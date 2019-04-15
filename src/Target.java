@@ -1,3 +1,4 @@
+import java.util.List;
 class Target {
     public static final String FRIEND = "friend";
     public static final String ENEMY = "enemy";

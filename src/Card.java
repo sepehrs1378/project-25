@@ -42,4 +42,16 @@ class Card {
     public static void deleteCard(Card card){
 
     }
+
+    public Card getCardWithName(String cardName){
+
+    }
+
+    public boolean doesCardExist(String cardName){
+        if (getCardWithName(cardName) == null){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

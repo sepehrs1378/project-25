@@ -5,6 +5,7 @@ class Deck {
     private List<Card> cards=new ArrayList<>();
     private Unit hero;
     private Item item;
+    private String name;
 
     public List<Card> getCards() {
         return cards;
@@ -31,6 +32,10 @@ class Deck {
     }
 
     public void deleteFromCards(Card card){
+
+    }
+
+    public boolean isValid(){
 
     }
 }
