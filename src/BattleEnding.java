@@ -12,6 +12,5 @@ class BattleEnding {
     }
 
     public static void checkBattleEndingMode3(Battle battle) {
-
     }
 }
