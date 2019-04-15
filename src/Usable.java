@@ -1,4 +1,4 @@
-public class Usable {
+public class Usable extends Item{
     private int price;
     private Spell passivePower;
 
