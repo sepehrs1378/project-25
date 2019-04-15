@@ -1,4 +1,8 @@
 class BattleOrders {
+    private BattleOrders(){
+
+    }
+
     public static void showGameInfo() {
 
     }
