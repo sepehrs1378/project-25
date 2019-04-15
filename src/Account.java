@@ -8,6 +8,7 @@ class Account {
     private String username;
     private PlayerInfo playerInfo;
     private List<MatchInfo> matchList=new ArrayList<>();
+    private static Account currentAccount;
 
     {
         levelsOpennessStatus[0]=true;
@@ -52,4 +53,19 @@ class Account {
     public void openLevelOfStory(int level){
         levelsOpennessStatus[level]=true;
     }
+
+    private int getNumberOfWins(){
+
+    }
+
+    public static void login(String username){
+
+    }
+
+    public static void showLeaderboard(){
+
+    }
+
+
+
 }

@@ -34,6 +34,10 @@ public class MatchInfo extends Account {
     }
 
     private void calculatePassedTime(LocalDateTime matchDate){    //todo this still has a lot of problems
+
+
+
+
         String[] dateAndTimeOfMatch = matchDate.toString().split("T");
         String[] timeOfMatch = dateAndTimeOfMatch[1].split(":");
         String[] dateAndTimeRightNow = LocalDateTime.now().toString().split("T");
