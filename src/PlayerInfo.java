@@ -47,4 +47,16 @@ class PlayerInfo {
     public void takeAwayMoney(int tookAwayMoney){
         money-=tookAwayMoney;
     }
+
+    public Deck getDeck(String deckName){
+
+    }
+
+    public boolean doesDeckExist(String deckName){
+        if (getDeck(deckName) == null){
+            return false;
+        }else{
+            return false;
+        }
+    }
 }

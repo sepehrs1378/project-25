@@ -18,5 +18,24 @@ public class BattleGround {
         }
         return true;
     }
+    public int getWidthOfUnit(Unit unit){
+
+    }
+
+    public int getLengthOfUnit(Unit unit){
+
+    }
+
+    public boolean doesHaveUnit(Unit unit){
+
+    }
+
+    public int getNumberOfFlags(){
+
+    }
+
+    public int getNumberOfFlagsOnGround(){
+
+    }
 
 }
