@@ -9,4 +9,6 @@ public class Battle {
     public static void setCurrentBattle(Battle currentBattle) {
         Battle.currentBattle = currentBattle;
     }
+
+    
 }
