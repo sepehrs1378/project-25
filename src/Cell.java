@@ -1,10 +1,13 @@
-class Cell {
-    private Card card;
-    private Item item;
-    private List<Buff> buffs = new ArrayList<Buff>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public Card getCard() {
-        return card;
+class Cell {
+    private Unit unit;
+    private Item item;
+    private List<Buff> buffs = new ArrayList<>();
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public Item getItem() {
@@ -15,8 +18,8 @@ class Cell {
         return buffs;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public void setItem(Item item) {
