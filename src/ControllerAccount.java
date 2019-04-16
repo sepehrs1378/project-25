@@ -1,7 +1,12 @@
+import javax.swing.text.View;
+
 public class ControllerAccount {
-    public void main() {
+    private static final View view = View.();
+
+    /*public void main() {
         boolean didExit = false;
         Request request = new Request();
+        request.getNewCommand();
         while (!didExit) {
             switch (request.getType()) {
                 case LOGIN:
@@ -37,10 +42,13 @@ public class ControllerAccount {
     }
 
     public void show(Request request) {
-
+        if (!request.getCommand().matches("^show leaderboard$")) {
+            request.setErrorType(ErrorType.WRONG_COMMAND);
+            view.printError
+        }
     }
 
     public void help(Request request) {
 
-    }
+    }*/
 }
