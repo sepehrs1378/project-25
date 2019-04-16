@@ -1,9 +1,9 @@
 import javax.swing.text.View;
 
 public class ControllerAccount {
-    private static final View view = View.();
+     static View view = View;
 
-    /*public void main() {
+    public void main() {
         boolean didExit = false;
         Request request = new Request();
         request.getNewCommand();
@@ -50,5 +50,5 @@ public class ControllerAccount {
 
     public void help(Request request) {
 
-    }*/
+    }
 }
