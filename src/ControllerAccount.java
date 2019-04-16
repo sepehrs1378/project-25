@@ -1,7 +1,5 @@
-import javax.swing.text.View;
-
 public class ControllerAccount {
-     static View view = View;
+    private static final View view = View.getInstance();
 
     public void main() {
         boolean didExit = false;
@@ -44,7 +42,8 @@ public class ControllerAccount {
     public void show(Request request) {
         if (!request.getCommand().matches("^show leaderboard$")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
-            view.printError
+            view.printError(request.getErrorType());
+            return;
         }
     }
 
