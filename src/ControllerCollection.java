@@ -1,4 +1,4 @@
-public class CollectionMenu {
+public class ControllerCollection {
     public static void exit(){
 
     }

@@ -1,5 +1,5 @@
-class ShopMenu {
-    private ShopMenu(){
+class ControllerShop {
+    private ControllerShop(){
 
     }
 

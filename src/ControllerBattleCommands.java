@@ -1,5 +1,5 @@
-class BattleOrders {
-    private BattleOrders(){
+public class ControllerBattleCommands {
+    private ControllerBattleCommands(){
 
     }
 
