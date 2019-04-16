@@ -1,29 +1,33 @@
 class ControllerShop {
-    private ControllerShop(){
+    public void main() {
 
     }
 
-    public static void exit(){
+    private ControllerShop() {
 
     }
 
-    public static void showCollection(){
+    public void exit() {
 
     }
 
-    public static void searchItemOrCard(String name){
+    public void showCollection() {
 
     }
 
-    public static void buy(String name){
+    public void searchItemOrCard(String name) {
 
     }
 
-    public static void sell(String name){
+    public void buy(String name) {
 
     }
 
-    public static void show(){
+    public void sell(String name) {
+
+    }
+
+    public void show() {
 
     }
 }

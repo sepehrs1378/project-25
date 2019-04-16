@@ -3,81 +3,83 @@ public class ControllerBattleCommands {
 
     }
 
-    public static void showGameInfo() {
+    public void main(){
 
     }
 
-    public static void showMyMinions() {
+    public void showGameInfo() {
 
     }
 
-    public static void showOpponentMinions() {
+    public void showMyMinions() {
 
     }
 
-    public static void showCardInfo(String cardID) {
+    public void showOpponentMinions() {
 
     }
 
-    public static void selectCard(String cardID) {
+    public void showCardInfo(String cardID) {
 
     }
 
-    public static void moveTo(int x, int y) {
+    public void selectCard(String cardID) {
 
     }
 
-    public static void attackCard(String cardID) {
+    public void moveTo(int x, int y) {
 
     }
 
-    public static void attackCombo(String opponentCardID, String... myCardID) {
+    public void attackCard(String cardID) {
 
     }
 
-    public static void useSpecialPower(int x, int y) {
+    public void attackCombo(String opponentCardID, String... myCardID) {
 
     }
 
-    public static void insertCardInCell(String cardName, int x, int y) {
+    public void useSpecialPower(int x, int y) {
 
     }
 
-    public static void endTurn() {
+    public void insertCardInCell(String cardName, int x, int y) {
 
     }
 
-    public static void showCollectibles() {
+    public void endTurn() {
 
     }
 
-    public static void selectCollectible(String collectableID) {
+    public void showCollectibles() {
 
     }
 
-    public static void showInfo() {
+    public void selectCollectible(String collectableID) {
 
     }
 
-    public static void use(int x,int y){
+    public void showInfo() {
 
     }
 
-    public static void showNextCard(){
+    public void use(int x,int y){
 
     }
 
-    public static void enterGraveYard() {
+    public void showNextCard(){
 
     }
 
-    public static void help(){
+    public void enterGraveYard() {
 
     }
 
-    public static void endGame(){
+    public void help(){
 
     }
 
+    public void endGame(){
 
+    }
 }

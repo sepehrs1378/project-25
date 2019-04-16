@@ -1,9 +1,13 @@
 public class ControllerCollection {
-    public static void exit(){
+    public void main(){
 
     }
 
-    public static void show(){
+    public void exit(){
+
+    }
+
+    public void show(){
 
     }
 }
