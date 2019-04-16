@@ -7,8 +7,11 @@ public class Request {
     private String command;
     private ErrorType errorType;
 
-    public String getNewCommand() {
+    public void getNewCommand() {
         command = scanner.nextLine().toLowerCase();
+    }
+
+    public String getCommand(){
         return command;
     }
 
