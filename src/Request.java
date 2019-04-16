@@ -65,4 +65,6 @@ public class Request {
             return RequestType.GAME_INFO;
         return RequestType.WRONG_REQUEST;
     }
+
+
 }
