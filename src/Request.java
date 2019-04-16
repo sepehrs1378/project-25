@@ -23,6 +23,10 @@ public class Request {
     public RequestType getType() {
         if (command == null || command.equals(""))
             return RequestType.WRONG_REQUEST;
+        if(command.matches("^logout .+$"))
+            return RequestType.LOGOUT;
+        if(command.matches("^login .+$"))
+            return RequestType.LOGIN;
         if (command.matches("^enter .+$"))
             return RequestType.ENTER;
         if (command.matches("^exit$"))

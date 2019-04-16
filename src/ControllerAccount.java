@@ -1,5 +1,46 @@
 public class ControllerAccount {
     public void main() {
+        boolean didExit = false;
+        Request request = new Request();
+        while (!didExit) {
+            switch (request.getType()) {
+                case LOGIN:
+                    break;
+                case LOGOUT:
+                    break;
+                case CREATE:
+                    break;
+                case SHOW:
+                    break;
+                case HELP:
+                    break;
+                case EXIT:
+                    didExit = true;
+                    break;
+                default:
+                    System.out.println("!!!!!! bad requestType in Controller.main");
+                    System.exit(-1);
+            }
+        }
+    }
+
+    public void login(Request request) {
+
+    }
+
+    public void logout(Request request) {
+
+    }
+
+    public void create(Request request) {
+
+    }
+
+    public void show(Request request) {
+
+    }
+
+    public void help(Request request) {
 
     }
 }
