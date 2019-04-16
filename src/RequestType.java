@@ -1,3 +1,23 @@
-public enum  RequestType {
-    EXIT;
+public enum RequestType {
+    ENTER,
+    EXIT,
+    SHOW,
+    SAVE,
+    SEARCH,
+    HELP,
+    BUY,
+    SELL,
+    CREATE,
+    DELETE,
+    ADD,
+    REMOVE,
+    SELECT,
+    VALIDATE,
+    SHOW_MINIONS,
+    MOVE,
+    ATTACK,
+    USE,
+    INSERT,
+    END,
+    GAME_INFO;
 }
