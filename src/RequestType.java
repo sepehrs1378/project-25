@@ -1,4 +1,5 @@
 public enum RequestType {
+    WRONG_REQUEST,
     ENTER,
     EXIT,
     SHOW,
