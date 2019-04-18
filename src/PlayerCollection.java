@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PlayerCollection {
-    private List<Card> cards=new ArrayList<Card>();
-    private List<Item> items=new ArrayList<Item>();
+    private List<Card> cards=new ArrayList<>();
+    private List<Item> items=new ArrayList<>();
 
     public List<Card> getCards(){
         return cards;

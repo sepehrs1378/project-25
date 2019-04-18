@@ -36,7 +36,6 @@ public class Deck {
     }
 
     public void addToCards(Card newCard){
-        Card.addCard(newCard);
     }
 
     public void deleteFromCards(Card card){
