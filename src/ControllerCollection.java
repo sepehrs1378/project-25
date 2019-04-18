@@ -1,13 +1,23 @@
 public class ControllerCollection {
-    public void main(){
+    private static final ControllerCollection ourInstance = new ControllerCollection();
+
+    private ControllerCollection() {
 
     }
 
-    public void exit(){
+    public static ControllerCollection getInstance() {
+        return ourInstance;
+    }
+
+    public void main() {
 
     }
 
-    public void show(){
+    public void exit() {
+
+    }
+
+    public void show() {
 
     }
 }
