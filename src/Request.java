@@ -6,12 +6,13 @@ public class Request {
     private static Scanner scanner = new Scanner(System.in);
     private String command;
     private ErrorType errorType;
+    private HelpType helpType;
 
     public void getNewCommand() {
         command = scanner.nextLine().toLowerCase();
     }
 
-    public String getCommand(){
+    public String getCommand() {
         return command;
     }
 
@@ -23,12 +24,20 @@ public class Request {
         return errorType;
     }
 
+    public void setHelpType(HelpType helpType) {
+        this.helpType = helpType;
+    }
+
+    public HelpType getHelpType() {
+        return helpType;
+    }
+
     public RequestType getType() {
         if (command == null || command.equals(""))
             return RequestType.WRONG_REQUEST;
-        if(command.matches("^logout .+$"))
+        if (command.matches("^logout .+$"))
             return RequestType.LOGOUT;
-        if(command.matches("^login .+$"))
+        if (command.matches("^login .+$"))
             return RequestType.LOGIN;
         if (command.matches("^enter .+$"))
             return RequestType.ENTER;
