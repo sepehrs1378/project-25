@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Deck {
+public class Deck {
     private List<Card> cards=new ArrayList<>();
     private Unit hero;
     private Item item;
