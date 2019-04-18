@@ -34,8 +34,7 @@ public class DataBase {
         return accounts;
     }
 
-//todo
-//    public void addAccount(){}
+    public void addAccount(){}
 
     public void sortAccountsByWins(){
 
