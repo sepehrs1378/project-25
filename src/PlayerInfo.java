@@ -4,7 +4,7 @@ import java.util.List;
 class PlayerInfo {
     private String  playerName;
     private PlayerCollection collection;
-    private List<Deck> decks=new ArrayList<Deck>();
+    private List<Deck> decks=new ArrayList<>();
     private Deck mainDeck;
     private int money;
 
@@ -37,7 +37,7 @@ class PlayerInfo {
     }
 
     public void addDeckToDecks(Deck newDeck){
-
+        decks.add(newDeck);
     }
 
     public void addMoney(int addedMoney){
@@ -49,7 +49,12 @@ class PlayerInfo {
     }
 
     public Deck getDeck(String deckName){
-
+        for (int i = 0; i < decks.size(); i++){
+            if (decks.get(i).getName().equals(deckName)){
+                return decks.get(i);
+            }
+        }
+        return null;
     }
 
     public boolean doesDeckExist(String deckName){

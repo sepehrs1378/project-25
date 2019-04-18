@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Spell extends Card {
     public static final String PASSIVE="passive";
     public static final String CASTABLE="castable";
@@ -5,9 +8,9 @@ class Spell extends Card {
     private int cooldown;
     private int apChange;
     private int hpChange;
-    private List<Buff> addedBuffs = new ArrayList<Buff>();
-    private List<Buff> deletedBuffs = new ArrayList<Buff>();
-    private List<Unit> addedUnits = new ArrayList<Unit>();
+    private List<Buff> addedBuffs = new ArrayList<>();
+    private List<Buff> deletedBuffs = new ArrayList<>();
+    private List<Unit> addedUnits = new ArrayList<>();
     private String passiveOrCastable;
 
     public Target getTarget(){
