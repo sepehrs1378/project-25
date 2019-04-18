@@ -34,7 +34,12 @@ public class MatchInfo extends Account {
     }
 
     private void calculatePassedTime(LocalDateTime matchDate){    //todo this still has a lot of problems
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), formatter);
+        matchDate = LocalDateTime.parse(matchDate.toString(), formatter);
 
+        long diffInSeconds = java.time.Duration.between(now, matchDate).getSeconds();
+        long diffInMinutes = java.time.
 
 
 

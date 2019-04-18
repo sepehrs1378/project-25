@@ -10,5 +10,5 @@ public class Battle {
         Battle.currentBattle = currentBattle;
     }
 
-    
+
 }
