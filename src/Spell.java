@@ -8,9 +8,9 @@ class Spell extends Card {
     private int cooldown;
     private int apChange;
     private int hpChange;
-    private List<Buff> addedBuffs = new ArrayList<Buff>();
-    private List<Buff> deletedBuffs = new ArrayList<Buff>();
-    private List<Unit> addedUnits = new ArrayList<Unit>();
+    private List<Buff> addedBuffs = new ArrayList<>();
+    private List<Buff> deletedBuffs = new ArrayList<>();
+    private List<Unit> addedUnits = new ArrayList<>();
     private String passiveOrCastable;
     private String description;
 
