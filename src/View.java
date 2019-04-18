@@ -8,6 +8,8 @@ public class View {
     private View() {
     }
 
+
+
     public void printError(ErrorType errorType){
         System.out.println(errorType.getMessage());
     }

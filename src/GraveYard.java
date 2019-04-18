@@ -9,7 +9,7 @@ class GraveYard {
     }
 
     public void addDeadCard(Card deadCard){
-
+        deadCards.add(deadCard);
     }
 
     public void showInfo(String cardID){

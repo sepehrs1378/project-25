@@ -9,7 +9,7 @@ class PlayerInfo {
     private int money;
 
     public void addCardToCollection(Card newCard){
-
+        collection.addCard(newCard);
     }
 
     public void setMainDeck(Deck mainDeck){
