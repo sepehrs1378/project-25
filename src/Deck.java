@@ -7,6 +7,14 @@ public class Deck {
     private Item item;
     private String name;
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
@@ -28,7 +36,7 @@ public class Deck {
     }
 
     public void addToCards(Card newCard){
-
+        Card.addCard(newCard);
     }
 
     public void deleteFromCards(Card card){
