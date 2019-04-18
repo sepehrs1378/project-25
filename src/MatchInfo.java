@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MatchInfo extends Account {
     private Account opponent;
@@ -39,20 +40,20 @@ public class MatchInfo extends Account {
         matchDate = LocalDateTime.parse(matchDate.toString(), formatter);
 
         long diffInSeconds = java.time.Duration.between(now, matchDate).getSeconds();
-        long diffInMinutes = java.time.
-
-
-
-        String[] dateAndTimeOfMatch = matchDate.toString().split("T");
-        String[] timeOfMatch = dateAndTimeOfMatch[1].split(":");
-        String[] dateAndTimeRightNow = LocalDateTime.now().toString().split("T");
-        String[] timeRightNow = dateAndTimeRightNow[1].split(":");
-        int hourOfMatch = Integer.parseInt(timeOfMatch[0]);
-        int hourRightNow = Integer.parseInt(timeRightNow[0]);
-        int howManyHoursPassed = hourRightNow - hourOfMatch;
-        int minuteOfMatch = Integer.parseInt(timeOfMatch[1]);
-        timeOfMatch[2] = timeOfMatch[2].replaceAll("(\\d+)[.](\\d+)", "$1");
-        int secondOfMatch = Integer.parseInt(timeOfMatch[2]);
+        long diffInMinutes = java.time.Duration.between(now, matchDate).toMinutes();
+        long diffInHours = java.time.Duration.between(now, matchDate).toHours();
+        long diffInDays = java.time.Duration.between(now, matchDate).toDays();
+        
+//        String[] dateAndTimeOfMatch = matchDate.toString().split("T");
+//        String[] timeOfMatch = dateAndTimeOfMatch[1].split(":");
+//        String[] dateAndTimeRightNow = LocalDateTime.now().toString().split("T");
+//        String[] timeRightNow = dateAndTimeRightNow[1].split(":");
+//        int hourOfMatch = Integer.parseInt(timeOfMatch[0]);
+//        int hourRightNow = Integer.parseInt(timeRightNow[0]);
+//        int howManyHoursPassed = hourRightNow - hourOfMatch;
+//        int minuteOfMatch = Integer.parseInt(timeOfMatch[1]);
+//        timeOfMatch[2] = timeOfMatch[2].replaceAll("(\\d+)[.](\\d+)", "$1");
+//        int secondOfMatch = Integer.parseInt(timeOfMatch[2]);
 
 
     }
