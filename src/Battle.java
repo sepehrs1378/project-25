@@ -7,6 +7,7 @@ public class Battle {
     private Player turn;
     private String mode;
     private int turnNumber;
+    private boolean isBattleFinished;
 
     public Player getTurn() {
         return turn;
@@ -14,12 +15,6 @@ public class Battle {
 
     public void endTurn() {
 
-    }
-
-    public void changeTurn() {
-        if (turn == player1)
-            turn = player2;
-        else turn = player1;
     }
 
     public Player getPlayer1() {
@@ -74,11 +69,25 @@ public class Battle {
         return turnNumber;
     }
 
+    public void setTurn(Player turn) {
+        this.turn = turn;
+    }
+
     public void setTurnNumber(int turnNumber) {
         this.turnNumber = turnNumber;
     }
 
-    public void setTurn(Player turn) {
-        this.turn = turn;
+    public void changeTurn() {
+        if (turn == player1)
+            turn = player2;
+        else turn = player1;
+    }
+
+    public boolean isBattleFinished() {
+        return isBattleFinished;
+    }
+
+    public void setBattleFinished(boolean battleFinished) {
+        isBattleFinished = battleFinished;
     }
 }

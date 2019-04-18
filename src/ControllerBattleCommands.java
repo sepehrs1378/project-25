@@ -1,4 +1,5 @@
 public class ControllerBattleCommands {
+    private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
 
     private ControllerBattleCommands() {
@@ -73,7 +74,22 @@ public class ControllerBattleCommands {
 
     }
 
-    public void end() {
+    public void end(Request request) {
+        if (request.getCommand().equals("end game")) {
+            if (!database.getCurrentBattle().isBattleFinished()) {
+                request.setErrorType(ErrorType.BATTLE_NOT_FINISHED);
+                view.printError(request.getErrorType());
+            } else {
+
+            }
+            return;
+        }
+        if (request.getCommand().equals("end turn")) {
+            database.getCurrentBattle().endTurn();
+            return;
+        }
+        request.setErrorType(ErrorType.WRONG_COMMAND);
+        view.printError(request.getErrorType());
 
     }
 
