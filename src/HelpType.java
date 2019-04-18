@@ -1,4 +1,4 @@
-public enum Help {
+public enum HelpType {
     CONTROLLER_SHOP_HELP("exit\nshow collection\nsearch [item name | card name]\n" +
             "search collection [item name | card name]\nbuy [item name | card name]\n" +
             "sell [card id | item id]\nshow\nhelp"),
@@ -7,7 +7,11 @@ public enum Help {
 
     private String message;
 
-    Help(String message) {
+    HelpType(String message) {
         this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

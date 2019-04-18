@@ -1,5 +1,5 @@
 class ControllerShop {
-    private static final View view=View.getInstance();
+    private static final View view = View.getInstance();
 
     private ControllerShop() {
 
@@ -35,19 +35,20 @@ class ControllerShop {
 
     }
 
-    public void sell(Request request){
+    public void sell(Request request) {
 
     }
 
-    public void buy(Request request){
+    public void buy(Request request) {
 
     }
 
-    public void search(Request request){
+    public void search(Request request) {
 
     }
 
-    public void help(Request request,View view){
-
+    public void help(Request request) {
+        request.setHelpType(HelpType.CONTROLLER_SHOP_HELP);
+        view.printHelp(request.getHelpType());
     }
 }

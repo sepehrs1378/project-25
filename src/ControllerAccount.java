@@ -1,5 +1,14 @@
 public class ControllerAccount {
+    private static final ControllerAccount ourInstance = ControllerAccount.getInstance();
     private static final View view = View.getInstance();
+
+    private ControllerAccount() {
+
+    }
+
+    public ControllerAccount getInstance() {
+        return ourInstance;
+    }
 
     public void main() {
         boolean didExit = false;
@@ -16,6 +25,7 @@ public class ControllerAccount {
                 case SHOW:
                     break;
                 case HELP:
+                    ourInstance.help(request);
                     break;
                 case EXIT:
                     didExit = true;
@@ -43,11 +53,12 @@ public class ControllerAccount {
         if (!request.getCommand().matches("^show leaderboard$")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
-            return;
         }
+        //todo else is missing
     }
 
     public void help(Request request) {
-
+        request.setHelpType(HelpType.CONTROLLER_ACCOUNT_HELP);
+        view.printHelp(request.getHelpType());
     }
 }
