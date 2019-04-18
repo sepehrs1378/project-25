@@ -18,8 +18,6 @@ public class ControllerAccount {
             switch (request.getType()) {
                 case LOGIN:
                     break;
-                case LOGOUT:
-                    break;
                 case CREATE:
                     break;
                 case SHOW:
@@ -38,10 +36,6 @@ public class ControllerAccount {
     }
 
     public void login(Request request) {
-
-    }
-
-    public void logout(Request request) {
 
     }
 

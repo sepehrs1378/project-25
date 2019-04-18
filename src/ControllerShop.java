@@ -1,8 +1,13 @@
 class ControllerShop {
+    private static final ControllerShop ourInstance=new ControllerShop();
     private static final View view = View.getInstance();
 
     private ControllerShop() {
 
+    }
+
+    public static ControllerShop getOurInstance(){
+        return ourInstance;
     }
 
     public void main() {
