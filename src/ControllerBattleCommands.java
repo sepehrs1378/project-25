@@ -1,85 +1,87 @@
 public class ControllerBattleCommands {
-    private ControllerBattleCommands(){
+    private static final View view = View.getInstance();
+
+    private ControllerBattleCommands() {
 
     }
 
-    public void main(){
+    public void main() {
+        boolean didExit = false;
+        Request request = new Request();
+        request.getNewCommand();
+        while (!didExit) {
+            switch (request.getType()) {
+                case GAME_INFO:
+                    break;
+                case SHOW_MINIONS:
+                    break;
+                case SHOW:
+                    break;
+                case SELECT:
+                    break;
+                case MOVE:
+                    break;
+                case ATTACK:
+                    break;
+                case USE:
+                    break;
+                case INSERT:
+                    break;
+                case END:
+                    break;
+                case ENTER:
+                    break;
+                case EXIT:
+                    didExit = true;
+                    break;
+                default:
+                    System.out.println("!!!!!! bad input in ControllerBattleCommands.main");
+                    System.exit(-1);
+            }
+        }
+    }
+
+    public void showGameInfo(Request request) {
 
     }
 
-    public void showGameInfo() {
+    public void showMinions() {
 
     }
 
-    public void showMyMinions() {
+    public void show() {
 
     }
 
-    public void showOpponentMinions() {
+    public void select() {
 
     }
 
-    public void showCardInfo(String cardID) {
+    public void move() {
 
     }
 
-    public void selectCard(String cardID) {
+    public void attack() {
 
     }
 
-    public void moveTo(int x, int y) {
+    public void use() {
 
     }
 
-    public void attackCard(String cardID) {
+    public void insert() {
 
     }
 
-    public void attackCombo(String opponentCardID, String... myCardID) {
+    public void end() {
 
     }
 
-    public void useSpecialPower(int x, int y) {
-
-    }
-
-    public void insertCardInCell(String cardName, int x, int y) {
-
-    }
-
-    public void endTurn() {
-
-    }
-
-    public void showCollectibles() {
-
-    }
-
-    public void selectCollectible(String collectableID) {
-
-    }
-
-    public void showInfo() {
-
-    }
-
-    public void use(int x,int y){
-
-    }
-
-    public void showNextCard(){
-
-    }
-
-    public void enterGraveYard() {
-
-    }
-
-    public void help(){
-
-    }
-
-    public void endGame(){
-
+    public void enter(Request request) {
+        if (!request.getCommand().equals("enter graveyard")) {
+            request.setErrorType(ErrorType.WRONG_COMMAND);
+            view.printError(request.getErrorType());
+        }
+        //todo write else later
     }
 }
