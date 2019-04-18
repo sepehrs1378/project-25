@@ -1,33 +1,35 @@
 class ControllerShop {
-    public void main() {
-
-    }
-
     private ControllerShop() {
 
     }
 
-    public void exit() {
-
+    public void main() {
+        boolean didExit = false;
+        Request request = new Request();
+        request.getNewCommand();
+        while (!didExit) {
+            switch (request.getType()) {
+                case EXIT:
+                    didExit = true;
+                    break;
+                case SHOW:
+                    break;
+                case SEARCH:
+                    break;
+                case BUY:
+                    break;
+                case SELL:
+                    break;
+                case HELP:
+                    break;
+                default:
+                    System.out.println("!!!!!! bad input in ControllerShop.main");
+                    System.exit(-1);
+            }
+        }
     }
 
-    public void showCollection() {
-
-    }
-
-    public void searchItemOrCard(String name) {
-
-    }
-
-    public void buy(String name) {
-
-    }
-
-    public void sell(String name) {
-
-    }
-
-    public void show() {
+    public void show(Request request) {
 
     }
 }
