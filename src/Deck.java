@@ -7,6 +7,12 @@ public class Deck {
     private Item item;
     private String name;
 
+    public Deck(Deck deck){
+        this.cards=new ArrayList<>(deck.getCards());
+        this.hero=deck.hero;
+        this.item=deck.item;
+        this.name=deck.name;
+    }
     public Deck(String name) {
         this.name = name;
     }
@@ -40,10 +46,11 @@ public class Deck {
     }
 
     public void addToCards(Card newCard) {
+        cards.add(newCard);
     }
 
     public void deleteFromCards(Card card) {
-
+        cards.remove(card);
     }
 
     public boolean isValid() {

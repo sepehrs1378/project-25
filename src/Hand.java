@@ -16,7 +16,4 @@ class Hand {
 
     }
 
-    public Card getNextCard() {
-
-    }
 }

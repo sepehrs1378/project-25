@@ -18,4 +18,5 @@ public class Constants {
     public static final String HYBRID = "hybrid";
     public static final int BATTLE_GROUND_WIDTH = 5;
     public static final int BATTLE_GROUND_LENGTH = 9;
+    public static final int NUMBER_OF_HAND_CARDS=5;
 }

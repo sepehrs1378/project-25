@@ -40,7 +40,6 @@ public class ControllerAccount {
     }
 
     public void create(Request request) {
-
     }
 
     public void show(Request request) {

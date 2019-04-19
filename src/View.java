@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class View {
@@ -8,7 +9,6 @@ public class View {
     }
 
     private View() {
-
     }
 
     public void printError(outputMessageType outputMessageType) {
@@ -22,7 +22,12 @@ public class View {
     public void printContentsOfAList(List list) {
         System.out.println(list);
     }
-
+    public void showUsers(List<Account> users,String currentUserName){
+        for(Account account:users){
+            if(!account.getUsername().equals(currentUserName))
+                System.out.println(account.getUsername());
+        }
+    }
     public void showLeaderboard(List<Account> accounts) {
         int counter = 1;
         for (Account account : accounts) {

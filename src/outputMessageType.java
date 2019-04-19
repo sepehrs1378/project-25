@@ -7,6 +7,7 @@ public enum outputMessageType {
     INSUFFICIENT_MONEY("You don't have enough money"),
     BUY_SUCCESSFUL("Card or item was bought successfully"),
     SELL_SUCCESSFUL("Card or item was sold successfully"),
+    DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
     NO_ERROR("");
 
     private String message;
