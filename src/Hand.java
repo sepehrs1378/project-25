@@ -9,11 +9,11 @@ class Hand {
     }
 
     public void addCard(Card newCard) {
-
+        cards.add(newCard);
     }
 
     public void deleteCard(Card card) {
-
+        cards.remove(card);
     }
 
     public Card getNextCard() {

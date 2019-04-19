@@ -49,7 +49,7 @@ public class ControllerAccount {
             view.printError(request.getErrorType());
         } else {
             dataBase.sortAccountsByWins();
-            view.showLeaderboard(dataBase.getAccounts());
+            view.showLeaderBoard(dataBase.getAccounts());
         }
     }
 

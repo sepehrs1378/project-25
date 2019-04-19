@@ -10,11 +10,9 @@ class Unit extends Card {
     private List<Buff> buffs = new ArrayList<>();
     private String typeOfAttack;
     private int range;
-    private List<Flag> flags = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
     private String StringSpecialPower;
-    private String name;
 
 
     public int getHp() {
@@ -81,14 +79,6 @@ class Unit extends Card {
         StringSpecialPower = stringSpecialPower;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<Flag> getFlags() {
         return flags;
     }
@@ -143,5 +133,13 @@ class Unit extends Card {
 
     public void setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
+    }
+
+    public String getTypeOfAttack() {
+        return typeOfAttack;
+    }
+
+    public int getRange() {
+        return range;
     }
 }

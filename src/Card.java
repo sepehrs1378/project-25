@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Card {
     private String cardID;
     private int price;
     private int mana;
+    private String name;
 
     public String getCardID() {
         return cardID;
@@ -32,5 +30,13 @@ class Card {
 
     public static void addCard(Card newCard) {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
