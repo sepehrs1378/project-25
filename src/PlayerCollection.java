@@ -64,4 +64,10 @@ class PlayerCollection {
         }
         return false;
     }
+
+    public void createDeck(String deckName) {
+        //todo if deck exists...?
+        Deck newDeck = new Deck(deckName);
+        decks.add(newDeck);
+    }
 }
