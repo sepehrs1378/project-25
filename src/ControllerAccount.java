@@ -1,5 +1,5 @@
 public class ControllerAccount {
-    private static final ControllerAccount ourInstance = ControllerAccount.getInstance();
+    private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
 
     private ControllerAccount() {

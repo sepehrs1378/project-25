@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Unit {
+class Unit extends Card {
     private int hp;
     private int ap;
     private String typeOfAttack;
     private int range;
-    private List<Flag> flags=new ArrayList<>();
+    private List<Flag> flags = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
+    private String StringSpecialPower;
+    private String name;
+
 
     public int getHp() {
         return hp;
@@ -76,5 +79,21 @@ class Unit {
 
     public void takeItem(Item item){
 
+    }
+
+    public String getStringSpecialPower() {
+        return StringSpecialPower;
+    }
+
+    public void setStringSpecialPower(String stringSpecialPower) {
+        StringSpecialPower = stringSpecialPower;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

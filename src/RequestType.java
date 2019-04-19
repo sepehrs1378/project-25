@@ -22,5 +22,5 @@ public enum RequestType {
     USE,
     INSERT,
     END,
-    GAME_INFO;
+    GAME_INFO
 }

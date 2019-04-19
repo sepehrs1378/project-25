@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerGraveYard {
-    private static final ControllerGraveYard ourInstance = ControllerGraveYard.getInstance();
+    private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
     private static final View view = View.getInstance();
 
     private ControllerGraveYard(){
@@ -11,7 +12,7 @@ public class ControllerGraveYard {
         return ourInstance;
     }
 
-    public void showListOfCards(List list){
-        view.printContentsOfAList(list);
+    public void showInfoOfCards(List<Card> cards){
+        view.showInfoOfCards(cards);
     }
 }

@@ -5,7 +5,7 @@ class Spell extends Card {
     public static final String PASSIVE = "passive";
     public static final String CASTABLE = "castable";
     private Target target;
-    private int cooldown;
+    private int coolDown;
     private int apChange;
     private int hpChange;
     private List<Buff> addedBuffs = new ArrayList<>();
@@ -13,13 +13,14 @@ class Spell extends Card {
     private List<Unit> addedUnits = new ArrayList<>();
     private String passiveOrCastable;
     private String description;
+    private String name;
 
     public Target getTarget() {
         return target;
     }
 
     public int getCooldown() {
-        return cooldown;
+        return coolDown;
     }
 
     public int getApChange() {
@@ -39,7 +40,7 @@ class Spell extends Card {
     }
 
     public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
+        this.coolDown = cooldown;
     }
 
     public void setApChange(int apChange) {
@@ -72,5 +73,13 @@ class Spell extends Card {
 
     public void createUnits() {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

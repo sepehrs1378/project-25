@@ -13,11 +13,12 @@ class GraveYard {
         deadCards.add(deadCard);
     }
 
-    public void showInfo(String cardID) {
-        
+    public void showInfoOfDeadCards() {
+        controllerGraveYard.showInfoOfCards(deadCards);
     }
 
-    public void showCards() {
-        controllerGraveYard.showListOfCards(deadCards);
-    }
+//    public void showInfo(String cardID) {             find a use for this empty method or delete it
+//
+//    }
+
 }
