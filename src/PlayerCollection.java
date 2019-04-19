@@ -36,7 +36,7 @@ class PlayerCollection {
     }
 
     public void addNewDeck() {
-        //todo
+        //todo maybe it isn't needed
     }
 
     public void deleteDeck(Deck deck) {
@@ -55,6 +55,10 @@ class PlayerCollection {
                 return deck;
         }
         return null;
+    }
+
+    public boolean doesHaveDeck(Deck deck) {
+        return doesHaveDeck(deck.getName());
     }
 
     public boolean doesHaveDeck(String deckName) {
