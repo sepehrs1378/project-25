@@ -4,7 +4,8 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
-    private static List<Item> itemList = new ArrayList<>();
+    private static List<Usable> usableList = new ArrayList<>();
+    private static List<Collectable> collectableList = new ArrayList<>();
     private static List<Card> cardList = new ArrayList<>();
     private static List<Account> accounts = new ArrayList<>();
     private static Account loggedInAccount;
@@ -21,8 +22,8 @@ public class DataBase {
         return cardList;
     }
 
-    public static List<Item> getItemList() {
-        return itemList;
+    public static List<Collectable> getCollectableList() {
+        return collectableList;
     }
 
     public Account getLoggedInAccount() {
@@ -68,15 +69,27 @@ public class DataBase {
         return getCardWithName(cardName) != null;
     }
 
-    public Item getItemWithName(String itemName) {
-        for (Item item : itemList) {
-            if (item.getItemID().equals(itemName))
-                return item;
+    public Usable getUsableWithName(String usableName) {
+        for (Usable usable : usableList) {
+            if (usable.getItemID().equals(usableName))
+                return usable;
         }
         return null;
     }
 
-    public boolean doesItemExit(String itemName) {
-        return getItemWithName(itemName) != null;
+    public boolean doesUsableExist(String itemName) {
+        return getUsableWithName(itemName) != null;
+    }
+
+    public Collectable getCollectableWithName(String collectableName) {
+        for (Collectable collectable : collectableList) {
+            if (collectable.getItemID().equals(collectableName))
+                return collectable;
+        }
+        return null;
+    }
+
+    public boolean doesCollectableExist(String collectableName) {
+        return getCollectableWithName(collectableName) != null;
     }
 }

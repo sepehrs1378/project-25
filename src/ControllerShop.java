@@ -50,13 +50,13 @@ class ControllerShop {
 
     public void buy(Request request) {
         if (!request.getCommand().matches("^buy .+$")) {
-            request.setErrorType(ErrorType.WRONG_COMMAND);
-            view.printError(request.getErrorType());
+            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
+            view.printError(request.getOutputMessageType());
             return;
         }
         Pattern pattern = Pattern.compile("^buy (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-
+        //todo
     }
 
     public void search(Request request) {

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class View {
@@ -8,10 +9,11 @@ public class View {
     }
 
     private View() {
+
     }
 
-    public void printError(ErrorType errorType) {
-        System.out.println(errorType.getMessage());
+    public void printError(outputMessageType outputMessageType) {
+        System.out.println(outputMessageType.getMessage());
     }
 
     public void printHelp(HelpType helpType) {

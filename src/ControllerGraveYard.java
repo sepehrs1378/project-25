@@ -1,14 +1,14 @@
 import java.util.List;
 
 public class ControllerGraveYard {
+    private static final View view=View.getInstance();
     private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
-    private static final View view = View.getInstance();
-
-    private ControllerGraveYard() {
-    }
 
     public static ControllerGraveYard getInstance() {
         return ourInstance;
+    }
+
+    private ControllerGraveYard() {
     }
 
     public void main() {
@@ -29,11 +29,11 @@ public class ControllerGraveYard {
         }
     }
 
-    public void show(Request request) {
-        if (!request.getCommand().matches("^show cards$") &&
-                !request.getCommand().matches("^show info .+$")) {
-            request.setErrorType(ErrorType.WRONG_COMMAND);
-            view.printError(request.getErrorType());
+    public void show(Request request){
+        if(!request.getCommand().matches("^show cards$") &&
+                !request.getCommand().matches("^show info .+$")){
+            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
+            view.printError(request.getOutputMessageType());
             return;
         }
         if (request.getCommand().matches("^show cards$")) {

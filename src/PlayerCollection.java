@@ -3,6 +3,7 @@ import java.util.List;
 
 class PlayerCollection {
     private static final DataBase dataBase = DataBase.getInstance();
+    private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
@@ -69,22 +70,34 @@ class PlayerCollection {
         return false;
     }
 
-    public void createDeck(String deckName) {
-        //todo if deck exists...?
+    public outputMessageType createDeck(String deckName) {
+        if (doesHaveDeck(deckName))
+            return outputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
         decks.add(newDeck);
+        return outputMessageType.NO_ERROR;
     }
 
-    public void buy(String name) {
+    public outputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
-
-            return;
+            Card card = dataBase.getCardWithName(name);
+            if (loggedInAccount.getMoney() < card.getPrice())
+                return outputMessageType.INSUFFICIENT_MONEY;
+            else {
+                //todo
+                return outputMessageType.NO_ERROR;
+            }
         }
-        if (dataBase.doesItemExit(name)) {
-
-            return;
+        if (dataBase.doesUsableExist(name)) {
+            Usable usable = dataBase.getUsableWithName(name);
+            if (loggedInAccount.getMoney() < usable.getPrice())
+                return outputMessageType.INSUFFICIENT_MONEY;
+            else {
+                //todo
+                return outputMessageType.NO_ERROR;
+            }
         }
-
+        return outputMessageType.NOT_IN_SHOP;
     }
 
     public void sell(String name) {

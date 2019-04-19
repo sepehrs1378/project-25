@@ -13,6 +13,7 @@ public class Account implements Comparable<Account> {
     private PlayerInfo playerInfo;
     private List<MatchInfo> matchList = new ArrayList<>();
     private Deck mainDeck;
+    private int money;
 
     {
         levelsOpennessStatus[0] = true;
@@ -38,10 +39,10 @@ public class Account implements Comparable<Account> {
                     login(username);
                 }
             } else {
-                controllerAccount.showLoginError(ErrorType.INVALID_PASSWORD);
+                controllerAccount.showLoginError(outputMessageType.INVALID_PASSWORD);
             }
         }
-        controllerAccount.showLoginError(ErrorType.INVALID_USERNAME);
+        controllerAccount.showLoginError(outputMessageType.INVALID_USERNAME);
     }
 
     public static Account getLoggedInAccount() {
@@ -58,6 +59,14 @@ public class Account implements Comparable<Account> {
 
     public String getPassword() {
         return password;
+    }
+
+    public void addMoney(int addedMoney) {
+        money += addedMoney;
+    }
+
+    public void takeAwayMoney(int tookAwayMoney) {
+        money -= tookAwayMoney;
     }
 
     public PlayerInfo getPlayerInfo() {
@@ -115,5 +124,9 @@ public class Account implements Comparable<Account> {
 
     public int compareTo(Account compareAccount) {
         return compareAccount.getNumberOfWins() - getNumberOfWins();
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

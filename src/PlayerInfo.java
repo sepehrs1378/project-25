@@ -6,7 +6,6 @@ class PlayerInfo {
     private PlayerCollection collection;
     private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
-    private int money;
 
     public void addCardToCollection(Card newCard) {
         collection.addCard(newCard);
@@ -32,20 +31,8 @@ class PlayerInfo {
         return playerName;
     }
 
-    public int getMoney() {
-        return money;
-    }
-
     public void addDeckToDecks(Deck newDeck) {
         decks.add(newDeck);
-    }
-
-    public void addMoney(int addedMoney) {
-        money += addedMoney;
-    }
-
-    public void takeAwayMoney(int tookAwayMoney) {
-        money -= tookAwayMoney;
     }
 
     public Deck getDeck(String deckName) {
