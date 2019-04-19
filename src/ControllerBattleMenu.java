@@ -9,6 +9,11 @@ public class ControllerBattleMenu {
     }
 
     public void main(){
-
+        Request request=new Request();
+        request.getNewCommand();
+        boolean didExit=false;
+        while (!didExit){
+            //todo
+        }
     }
 }

@@ -8,8 +8,8 @@ public class ControllerBattleCommands {
     public void main() {
         boolean didExit = false;
         Request request = new Request();
-        request.getNewCommand();
         while (!didExit) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
                     break;
@@ -45,8 +45,14 @@ public class ControllerBattleCommands {
 
     }
 
-    public void showMinions() {
+    public void showMinions(Request request) {
+        if (request.getCommand().matches("^show my minions$")) {
 
+            return;
+        }
+        if (request.getCommand().matches("^show opponent minions$")) {
+
+        }
     }
 
     public void show() {
@@ -79,7 +85,7 @@ public class ControllerBattleCommands {
                 request.setErrorType(ErrorType.BATTLE_NOT_FINISHED);
                 view.printError(request.getErrorType());
             } else {
-
+                //todo
             }
             return;
         }
@@ -96,7 +102,8 @@ public class ControllerBattleCommands {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
+        } else {
+            ControllerGraveYard.getInstance().main();
         }
-        //todo write else later
     }
 }

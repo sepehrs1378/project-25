@@ -4,6 +4,10 @@ import java.util.List;
 class Unit extends Card {
     private int hp;
     private int ap;
+    private int minRange;
+    private int maxRange;
+    private List<Flag> flags = new ArrayList<>();
+    private List<Buff> buffs = new ArrayList<>();
     private String typeOfAttack;
     private int range;
     private List<Flag> flags = new ArrayList<>();
@@ -19,14 +23,6 @@ class Unit extends Card {
 
     public int getAp() {
         return ap;
-    }
-
-    public String getTypeOfAttack() {
-        return typeOfAttack;
-    }
-
-    public int getRange() {
-        return range;
     }
 
     public String getHeroOrMinion() {
@@ -53,31 +49,27 @@ class Unit extends Card {
         this.heroOrMinion = heroOrMinion;
     }
 
-    public void addFlag(Flag newFlag){
+    public void addFlag(Flag newFlag) {
+        flags.add(newFlag);
+    }
+
+    public void dropFlags() {
 
     }
 
-    public void dropFlags(){
+    public void doSpecialPower() {
 
     }
 
-    public static void killUnit(Unit unit){
+    public void moveToCell(int row, int column) {
 
     }
 
-    public void doSpecialPower(){
+    public void attackUnit(Unit unit) {
 
     }
 
-    public void moveToCell(int x,int y){
-
-    }
-
-    public void attackUnit(Unit unit){
-
-    }
-
-    public void takeItem(Item item){
+    public void counterAttackUnit(Unit unit) {
 
     }
 
@@ -99,5 +91,57 @@ class Unit extends Card {
 
     public List<Flag> getFlags() {
         return flags;
+    }
+
+    public String getUnitClass() {
+        if (minRange == 1 && maxRange == 1)
+            return Constants.MELEE;
+        if (minRange == 1)
+            return Constants.HYBRID;
+        return Constants.RANGED;
+    }
+
+    public int getMaxRange() {
+        return maxRange;
+    }
+
+    public void setMaxRange(int maxRange) {
+        this.maxRange = maxRange;
+    }
+
+    public int getMinRange() {
+        return minRange;
+    }
+
+    public void setMinRange(int minRange) {
+        this.minRange = minRange;
+    }
+
+    public Spell getSpecialPower() {
+        return specialPower;
+    }
+
+    public void setSpecialPower(Spell specialPower) {
+        this.specialPower = specialPower;
+    }
+
+    public void changeHp(int hpChange) {
+        hp += hpChange;
+        if (hp < 0)
+            hp = 0;
+    }
+
+    public void changeAp(int apChange) {
+        ap += apChange;
+        if (ap < 0)
+            ap = 0;
+    }
+
+    public List<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public void setBuffs(List<Buff> buffs) {
+        this.buffs = buffs;
     }
 }

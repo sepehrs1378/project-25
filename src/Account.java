@@ -1,49 +1,38 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
-    private static List<Account> accounts = new ArrayList<>();
-    private boolean[] openedLevels = new boolean[3];
+public class Account implements Comparable<Account> {
+    private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
+    private static final DataBase dataBase = DataBase.getInstance();
+    private static List<Account> accounts = DataBase.getInstance().getAccounts();
+    private static Account loggedInAccount = dataBase.getLoggedInAccount();
+    private boolean[] levelsOpennessStatus = new boolean[3];
     private String password;
     private String username;
     private PlayerInfo playerInfo;
-    private List<MatchInfo> matchList=new ArrayList<>();
-    private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
-    private static Account currentAccount;
+    private List<MatchInfo> matchList = new ArrayList<>();
+    private Deck mainDeck;
 
     {
-        openedLevels[0]=true;
+        levelsOpennessStatus[0] = true;
     }
 
-    public static List<Account> getAccounts() {
-        return accounts;
+    public static boolean checkValidation(String username, String password) {
+        //todo
     }
 
-    public static void addAccount(Account newAccount){
-        accounts.add(newAccount);
-    }
-
-    public static void loginToAccount(String username,String password){
-        for (int i = 0; i < accounts.size(); i++){
-            Account account = accounts.get(i);
-            if (account.username.equals(username)){
-                if (account.password.equals(password)){
-                    currentAccount = account;
+    public static void loginToAccount(String username, String password) {
+        for (Account account : accounts) {
+            if (account.username.equals(username)) {
+                if (account.password.equals(password)) {
+                    loggedInAccount = account;
                     login(username);
                 }
-            }else{
+            } else {
                 controllerAccount.showLoginError(ErrorType.INVALID_PASSWORD);
             }
         }
         controllerAccount.showLoginError(ErrorType.INVALID_USERNAME);
-    }
-
-    public static Account getCurrentAccount() {
-        return currentAccount;
-    }
-
-    public static void setCurrentAccount(Account currentAccount) {
-        Account.currentAccount = currentAccount;
     }
 
     public String getUsername() {
@@ -58,36 +47,33 @@ public class Account {
         return playerInfo;
     }
 
-    public boolean[] getOpenedLevels() {
-        return openedLevels;
+    public boolean[] getLevelsOpennessStatus() {
+        return levelsOpennessStatus;
     }
 
     public List<MatchInfo> getMatchList() {
         return matchList;
     }
 
-    public void addMatchToMatchList(MatchInfo Match){
+    public void addMatchToMatchList(MatchInfo Match) {
         matchList.add(Match);
     }
 
-    public void openLevelOfStory(int level){
-        openedLevels[level]=true;
+    public void openLevelOfStory(int level) {
+        levelsOpennessStatus[level] = true;
     }
 
-    private int getNumberOfWins(){
-        //todo ask what you should put in this
+    public int getNumberOfWins() {
+        int numberOfWins = 0;
+        for (MatchInfo matchInfo : matchList) {
+            if (matchInfo.getWinner() == this)
+                numberOfWins++;
+        }
+        return numberOfWins;
     }
 
-    public static void login(String username){
+    public static void login(String username) {
         //todo where should this connect to?
-    }
-
-    public static void showLeaderboard(){
-        //todo what does leader board consist of?
-    }
-
-    private static void showMatchHistory(){
-
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
@@ -100,5 +86,17 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
+    }
+
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
+    }
+
+    public int compareTo(Account compareAccount) {
+        return compareAccount.getNumberOfWins() - getNumberOfWins();
     }
 }

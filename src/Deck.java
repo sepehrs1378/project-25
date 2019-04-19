@@ -2,16 +2,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private List<Card> cards=new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
     private Unit hero;
     private Item item;
     private String name;
 
-    public void setName(String name){
+    public Deck(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -35,14 +39,16 @@ public class Deck {
         this.item = item;
     }
 
-    public void addToCards(Card newCard){
+    public void addToCards(Card newCard) {
     }
 
-    public void deleteFromCards(Card card){
+    public void deleteFromCards(Card card) {
 
     }
 
-    public boolean isValid(){
-
+    public boolean isValid() {
+        if (cards.size() == 20 && hero != null && item != null)
+            return true;
+        return false;
     }
 }

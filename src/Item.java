@@ -2,6 +2,12 @@ class Item extends Card {
     private String itemID;
     private String desc;
     private String name;
+    private String description;
+
+    public Item(String itemID, String description) {
+        this.itemID = itemID;
+        this.description = description;
+    }
 
     public String getItemID() {
         return itemID;
@@ -25,5 +31,13 @@ class Item extends Card {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

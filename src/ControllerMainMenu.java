@@ -16,8 +16,10 @@ public class ControllerMainMenu {
             request.getNewCommand();
             switch (request.getType()) {
                 case ENTER:
+                    ourInstance.enter(request);
                     break;
                 case SAVE:
+                    //todo
                     break;
                 case LOGOUT:
                     didLogout = true;

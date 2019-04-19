@@ -1,57 +1,73 @@
+import java.util.ArrayList;
 import java.util.List;
+
 class Target {
-    public static final String FRIEND = "friend";
-    public static final String ENEMY = "enemy";
-    public static final String HERO = "hero";
-    public static final String CELL = "cell";
-    public static final String MINION = "minion";
+    private static DataBase dataBase = DataBase.getInstance();
+    private static Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
     private int width;
     private int length;
-    private String friendOrEnemy;
+    private String friendlyOrEnemy;
     private boolean selfTargeting;
 
-    public String getTypeOfTarget(){
+    public String getTypeOfTarget() {
         return typeOfTarget;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return width;
     }
 
-    public int getLength(){
+    public int getLength() {
         return length;
     }
 
-    public String getFriendOrEnemy(){
-        return friendOrEnemy;
+    public String getFriendlyOrEnemy() {
+        return friendlyOrEnemy;
     }
 
-    public boolean isSelfTargeting(){
+    public boolean isSelfTargeting() {
         return selfTargeting;
     }
 
-    public void setTypeOfTarget(String typeOfTarget){
-        this.typeOfTarget=typeOfTarget;
+    public void setTypeOfTarget(String typeOfTarget) {
+        this.typeOfTarget = typeOfTarget;
     }
 
-    public void setWidth(int width){
-        this.width=width;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public void setLength(int length){
-        this.length=length;
+    public void setLength(int length) {
+        this.length = length;
     }
 
-    public void setFriendOrEnemy(String friendOrEnemy){
-        this.friendOrEnemy=friendOrEnemy;
+    public void setFriendlyOrEnemy(String friendlyOrEnemy) {
+        this.friendlyOrEnemy = friendlyOrEnemy;
     }
 
-    public void setSelfTargeting(boolean selfTargeting){
-        this.selfTargeting=selfTargeting;
+    public void setSelfTargeting(boolean selfTargeting) {
+        this.selfTargeting = selfTargeting;
     }
 
-    public List<Cell> getCells(){
+    public List<Cell> getCells(int insertionRow, int insertionColumn) {
+        if (!typeOfTarget.equals(Constants.CELL))
+            return null;
+        List<Cell> targetCells = new ArrayList<>();
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                if (Math.abs(i - insertionRow) <= width && Math.abs(j - insertionColumn) <= length)
+                    targetCells.add(currentBattle.getBattleGround().getCells()[i][j]);
+            }
+        }
+        return targetCells;
+    }
 
+    public List<Unit> getUnits(int insertionRow, int insertionColumn) {
+        if (typeOfTarget.equals(Constants.CELL))
+            return null;
+        //todo
     }
 }
