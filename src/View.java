@@ -11,8 +11,8 @@ public class View {
 
     }
 
-    public void printError(ErrorType errorType) {
-        System.out.println(errorType.getMessage());
+    public void printError(outputMessageType outputMessageType) {
+        System.out.println(outputMessageType.getMessage());
     }
 
     public void printHelp(HelpType helpType) {

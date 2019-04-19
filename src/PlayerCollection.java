@@ -3,6 +3,7 @@ import java.util.List;
 
 class PlayerCollection {
     private static final DataBase dataBase = DataBase.getInstance();
+    private static final Account logedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
@@ -75,16 +76,18 @@ class PlayerCollection {
         decks.add(newDeck);
     }
 
-    public void buy(String name) {
+    public outputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
-
-            return;
+            Card card = dataBase.getCardWithName(name);
+            if (logedInAccount.getMoney() < card.getPrice())
+                return outputMessageType.INSUFFICIENT_MONEY;
+            //todo
         }
-        if (dataBase.doesItemExit(name)) {
-
-            return;
+        if (dataBase.doesUsableExist(name)) {
+            Item item=dataBase.getUsableWithName(name);
+            if(logedInAccount.getMoney()<item.g)
         }
-
+        return outputMessageType.NOT_IN_SHOP;
     }
 
     public void sell(String name) {
