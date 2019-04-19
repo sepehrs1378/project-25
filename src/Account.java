@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class Account implements Comparable<Account> {
     private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
     private static List<Account> accounts = DataBase.getInstance().getAccounts();
@@ -73,7 +73,7 @@ public class Account {
         levelsOpennessStatus[level] = true;
     }
 
-    private int getNumberOfWins() {
+    public int getNumberOfWins() {
         int numberOfWins = 0;
         for (MatchInfo matchInfo : matchList) {
             if (matchInfo.getWinner() == this)
@@ -84,14 +84,6 @@ public class Account {
 
     public static void login(String username) {
         //todo where should this connect to?
-    }
-
-    public static void showLeaderboard() {
-        //todo what does leader board consist of?
-    }
-
-    private static void showMatchHistory() {
-
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
@@ -112,5 +104,9 @@ public class Account {
 
     public void setMainDeck(Deck mainDeck) {
         this.mainDeck = mainDeck;
+    }
+
+    public int compareTo(Account compareAccount) {
+        return compareAccount.getNumberOfWins() - getNumberOfWins();
     }
 }

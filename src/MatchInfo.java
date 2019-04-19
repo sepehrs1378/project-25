@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MatchInfo extends Account {
+public class MatchInfo {
     private Account opponent;
     private Account winner;
     private LocalDateTime matchDate;
@@ -10,27 +10,27 @@ public class MatchInfo extends Account {
         this.opponent = opponent;
     }
 
-    public void setWinner(Account winner){
+    public void setWinner(Account winner) {
         this.winner = winner;
     }
 
-    public void setMatchDate(){
+    public void setMatchDate() {
         this.matchDate = LocalDateTime.now();
     }
 
-    public Account getOpponent(){
+    public Account getOpponent() {
         return opponent;
     }
 
-    public Account getWinner(){
+    public Account getWinner() {
         return winner;
     }
 
-    public LocalDateTime getMatchDate(){
+    public LocalDateTime getMatchDate() {
         return matchDate;
     }
 
-    private void calculatePassedTime(){
+    private void calculatePassedTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), formatter);
         matchDate = LocalDateTime.parse(matchDate.toString(), formatter);

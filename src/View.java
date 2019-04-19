@@ -10,15 +10,25 @@ public class View {
     private View() {
     }
 
-    public void printError(ErrorType errorType){
+    public void printError(ErrorType errorType) {
         System.out.println(errorType.getMessage());
     }
 
-    public void printHelp(HelpType helpType){
+    public void printHelp(HelpType helpType) {
         System.out.println(helpType.getMessage());
     }
 
-    public void printContentsOfAList(List list){
+    public void printContentsOfAList(List list) {
         System.out.println(list);
+
+    }
+
+    public void showLeaderboard(List<Account> accounts) {
+        int counter = 1;
+        for (Account account : accounts) {
+            System.out.println(counter + "- Username: " + account.getUsername() +
+                    " - Wins: " + account.getNumberOfWins());
+            counter++;
+        }
     }
 }

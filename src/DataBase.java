@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DataBase {
@@ -34,9 +36,10 @@ public class DataBase {
         return accounts;
     }
 
-    public void addAccount(){}
+    public void addAccount() {
+    }
 
-    public void sortAccountsByWins(){
-
+    public void sortAccountsByWins() {
+        Collections.sort(accounts);
     }
 }
