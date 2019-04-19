@@ -1,13 +1,20 @@
 public class Battle {
     private Player player1;
     private Player player2;
-    private BattleGround battleGround;
+    private BattleGround battleGround=new BattleGround();
     private Player playerInTurn;
     private String mode;
     private int turnNumber=1;
     private boolean isBattleFinished=false;
+    private int numberOfFlags;
 
-
+    public Battle(Account firstPlayerAccount,Account secondPlayerAccount,String mode,int numberOfFlags){
+        player1=new Player(firstPlayerAccount.getPlayerInfo(),firstPlayerAccount.getMainDeck());
+        player2=new Player(secondPlayerAccount.getPlayerInfo(),secondPlayerAccount.getMainDeck());
+        playerInTurn=player1;
+        this.mode=mode;
+        this.setNumberOfFlags(numberOfFlags);
+    }
     public void endTurn() {
 
     }
@@ -79,6 +86,11 @@ public class Battle {
     }
 
 
+    public int getNumberOfFlags() {
+        return numberOfFlags;
+    }
 
-
+    public void setNumberOfFlags(int numberOfFlags) {
+        this.numberOfFlags = numberOfFlags;
+    }
 }

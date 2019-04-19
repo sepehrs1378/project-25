@@ -16,7 +16,4 @@ class Hand {
         cards.remove(card);
     }
 
-    public Card getNextCard() {
-
-    }
 }

@@ -1,3 +1,4 @@
+import java.nio.file.attribute.AttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,14 @@ public class Account implements Comparable<Account> {
     public static boolean checkValidation(String username, String password) {
         //todo
     }
+    public static Account getAccount(String userName){
+        for(Account account:accounts){
+            if(account.getUsername().equals(userName)){
+                return account;
+            }
+        }
+        return null;
+    }
 
     public static void loginToAccount(String username, String password) {
         for (Account account : accounts) {
@@ -33,6 +42,14 @@ public class Account implements Comparable<Account> {
             }
         }
         controllerAccount.showLoginError(ErrorType.INVALID_USERNAME);
+    }
+
+    public static Account getLoggedInAccount() {
+        return loggedInAccount;
+    }
+
+    public static void setLoggedInAccount(Account loggedInAccount) {
+        Account.loggedInAccount = loggedInAccount;
     }
 
     public String getUsername() {

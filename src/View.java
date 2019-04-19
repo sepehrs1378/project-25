@@ -8,7 +8,6 @@ public class View {
     }
 
     private View() {
-
     }
 
     public void printError(ErrorType errorType) {
@@ -59,9 +58,15 @@ public class View {
 
     public void printContentsOfAList(List list) {
         System.out.println(list);
-    }
 
-    public void showLeaderBoard(List<Account> accounts) {
+    }
+    public void showUsers(List<Account> users,String currentUserName){
+        for(Account account:users){
+            if(!account.getUsername().equals(currentUserName))
+                System.out.println(account.getUsername());
+        }
+    }
+    public void showLeaderboard(List<Account> accounts) {
         int counter = 1;
         for (Account account : accounts) {
             System.out.println(counter + "- Username: " + account.getUsername() +
@@ -100,6 +105,6 @@ public class View {
     }
 
     public void showMatchHistory(Account account){
-        
+
     }
 }
