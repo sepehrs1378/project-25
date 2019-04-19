@@ -1,15 +1,23 @@
-import javax.net.ssl.SNIHostName;
-import javax.print.DocFlavor;
 import java.util.Scanner;
 
 public class Request {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final View view = View.getInstance();
+    private static final Scanner scanner = new Scanner(System.in);
     private String command;
     private ErrorType errorType;
     private HelpType helpType;
 
     public void getNewCommand() {
-        command = scanner.nextLine().toLowerCase();
+        boolean isValid = false;
+        while (!isValid) {
+            command = scanner.nextLine().toLowerCase();
+            if (!getType().equals(RequestType.WRONG_REQUEST))
+                isValid = true;
+            else {
+                errorType = ErrorType.WRONG_COMMAND;
+                view.printError(errorType);
+            }
+        }
     }
 
     public String getCommand() {
@@ -81,6 +89,4 @@ public class Request {
             return RequestType.GAME_INFO;
         return RequestType.WRONG_REQUEST;
     }
-
-
 }

@@ -99,20 +99,7 @@ public class ControllerBattleCommands {
             view.printError(request.getErrorType());
         }
         else {
-            boolean didExit=false;
-            while (!didExit){
-                request.getNewCommand();
-                switch (request.getType()){
-                    case EXIT:
-                        didExit=true;
-                        break;
-                    case SHOW:
-                        break;
-                    default:
-
-                }
-            }
+            ControllerGraveYard.getInstance().main();
         }
-        //todo write else later
     }
 }
