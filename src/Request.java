@@ -1,5 +1,3 @@
-import javax.net.ssl.SNIHostName;
-import javax.print.DocFlavor;
 import java.util.Scanner;
 
 public class Request {

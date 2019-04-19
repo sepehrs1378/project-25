@@ -3,7 +3,6 @@ public class ControllerBattleCommands {
     private static final View view = View.getInstance();
 
     private ControllerBattleCommands() {
-
     }
 
     public void main() {
