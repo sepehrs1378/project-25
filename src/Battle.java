@@ -6,12 +6,14 @@ public class Battle {
     private String mode;
     private int turnNumber=1;
     private boolean isBattleFinished=false;
+    private int numberOfFlags;
 
-    public Battle(Account firstPlayerAccount,Account secondPlayerAccount,String mode){
+    public Battle(Account firstPlayerAccount,Account secondPlayerAccount,String mode,int numberOfFlags){
         player1=new Player(firstPlayerAccount.getPlayerInfo(),firstPlayerAccount.getMainDeck());
         player2=new Player(secondPlayerAccount.getPlayerInfo(),secondPlayerAccount.getMainDeck());
         playerInTurn=player1;
         this.mode=mode;
+        this.setNumberOfFlags(numberOfFlags);
     }
     public void endTurn() {
 
@@ -84,6 +86,11 @@ public class Battle {
     }
 
 
+    public int getNumberOfFlags() {
+        return numberOfFlags;
+    }
 
-
+    public void setNumberOfFlags(int numberOfFlags) {
+        this.numberOfFlags = numberOfFlags;
+    }
 }

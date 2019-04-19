@@ -26,7 +26,7 @@ public class ControllerBattleMenu {
         if(request.getCommand().toLowerCase().equals("enter single player")){
 
         }else if(request.getCommand().toLowerCase().equals("enter multi player")){
-
+            ControllerMultiPlayerMenu.getInstance().main();
         }else {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());

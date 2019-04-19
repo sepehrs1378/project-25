@@ -1,9 +1,12 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class Player {
     private PlayerInfo playerInfo;
     private Hand hand;
     private Deck deck;
     private Card nextCard;
-    private int mana=4;//todo forgot first start
+    private int mana=2;//todo forgot first start
     private GraveYard graveYard = new GraveYard();
     public Player(PlayerInfo playerInfo,Deck deck){
         this.playerInfo=playerInfo;
