@@ -30,7 +30,7 @@ public class MatchInfo extends Account {
         return matchDate;
     }
 
-    private void calculateAndShowPassedTime(){
+    private void calculatePassedTime(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), formatter);
         matchDate = LocalDateTime.parse(matchDate.toString(), formatter);
@@ -39,7 +39,6 @@ public class MatchInfo extends Account {
         long diffInMinutes = java.time.Duration.between(now, matchDate).toMinutes();
         long diffInHours = java.time.Duration.between(now, matchDate).toHours();
         long diffInDays = java.time.Duration.between(now, matchDate).toDays();
-        //todo print these when view is made
 
 
 //        String[] dateAndTimeOfMatch = matchDate.toString().split("T");

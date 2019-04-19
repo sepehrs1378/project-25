@@ -3,7 +3,6 @@ public class ControllerAccount {
     private static final View view = View.getInstance();
 
     private ControllerAccount() {
-
     }
 
     public static ControllerAccount getInstance() {
@@ -54,5 +53,9 @@ public class ControllerAccount {
     public void help(Request request) {
         request.setHelpType(HelpType.CONTROLLER_ACCOUNT_HELP);
         view.printHelp(request.getHelpType());
+    }
+
+    public void showLoginError(ErrorType error){
+        view.printError(error);
     }
 }

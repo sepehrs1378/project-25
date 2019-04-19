@@ -27,10 +27,10 @@ class Cell {
     }
 
     public void addBuff(Buff newBuff) {
-
+        buffs.add(newBuff);
     }
 
     public void deleteBuff(Buff buff){
-
+        buffs.remove(buff);
     }
 }
