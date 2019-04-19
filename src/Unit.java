@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Unit {
+class Unit extends Card {
     private int hp;
     private int ap;
     private String typeOfAttack;
@@ -51,7 +51,7 @@ class Unit {
     }
 
     public void addFlag(Flag newFlag){
-
+        flags.add(newFlag);
     }
 
     public void dropFlags(){
@@ -76,5 +76,9 @@ class Unit {
 
     public void takeItem(Item item){
 
+    }
+
+    public List<Flag> getFlags() {
+        return flags;
     }
 }
