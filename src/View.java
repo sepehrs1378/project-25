@@ -20,7 +20,6 @@ public class View {
 
     public void printContentsOfAList(List list) {
         System.out.println(list);
-
     }
 
     public void showLeaderboard(List<Account> accounts) {

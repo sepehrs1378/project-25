@@ -47,6 +47,6 @@ public class Deck {
     }
 
     public boolean isValid() {
-
+        if()
     }
 }

@@ -16,8 +16,4 @@ class GraveYard {
     public void showInfo(String cardID) {
 
     }
-
-    public void showCards() {
-        controllerGraveYard.showListOfCards(deadCards);
-    }
 }
