@@ -93,4 +93,16 @@ class Unit extends Card {
     public void setSpecialPower(Spell specialPower) {
         this.specialPower = specialPower;
     }
+
+    public void changeHp(int hpChange) {
+        hp += hpChange;
+        if (hp < 0)
+            hp = 0;
+    }
+
+    public void changeAp(int apChange) {
+        ap += apChange;
+        if (ap < 0)
+            ap = 0;
+    }
 }

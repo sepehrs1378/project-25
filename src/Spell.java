@@ -6,9 +6,11 @@ class Spell extends Card {
     private int cooldown;
     private int apChange;
     private int hpChange;
-    private List<Buff> addedBuffs = new ArrayList<>();
-    private List<Buff> deletedBuffs = new ArrayList<>();
-    private List<Unit> addedUnits = new ArrayList<>();
+    private List<Buff> addedBuffsToCells = new ArrayList<>();
+    private List<Buff> deletedBuffsFromCells = new ArrayList<>();
+    private List<Buff> addedBuffsToUnits = new ArrayList<>();
+    private List<Buff> deletedBuffsFromUnits = new ArrayList<>();
+    private List<Unit> createdUnits = new ArrayList<>();
     private String passiveOrCastable;
     private String description;
 
@@ -60,15 +62,40 @@ class Spell extends Card {
 
     }
 
-    public void doSpellEffectOnCells() {
-
+    public void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
+        List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
+        for (Cell cell : targetCells) {
+            for (Buff buff : addedBuffsToCells) {
+                cell.getBuffs().add(buff);
+            }
+            for (Buff buff : deletedBuffsFromCells) {
+                cell.getBuffs().remove(buff);
+            }
+        }
     }
 
-    public void deSpellEffectOnUnits(){
-
+    public void deSpellEffectOnUnits(int insertionRow, int insertionColumn) {
+        List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
+        for ()
     }
 
     public void createUnits() {
 
+    }
+
+    public List<Buff> getAddedBuffsToUnits() {
+        return addedBuffsToUnits;
+    }
+
+    public void setAddedBuffsToUnits(List<Buff> addedBuffsToUnits) {
+        this.addedBuffsToUnits = addedBuffsToUnits;
+    }
+
+    public List<Buff> getDeletedBuffsFromUnits() {
+        return deletedBuffsFromUnits;
+    }
+
+    public void setDeletedBuffsFromUnits(List<Buff> deletedBuffsFromUnits) {
+        this.deletedBuffsFromUnits = deletedBuffsFromUnits;
     }
 }
