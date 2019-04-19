@@ -4,6 +4,8 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
+    private static List<Item> itemList = new ArrayList<>();
+    private static List<Card> cardList = new ArrayList<>();
     private static List<Account> accounts = new ArrayList<>();
     private static Account loggedInAccount;
     private static Battle currentBattle;
@@ -13,6 +15,14 @@ public class DataBase {
     }
 
     private DataBase() {
+    }
+
+    public static List<Card> getCardList() {
+        return cardList;
+    }
+
+    public static List<Item> getItemList() {
+        return itemList;
     }
 
     public Account getLoggedInAccount() {
@@ -44,5 +54,19 @@ public class DataBase {
 
     public void createNewUnits() {
 
+    }
+
+    public static Card getCardWithName(String cardName) {
+        for (Card card : cardList) {
+            if (card.getCardID().equals(cardName))
+                return card;
+        }
+        return null;
+    }
+
+    public boolean doesCardExist(String cardName) {
+        if (getCardWithName(cardName) == null)
+            return false;
+        else return true;
     }
 }

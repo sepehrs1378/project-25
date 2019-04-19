@@ -17,22 +17,12 @@ public class Account implements Comparable<Account> {
         levelsOpennessStatus[0] = true;
     }
 
-    public static List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public static void addAccount(Account newAccount) {
-        accounts.add(newAccount);
-    }
-
     public static boolean checkValidation(String username, String password) {
         //todo
-        return true;
     }
 
     public static void loginToAccount(String username, String password) {
-        for (int i = 0; i < accounts.size(); i++) {
-            Account account = accounts.get(i);
+        for (Account account : accounts) {
             if (account.username.equals(username)) {
                 if (account.password.equals(password)) {
                     loggedInAccount = account;

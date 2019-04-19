@@ -74,4 +74,12 @@ class PlayerCollection {
         Deck newDeck = new Deck(deckName);
         decks.add(newDeck);
     }
+
+    public void buy(String name) {
+
+    }
+
+    public void sell(String name) {
+
+    }
 }

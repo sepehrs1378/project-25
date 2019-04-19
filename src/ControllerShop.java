@@ -1,12 +1,15 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class ControllerShop {
-    private static final ControllerShop ourInstance=new ControllerShop();
+    private static final ControllerShop ourInstance = new ControllerShop();
     private static final View view = View.getInstance();
 
     private ControllerShop() {
 
     }
 
-    public static ControllerShop getOurInstance(){
+    public static ControllerShop getOurInstance() {
         return ourInstance;
     }
 
@@ -24,6 +27,7 @@ class ControllerShop {
                 case SEARCH:
                     break;
                 case BUY:
+                    buy(request);
                     break;
                 case SELL:
                     break;
@@ -45,6 +49,13 @@ class ControllerShop {
     }
 
     public void buy(Request request) {
+        if (!request.getCommand().matches("^buy .+$")) {
+            request.setErrorType(ErrorType.WRONG_COMMAND);
+            view.printError(request.getErrorType());
+            return;
+        }
+        Pattern pattern = Pattern.compile("^buy (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
 
     }
 
