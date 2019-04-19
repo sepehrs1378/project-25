@@ -4,11 +4,10 @@ import java.util.List;
 class Target {
     private static DataBase dataBase = DataBase.getInstance();
     private static Battle currentBattle = dataBase.getCurrentBattle();
-    //type of target: hero minion cell
     private String typeOfTarget;
     private int width;
     private int length;
-    private String friendOrEnemy;
+    private String friendlyOrEnemy;
     private boolean selfTargeting;
 
     public String getTypeOfTarget() {
@@ -23,8 +22,8 @@ class Target {
         return length;
     }
 
-    public String getFriendOrEnemy() {
-        return friendOrEnemy;
+    public String getFriendlyOrEnemy() {
+        return friendlyOrEnemy;
     }
 
     public boolean isSelfTargeting() {
@@ -43,24 +42,32 @@ class Target {
         this.length = length;
     }
 
-    public void setFriendOrEnemy(String friendOrEnemy) {
-        this.friendOrEnemy = friendOrEnemy;
+    public void setFriendlyOrEnemy(String friendlyOrEnemy) {
+        this.friendlyOrEnemy = friendlyOrEnemy;
     }
 
     public void setSelfTargeting(boolean selfTargeting) {
         this.selfTargeting = selfTargeting;
     }
 
-    public List<Cell> getCells(int insertWidth, int insetLength) {
+    public List<Cell> getCells(int insertionRow, int insertionColumn) {
+        if (!typeOfTarget.equals(Constants.CELL))
+            return null;
         List<Cell> targetCells = new ArrayList<>();
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (Math.abs(i - insertWidth) <= width && Math.abs(j - insetLength) <= length)
+                if (Math.abs(i - insertionRow) <= width && Math.abs(j - insertionColumn) <= length)
                     targetCells.add(currentBattle.getBattleGround().getCells()[i][j]);
             }
         }
         return targetCells;
+    }
+
+    public List<Unit> getUnits(int insertionRow, int insertionColumn) {
+        if (typeOfTarget.equals(Constants.CELL))
+            return null;
+        //todo
     }
 }

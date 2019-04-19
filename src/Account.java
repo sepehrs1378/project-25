@@ -74,7 +74,12 @@ public class Account {
     }
 
     private int getNumberOfWins() {
-        //todo ask what you should put in this
+        int numberOfWins = 0;
+        for (MatchInfo matchInfo : matchList) {
+            if (matchInfo.getWinner() == this)
+                numberOfWins++;
+        }
+        return numberOfWins;
     }
 
     public static void login(String username) {

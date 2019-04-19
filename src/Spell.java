@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Spell extends Card {
-    public static final String PASSIVE = "passive";
-    public static final String CASTABLE = "castable";
     private Target target;
     private int cooldown;
     private int apChange;
