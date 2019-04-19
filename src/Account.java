@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Account {
+public class Account {
     private static List<Account> accounts=new ArrayList<>();
     private boolean[] levelsOpennessStatus =new boolean[3];
     private String password;

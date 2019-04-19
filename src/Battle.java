@@ -1,8 +1,4 @@
 public class Battle {
-    public static final String FLAGS = "flags";
-    public static final String ONE_FLAG = "one flag";
-    public static final String CLASSIC = "classic";
-    private static Battle currentBattle;
     private Player player1;
     private Player player2;
     private BattleGround battleGround;
@@ -10,14 +6,7 @@ public class Battle {
     private GraveYard graveYard2;
     private Player turn;
     private String mode;
-
-    public static Battle getCurrentBattle() {
-        return currentBattle;
-    }
-
-    public static void setCurrentBattle(Battle currentBattle) {
-        Battle.currentBattle = currentBattle;
-    }
+    private int turnNumber;
 
     public Player getTurn() {
         return turn;
@@ -25,6 +14,12 @@ public class Battle {
 
     public void endTurn() {
 
+    }
+
+    public void changeTurn() {
+        if (turn == player1)
+            turn = player2;
+        else turn = player1;
     }
 
     public Player getPlayer1() {
@@ -73,5 +68,17 @@ public class Battle {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
+    public void setTurn(Player turn) {
+        this.turn = turn;
     }
 }

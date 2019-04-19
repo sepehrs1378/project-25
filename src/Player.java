@@ -3,6 +3,7 @@ class Player {
     private Hand hand;
     private Deck deck;
     private int mana;
+    private GraveYard graveYard=new GraveYard();
 
     public PlayerInfo getPlayerInfo() {
         return playerInfo;

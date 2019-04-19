@@ -1,10 +1,15 @@
-class Cell {
-    private Card card;
-    private Item item;
-    private List<Buff> buffs = new ArrayList<Buff>();
+import java.util.ArrayList;
+import java.util.List;
 
-    public Card getCard() {
-        return card;
+class Cell {
+    private Unit unit;
+    private Item item;
+    private List<Buff> buffs = new ArrayList<>();
+    private ArrayList<Flag> flags=new ArrayList<>();
+
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public Item getItem() {
@@ -15,8 +20,8 @@ class Cell {
         return buffs;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public void setItem(Item item) {
@@ -24,10 +29,20 @@ class Cell {
     }
 
     public void addBuff(Buff newBuff) {
-
+        buffs.add(newBuff);
     }
-
-    public void deleteBuff(Buff buff){
-
+    public void deleteBuff(Buff buffToBeDeleted){
+        for(Buff buff:buffs){
+            if(buff==buffToBeDeleted){
+                buffs.remove(buffToBeDeleted);
+                break;
+            }
+        }
+    }
+    public ArrayList<Flag> getFlags(){
+        return this.flags;
+    }
+    public void addFlag(Flag flag){
+        flags.add(flag);
     }
 }

@@ -1,6 +1,6 @@
 import java.util.List;
 
-class AI {
+public class AI {
     public void doNextMove(){
 
     }
