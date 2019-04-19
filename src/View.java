@@ -37,7 +37,10 @@ public class View {
     }
 
     public void showHeroInfo(Unit hero) {
-
+        System.out.println("Name: " + hero.getCardID() + " - AP: " + hero.getAp() +
+                " - HP: " + hero.getHp() + " - Class: " + hero.getUnitClass() +
+                " - Special Power: " + hero.getSpecialPower().getDescription() +
+                " - Sell Cost: " + hero.getPrice());
     }
 
     public void showCardInfo(Card card) {

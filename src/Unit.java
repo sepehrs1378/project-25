@@ -1,3 +1,4 @@
+import javax.naming.CompositeName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,7 +6,8 @@ class Unit extends Card {
     private int hp;
     private int ap;
     private String typeOfAttack;
-    private int range;
+    private int minRange;
+    private int maxRange;
     private List<Flag> flags = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
@@ -22,10 +24,6 @@ class Unit extends Card {
         return typeOfAttack;
     }
 
-    public int getRange() {
-        return range;
-    }
-
     public String getHeroOrMinion() {
         return heroOrMinion;
     }
@@ -40,10 +38,6 @@ class Unit extends Card {
 
     public void setTypeOfAttack(String typeOfAttack) {
         this.typeOfAttack = typeOfAttack;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
     }
 
     public void setHeroOrMinion(String heroOrMinion) {
@@ -84,5 +78,37 @@ class Unit extends Card {
 
     public List<Flag> getFlags() {
         return flags;
+    }
+
+    public String getUnitClass() {
+        if (minRange == 1 && maxRange == 1)
+            return Constants.MELEE;
+        if (minRange == 1)
+            return Constants.HYBRID;
+        return Constants.RANGED;
+    }
+
+    public int getMaxRange() {
+        return maxRange;
+    }
+
+    public void setMaxRange(int maxRange) {
+        this.maxRange = maxRange;
+    }
+
+    public int getMinRange() {
+        return minRange;
+    }
+
+    public void setMinRange(int minRange) {
+        this.minRange = minRange;
+    }
+
+    public Spell getSpecialPower() {
+        return specialPower;
+    }
+
+    public void setSpecialPower(Spell specialPower) {
+        this.specialPower = specialPower;
     }
 }
