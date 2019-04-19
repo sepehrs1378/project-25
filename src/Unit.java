@@ -74,6 +74,10 @@ class Unit extends Card {
 
     }
 
+    public void counterAttackUnit(Unit unit){
+
+    }
+
     public void takeItem(Item item){
 
     }
