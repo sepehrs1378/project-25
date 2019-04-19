@@ -8,8 +8,8 @@ public class ControllerBattleCommands {
     public void main() {
         boolean didExit = false;
         Request request = new Request();
-        request.getNewCommand();
         while (!didExit) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
                     break;
@@ -79,7 +79,7 @@ public class ControllerBattleCommands {
                 request.setErrorType(ErrorType.BATTLE_NOT_FINISHED);
                 view.printError(request.getErrorType());
             } else {
-
+                //todo
             }
             return;
         }
@@ -97,6 +97,8 @@ public class ControllerBattleCommands {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
         }
-        //todo write else later
+        else {
+            ControllerGraveYard.getInstance().main();
+        }
     }
 }

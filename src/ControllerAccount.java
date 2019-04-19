@@ -1,4 +1,5 @@
 public class ControllerAccount {
+    private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = ControllerAccount.getInstance();
     private static final View view = View.getInstance();
 
@@ -46,8 +47,10 @@ public class ControllerAccount {
         if (!request.getCommand().matches("^show leaderboard$")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
+        } else {
+            dataBase.sortAccountsByWins();
+            view.showLeaderboard(dataBase.getAccounts());
         }
-        //todo else is missing
     }
 
     public void help(Request request) {
@@ -55,7 +58,7 @@ public class ControllerAccount {
         view.printHelp(request.getHelpType());
     }
 
-    public void showLoginError(ErrorType error){
+    public void showLoginError(ErrorType error) {
         view.printError(error);
     }
 }

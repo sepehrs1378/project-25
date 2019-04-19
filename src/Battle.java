@@ -1,13 +1,18 @@
 public class Battle {
     private Player player1;
     private Player player2;
-    private BattleGround battleGround;
+    private BattleGround battleGround=new BattleGround();
     private Player playerInTurn;
     private String mode;
-    private int turnNumber;
-    private boolean isBattleFinished;
+    private int turnNumber=1;
+    private boolean isBattleFinished=false;
 
-
+    public Battle(Account firstPlayerAccount,Account secondPlayerAccount,String mode){
+        player1=new Player(firstPlayerAccount.getPlayerInfo(),firstPlayerAccount.getMainDeck());
+        player2=new Player(secondPlayerAccount.getPlayerInfo(),secondPlayerAccount.getMainDeck());
+        playerInTurn=player1;
+        this.mode=mode;
+    }
     public void endTurn() {
 
     }

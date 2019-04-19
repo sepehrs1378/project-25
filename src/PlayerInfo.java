@@ -28,7 +28,7 @@ class PlayerInfo {
         return mainDeck;
     }
 
-    public String getPlayerName() {
+    public String getPlayerName(){
         return playerName;
     }
 

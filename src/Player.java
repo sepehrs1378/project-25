@@ -2,9 +2,14 @@ class Player {
     private PlayerInfo playerInfo;
     private Hand hand;
     private Deck deck;
-    private int mana;
+    private Card nextCard;
+    private int mana=4;//todo forgot first start
     private GraveYard graveYard = new GraveYard();
-
+    public Player(PlayerInfo playerInfo,Deck deck){
+        this.playerInfo=playerInfo;
+        this.deck=new Deck(deck);
+        setHand(this.deck);
+    }
     public PlayerInfo getPlayerInfo() {
         return playerInfo;
     }
@@ -25,8 +30,13 @@ class Player {
         this.playerInfo = playerInfo;
     }
 
-    public void setHand(Hand hand) {
-        this.hand = hand;
+    public void setHand(Deck deck) {
+        for(int i=0;i<Constants.NUMBER_OF_HAND_CARDS;i++){
+            int randomNumber=(int)(Math.random()*deck.getCards().size());
+            hand.addCard(deck.getCards().get(randomNumber));
+            deck.getCards().remove(randomNumber);
+        }
+
     }
 
     public void setDeck(Deck deck) {
@@ -39,5 +49,24 @@ class Player {
 
     public GraveYard getGraveYard() {
         return graveYard;
+    }
+
+    public Card getNextCard() {
+        return nextCard;
+    }
+
+    public void setNextCard(Deck deck) {
+        int randomNumber=(int)(Math.random()*deck.getCards().size());
+        if(deck.getCards().size()!=0)
+        {
+            nextCard=deck.getCards().get(randomNumber);
+            deck.getCards().remove(randomNumber);
+        }
+    }
+    public void moveNextCardToHand(){
+        if(hand.getCards().size()<5){
+            hand.getCards().add(nextCard);
+            setNextCard(this.deck);
+        }
     }
 }
