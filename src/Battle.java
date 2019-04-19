@@ -6,8 +6,8 @@ public class Battle {
     private GraveYard graveYard2;
     private Player turn;
     private String mode;
-    private int turnNumber;
-    private boolean isBattleFinished;
+    private int turnNumber=1;
+    private boolean isBattleFinished=false;
 
     public Player getTurn() {
         return turn;

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PlayerCollection {
+    private static final DataBase dataBase = DataBase.getInstance();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
@@ -40,7 +41,8 @@ class PlayerCollection {
 
     public void deleteDeck(Deck deck) {
         decks.remove(deck);
-        if ()//todo باید دک اصلی رو هم در صورت نیاز نال کنم ولی بهش دسترسی ندارم:(
+        if (dataBase.getLoggedInAccount().getMainDeck() == deck)
+            dataBase.getLoggedInAccount().setMainDeck(null);
     }
 
     public void deleteDeck(String deckName) {
