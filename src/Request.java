@@ -44,7 +44,7 @@ public class Request {
         if (command.matches("^show .+$"))
             return RequestType.SHOW;
         if (command.matches("^save$"))
-            return RequestType.SHOW.SAVE;
+            return RequestType.SAVE;
         if (command.matches("^search .+$"))
             return RequestType.SEARCH;
         if (command.matches("^help$"))

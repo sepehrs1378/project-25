@@ -7,10 +7,9 @@ class BattleGround {
     }
 
     public int getWidthOfUnit(Unit unit) {
-        int i;
-        int j;
-        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
-            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+
+        for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (cells[i][j].getUnit() == unit)
                     return i;
             }
@@ -62,7 +61,7 @@ class BattleGround {
         for(Cell[] cellRow:cells){
             for (Cell cell:cellRow){
                 numberOfFlags+=cell.getFlags().size();
-                numberOfFlags+=cell.getUnit().getFlags().size()
+                numberOfFlags+=cell.getUnit().getFlags().size();
             }
         }
         return numberOfFlags;
@@ -75,6 +74,6 @@ class BattleGround {
                 numberOfFlags+=cell.getFlags().size();
             }
         }
-
+        return numberOfFlags;
     }
 }

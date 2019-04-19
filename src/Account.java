@@ -38,6 +38,14 @@ public class Account {
         controllerAccount.showLoginError(ErrorType.INVALID_USERNAME);
     }
 
+    public static Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public static void setCurrentAccount(Account currentAccount) {
+        Account.currentAccount = currentAccount;
+    }
+
     public String getUsername() {
         return username;
     }

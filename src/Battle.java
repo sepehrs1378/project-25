@@ -2,16 +2,11 @@ public class Battle {
     private Player player1;
     private Player player2;
     private BattleGround battleGround;
-    private GraveYard graveYard1;
-    private GraveYard graveYard2;
-    private Player turn;
+    private Player playerInTurn;
     private String mode;
     private int turnNumber;
     private boolean isBattleFinished;
 
-    public Player getTurn() {
-        return turn;
-    }
 
     public void endTurn() {
 
@@ -41,22 +36,6 @@ public class Battle {
         this.battleGround = battleGround;
     }
 
-    public GraveYard getGraveYard1() {
-        return graveYard1;
-    }
-
-    public void setGraveYard1(GraveYard graveYard1) {
-        this.graveYard1 = graveYard1;
-    }
-
-    public GraveYard getGraveYard2() {
-        return graveYard2;
-    }
-
-    public void setGraveYard2(GraveYard graveYard2) {
-        this.graveYard2 = graveYard2;
-    }
-
     public String getMode() {
         return mode;
     }
@@ -69,18 +48,14 @@ public class Battle {
         return turnNumber;
     }
 
-    public void setTurn(Player turn) {
-        this.turn = turn;
+    public void addTurnNumber() {
+        this.turnNumber++;
     }
 
-    public void setTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
-    }
-
-    public void changeTurn() {
-        if (turn == player1)
-            turn = player2;
-        else turn = player1;
+    public void changePlayerInTurn() {
+        if (playerInTurn == player1)
+            playerInTurn = player2;
+        else playerInTurn = player1;
     }
 
     public boolean isBattleFinished() {
@@ -90,4 +65,17 @@ public class Battle {
     public void setBattleFinished(boolean battleFinished) {
         isBattleFinished = battleFinished;
     }
+
+    public Player getPlayerInTurn() {
+        return playerInTurn;
+    }
+    public void killUnit(Unit unit){
+        this.getBattleGround().getCoordinatesOfUnit(unit).setUnit(null);
+        if(unit.getCardID().contains(player1.getPlayerInfo().getPlayerName()))
+            player1.getGraveYard().addDeadCard(unit);
+        else if(unit.getCardID().contains(player2.getPlayerInfo().getPlayerName()))
+            player2.getGraveYard().addDeadCard(unit);
+    }
+
+
 }
