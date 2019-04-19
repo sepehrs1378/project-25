@@ -21,7 +21,7 @@ public class ControllerGraveYard {
                     didExit = true;
                     break;
                 default:
-                    System.out.println("!!!!!! badinput in ControllerGraveYard.main");
+                    System.out.println("!!!!!! bad input in ControllerGraveYard.main");
                     System.exit(-1);
             }
         }
