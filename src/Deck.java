@@ -47,6 +47,8 @@ public class Deck {
     }
 
     public boolean isValid() {
-        if()
+        if (cards.size() == 20 && hero != null && item != null)
+            return true;
+        return false;
     }
 }

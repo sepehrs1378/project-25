@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.List;
 
 public class View {
@@ -9,6 +8,7 @@ public class View {
     }
 
     private View() {
+
     }
 
     public void printError(ErrorType errorType) {
@@ -44,18 +44,20 @@ public class View {
     }
 
     public void showCardInfo(Card card) {
-
+        //todo
     }
 
     public void showItemInfo(Item item) {
         if (item instanceof Usable) {
             Usable usable = (Usable) item;
-            System.out.println("Name: " + usable.getItemID() + " - Desc: " + usable.getDescription() + " - Sell Cost: " + usable.getPrice());
+            System.out.println("Name: " + usable.getItemID() + " - Desc: " +
+                    usable.getDescription() + " - Sell Cost: " + usable.getPrice());
             return;
         }
         if (item instanceof Collectable) {
             Collectable collectable = (Collectable) item;
-            System.out.println("Name: " + collectable.getItemID() + " - Desc: " + collectable.getDescription() + " - No Sell Cost: Colletable");
+            System.out.println("Name: " + collectable.getItemID() + " - Desc: " +
+                    collectable.getDescription() + " - No Sell Cost: Collectable");
         }
     }
 }

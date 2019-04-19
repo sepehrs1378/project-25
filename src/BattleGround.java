@@ -17,7 +17,7 @@ class BattleGround {
         return -1;
     }
 
-    public Cell getCoordinatesOfUnit(Unit unit) {
+    public Cell getCellOfUnit(Unit unit) {
         for (Cell[] cellRow : cells)
             for (Cell cell : cellRow) {
                 if (cell.getUnit() == unit) {
@@ -28,7 +28,7 @@ class BattleGround {
     }
 
     public boolean doesHaveUnit(Unit unit) {
-        if (getCoordinatesOfUnit(unit) == null) {
+        if (getCellOfUnit(unit) == null) {
             return false;
         }
         return true;

@@ -1,11 +1,11 @@
-class Collectable extends Item{
+class Collectable extends Item {
     private Spell spell;
 
-    public static void takeCollectible(Collectable collectible){
+    public static void takeCollectable(Collectable collectable) {
 
     }
 
-    public void doSpell(){
+    public void doSpell() {
 
     }
 }

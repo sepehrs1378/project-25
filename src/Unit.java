@@ -1,11 +1,9 @@
-import javax.naming.CompositeName;
 import java.util.ArrayList;
 import java.util.List;
 
 class Unit extends Card {
     private int hp;
     private int ap;
-    private String typeOfAttack;
     private int minRange;
     private int maxRange;
     private List<Flag> flags = new ArrayList<>();
@@ -20,10 +18,6 @@ class Unit extends Card {
         return ap;
     }
 
-    public String getTypeOfAttack() {
-        return typeOfAttack;
-    }
-
     public String getHeroOrMinion() {
         return heroOrMinion;
     }
@@ -36,10 +30,6 @@ class Unit extends Card {
         this.ap = ap;
     }
 
-    public void setTypeOfAttack(String typeOfAttack) {
-        this.typeOfAttack = typeOfAttack;
-    }
-
     public void setHeroOrMinion(String heroOrMinion) {
         this.heroOrMinion = heroOrMinion;
     }
@@ -49,10 +39,6 @@ class Unit extends Card {
     }
 
     public void dropFlags() {
-
-    }
-
-    public static void killUnit(Unit unit) {
 
     }
 
@@ -69,10 +55,6 @@ class Unit extends Card {
     }
 
     public void counterAttackUnit(Unit unit) {
-
-    }
-
-    public void takeItem(Item item) {
 
     }
 

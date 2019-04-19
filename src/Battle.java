@@ -69,13 +69,16 @@ public class Battle {
     public Player getPlayerInTurn() {
         return playerInTurn;
     }
+
     public void killUnit(Unit unit){
-        this.getBattleGround().getCoordinatesOfUnit(unit).setUnit(null);
+        this.getBattleGround().getCellOfUnit(unit).setUnit(null);
         if(unit.getCardID().contains(player1.getPlayerInfo().getPlayerName()))
             player1.getGraveYard().addDeadCard(unit);
         else if(unit.getCardID().contains(player2.getPlayerInfo().getPlayerName()))
             player2.getGraveYard().addDeadCard(unit);
     }
+
+
 
 
 }
