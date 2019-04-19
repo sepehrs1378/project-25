@@ -76,11 +76,23 @@ class Spell extends Card {
 
     public void deSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
-        for ()
+        for (Unit unit : targetUnits) {
+            for (Buff buff : addedBuffsToUnits) {
+                unit.getBuffs().add(buff);
+            }
+            for (Buff buff : deletedBuffsFromUnits) {
+                unit.getBuffs().remove(buff);
+            }
+            unit.changeAp(apChange);
+            unit.changeHp(hpChange);
+        }
     }
 
     public void createUnits() {
-
+        List<Cell> targetCells = new ArrayList<>();
+        for (Cell cell : targetCells) {
+            //todo
+        }
     }
 
     public List<Buff> getAddedBuffsToUnits() {

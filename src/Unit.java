@@ -7,6 +7,7 @@ class Unit extends Card {
     private int minRange;
     private int maxRange;
     private List<Flag> flags = new ArrayList<>();
+    private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
 
@@ -104,5 +105,13 @@ class Unit extends Card {
         ap += apChange;
         if (ap < 0)
             ap = 0;
+    }
+
+    public List<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public void setBuffs(List<Buff> buffs) {
+        this.buffs = buffs;
     }
 }
