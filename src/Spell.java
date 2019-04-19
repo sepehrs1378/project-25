@@ -51,15 +51,9 @@ class Spell extends Card {
     }
 
     public void doSpell(int insertionRow, int insertionColumn) {
-
-    }
-
-    public void changeAp() {
-
-    }
-
-    public void changeHp() {
-
+        doSpellEffectOnCells(insertionRow, insertionColumn);
+        doSpellEffectOnUnits(insertionRow, insertionColumn);
+        createUnits(insertionRow, insertionColumn);
     }
 
     public void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
@@ -74,7 +68,7 @@ class Spell extends Card {
         }
     }
 
-    public void deSpellEffectOnUnits(int insertionRow, int insertionColumn) {
+    public void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
         for (Unit unit : targetUnits) {
             for (Buff buff : addedBuffsToUnits) {
@@ -88,7 +82,7 @@ class Spell extends Card {
         }
     }
 
-    public void createUnits() {
+    public void createUnits(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = new ArrayList<>();
         for (Cell cell : targetCells) {
             //todo

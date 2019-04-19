@@ -1,4 +1,8 @@
 public class Constants {
+    private Constants() {
+
+    }
+
     public static final String PASSIVE = "passive";
     public static final String CASTABLE = "castable";
     public static final String FLAGS = "flags";

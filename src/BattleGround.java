@@ -6,12 +6,23 @@ class BattleGround {
         return cells;
     }
 
-    public int getWidthOfUnit(Unit unit) {
-
+    public int getRowOfUnit(Unit unit) {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (cells[i][j].getUnit() == unit)
                     return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getColumnOfUnit(Unit unit) {
+        int j;
+        int i;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                if (cells[i][j].getUnit() == unit)
+                    return j;
             }
         }
         return -1;
@@ -34,22 +45,10 @@ class BattleGround {
         return true;
     }
 
-    public int getLengthOfUnit(Unit unit) {
-        int i;
-        int j;
-        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
-            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (cells[i][j].getUnit() == unit)
-                    return j;
-            }
-        }
-        return -1;
-    }
-
     public boolean doesHaveUnit(String unitName) {
-        for(Cell[] cellRow:cells){
-            for (Cell cell:cellRow){
-                if(cell.getUnit()!=null&&cell.getUnit().getCardID()==unitName)
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() != null && cell.getUnit().getCardID() == unitName)
                     return true;
             }
         }
@@ -57,21 +56,21 @@ class BattleGround {
     }
 
     public int getNumberOfFlags() {
-        int numberOfFlags=0;
-        for(Cell[] cellRow:cells){
-            for (Cell cell:cellRow){
-                numberOfFlags+=cell.getFlags().size();
-                numberOfFlags+=cell.getUnit().getFlags().size();
+        int numberOfFlags = 0;
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                numberOfFlags += cell.getFlags().size();
+                numberOfFlags += cell.getUnit().getFlags().size();
             }
         }
         return numberOfFlags;
     }
 
     public int getNumberOfFlagsOnGround() {
-        int numberOfFlags=0;
-        for(Cell[] cellRow:cells){
-            for (Cell cell:cellRow){
-                numberOfFlags+=cell.getFlags().size();
+        int numberOfFlags = 0;
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                numberOfFlags += cell.getFlags().size();
             }
         }
         return numberOfFlags;

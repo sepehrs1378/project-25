@@ -45,8 +45,14 @@ public class ControllerBattleCommands {
 
     }
 
-    public void showMinions() {
+    public void showMinions(Request request) {
+        if (request.getCommand().matches("^show my minions$")) {
 
+            return;
+        }
+        if (request.getCommand().matches("^show opponent minions$")) {
+
+        }
     }
 
     public void show() {
@@ -96,8 +102,7 @@ public class ControllerBattleCommands {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
-        }
-        else {
+        } else {
             ControllerGraveYard.getInstance().main();
         }
     }

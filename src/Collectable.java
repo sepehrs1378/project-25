@@ -6,7 +6,7 @@ class Collectable extends Item {
         //todo what about spell
     }
 
-    public void doSpell() {
+    public void doSpell(Card card) {
 
     }
 }

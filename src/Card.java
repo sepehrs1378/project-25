@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Card {
-    private static List<Card> cardList= new ArrayList<>();
+    private static List<Card> cardList = new ArrayList<>();
     private String cardID;
     private int price;
     private int mana;
@@ -31,31 +31,30 @@ class Card {
         this.mana = mana;
     }
 
-    public static List<Card> getCardList(){
+    public static List<Card> getCardList() {
         return cardList;
     }
 
-    public static void addCard(Card newCard){
+    public static void addCard(Card newCard) {
 
     }
 
-    public static void deleteCard(Card card){
+    public static void deleteCard(Card card) {
         cardList.remove(card);
     }
 
-    public static Card getCardWithName(String cardName){
-        for (Card card:cardList)
-        {
-            if (card.getCardID()==cardName)
+    public static Card getCardWithName(String cardName) {
+        for (Card card : cardList) {
+            if (card.getCardID().equals(cardName))
                 return card;
         }
         return null;
     }
 
-    public boolean doesCardExist(String cardName){
-        if (getCardWithName(cardName) == null){
+    public boolean doesCardExist(String cardName) {
+        if (getCardWithName(cardName) == null) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
