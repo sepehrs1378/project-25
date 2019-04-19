@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        ControllerAccount controllerAccount = new ControllerAccount();
+        ControllerAccount controllerAccount = ControllerAccount.getInstance();
         controllerAccount.main();
     }
 }

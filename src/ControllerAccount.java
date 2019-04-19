@@ -6,7 +6,7 @@ public class ControllerAccount {
 
     }
 
-    public ControllerAccount getInstance() {
+    public static ControllerAccount getInstance() {
         return ourInstance;
     }
 

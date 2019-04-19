@@ -2,27 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
-    private static List<Account> accounts=new ArrayList<>();
-    private boolean[] levelsOpennessStatus =new boolean[3];
+    private static List<Account> accounts = new ArrayList<>();
+    private boolean[] levelsOpennessStatus = new boolean[3];
     private String password;
     private String username;
     private PlayerInfo playerInfo;
-    private List<MatchInfo> matchList=new ArrayList<>();
+    private List<MatchInfo> matchList = new ArrayList<>();
     private static Account currentAccount;
 
     {
-        levelsOpennessStatus[0]=true;
+        levelsOpennessStatus[0] = true;
     }
 
     public static List<Account> getAccounts() {
         return accounts;
     }
 
-    public static void addAccount(Account newAccount){
+    public static void addAccount(Account newAccount) {
 
     }
 
-    public static boolean checkValidation(String username,String password){
+    public static boolean checkValidation(String username, String password) {
 
     }
 
@@ -46,23 +46,23 @@ public class Account {
         return matchList;
     }
 
-    public void addMatchToMatchList(MatchInfo Match){
+    public void addMatchToMatchList(MatchInfo Match) {
 
     }
 
-    public void openLevelOfStory(int level){
-        levelsOpennessStatus[level]=true;
+    public void openLevelOfStory(int level) {
+        levelsOpennessStatus[level] = true;
     }
 
-    private int getNumberOfWins(){
-
-    }
-
-    public static void login(String username){
+    private int getNumberOfWins() {
 
     }
 
-    public static void showLeaderboard(){
+    public static void login(String username) {
+
+    }
+
+    public static void showLeaderboard() {
 
     }
 }
