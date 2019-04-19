@@ -5,7 +5,7 @@ class Cell {
     private Unit unit;
     private Item item;
     private List<Buff> buffs = new ArrayList<>();
-    private ArrayList<Flag> flags=new ArrayList<>();
+    private ArrayList<Flag> flags = new ArrayList<>();
 
 
     public Unit getUnit() {
@@ -31,18 +31,16 @@ class Cell {
     public void addBuff(Buff newBuff) {
         buffs.add(newBuff);
     }
-    public void deleteBuff(Buff buffToBeDeleted){
-        for(Buff buff:buffs){
-            if(buff==buffToBeDeleted){
-                buffs.remove(buffToBeDeleted);
-                break;
-            }
-        }
+
+    public void deleteBuff(Buff buff) {
+        buffs.remove(buff);
     }
-    public ArrayList<Flag> getFlags(){
+
+    public ArrayList<Flag> getFlags() {
         return this.flags;
     }
-    public void addFlag(Flag flag){
+
+    public void addFlag(Flag flag) {
         flags.add(flag);
     }
 }

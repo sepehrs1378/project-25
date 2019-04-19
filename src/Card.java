@@ -36,16 +36,11 @@ class Card {
     }
 
     public static void addCard(Card newCard){
-        cardList.add(newCard);
+
     }
 
-    public static void deleteCard(Card cardToBeDeleted){
-        for(Card card:cardList){
-            if (card==cardToBeDeleted){
-                cardList.remove(cardToBeDeleted);
-                break;
-            }
-        }
+    public static void deleteCard(Card card){
+        cardList.remove(card);
     }
 
     public static Card getCardWithName(String cardName){

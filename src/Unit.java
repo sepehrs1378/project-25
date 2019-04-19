@@ -6,7 +6,7 @@ class Unit extends Card {
     private int ap;
     private String typeOfAttack;
     private int range;
-    private List<Flag> flags=new ArrayList<Flag>();
+    private List<Flag> flags=new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
 
