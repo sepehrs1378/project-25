@@ -12,8 +12,8 @@ public class ControllerAccount {
     public void main() {
         boolean didExit = false;
         Request request = new Request();
-        request.getNewCommand();
         while (!didExit) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case LOGIN:
                     break;
