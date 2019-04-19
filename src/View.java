@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.List;
 
 public class View {
@@ -28,6 +29,30 @@ public class View {
             System.out.println(counter + "- Username: " + account.getUsername() +
                     " - Wins: " + account.getNumberOfWins());
             counter++;
+        }
+    }
+
+    public void showCollection(PlayerCollection playerCollection) {
+
+    }
+
+    public void showHeroInfo(Unit hero) {
+
+    }
+
+    public void showCardInfo(Card card) {
+
+    }
+
+    public void showItemInfo(Item item) {
+        if (item instanceof Usable) {
+            Usable usable = (Usable) item;
+            System.out.println("Name: " + usable.getItemID() + " - Desc: " + usable.getDescription() + " - Sell Cost: " + usable.getPrice());
+            return;
+        }
+        if (item instanceof Collectable) {
+            Collectable collectable = (Collectable) item;
+            System.out.println("Name: " + collectable.getItemID() + " - Desc: " + collectable.getDescription() + " - No Sell Cost: Colletable");
         }
     }
 }

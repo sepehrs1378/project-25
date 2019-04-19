@@ -7,6 +7,9 @@ class Cell {
     private List<Buff> buffs = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
 
+    public Cell() {
+
+    }
 
     public Unit getUnit() {
         return unit;
@@ -42,5 +45,9 @@ class Cell {
 
     public void addFlag(Flag flag) {
         flags.add(flag);
+    }
+
+    public boolean isEmptyOfUnit() {
+        return unit == null;
     }
 }

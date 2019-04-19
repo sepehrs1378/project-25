@@ -49,14 +49,7 @@ class Spell extends Card {
     }
 
     public void doSpell(int insertionRow, int insertionColumn) {
-        List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
-        List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
-        for (Unit unit : targetUnits) {
 
-        }
-        for (Cell cell : targetCells) {
-
-        }
     }
 
     public void changeAp() {
@@ -67,11 +60,11 @@ class Spell extends Card {
 
     }
 
-    public void addBuffs() {
+    public void doSpellEffectOnCells() {
 
     }
 
-    public void deleteBuffs() {
+    public void deSpellEffectOnUnits(){
 
     }
 
