@@ -6,7 +6,7 @@ class Unit extends Card {
     private int ap;
     private String typeOfAttack;
     private int range;
-    private List<Flag> flags=new ArrayList<>();
+    private List<Flag> flags = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
 
@@ -50,35 +50,35 @@ class Unit extends Card {
         this.heroOrMinion = heroOrMinion;
     }
 
-    public void addFlag(Flag newFlag){
+    public void addFlag(Flag newFlag) {
         flags.add(newFlag);
     }
 
-    public void dropFlags(){
+    public void dropFlags() {
 
     }
 
-    public static void killUnit(Unit unit){
+    public static void killUnit(Unit unit) {
 
     }
 
-    public void doSpecialPower(){
+    public void doSpecialPower() {
 
     }
 
-    public void moveToCell(int x,int y){
+    public void moveToCell(int row, int column) {
 
     }
 
-    public void attackUnit(Unit unit){
+    public void attackUnit(Unit unit) {
 
     }
 
-    public void counterAttackUnit(Unit unit){
+    public void counterAttackUnit(Unit unit) {
 
     }
 
-    public void takeItem(Item item){
+    public void takeItem(Item item) {
 
     }
 

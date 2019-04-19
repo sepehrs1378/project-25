@@ -48,8 +48,15 @@ class Spell extends Card {
         this.hpChange = hpChange;
     }
 
-    public void doSpell() {
+    public void doSpell(int insertionRow, int insertionColumn) {
+        List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
+        List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
+        for (Unit unit : targetUnits) {
 
+        }
+        for (Cell cell : targetCells) {
+
+        }
     }
 
     public void changeAp() {
