@@ -9,8 +9,8 @@ public class ControllerBattleCommands {
     public void main() {
         boolean didExit = false;
         Request request = new Request();
-        request.getNewCommand();
         while (!didExit) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
                     break;
@@ -80,7 +80,7 @@ public class ControllerBattleCommands {
                 request.setErrorType(ErrorType.BATTLE_NOT_FINISHED);
                 view.printError(request.getErrorType());
             } else {
-
+                //todo
             }
             return;
         }
@@ -97,6 +97,21 @@ public class ControllerBattleCommands {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setErrorType(ErrorType.WRONG_COMMAND);
             view.printError(request.getErrorType());
+        }
+        else {
+            boolean didExit=false;
+            while (!didExit){
+                request.getNewCommand();
+                switch (request.getType()){
+                    case EXIT:
+                        didExit=true;
+                        break;
+                    case SHOW:
+                        break;
+                    default:
+
+                }
+            }
         }
         //todo write else later
     }

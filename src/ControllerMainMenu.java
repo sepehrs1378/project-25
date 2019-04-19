@@ -12,8 +12,8 @@ public class ControllerMainMenu {
     public void main() {
         boolean didLogout = false;
         Request request = new Request();
-        request.getNewCommand();
         while (!didLogout) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case ENTER:
                     ourInstance.enter(request);
