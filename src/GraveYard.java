@@ -3,6 +3,7 @@ import java.util.List;
 
 class GraveYard {
     private List<Card> deadCards = new ArrayList<>();
+    private static final ControllerGraveYard controllerGraveYard = ControllerGraveYard.getInstance();
 
     public List<Card> getDeadCards() {
         return deadCards;
@@ -13,10 +14,10 @@ class GraveYard {
     }
 
     public void showInfo(String cardID) {
-
+        
     }
 
     public void showCards() {
-
+        controllerGraveYard.showListOfCards(deadCards);
     }
 }

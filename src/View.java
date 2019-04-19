@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class View {
     private static View ourInstance = new View();
 
@@ -14,5 +16,9 @@ public class View {
 
     public void printHelp(HelpType helpType){
         System.out.println(helpType.getMessage());
+    }
+
+    public void printContentsOfAList(List list){
+        System.out.println(list);
     }
 }

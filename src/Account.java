@@ -9,7 +9,7 @@ public class Account {
     private PlayerInfo playerInfo;
     private List<MatchInfo> matchList=new ArrayList<>();
     private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
-    //private static Account currentAccount;  find a use for this or delete it
+    private static Account currentAccount;
 
     {
         openedLevels[0]=true;
@@ -28,6 +28,7 @@ public class Account {
             Account account = accounts.get(i);
             if (account.username.equals(username)){
                 if (account.password.equals(password)){
+                    currentAccount = account;
                     login(username);
                 }
             }else{
@@ -66,14 +67,18 @@ public class Account {
     }
 
     private int getNumberOfWins(){
-
+        //todo ask what you should put in this
     }
 
     public static void login(String username){
-
+        //todo where should this connect to?
     }
 
     public static void showLeaderboard(){
+        //todo what does leader board consist of?
+    }
+
+    private static void showMatchHistory(){
 
     }
 
