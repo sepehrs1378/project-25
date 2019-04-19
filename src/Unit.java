@@ -96,4 +96,8 @@ class Unit extends Card {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Flag> getFlags() {
+        return flags;
+    }
 }
