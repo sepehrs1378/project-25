@@ -10,7 +10,10 @@ public class ControllerCollection {
     }
 
     public void main() {
-
+        boolean didExit = false;
+        Request request = new Request();
+        request.getNewCommand();
+        while ()
     }
 
     public void exit() {

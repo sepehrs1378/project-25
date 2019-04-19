@@ -1,6 +1,9 @@
+import javax.lang.model.type.ErrorType;
+
 public class ControllerBattleMenu {
     private static ControllerBattleMenu ourInstance = new ControllerBattleMenu();
-    private static View view=View.getInstance();
+    private static View view = View.getInstance();
+
     public static ControllerBattleMenu getInstance() {
         return ourInstance;
     }
@@ -8,28 +11,29 @@ public class ControllerBattleMenu {
     private ControllerBattleMenu() {
     }
 
-    public void main(){
-        Request request=new Request();
-        boolean didExit=false;
-        while (!didExit){
+    public void main() {
+        Request request = new Request();
+        boolean didExit = false;
+        while (!didExit) {
             request.getNewCommand();
-            switch (request.getType()){
+            switch (request.getType()) {
                 case EXIT:
-                    didExit=true;
+                    didExit = true;
                     break;
                 case ENTER:
                     break;
             }
         }
     }
-    private void enter(Request request){
-        if(request.getCommand().toLowerCase().equals("enter single player")){
 
-        }else if(request.getCommand().toLowerCase().equals("enter multi player")){
+    private void enter(Request request) {
+        if (request.getCommand().toLowerCase().equals("enter single player")) {
+
+        } else if (request.getCommand().toLowerCase().equals("enter multi player")) {
             ControllerMultiPlayerMenu.getInstance().main();
-        }else {
-            request.setErrorType(ErrorType.WRONG_COMMAND);
-            view.printError(request.getErrorType());
+        } else {
+            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
+            view.printError(request.getOutputMessageType());
         }
     }
 }

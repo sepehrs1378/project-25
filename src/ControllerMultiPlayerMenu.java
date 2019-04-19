@@ -35,8 +35,8 @@ public class ControllerMultiPlayerMenu {
             Account secondPlayer=Account.getAccount(request.getCommand().split(" ")[2]);
             if(secondPlayer==null)
             {
-                request.setErrorType(ErrorType.INVALID_USERNAME);
-                view.printError(request.getErrorType());
+                request.setOutputMessageType(outputMessageType.INVALID_USERNAME);
+                view.printError(request.getOutputMessageType());
             }else{
                 request.setHelpType(HelpType.MODES_HELP);
                 view.printHelp(request.getHelpType());
@@ -48,8 +48,8 @@ public class ControllerMultiPlayerMenu {
                         if (request.getCommand().split(" ").length == 5) {
                             numberOfFlags = Integer.parseInt(request.getCommand().split(" ")[4]);
                         } else {
-                            request.setErrorType(ErrorType.WRONG_COMMAND);
-                            view.printError(request.getErrorType());
+                            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
+                            view.printError(request.getOutputMessageType());
                         }
                     } else if (mode.equals(Constants.ONE_FLAG)) {
                         numberOfFlags = 1;
@@ -58,12 +58,12 @@ public class ControllerMultiPlayerMenu {
                         Battle battle = new Battle(Account.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
                         database.setCurrentBattle(battle);
                     }else{
-                        request.setErrorType(ErrorType.INVALID_DECK_PLAYER2);
-                        view.printError(request.getErrorType());
+                        request.setOutputMessageType(outputMessageType.INVALID_DECK_PLAYER2);
+                        view.printError(request.getOutputMessageType());
                     }
                 }else{
-                    request.setErrorType(ErrorType.WRONG_COMMAND);
-                    view.printError(request.getErrorType());
+                    request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
+                    view.printError(request.getOutputMessageType());
                 }
 
             }

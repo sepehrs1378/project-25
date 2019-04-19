@@ -8,6 +8,8 @@ public enum outputMessageType {
     BUY_SUCCESSFUL("Card or item was bought successfully"),
     SELL_SUCCESSFUL("Card or item was sold successfully"),
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
+    INVALID_DECK_PLAYER1(""),//todo
+    INVALID_DECK_PLAYER2(""),//todo
     NO_ERROR("");
 
     private String message;
