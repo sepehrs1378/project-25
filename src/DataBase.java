@@ -56,7 +56,7 @@ public class DataBase {
 
     }
 
-    public static Card getCardWithName(String cardName) {
+    public Card getCardWithName(String cardName) {
         for (Card card : cardList) {
             if (card.getCardID().equals(cardName))
                 return card;
@@ -65,8 +65,18 @@ public class DataBase {
     }
 
     public boolean doesCardExist(String cardName) {
-        if (getCardWithName(cardName) == null)
-            return false;
-        else return true;
+        return getCardWithName(cardName) != null;
+    }
+
+    public Item getItemWithName(String itemName) {
+        for (Item item : itemList) {
+            if (item.getItemID().equals(itemName))
+                return item;
+        }
+        return null;
+    }
+
+    public boolean doesItemExit(String itemName) {
+        return getItemWithName(itemName) != null;
     }
 }

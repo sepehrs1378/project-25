@@ -76,6 +76,14 @@ class PlayerCollection {
     }
 
     public void buy(String name) {
+        if (dataBase.doesCardExist(name)) {
+
+            return;
+        }
+        if (dataBase.doesItemExit(name)) {
+
+            return;
+        }
 
     }
 
