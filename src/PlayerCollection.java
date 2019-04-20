@@ -71,7 +71,7 @@ class PlayerCollection {
         decks.remove(deck);
         if (dataBase.getLoggedInAccount().getMainDeck() == deck)
             dataBase.getLoggedInAccount().setMainDeck(null);
-        return OutputMessageType.DECK_DELTED;
+        return OutputMessageType.DECK_DELETED;
     }
 
     public Deck getDeckByName(String deckName) {
@@ -128,7 +128,16 @@ class PlayerCollection {
         return OutputMessageType.NOT_IN_SHOP;
     }
 
+
     public OutputMessageType sell(String id) {
         if ()
+    }
+
+    public OutputMessageType selectDeckAsMain(String deckName) {
+        if (!doesHaveDeck(deckName)) {
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        }
+        dataBase.getLoggedInAccount().setMainDeck(getDeckByName(deckName));
+        return OutputMessageType.DECK_SELECTED;
     }
 }

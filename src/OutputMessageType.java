@@ -13,7 +13,8 @@ public enum OutputMessageType {
     CANT_HAVE_MORE_ITEMS("You can't have more items"),
     DECK_CREATED("Deck was created"),
     DECK_DOESNT_EXIST("Deck doesn't exist"),
-    DECK_DELTED("Deck was deleted"),
+    DECK_DELETED("Deck was deleted"),
+    DECK_SELECTED("Deck was selected as main deck"),
     NO_ERROR("");
 
     private String message;

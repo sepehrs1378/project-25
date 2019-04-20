@@ -46,6 +46,7 @@ public class ControllerCollection {
                 case SELECT:
                     break;
                 case HELP:
+                    ourInstance.help();
                     break;
                 default:
                     System.out.println("!!!!!! bad input in ControllerCollection.main");
@@ -77,11 +78,26 @@ public class ControllerCollection {
     }
 
     public void help() {
-
+        view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 
-    public void select() {
-
+    public void select(Request request) {
+        if (!request.getCommand().matches("^select deck .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^select deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        switch (loggedInAccount.getPlayerInfo().getCollection()
+                .selectDeckAsMain(matcher.group(1))) {
+            case DECK_DOESNT_EXIST:
+                view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
+                break;
+            case DECK_SELECTED:
+                view.printOutputMessage(OutputMessageType.DECK_SELECTED);
+                break;
+            default:
+        }
     }
 
     public void validate() {
@@ -103,8 +119,8 @@ public class ControllerCollection {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
-            case DECK_DELTED:
-                view.printOutputMessage(OutputMessageType.DECK_DELTED);
+            case DECK_DELETED:
+                view.printOutputMessage(OutputMessageType.DECK_DELETED);
                 break;
             default:
                 break;
