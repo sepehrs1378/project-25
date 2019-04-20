@@ -134,10 +134,18 @@ class PlayerCollection {
     }
 
     public OutputMessageType selectDeckAsMain(String deckName) {
-        if (!doesHaveDeck(deckName)) {
+        if (!doesHaveDeck(deckName))
             return OutputMessageType.DECK_DOESNT_EXIST;
-        }
         dataBase.getLoggedInAccount().setMainDeck(getDeckByName(deckName));
         return OutputMessageType.DECK_SELECTED;
+    }
+
+    public OutputMessageType validateDeck(String deckName) {
+        if (!doesHaveDeck(deckName))
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        Deck deck = getDeckByName(deckName);
+        if (deck.isValid())
+            return OutputMessageType.DECK_VALID;
+        return OutputMessageType.DECK_NOT_VALID;
     }
 }

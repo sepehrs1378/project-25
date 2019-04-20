@@ -100,8 +100,25 @@ public class ControllerCollection {
         }
     }
 
-    public void validate() {
-
+    public void validate(Request request) {
+        if (!request.getCommand().matches("^validate deck .+$")) {
+            view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^validate deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        switch (loggedInAccount.getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
+            case DECK_DOESNT_EXIST:
+                view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
+                break;
+            case DECK_VALID:
+                view.printOutputMessage(OutputMessageType.DECK_VALID);
+                break;
+            case DECK_NOT_VALID:
+                view.printOutputMessage(OutputMessageType.DECK_NOT_VALID);
+                break;
+            default:
+        }
     }
 
     public void add() {

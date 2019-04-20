@@ -15,6 +15,8 @@ public enum OutputMessageType {
     DECK_DOESNT_EXIST("Deck doesn't exist"),
     DECK_DELETED("Deck was deleted"),
     DECK_SELECTED("Deck was selected as main deck"),
+    DECK_VALID("Deck is Valid"),
+    DECK_NOT_VALID("Deck is NOT valid"),
     NO_ERROR("");
 
     private String message;
