@@ -44,8 +44,8 @@ public class ControllerAccount {
 
     public void show(Request request) {
         if (!request.getCommand().matches("^show leaderboard$")) {
-            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-            view.printError(request.getOutputMessageType());
+            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+            view.printOutputMessage(request.getOutputMessageType());
         } else {
             dataBase.sortAccountsByWins();
             view.showLeaderboard(dataBase.getAccounts());
@@ -57,7 +57,7 @@ public class ControllerAccount {
         view.printHelp(request.getHelpType());
     }
 
-    public void showLoginError(outputMessageType error) {
-        view.printError(error);
+    public void showLoginError(OutputMessageType error) {
+        view.printOutputMessage(error);
     }
 }

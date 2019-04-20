@@ -1,4 +1,4 @@
-public enum outputMessageType {
+public enum OutputMessageType {
     WRONG_COMMAND("Wrong command"),
     BATTLE_NOT_FINISHED("Battle isn't finished yet..."),
     INVALID_PASSWORD("Invalid password"),
@@ -10,11 +10,12 @@ public enum outputMessageType {
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
     INVALID_DECK_PLAYER1(""),//todo
     INVALID_DECK_PLAYER2(""),//todo
+    CANT_HAVE_MORE_ITEMS("You can't have more items"),
     NO_ERROR("");
 
     private String message;
 
-    outputMessageType(String message) {
+    OutputMessageType(String message) {
         this.message = message;
     }
 

@@ -48,7 +48,7 @@ class BattleGround {
     public boolean doesHaveUnit(String unitName) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getCardID() == unitName)
+                if (cell.getUnit() != null && cell.getUnit().getId() == unitName)
                     return true;
             }
         }

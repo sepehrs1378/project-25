@@ -4,7 +4,7 @@ public class Request {
     private static final View view = View.getInstance();
     private static final Scanner scanner = new Scanner(System.in);
     private String command;
-    private outputMessageType outputMessageType;
+    private OutputMessageType outputMessageType;
     private HelpType helpType;
 
     public void getNewCommand() {
@@ -15,7 +15,7 @@ public class Request {
                 isValid = true;
             else {
                 outputMessageType = outputMessageType.WRONG_COMMAND;
-                view.printError(outputMessageType);
+                view.printOutputMessage(outputMessageType);
             }
         }
     }
@@ -24,11 +24,11 @@ public class Request {
         return command;
     }
 
-    public void setOutputMessageType(outputMessageType outputMessageType) {
+    public void setOutputMessageType(OutputMessageType outputMessageType) {
         this.outputMessageType = outputMessageType;
     }
 
-    public outputMessageType getOutputMessageType() {
+    public OutputMessageType getOutputMessageType() {
         return outputMessageType;
     }
 

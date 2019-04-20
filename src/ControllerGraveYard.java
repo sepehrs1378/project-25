@@ -30,8 +30,8 @@ public class ControllerGraveYard {
     public void show(Request request){
         if(!request.getCommand().matches("^show cards$") &&
                 !request.getCommand().matches("^show info .+$")){
-            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-            view.printError(request.getOutputMessageType());
+            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+            view.printOutputMessage(request.getOutputMessageType());
             return;
         }
         if(request.getCommand().matches("^show cards$")){

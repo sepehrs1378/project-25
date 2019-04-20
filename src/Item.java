@@ -1,18 +1,19 @@
 class Item {
-    private String itemID;
+    private String id;
+    private String name;
     private String description;
 
-    public Item(String itemID, String description) {
-        this.itemID = itemID;
+    public Item(String id, String description) {
+        this.id = id;
         this.description = description;
     }
 
-    public String getItemID() {
-        return itemID;
+    public String getId() {
+        return id;
     }
 
-    public void setItemID(String itemID) {
-        this.itemID = itemID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -21,5 +22,13 @@ class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

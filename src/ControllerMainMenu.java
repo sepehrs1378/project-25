@@ -47,8 +47,8 @@ public class ControllerMainMenu {
                 ControllerBattleMenu.getInstance().main();
                 break;
             default:
-                request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-                view.printError(request.getOutputMessageType());
+                request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                view.printOutputMessage(request.getOutputMessageType());
         }
     }
 }

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class View {
@@ -11,7 +10,7 @@ public class View {
     private View() {
     }
 
-    public void printError(outputMessageType outputMessageType) {
+    public void printOutputMessage(OutputMessageType outputMessageType) {
         System.out.println(outputMessageType.getMessage());
     }
 
@@ -42,7 +41,7 @@ public class View {
     }
 
     public void showHeroInfo(Unit hero) {
-        System.out.println("Name: " + hero.getCardID() + " - AP: " + hero.getAp() +
+        System.out.println("Name: " + hero.getId() + " - AP: " + hero.getAp() +
                 " - HP: " + hero.getHp() + " - Class: " + hero.getUnitClass() +
                 " - Special Power: " + hero.getSpecialPower().getDescription() +
                 " - Sell Cost: " + hero.getPrice());
@@ -55,13 +54,13 @@ public class View {
     public void showItemInfo(Item item) {
         if (item instanceof Usable) {
             Usable usable = (Usable) item;
-            System.out.println("Name: " + usable.getItemID() + " - Desc: " +
+            System.out.println("Name: " + usable.getId() + " - Desc: " +
                     usable.getDescription() + " - Sell Cost: " + usable.getPrice());
             return;
         }
         if (item instanceof Collectable) {
             Collectable collectable = (Collectable) item;
-            System.out.println("Name: " + collectable.getItemID() + " - Desc: " +
+            System.out.println("Name: " + collectable.getId() + " - Desc: " +
                     collectable.getDescription() + " - No Sell Cost: Collectable");
         }
     }

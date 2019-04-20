@@ -1,69 +1,72 @@
 public class ControllerMultiPlayerMenu {
-    private static final View view=View.getInstance();
-    private static final ControllerMultiPlayerMenu ourInstance=new ControllerMultiPlayerMenu();
-    private static final DataBase database=DataBase.getInstance();
-    public static ControllerMultiPlayerMenu getInstance(){
+    private static final View view = View.getInstance();
+    private static final ControllerMultiPlayerMenu ourInstance = new ControllerMultiPlayerMenu();
+    private static final DataBase database = DataBase.getInstance();
+
+    public static ControllerMultiPlayerMenu getInstance() {
         return ourInstance;
     }
-    private ControllerMultiPlayerMenu(){
+
+    private ControllerMultiPlayerMenu() {
     }
-    public void main(){
-        view.showUsers(database.getAccounts(),database.getLoggedInAccount().getUsername());
-        Request request=new Request();
-        boolean didExit=false;
-        while(!didExit)
-        {
+
+    public void main() {
+        view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
+        Request request = new Request();
+        boolean didExit = false;
+        while (!didExit) {
             request.getNewCommand();
-            switch (request.getType()){
+            switch (request.getType()) {
                 case SELECT:
                     select(request);
                     break;
                 case ENTER:
-                   break;
+                    break;
                 case EXIT:
-                    didExit=true;
+                    didExit = true;
                     break;
             }
         }
     }
-    private void enter(Request request){
+
+    private void enter(Request request) {
 
     }
-    private void select(Request request){
-        if(request.getCommand().matches("select user \\w+"));
+
+    private void select(Request request) {
+        if (request.getCommand().matches("select user \\w+")) ;
         {
-            Account secondPlayer=Account.getAccount(request.getCommand().split(" ")[2]);
-            if(secondPlayer==null)
-            {
-                request.setOutputMessageType(outputMessageType.INVALID_USERNAME);
-                view.printError(request.getOutputMessageType());
-            }else{
+            Account secondPlayer = Account.getAccount(request.getCommand().split(" ")[2]);
+            if (secondPlayer == null) {
+                request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
+                view.printOutputMessage(request.getOutputMessageType());
+            } else {
                 request.setHelpType(HelpType.MODES_HELP);
                 view.printHelp(request.getHelpType());
                 request.getNewCommand();
-                if(request.getCommand().matches("start multiplayer game \\w+ \\w+")) {
+                if (request.getCommand().matches("start multiplayer game \\w+ \\w+")) {
                     int numberOfFlags = 0;
                     String mode = request.getCommand().split(" ")[3];
                     if (mode.equals(Constants.FLAGS)) {
                         if (request.getCommand().split(" ").length == 5) {
                             numberOfFlags = Integer.parseInt(request.getCommand().split(" ")[4]);
                         } else {
-                            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-                            view.printError(request.getOutputMessageType());
+                            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                            view.printOutputMessage(request.getOutputMessageType());
                         }
                     } else if (mode.equals(Constants.ONE_FLAG)) {
                         numberOfFlags = 1;
                     }
-                    if(Account.getLoggedInAccount().getMainDeck().isValid()&&secondPlayer.getMainDeck().isValid()){
+                    if (Account.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
                         Battle battle = new Battle(Account.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
                         database.setCurrentBattle(battle);
-                    }else{
-                        request.setOutputMessageType(outputMessageType.INVALID_DECK_PLAYER2);
-                        view.printError(request.getOutputMessageType());
+                    } else {
+                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER2);
+                        view.printOutputMessage(request.getOutputMessageType());
                     }
-                }else{
-                    request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-                    view.printError(request.getOutputMessageType());
+                } else {
+                    request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                    view.printOutputMessage(request.getOutputMessageType());
                 }
 
             }

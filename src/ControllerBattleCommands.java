@@ -82,8 +82,8 @@ public class ControllerBattleCommands {
     public void end(Request request) {
         if (request.getCommand().equals("end game")) {
             if (!database.getCurrentBattle().isBattleFinished()) {
-                request.setOutputMessageType(outputMessageType.BATTLE_NOT_FINISHED);
-                view.printError(request.getOutputMessageType());
+                request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
+                view.printOutputMessage(request.getOutputMessageType());
             } else {
                 //todo
             }
@@ -93,15 +93,15 @@ public class ControllerBattleCommands {
             database.getCurrentBattle().endTurn();
             return;
         }
-        request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-        view.printError(request.getOutputMessageType());
+        request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+        view.printOutputMessage(request.getOutputMessageType());
 
     }
 
     public void enter(Request request) {
         if (!request.getCommand().equals("enter graveyard")) {
-            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-            view.printError(request.getOutputMessageType());
+            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+            view.printOutputMessage(request.getOutputMessageType());
         } else {
             ControllerGraveYard.getInstance().main();
         }

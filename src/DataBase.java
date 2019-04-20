@@ -59,7 +59,7 @@ public class DataBase {
 
     public Card getCardWithName(String cardName) {
         for (Card card : cardList) {
-            if (card.getCardID().equals(cardName))
+            if (card.getId().equals(cardName))
                 return card;
         }
         return null;
@@ -71,7 +71,7 @@ public class DataBase {
 
     public Usable getUsableWithName(String usableName) {
         for (Usable usable : usableList) {
-            if (usable.getItemID().equals(usableName))
+            if (usable.getId().equals(usableName))
                 return usable;
         }
         return null;
@@ -83,7 +83,7 @@ public class DataBase {
 
     public Collectable getCollectableWithName(String collectableName) {
         for (Collectable collectable : collectableList) {
-            if (collectable.getItemID().equals(collectableName))
+            if (collectable.getId().equals(collectableName))
                 return collectable;
         }
         return null;

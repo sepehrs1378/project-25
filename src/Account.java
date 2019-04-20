@@ -1,4 +1,3 @@
-import java.nio.file.attribute.AttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +38,10 @@ public class Account implements Comparable<Account> {
                     login(username);
                 }
             } else {
-                controllerAccount.showLoginError(outputMessageType.INVALID_PASSWORD);
+                controllerAccount.showLoginError(OutputMessageType.INVALID_PASSWORD);
             }
         }
-        controllerAccount.showLoginError(outputMessageType.INVALID_USERNAME);
+        controllerAccount.showLoginError(OutputMessageType.INVALID_USERNAME);
     }
 
     public static Account getLoggedInAccount() {
