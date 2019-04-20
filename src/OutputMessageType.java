@@ -11,6 +11,9 @@ public enum OutputMessageType {
     INVALID_DECK_PLAYER1(""),//todo
     INVALID_DECK_PLAYER2(""),//todo
     CANT_HAVE_MORE_ITEMS("You can't have more items"),
+    DECK_CREATED("Deck was created"),
+    DECK_DOESNT_EXIST("Deck doesn't exist"),
+    DECK_DELTED("Deck was deleted"),
     NO_ERROR("");
 
     private String message;

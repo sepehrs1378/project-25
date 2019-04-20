@@ -7,12 +7,13 @@ public class Deck {
     private Item item;
     private String name;
 
-    public Deck(Deck deck){
-        this.cards=new ArrayList<>(deck.getCards());
-        this.hero=deck.hero;
-        this.item=deck.item;
-        this.name=deck.name;
+    public Deck(Deck deck) {
+        this.cards = new ArrayList<>(deck.getCards());
+        this.hero = deck.hero;
+        this.item = deck.item;
+        this.name = deck.name;
     }
+
     public Deck(String name) {
         this.name = name;
     }
@@ -54,8 +55,6 @@ public class Deck {
     }
 
     public boolean isValid() {
-        if (cards.size() == 20 && hero != null && item != null)
-            return true;
-        return false;
+        return cards.size() == 20 && hero != null;
     }
 }

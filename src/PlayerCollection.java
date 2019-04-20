@@ -64,14 +64,14 @@ class PlayerCollection {
         //todo maybe it isn't needed
     }
 
-    public void deleteDeck(Deck deck) {
+    public OutputMessageType deleteDeck(String deckName) {
+        if (!doesHaveDeck(deckName))
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        Deck deck = getDeckByName(deckName);
         decks.remove(deck);
         if (dataBase.getLoggedInAccount().getMainDeck() == deck)
             dataBase.getLoggedInAccount().setMainDeck(null);
-    }
-
-    public void deleteDeck(String deckName) {
-        deleteDeck(getDeckByName(deckName));
+        return OutputMessageType.DECK_DELTED;
     }
 
     public Deck getDeckByName(String deckName) {
@@ -99,7 +99,7 @@ class PlayerCollection {
             return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
         decks.add(newDeck);
-        return OutputMessageType.NO_ERROR;
+        return OutputMessageType.DECK_CREATED;
     }
 
     public OutputMessageType buy(String name) {

@@ -1,6 +1,11 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ControllerCollection {
     private static final ControllerCollection ourInstance = new ControllerCollection();
     private static final DataBase dataBase = DataBase.getInstance();
+    private static final Account loggedInAccount = dataBase.getLoggedInAccount();
+    private static final View view = View.getInstance();
 
     private ControllerCollection() {
 
@@ -17,6 +22,7 @@ public class ControllerCollection {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE:
+                    ourInstance.create(request);
                     break;
                 case EXIT:
                     didExit = true;
@@ -29,6 +35,7 @@ public class ControllerCollection {
                     //todo is it needed?
                     break;
                 case DELETE:
+                    ourInstance.delete(request);
                     break;
                 case ADD:
                     break;
@@ -47,25 +54,68 @@ public class ControllerCollection {
         }
     }
 
+    public void create(Request request) {
+        if (!request.getCommand().matches("^create deck .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^create deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        switch (loggedInAccount.getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
+            case DECK_ALREADY_EXISTS:
+                view.printOutputMessage(OutputMessageType.DECK_ALREADY_EXISTS);
+                break;
+            case DECK_CREATED:
+                view.printOutputMessage(OutputMessageType.DECK_CREATED);
+                break;
+            default:
+        }
+    }
+
     public void show() {
 
     }
 
-    public void help(){
+    public void help() {
 
     }
 
-    public void select(){
+    public void select() {
 
     }
 
-    public void validate(){
+    public void validate() {
 
     }
 
-    public void add(){
+    public void add() {
 
     }
 
-    public void
+    public void delete(Request request) {
+        if (request.getCommand().matches("^delete deck .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^delete deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        switch (loggedInAccount.getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
+            case DECK_DOESNT_EXIST:
+                view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
+                break;
+            case DECK_DELTED:
+                view.printOutputMessage(OutputMessageType.DECK_DELTED);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void remove() {
+
+    }
+
+    public void search() {
+
+    }
 }
