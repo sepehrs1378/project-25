@@ -1,4 +1,8 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class Card {
+    private static final DataBase dataBase = DataBase.getInstance();
     private String id;
     private String name;
     private int price;
@@ -34,5 +38,11 @@ class Card {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Account getCardOwner() {
+        Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
+        Matcher matcher = pattern.matcher(id);
+        return dataBase.getAccountWithUsername(matcher.group(1));
     }
 }

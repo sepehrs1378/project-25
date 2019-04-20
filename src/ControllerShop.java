@@ -32,8 +32,10 @@ class ControllerShop {
                     buy(request);
                     break;
                 case SELL:
+                    sell(request);
                     break;
                 case HELP:
+                    help();
                     break;
                 default:
                     System.out.println("!!!!!! bad input in ControllerShop.main");
@@ -54,6 +56,12 @@ class ControllerShop {
         Pattern pattern = Pattern.compile("^sell (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1))) {
+            case NOT_IN_COLLECTION:
+                view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
+                break;
+            case SOLD_SUCCESSFULLY:
+                view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
+                break;
             default:
         }
     }
@@ -75,20 +83,18 @@ class ControllerShop {
             case CANT_HAVE_MORE_ITEMS:
                 view.printOutputMessage(OutputMessageType.CANT_HAVE_MORE_ITEMS);
                 break;
-            case BUY_SUCCESSFUL:
-                view.printOutputMessage(OutputMessageType.BUY_SUCCESSFUL);
+            case BOUGHT_SUCCESSFULLY:
+                view.printOutputMessage(OutputMessageType.BOUGHT_SUCCESSFULLY);
                 break;
             default:
         }
-        //todo
     }
 
     public void search(Request request) {
 
     }
 
-    public void help(Request request) {
-        request.setHelpType(HelpType.CONTROLLER_SHOP_HELP);
-        view.printHelp(request.getHelpType());
+    public void help() {
+        view.printHelp(HelpType.CONTROLLER_SHOP_HELP);
     }
 }

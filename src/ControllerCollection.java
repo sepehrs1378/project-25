@@ -42,6 +42,7 @@ public class ControllerCollection {
                 case REMOVE:
                     break;
                 case VALIDATE:
+                    ourInstance.validate(request);
                     break;
                 case SELECT:
                     break;

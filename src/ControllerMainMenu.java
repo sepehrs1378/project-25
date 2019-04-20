@@ -16,7 +16,7 @@ public class ControllerMainMenu {
             request.getNewCommand();
             switch (request.getType()) {
                 case ENTER:
-                    ourInstance.enter(request);
+                    enter(request);
                     break;
                 case SAVE:
                     //todo

@@ -3,10 +3,11 @@ public enum OutputMessageType {
     BATTLE_NOT_FINISHED("Battle isn't finished yet..."),
     INVALID_PASSWORD("Invalid password"),
     INVALID_USERNAME("This user does not exist"),
-    NOT_IN_SHOP("Card or item doesn't exist in shop"),
+    NOT_IN_SHOP("Card/item doesn't exist in shop"),
     INSUFFICIENT_MONEY("You don't have enough money"),
-    BUY_SUCCESSFUL("Card or item was bought successfully"),
-    SELL_SUCCESSFUL("Card or item was sold successfully"),
+    BOUGHT_SUCCESSFULLY("Card/item was bought successfully"),
+    NOT_IN_COLLECTION("You don't have the card or item"),
+    SOLD_SUCCESSFULLY("Card or item was sold successfully"),
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
     INVALID_DECK_PLAYER1(""),//todo
     INVALID_DECK_PLAYER2(""),//todo

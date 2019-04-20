@@ -7,7 +7,7 @@ public class DataBase {
     private static List<Usable> usableList = new ArrayList<>();
     private static List<Collectable> collectableList = new ArrayList<>();
     private static List<Card> cardList = new ArrayList<>();
-    private static List<Account> accounts = new ArrayList<>();
+    private static List<Account> accountList = new ArrayList<>();
     private static Account loggedInAccount;
     private static Battle currentBattle;
 
@@ -43,14 +43,14 @@ public class DataBase {
     }
 
     public List<Account> getAccounts() {
-        return accounts;
+        return accountList;
     }
 
     public void addAccount() {
     }
 
     public void sortAccountsByWins() {
-        Collections.sort(accounts);
+        Collections.sort(accountList);
     }
 
     public void createNewUnits() {
@@ -91,5 +91,13 @@ public class DataBase {
 
     public boolean doesCollectableExist(String collectableName) {
         return getCollectableWithName(collectableName) != null;
+    }
+
+    public Account getAccountWithUsername(String username) {
+        for (Account account : accountList) {
+            if (account.getUsername().equals(username))
+                return account;
+        }
+        return null;
     }
 }

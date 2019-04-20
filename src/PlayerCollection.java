@@ -44,7 +44,7 @@ class PlayerCollection {
         return null;
     }
 
-    public boolean doesCardExist(String id) {
+    public boolean doesHaveCard(String id) {
         return getCardWithID(id) != null;
     }
 
@@ -56,9 +56,11 @@ class PlayerCollection {
         return null;
     }
 
-    public boolean doesItemExist(String id) {
+    public boolean doesHaveItem(String id) {
         return getCardWithID(id) != null;
     }
+
+    public boolean doesHave
 
     public void addNewDeck() {
         //todo maybe it isn't needed
@@ -111,7 +113,7 @@ class PlayerCollection {
                 return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
                 //todo
-                return OutputMessageType.BUY_SUCCESSFUL;
+                return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
         if (dataBase.doesUsableExist(name)) {
@@ -122,7 +124,7 @@ class PlayerCollection {
                 return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
                 //todo
-                return OutputMessageType.BUY_SUCCESSFUL;
+                return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
         return OutputMessageType.NOT_IN_SHOP;
@@ -130,7 +132,11 @@ class PlayerCollection {
 
 
     public OutputMessageType sell(String id) {
-        if ()
+        if(doesHaveCard(id)){
+            //todo
+        }
+        //todo
+        return OutputMessageType.NOT_IN_COLLECTION;
     }
 
     public OutputMessageType selectDeckAsMain(String deckName) {
