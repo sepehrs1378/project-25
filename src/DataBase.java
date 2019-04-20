@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
-    private static List<Usable> usableList = new ArrayList<>();
+    private static List<Usable> usableList = new ArrayList<>();//todo WTF?
     private static List<Collectable> collectableList = new ArrayList<>();
     private static List<Card> cardList = new ArrayList<>();
     private static List<Account> accounts = new ArrayList<>();
@@ -92,4 +92,5 @@ public class DataBase {
     public boolean doesCollectableExist(String collectableName) {
         return getCollectableWithName(collectableName) != null;
     }
+
 }

@@ -9,7 +9,6 @@ public class View {
     }
 
     private View() {
-
     }
 
     public void printError(outputMessageType outputMessageType) {
@@ -107,6 +106,6 @@ public class View {
     }
 
     public void showMatchHistory(Account account){
-
+        //todo
     }
 }

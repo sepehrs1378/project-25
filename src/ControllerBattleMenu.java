@@ -21,14 +21,15 @@ public class ControllerBattleMenu {
                     didExit = true;
                     break;
                 case ENTER:
+                    enter(request);
                     break;
             }
         }
     }
 
     private void enter(Request request) {
-        if (request.getCommand().toLowerCase().equals("enter single player")) {
-
+        if (request.getCommand().equals("enter single player")) {
+            //todo
         } else if (request.getCommand().toLowerCase().equals("enter multi player")) {
             ControllerMultiPlayerMenu.getInstance().main();
         } else {

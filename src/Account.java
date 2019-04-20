@@ -36,7 +36,6 @@ public class Account implements Comparable<Account> {
             if (account.username.equals(username)) {
                 if (account.password.equals(password)) {
                     loggedInAccount = account;
-                    login(username);
                 }
             } else {
                 controllerAccount.showLoginError(outputMessageType.INVALID_PASSWORD);
@@ -96,10 +95,6 @@ public class Account implements Comparable<Account> {
                 numberOfWins++;
         }
         return numberOfWins;
-    }
-
-    public static void login(String username) {
-        //todo where should this connect to?
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {

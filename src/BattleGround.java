@@ -6,26 +6,20 @@ class BattleGround {
         return cells;
     }
 
-    public int getRowOfUnit(Unit unit) {
+    public int[] getCoordinationsOfUnit(Unit unit) {
+        int[] coordinations=new int[2];
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (cells[i][j].getUnit() == unit)
-                    return i;
+                {
+                    coordinations[0]=i;
+                    coordinations[1]=j;
+                    return coordinations;
+                }
             }
         }
-        return -1;
-    }
+        return null;
 
-    public int getColumnOfUnit(Unit unit) {
-        int j;
-        int i;
-        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
-            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (cells[i][j].getUnit() == unit)
-                    return j;
-            }
-        }
-        return -1;
     }
 
     public Cell getCellOfUnit(Unit unit) {
