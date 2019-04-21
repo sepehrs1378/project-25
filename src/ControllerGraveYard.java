@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class ControllerGraveYard {
     private static final View view=View.getInstance();
     private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
@@ -34,11 +36,16 @@ public class ControllerGraveYard {
             view.printOutputMessage(request.getOutputMessageType());
             return;
         }
-        if(request.getCommand().matches("^show cards$")){
+        if (request.getCommand().matches("^show cards$")) {
             //todo
         }
-        if(request.getCommand().matches("^show info .+$")){
+        if (request.getCommand().matches("^show info .+$")) {
             //todo
         }
     }
+
+    public void showInfoOfCards(List<Card> cards) {
+        view.showInfoOfCards(cards);
+    }
+
 }

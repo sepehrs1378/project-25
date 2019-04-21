@@ -2,6 +2,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MatchInfo {
+    private static final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstatnce();
     private Account opponent;
     private Account winner;
     private LocalDateTime matchDate;
@@ -40,6 +41,7 @@ public class MatchInfo {
         long diffInHours = java.time.Duration.between(now, matchDate).toHours();
         long diffInDays = java.time.Duration.between(now, matchDate).toDays();
 
+        controllerMatchInfo.showMatchHistory(account);
 
 //        String[] dateAndTimeOfMatch = matchDate.toString().split("T");
 //        String[] timeOfMatch = dateAndTimeOfMatch[1].split(":");

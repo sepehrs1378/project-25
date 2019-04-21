@@ -6,13 +6,17 @@ class Player {
     private Hand hand;
     private Deck deck;
     private Card nextCard;
-    private int mana=2;//todo forgot first start
+    private int mana = 2;
     private GraveYard graveYard = new GraveYard();
-    public Player(PlayerInfo playerInfo,Deck deck){
-        this.playerInfo=playerInfo;
-        this.deck=new Deck(deck);
+    private Unit selectedUnit;
+    private Collectable selectedCollectable;
+
+    public Player(PlayerInfo playerInfo, Deck deck) {
+        this.playerInfo = playerInfo;
+        this.deck = new Deck(deck);
         setHand(this.deck);
     }
+
     public PlayerInfo getPlayerInfo() {
         return playerInfo;
     }
@@ -34,8 +38,8 @@ class Player {
     }
 
     public void setHand(Deck deck) {
-        for(int i=0;i<Constants.NUMBER_OF_HAND_CARDS;i++){
-            int randomNumber=(int)(Math.random()*deck.getCards().size());
+        for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
+            int randomNumber = (int) (Math.random() * deck.getCards().size());
             hand.addCard(deck.getCards().get(randomNumber));
             deck.getCards().remove(randomNumber);
         }
@@ -59,17 +63,33 @@ class Player {
     }
 
     public void setNextCard(Deck deck) {
-        int randomNumber=(int)(Math.random()*deck.getCards().size());
-        if(deck.getCards().size()!=0)
-        {
-            nextCard=deck.getCards().get(randomNumber);
+        int randomNumber = (int) (Math.random() * deck.getCards().size());
+        if (deck.getCards().size() != 0) {
+            nextCard = deck.getCards().get(randomNumber);
             deck.getCards().remove(randomNumber);
         }
     }
-    public void moveNextCardToHand(){
-        if(hand.getCards().size()<5){
+
+    public void moveNextCardToHand() {
+        if (hand.getCards().size() < 5) {
             hand.getCards().add(nextCard);
             setNextCard(this.deck);
         }
+    }
+
+    public Unit getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
+    }
+
+    public Collectable getSelectedCollectable() {
+        return selectedCollectable;
+    }
+
+    public void setSelectedCollectable(Collectable selectedCollectable) {
+        this.selectedCollectable = selectedCollectable;
     }
 }

@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ControllerBattleCommands {
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
@@ -12,6 +15,7 @@ public class ControllerBattleCommands {
             request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
+                    showGameInfo(request);
                     break;
                 case SHOW_MINIONS:
                     break;
@@ -28,8 +32,10 @@ public class ControllerBattleCommands {
                 case INSERT:
                     break;
                 case END:
+                    end(request);
                     break;
                 case ENTER:
+                    enter(request);
                     break;
                 case EXIT:
                     didExit = true;
@@ -59,12 +65,24 @@ public class ControllerBattleCommands {
 
     }
 
-    public void select() {
-
+    public void select(Request request) {
+        if (!request.getCommand().matches("^select .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^select (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        //todo
     }
 
-    public void move() {
-
+    public void move(Request request) {
+        if (!request.getCommand().matches("^move to \\d+ \\d+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^move to (\\d+) (\\d+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        //todo
     }
 
     public void attack() {

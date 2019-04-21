@@ -8,8 +8,12 @@ class Unit extends Card {
     private int maxRange;
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
+    private String typeOfAttack;
+    private int range;
     private String heroOrMinion;
     private Spell specialPower;
+    private String StringSpecialPower;
+
 
     public int getHp() {
         return hp;
@@ -31,6 +35,14 @@ class Unit extends Card {
         this.ap = ap;
     }
 
+    public void setTypeOfAttack(String typeOfAttack) {
+        this.typeOfAttack = typeOfAttack;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
+
     public void setHeroOrMinion(String heroOrMinion) {
         this.heroOrMinion = heroOrMinion;
     }
@@ -47,16 +59,20 @@ class Unit extends Card {
 
     }
 
-    public void moveToCell(int row, int column) {
-
-    }
-
     public void attackUnit(Unit unit) {
 
     }
 
     public void counterAttackUnit(Unit unit) {
 
+    }
+
+    public String getStringSpecialPower() {
+        return StringSpecialPower;
+    }
+
+    public void setStringSpecialPower(String stringSpecialPower) {
+        StringSpecialPower = stringSpecialPower;
     }
 
     public List<Flag> getFlags() {
@@ -113,5 +129,13 @@ class Unit extends Card {
 
     public void setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
+    }
+
+    public String getTypeOfAttack() {
+        return typeOfAttack;
+    }
+
+    public int getRange() {
+        return range;
     }
 }

@@ -1,6 +1,6 @@
 public class ControllerAccount {
     private static final DataBase dataBase = DataBase.getInstance();
-    private static final ControllerAccount ourInstance = ControllerAccount.getInstance();
+    private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
 
     private ControllerAccount() {
@@ -48,7 +48,7 @@ public class ControllerAccount {
             view.printOutputMessage(request.getOutputMessageType());
         } else {
             dataBase.sortAccountsByWins();
-            view.showLeaderboard(dataBase.getAccounts());
+            view.showLeaderBoard(dataBase.getAccounts());
         }
     }
 

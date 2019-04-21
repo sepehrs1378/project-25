@@ -10,7 +10,7 @@ public class Request {
     public void getNewCommand() {
         boolean isValid = false;
         while (!isValid) {
-            command = scanner.nextLine().toLowerCase().trim().replaceAll(" +", " ");
+            command = scanner.nextLine().toLowerCase().trim().replaceAll("\\s+", " ");
             if (!getType().equals(RequestType.WRONG_REQUEST))
                 isValid = true;
             else {
