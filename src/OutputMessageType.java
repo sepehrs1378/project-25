@@ -18,6 +18,8 @@ public enum OutputMessageType {
     DECK_SELECTED("Deck was selected as main deck"),
     DECK_VALID("Deck is Valid"),
     DECK_NOT_VALID("Deck is NOT valid"),
+    SELECTED("Card/unit selected"),
+    INVALID_COLLECTABLE_CARD("Invalid card/collectable"),
     NO_ERROR("");
 
     private String message;

@@ -8,83 +8,11 @@ class Unit extends Card {
     private int maxRange;
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
-    private String typeOfAttack;
-    private int range;
     private String heroOrMinion;
     private Spell specialPower;
-    private String StringSpecialPower;
-
 
     public int getHp() {
         return hp;
-    }
-
-    public int getAp() {
-        return ap;
-    }
-
-    public String getHeroOrMinion() {
-        return heroOrMinion;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setAp(int ap) {
-        this.ap = ap;
-    }
-
-    public void setTypeOfAttack(String typeOfAttack) {
-        this.typeOfAttack = typeOfAttack;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
-    }
-
-    public void setHeroOrMinion(String heroOrMinion) {
-        this.heroOrMinion = heroOrMinion;
-    }
-
-    public void addFlag(Flag newFlag) {
-        flags.add(newFlag);
-    }
-
-    public void dropFlags() {
-
-    }
-
-    public void doSpecialPower() {
-
-    }
-
-    public void attackUnit(Unit unit) {
-
-    }
-
-    public void counterAttackUnit(Unit unit) {
-
-    }
-
-    public String getStringSpecialPower() {
-        return StringSpecialPower;
-    }
-
-    public void setStringSpecialPower(String stringSpecialPower) {
-        StringSpecialPower = stringSpecialPower;
-    }
-
-    public List<Flag> getFlags() {
-        return flags;
-    }
-
-    public String getUnitClass() {
-        if (minRange == 1 && maxRange == 1)
-            return Constants.MELEE;
-        if (minRange == 1)
-            return Constants.HYBRID;
-        return Constants.RANGED;
     }
 
     public int getMaxRange() {
@@ -111,16 +39,24 @@ class Unit extends Card {
         this.specialPower = specialPower;
     }
 
-    public void changeHp(int hpChange) {
-        hp += hpChange;
-        if (hp < 0)
-            hp = 0;
+    public int getAp() {
+        return ap;
     }
 
-    public void changeAp(int apChange) {
-        ap += apChange;
-        if (ap < 0)
-            ap = 0;
+    public String getHeroOrMinion() {
+        return heroOrMinion;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setAp(int ap) {
+        this.ap = ap;
+    }
+
+    public void setHeroOrMinion(String heroOrMinion) {
+        this.heroOrMinion = heroOrMinion;
     }
 
     public List<Buff> getBuffs() {
@@ -131,11 +67,49 @@ class Unit extends Card {
         this.buffs = buffs;
     }
 
-    public String getTypeOfAttack() {
-        return typeOfAttack;
+    public void addFlag(Flag newFlag) {
+        flags.add(newFlag);
     }
 
-    public int getRange() {
-        return range;
+    public void dropFlags() {
+
+    }
+
+    public void doSpecialPower() {
+
+    }
+
+    public void attackUnit(Unit unit) {
+
+    }
+
+    public void counterAttackUnit(Unit unit) {
+
+    }
+
+    public List<Flag> getFlags() {
+        return flags;
+    }
+
+    public String getUnitClass() {
+        if (minRange == 1 && maxRange == 1)
+            return Constants.MELEE;
+        if (minRange == 1)
+            return Constants.HYBRID;
+        return Constants.RANGED;
+    }
+
+
+
+    public void changeHp(int hpChange) {
+        hp += hpChange;
+        if (hp < 0)
+            hp = 0;
+    }
+
+    public void changeAp(int apChange) {
+        ap += apChange;
+        if (ap < 0)
+            ap = 0;
     }
 }

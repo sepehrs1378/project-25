@@ -40,7 +40,7 @@ class Card {
         this.name = name;
     }
 
-    public Account getCardOwner() {
+    public Account getOwner() {
         Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
         Matcher matcher = pattern.matcher(id);
         return dataBase.getAccountWithUsername(matcher.group(1));

@@ -72,7 +72,14 @@ public class ControllerBattleCommands {
         }
         Pattern pattern = Pattern.compile("^select (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        //todo
+        switch (database.getCurrentBattle().getPlayerInTurn().select(matcher.group(1))) {
+            case INVALID_COLLECTABLE_CARD:
+                view.printOutputMessage(OutputMessageType.INVALID_COLLECTABLE_CARD);
+                break;
+            case SELECTED:
+                break;
+            default:
+        }
     }
 
     public void move(Request request) {
