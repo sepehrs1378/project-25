@@ -84,9 +84,6 @@ class Unit extends Card {
     }
 
     public OutputMessageType attackUnit(String targetID) {
-//        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
-//            return OutputMessageType.UNIT_NOT_SELECTED;
-//        todo isn't needed because "this" refers to the unit
         if (dataBase.getCurrentBattle().getPlayerInTurn().
                 getSelectedUnit().didAttackThisTurn)
             return OutputMessageType.ALREADY_ATTACKED;
@@ -131,7 +128,7 @@ class Unit extends Card {
             ap = 0;
     }
 
-    public boolean isDidAttackThisTurn() {
+    public boolean didAttackThisTurn() {
         return didAttackThisTurn;
     }
 
@@ -139,11 +136,29 @@ class Unit extends Card {
         this.didAttackThisTurn = didAttackThisTurn;
     }
 
-    public boolean isDidMoveThisTurn() {
+    public boolean didMoveThisTurn() {
         return didMoveThisTurn;
     }
 
     public void setDidMoveThisTurn(boolean didMoveThisTurn) {
         this.didMoveThisTurn = didMoveThisTurn;
     }
+
+    public boolean isDisarmed() {
+        for (Buff buff : buffs) {
+            if (buff instanceof DisarmBuff)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isStuned() {
+        for (Buff buff : buffs) {
+            if (buff instanceof StunBuff)
+                return true;
+        }
+        return false;
+    }
+
+    public
 }

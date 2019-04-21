@@ -1,4 +1,4 @@
-import javax.xml.crypto.Data;
+import java.util.regex.Matcher;
 
 class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
@@ -77,10 +77,14 @@ class BattleGround {
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
-        //todo checkin the manhattan destination and ...
+        //todo checking the manhattan destination and ...
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
         return OutputMessageType.UNIT_MOVED;
+    }
+
+    public int getManhattanDistance(int row1, int column1, int row2, int column2) {
+        return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 }
