@@ -1,5 +1,5 @@
-class Flag extends Item{
-    public static void takeFlag(Flag flag){
+class Flag {
+    public static void takeFlag(Flag flag) {
 
     }
 }
