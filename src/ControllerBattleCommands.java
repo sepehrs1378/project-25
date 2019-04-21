@@ -120,7 +120,6 @@ public class ControllerBattleCommands {
         }
         request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
         view.printOutputMessage(request.getOutputMessageType());
-
     }
 
     public void enter(Request request) {

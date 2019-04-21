@@ -1,4 +1,7 @@
+import javax.xml.crypto.Data;
+
 class BattleGround {
+    private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
 
@@ -70,10 +73,13 @@ class BattleGround {
         return numberOfFlags;
     }
 
-    public void moveUnit(Unit unit, int destinationRow, int destinationColumn) {
-        //todo
-        Cell originCell = getCellOfUnit(unit);
+    public OutputMessageType moveUnit(int destinationRow, int destinationColumn) {
+        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
+            return OutputMessageType.UNIT_NOT_SELECTED;
+        Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
+        //todo checkin the manhattan destination and ...
+        Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
-        cells[destinationRow][destinationColumn].setUnit(unit);
+        cells[destinationRow][destinationColumn].setUnit(selectedUnit);
     }
 }
