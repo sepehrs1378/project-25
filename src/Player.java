@@ -6,7 +6,7 @@ class Player {
     private Hand hand;
     private Deck deck;
     private Card nextCard;
-    private int mana=2;//todo forgot first start
+    private int mana;
     private GraveYard graveYard = new GraveYard();
     public Player(PlayerInfo playerInfo,Deck deck){
         this.playerInfo=playerInfo;

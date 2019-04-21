@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DataBase {
+public class
+DataBase {
     private static DataBase ourInstance = new DataBase();
     private static List<Usable> usableList = new ArrayList<>();//todo WTF?
     private static List<Collectable> collectableList = new ArrayList<>();

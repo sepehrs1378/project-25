@@ -59,7 +59,8 @@ public class Battle {
         this.turnNumber++;
     }
 
-    public void changePlayerInTurn() {
+    public void changeTurn() {
+        this.addTurnNumber();
         if (playerInTurn == player1)
             playerInTurn = player2;
         else playerInTurn = player1;
@@ -85,6 +86,18 @@ public class Battle {
             player2.getGraveYard().addDeadCard(unit);
     }
 
+    public void setManaBasedOnTurnNumber(){
+        if(turnNumber%2==1){
+            if(turnNumber<14){
+                player1.setMana((turnNumber+1)/2+1);
+            }else player1.setMana(9);
+        }
+        else if (turnNumber%2==0){
+            if(turnNumber<15){
+                player2.setMana((turnNumber/2+2));
+            }else player2.setMana(9);
+        }
+    }
 
     public int getNumberOfFlags() {
         return numberOfFlags;
@@ -92,5 +105,34 @@ public class Battle {
 
     public void setNumberOfFlags(int numberOfFlags) {
         this.numberOfFlags = numberOfFlags;
+    }
+
+    public Player checkEndBattleModeClassic(){
+        if(this.getPlayer1().getDeck().getHero().getHp()<=0)
+            return player2;
+        else if (this.getPlayer2().getDeck().getHero().getHp()<=0){
+            return  player1;
+        }
+        return null;
+    }
+    public Player checkEndBattleModeOneFlag(){
+        int numberOfFlagsPlayer1=this.battleGround.getNumberOfFlagsForPlayer(player1);
+        int numberOfFlagsPlayer2=this.battleGround.getNumberOfFlagsForPlayer(player2);
+        if(numberOfFlagsPlayer1>=this.getNumberOfFlags()/2+1)
+            return player1;
+        else if(numberOfFlagsPlayer2>=this.getNumberOfFlags()/2+1)
+            return player2;
+        return null;
+    }
+    public Player checkEndBattleModeFlags(){
+        Cell cell=this.getBattleGround().getCellWithFlag();
+        if(cell!=null){
+            if(cell.getUnit().getFlags().get(0).getTurnsInUnitHand()>=6){
+                if(cell.getUnit().getCardID().contains(player1.getPlayerInfo().getPlayerName()))
+                    return player1;
+                return player2;
+            }
+        }
+        return null;
     }
 }

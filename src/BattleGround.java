@@ -7,13 +7,12 @@ class BattleGround {
     }
 
     public int[] getCoordinationsOfUnit(Unit unit) {
-        int[] coordinations=new int[2];
+        int[] coordinations = new int[2];
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (cells[i][j].getUnit() == unit)
-                {
-                    coordinations[0]=i;
-                    coordinations[1]=j;
+                if (cells[i][j].getUnit() == unit) {
+                    coordinations[0] = i;
+                    coordinations[1] = j;
                     return coordinations;
                 }
             }
@@ -60,6 +59,18 @@ class BattleGround {
         return numberOfFlags;
     }
 
+    public int getNumberOfFlagsForPlayer(Player player) {
+        int numberOfFlags = 0;
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if(cell.getUnit()!=null&&cell.getUnit().getCardID().contains(player.getPlayerInfo().getPlayerName())){
+                    numberOfFlags+=cell.getUnit().getFlags().size();
+                }
+            }
+        }
+        return numberOfFlags;
+    }
+
     public int getNumberOfFlagsOnGround() {
         int numberOfFlags = 0;
         for (Cell[] cellRow : cells) {
@@ -68,5 +79,16 @@ class BattleGround {
             }
         }
         return numberOfFlags;
+    }
+    //method below is for oneFlag mode game
+    public Cell getCellWithFlag(){
+        for (Cell[] cellRow:cells){
+            for(Cell cell:cellRow)
+            {
+                if(cell.getFlags().size()>0)
+                    return cell;
+            }
+        }
+        return null;
     }
 }

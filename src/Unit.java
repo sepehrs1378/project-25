@@ -14,7 +14,6 @@ class Unit extends Card {
     private Spell specialPower;
     private String StringSpecialPower;
 
-
     public int getHp() {
         return hp;
     }
@@ -49,10 +48,6 @@ class Unit extends Card {
 
     public void addFlag(Flag newFlag) {
         flags.add(newFlag);
-    }
-
-    public void dropFlags() {
-
     }
 
     public void doSpecialPower() {
@@ -141,5 +136,15 @@ class Unit extends Card {
 
     public int getRange() {
         return range;
+    }
+
+    public void takeFlags(List<Flag> flags){
+        this.flags=flags;
+    }
+
+    public void dropFlags(){
+        for(Flag flag:flags)
+            flag.setTurnsInUnitHand(0);
+        this.flags=null;
     }
 }
