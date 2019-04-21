@@ -84,7 +84,7 @@ class BattleGround {
         return OutputMessageType.UNIT_MOVED;
     }
 
-    public int getManhattanDistance(int row1, int column1, int row2, int column2) {
+    public int getDistance(int row1, int column1, int row2, int column2) {
         return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 }

@@ -1,4 +1,3 @@
-import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,5 +159,12 @@ class Unit extends Card {
         return false;
     }
 
-    public
+    public int getDistanceToTarget(int targetRow, int targetColumn) {
+        int unitRow = dataBase.getCurrentBattle().getBattleGround()
+                .getCoordinationOfUnit(this)[0];
+        int unitColumn = dataBase.getCurrentBattle().getBattleGround()
+                .getCoordinationOfUnit(this)[1];
+        return dataBase.getCurrentBattle().getBattleGround()
+                .getDistance(unitRow, unitColumn, targetRow, targetColumn);
+    }
 }

@@ -16,7 +16,7 @@ public class Battle {
         this.setNumberOfFlags(numberOfFlags);
     }
 
-    public void endTurn() {
+    public void nextTurn() {
         changePlayerInTurn();
         turnNumber++;
         //todo do buff effects

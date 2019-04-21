@@ -1,4 +1,3 @@
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,7 +154,7 @@ public class ControllerBattleCommands {
             return;
         }
         if (request.getCommand().equals("end turn")) {
-            database.getCurrentBattle().endTurn();
+            database.getCurrentBattle().nextTurn();
             return;
         }
         request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
