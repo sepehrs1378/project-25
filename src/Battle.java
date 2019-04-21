@@ -21,7 +21,7 @@ public class Battle {
         turnNumber++;
         //todo do buff effects
         //todo delete expired buffs
-
+        //todo reset attack and move status of units
     }
 
     public Player getPlayer1() {

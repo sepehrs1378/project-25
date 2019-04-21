@@ -19,9 +19,14 @@ public enum OutputMessageType {
     DECK_VALID("Deck is Valid"),
     DECK_NOT_VALID("Deck is NOT valid"),
     SELECTED("Card/unit selected"),
-    INVALID_COLLECTABLE_CARD("Invalid card/collectable"),
+    INVALID_COLLECTABLE_CARD("Invalid card/collectable id"),
+    INVALID_COLLECTABLE("Invalid collectable id"),
+    INVALID_CARD("Invalid card id"),
     UNIT_NOT_SELECTED("No unit is selected"),
     UNIT_MOVED("Selected unit moved"),
+    TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
+    ATTACKED_SUCCESSFULLY(""),
+    ALREADY_ATTACKED("Unit has already attacked"),
     NO_ERROR("");
 
     private String message;

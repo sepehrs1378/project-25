@@ -1,3 +1,4 @@
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -105,8 +106,34 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void attack() {
+    public void attack(Request request) {
+        if (request.getCommand().matches("^attack .+$")) {
+            Pattern pattern = Pattern.compile("^attack (.+)$");
+            Matcher matcher = pattern.matcher(request.getCommand());
+            if (database.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null) {
+                view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
+                return;
+            }
 
+            switch (database.getCurrentBattle().getPlayerInTurn()
+                    .getSelectedUnit().attackUnit(matcher.group(1))) {
+                case TARGET_NOT_IN_RANGE:
+                    view.printOutputMessage(OutputMessageType.TARGET_NOT_IN_RANGE);
+                    break;
+                case INVALID_CARD:
+                    view.printOutputMessage(OutputMessageType.INVALID_CARD);
+                    break;
+                case ALREADY_ATTACKED:
+                    view.printOutputMessage(OutputMessageType.ALREADY_ATTACKED);
+                    break;
+                default:
+            }
+            return;
+        }
+        if (request.getCommand().matches("^attack combo .+$")) {
+            //todo
+        }
+        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void use() {

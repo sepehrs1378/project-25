@@ -21,9 +21,10 @@ public class ControllerAccount {
                 case CREATE:
                     break;
                 case SHOW:
+                    show(request);
                     break;
                 case HELP:
-                    ourInstance.help(request);
+                    help(request);
                     break;
                 case EXIT:
                     didExit = true;
@@ -48,7 +49,7 @@ public class ControllerAccount {
             view.printOutputMessage(request.getOutputMessageType());
         } else {
             dataBase.sortAccountsByWins();
-            view.showLeaderBoard(dataBase.getAccounts());
+            view.showLeaderboard(dataBase.getAccounts());
         }
     }
 

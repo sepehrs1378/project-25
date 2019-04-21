@@ -1,7 +1,9 @@
+import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.List;
 
 class Unit extends Card {
+    private static final DataBase dataBase = DataBase.getInstance();
     private int hp;
     private int ap;
     private int minRange;
@@ -10,6 +12,8 @@ class Unit extends Card {
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
     private Spell specialPower;
+    private boolean didAttackThisTurn;
+    private boolean didMoveThisTurn;
 
     public int getHp() {
         return hp;
@@ -79,8 +83,24 @@ class Unit extends Card {
 
     }
 
-    public void attackUnit(Unit unit) {
-
+    public OutputMessageType attackUnit(String targetID) {
+//        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
+//            return OutputMessageType.UNIT_NOT_SELECTED;
+//        todo isn't needed because "this" refers to the unit
+        if (dataBase.getCurrentBattle().getPlayerInTurn().
+                getSelectedUnit().didAttackThisTurn)
+            return OutputMessageType.ALREADY_ATTACKED;
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetID))
+            return OutputMessageType.INVALID_CARD;
+        if (false) {
+            //todo check range
+            return OutputMessageType.TARGET_NOT_IN_RANGE;
+        }
+        this.didAttackThisTurn = true;
+        Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
+                getUnitWithID(targetID);
+        targetedUnit.changeHp(-this.ap);
+        return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
     public void counterAttackUnit(Unit unit) {
@@ -99,8 +119,6 @@ class Unit extends Card {
         return Constants.RANGED;
     }
 
-
-
     public void changeHp(int hpChange) {
         hp += hpChange;
         if (hp < 0)
@@ -111,5 +129,21 @@ class Unit extends Card {
         ap += apChange;
         if (ap < 0)
             ap = 0;
+    }
+
+    public boolean isDidAttackThisTurn() {
+        return didAttackThisTurn;
+    }
+
+    public void setDidAttackThisTurn(boolean didAttackThisTurn) {
+        this.didAttackThisTurn = didAttackThisTurn;
+    }
+
+    public boolean isDidMoveThisTurn() {
+        return didMoveThisTurn;
+    }
+
+    public void setDidMoveThisTurn(boolean didMoveThisTurn) {
+        this.didMoveThisTurn = didMoveThisTurn;
     }
 }
