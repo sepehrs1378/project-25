@@ -60,12 +60,14 @@ public class View {
         System.out.println(list);
 
     }
-    public void showUsers(List<Account> users,String currentUserName){
-        for(Account account:users){
-            if(!account.getUsername().equals(currentUserName))
+
+    public void showUsers(List<Account> users, String currentUserName) {
+        for (Account account : users) {
+            if (!account.getUsername().equals(currentUserName))
                 System.out.println(account.getUsername());
         }
     }
+
     public void showLeaderboard(List<Account> accounts) {
         int counter = 1;
         for (Account account : accounts) {
@@ -104,7 +106,11 @@ public class View {
         }
     }
 
-    public void showMatchHistory(Account account){
+    public void showMatchHistory(Account account) {
         //todo
+    }
+
+    public void showUnitMove(String unitID, int destinationRow, int destinationColumn) {
+        System.out.println(unitID + " move to " + destinationRow + " " + destinationColumn);
     }
 }

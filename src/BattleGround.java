@@ -81,5 +81,6 @@ class BattleGround {
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
+        return OutputMessageType.UNIT_MOVED;
     }
 }

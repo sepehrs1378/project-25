@@ -89,7 +89,20 @@ public class ControllerBattleCommands {
         }
         Pattern pattern = Pattern.compile("^move to (\\d+) (\\d+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        //todo
+        int destinationRow = Integer.parseInt(matcher.group(1));
+        int destinationColumn = Integer.parseInt(matcher.group(2));
+        switch (database.getCurrentBattle().getBattleGround().
+                moveUnit(destinationRow, destinationColumn)) {
+            case UNIT_NOT_SELECTED:
+                view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
+                break;
+            case UNIT_MOVED:
+                view.showUnitMove(database.getCurrentBattle().
+                                getPlayerInTurn().getSelectedUnit().getId()
+                        , destinationRow, destinationColumn);
+                break;
+            default:
+        }
     }
 
     public void attack() {
