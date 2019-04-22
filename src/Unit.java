@@ -88,15 +88,22 @@ class Unit extends Card {
             return OutputMessageType.ALREADY_ATTACKED;
         if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetID))
             return OutputMessageType.INVALID_CARD;
-        if (false) {
-            //todo check range
+        if (!isTargetUnitWithinRange(targetID))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
-        }
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
                 getUnitWithID(targetID);
         targetedUnit.changeHp(-this.ap);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
+    }
+
+    private boolean isTargetUnitWithinRange(String targetID) {
+        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetID);
+        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+        int distanceToTarget = getDistanceToTarget(
+                battleGround.getCoordinationOfUnit(targetUnit)[0],
+                battleGround.getCoordinationOfUnit(targetUnit)[1]);
+        return distanceToTarget <= maxRange && distanceToTarget >= minRange;
     }
 
     public void counterAttackUnit(Unit unit) {
