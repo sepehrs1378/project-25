@@ -1,7 +1,8 @@
 import java.util.List;
 
 public class ControllerGraveYard {
-    private static final View view=View.getInstance();
+    private static final Request request = Request.getInstance();
+    private static final View view = View.getInstance();
     private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
 
     public static ControllerGraveYard getInstance() {
@@ -12,7 +13,6 @@ public class ControllerGraveYard {
     }
 
     public void main() {
-        Request request = new Request();
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -29,11 +29,11 @@ public class ControllerGraveYard {
         }
     }
 
-    public void show(Request request){
-        if(!request.getCommand().matches("^show cards$") &&
-                !request.getCommand().matches("^show info .+$")){
-            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-            view.printError(request.getOutputMessageType());
+    public void show() {
+        if (!request.getCommand().matches("^show cards$") &&
+                !request.getCommand().matches("^show info .+$")) {
+            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+            view.printOutputMessage(request.getOutputMessageType());
             return;
         }
         if (request.getCommand().matches("^show cards$")) {

@@ -1,11 +1,15 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class Card {
-    private String cardID;
+    private static final DataBase dataBase = DataBase.getInstance();
+    private String id;
+    private String name;
     private int price;
     private int mana;
-    private String name;
 
-    public String getCardID() {
-        return cardID;
+    public String getId() {
+        return id;
     }
 
     public int getPrice() {
@@ -16,8 +20,8 @@ class Card {
         return mana;
     }
 
-    public void setCardID(String cardID) {
-        this.cardID = cardID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setPrice(int price) {
@@ -28,15 +32,17 @@ class Card {
         this.mana = mana;
     }
 
-    public static void addCard(Card newCard) {
-
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Account getOwner() {
+        Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
+        Matcher matcher = pattern.matcher(id);
+        return dataBase.getAccountWithUsername(matcher.group(1));
     }
 }

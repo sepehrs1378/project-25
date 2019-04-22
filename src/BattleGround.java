@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class BattleGround {
+    private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
 
@@ -9,14 +7,14 @@ class BattleGround {
         return cells;
     }
 
-    public int[] getCoordinationsOfUnit(Unit unit) {
-        int[] coordinations = new int[2];
+    public int[] getCoordinationOfUnit(Unit unit) {
+        int[] coordination = new int[2];
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (cells[i][j].getUnit() == unit) {
-                    coordinations[0] = i;
-                    coordinations[1] = j;
-                    return coordinations;
+                    coordination[0] = i;
+                    coordination[1] = j;
+                    return coordination;
                 }
             }
         }
@@ -45,20 +43,21 @@ class BattleGround {
         return null;
     }
     public boolean doesHaveUnit(Unit unit) {
-        if (getCellOfUnit(unit) == null) {
-            return false;
-        }
-        return true;
+        return getCellOfUnit(unit) != null;
     }
 
-    public boolean doesHaveUnit(String unitName) {
+    public boolean doesHaveUnit(String id) {
+        return getUnitWithID(id) != null;
+    }
+
+    public Unit getUnitWithID(String id) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getCardID() == unitName)
-                    return true;
+                if (cell.getUnit() != null && cell.getUnit().getId().equals(id))
+                    return cell.getUnit();
             }
         }
-        return false;
+        return null;
     }
 
     public int getNumberOfFlags() {
@@ -116,5 +115,20 @@ class BattleGround {
             }
         }
         return minions;
+    }
+
+    public OutputMessageType moveUnit(int destinationRow, int destinationColumn) {
+        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
+            return OutputMessageType.UNIT_NOT_SELECTED;
+        Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
+        //todo checking the manhattan destination and ...
+        Cell originCell = getCellOfUnit(selectedUnit);
+        originCell.setUnit(null);
+        cells[destinationRow][destinationColumn].setUnit(selectedUnit);
+        return OutputMessageType.UNIT_MOVED;
+    }
+
+    public int getDistance(int row1, int column1, int row2, int column2) {
+        return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 }

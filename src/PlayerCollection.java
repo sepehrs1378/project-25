@@ -36,18 +36,44 @@ class PlayerCollection {
         return decks;
     }
 
+    public Card getCardWithID(String id) {
+        for (Card card : cards) {
+            if (card.getId().equals(id))
+                return card;
+        }
+        return null;
+    }
+
+    public boolean doesHaveCard(String id) {
+        return getCardWithID(id) != null;
+    }
+
+    public Item getItemWithID(String id) {
+        for (Item item : items) {
+            if (item.getId().equals(id))
+                return item;
+        }
+        return null;
+    }
+
+    public boolean doesHaveItem(String id) {
+        return getCardWithID(id) != null;
+    }
+
+    public boolean doesHave
+
     public void addNewDeck() {
         //todo maybe it isn't needed
     }
 
-    public void deleteDeck(Deck deck) {
+    public OutputMessageType deleteDeck(String deckName) {
+        if (!doesHaveDeck(deckName))
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        Deck deck = getDeckByName(deckName);
         decks.remove(deck);
         if (dataBase.getLoggedInAccount().getMainDeck() == deck)
             dataBase.getLoggedInAccount().setMainDeck(null);
-    }
-
-    public void deleteDeck(String deckName) {
-        deleteDeck(getDeckByName(deckName));
+        return OutputMessageType.DECK_DELETED;
     }
 
     public Deck getDeckByName(String deckName) {
@@ -70,37 +96,62 @@ class PlayerCollection {
         return false;
     }
 
-    public outputMessageType createDeck(String deckName) {
+    public OutputMessageType createDeck(String deckName) {
         if (doesHaveDeck(deckName))
-            return outputMessageType.DECK_ALREADY_EXISTS;
+            return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
         decks.add(newDeck);
-        return outputMessageType.NO_ERROR;
+        return OutputMessageType.DECK_CREATED;
     }
 
-    public outputMessageType buy(String name) {
+    public OutputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
             if (loggedInAccount.getMoney() < card.getPrice())
-                return outputMessageType.INSUFFICIENT_MONEY;
+                return OutputMessageType.INSUFFICIENT_MONEY;
+            if (items.size() == 3)
+                return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
                 //todo
-                return outputMessageType.NO_ERROR;
+                return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
         if (dataBase.doesUsableExist(name)) {
             Usable usable = dataBase.getUsableWithName(name);
             if (loggedInAccount.getMoney() < usable.getPrice())
-                return outputMessageType.INSUFFICIENT_MONEY;
+                return OutputMessageType.INSUFFICIENT_MONEY;
+            if (items.size() == 3)
+                return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
                 //todo
-                return outputMessageType.NO_ERROR;
+                return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
-        return outputMessageType.NOT_IN_SHOP;
+        return OutputMessageType.NOT_IN_SHOP;
     }
 
-    public void sell(String name) {
 
+    public OutputMessageType sell(String id) {
+        if(doesHaveCard(id)){
+            //todo
+        }
+        //todo
+        return OutputMessageType.NOT_IN_COLLECTION;
+    }
+
+    public OutputMessageType selectDeckAsMain(String deckName) {
+        if (!doesHaveDeck(deckName))
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        dataBase.getLoggedInAccount().setMainDeck(getDeckByName(deckName));
+        return OutputMessageType.DECK_SELECTED;
+    }
+
+    public OutputMessageType validateDeck(String deckName) {
+        if (!doesHaveDeck(deckName))
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        Deck deck = getDeckByName(deckName);
+        if (deck.isValid())
+            return OutputMessageType.DECK_VALID;
+        return OutputMessageType.DECK_NOT_VALID;
     }
 }

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class View {
@@ -11,7 +10,7 @@ public class View {
     private View() {
     }
 
-    public void printError(outputMessageType outputMessageType) {
+    public void printOutputMessage(OutputMessageType outputMessageType) {
         System.out.println(outputMessageType.getMessage());
     }
 
@@ -59,14 +58,15 @@ public class View {
 
     public void printContentsOfAList(List list) {
         System.out.println(list);
-
     }
-    public void showUsers(List<Account> users,String currentUserName){
-        for(Account account:users){
-            if(!account.getUsername().equals(currentUserName))
+
+    public void showUsers(List<Account> users, String currentUserName) {
+        for (Account account : users) {
+            if (!account.getUsername().equals(currentUserName))
                 System.out.println(account.getUsername());
         }
     }
+
     public void showLeaderboard(List<Account> accounts) {
         int counter = 1;
         for (Account account : accounts) {
@@ -122,19 +122,23 @@ public class View {
     public void showItemInfo(Item item) {
         if (item instanceof Usable) {
             Usable usable = (Usable) item;
-            System.out.println("Name: " + usable.getItemID() + " - Desc: " +
+            System.out.println("Name: " + usable.getId() + " - Desc: " +
                     usable.getDescription() + " - Sell Cost: " + usable.getPrice());
             return;
         }
         if (item instanceof Collectable) {
             Collectable collectable = (Collectable) item;
-            System.out.println("Name: " + collectable.getItemID() + " - Desc: " +
+            System.out.println("Name: " + collectable.getId() + " - Desc: " +
                     collectable.getDescription() + " - No Sell Cost: Collectable");
         }
     }
 
-    public void showMatchHistory(Account account){
+    public void showMatchHistory(Account account) {
         //todo
+    }
+
+    public void showUnitMove(String unitID, int destinationRow, int destinationColumn) {
+        System.out.println(unitID + " move to " + destinationRow + " " + destinationColumn);
     }
     public void showGameInfo(Battle battle){
         System.out.println("Mana points of player1 is: "+battle.getPlayer1().getMana());

@@ -2,7 +2,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class ControllerShop {
+    private static final Request request = Request.getInstance();
     private static final ControllerShop ourInstance = new ControllerShop();
+    private static final DataBase dataBase = DataBase.getInstance();
+    private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private static final View view = View.getInstance();
 
     private ControllerShop() {
@@ -15,9 +18,8 @@ class ControllerShop {
 
     public void main() {
         boolean didExit = false;
-        Request request = new Request();
-        request.getNewCommand();
         while (!didExit) {
+            request.getNewCommand();
             switch (request.getType()) {
                 case EXIT:
                     didExit = true;
@@ -27,11 +29,13 @@ class ControllerShop {
                 case SEARCH:
                     break;
                 case BUY:
-                    buy(request);
+                    buy();
                     break;
                 case SELL:
+                    sell();
                     break;
                 case HELP:
+                    help();
                     break;
                 default:
                     System.out.println("!!!!!! bad input in ControllerShop.main");
@@ -40,31 +44,57 @@ class ControllerShop {
         }
     }
 
-    public void show(Request request) {
+    public void show() {
 
     }
 
-    public void sell(Request request) {
-
+    public void sell() {
+        if (!request.getCommand().matches("^sell .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^sell (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        switch (loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1))) {
+            case NOT_IN_COLLECTION:
+                view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
+                break;
+            case SOLD_SUCCESSFULLY:
+                view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
+                break;
+            default:
+        }
     }
 
-    public void buy(Request request) {
+    public void buy() {
         if (!request.getCommand().matches("^buy .+$")) {
-            request.setOutputMessageType(outputMessageType.WRONG_COMMAND);
-            view.printError(request.getOutputMessageType());
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
         Pattern pattern = Pattern.compile("^buy (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        //todo
+        switch (loggedInAccount.getPlayerInfo().getCollection().buy(matcher.group(1))) {
+            case NOT_IN_SHOP:
+                view.printOutputMessage(OutputMessageType.NOT_IN_SHOP);
+                break;
+            case INSUFFICIENT_MONEY:
+                view.printOutputMessage(OutputMessageType.INSUFFICIENT_MONEY);
+                break;
+            case CANT_HAVE_MORE_ITEMS:
+                view.printOutputMessage(OutputMessageType.CANT_HAVE_MORE_ITEMS);
+                break;
+            case BOUGHT_SUCCESSFULLY:
+                view.printOutputMessage(OutputMessageType.BOUGHT_SUCCESSFULLY);
+                break;
+            default:
+        }
     }
 
-    public void search(Request request) {
+    public void search() {
 
     }
 
-    public void help(Request request) {
-        request.setHelpType(HelpType.CONTROLLER_SHOP_HELP);
-        view.printHelp(request.getHelpType());
+    public void help() {
+        view.printHelp(HelpType.CONTROLLER_SHOP_HELP);
     }
 }
