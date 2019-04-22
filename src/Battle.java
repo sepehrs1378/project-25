@@ -135,4 +135,9 @@ public class Battle {
         }
         return null;
     }
+    public Card getCardByCardID(String cardId){
+        Card card=this.getBattleGround().getCardByID(cardId);
+        return null;
+        //todo complete this method
+    }
 }

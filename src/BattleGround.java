@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class BattleGround {
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
@@ -30,7 +33,17 @@ class BattleGround {
             }
         return null;
     }
-
+    public Card getCardByID(String cardid){
+        for(Cell[] cellRow:cells)
+        {
+            for (Cell cell:cellRow){
+                if(cell.getUnit().getCardID().equals(cardid)){
+                    return cell.getUnit();
+                }
+            }
+        }
+        return null;
+    }
     public boolean doesHaveUnit(Unit unit) {
         if (getCellOfUnit(unit) == null) {
             return false;
@@ -90,5 +103,18 @@ class BattleGround {
             }
         }
         return null;
+    }
+    public List<Unit> getMinionsOfPlayer(Player player){
+        List<Unit> minions=new ArrayList<>();
+        for(Cell[] cellRow:cells){
+            for(Cell cell:cellRow)
+            {
+                if (cell.getUnit()!=null&&cell.getUnit().getCardID().equals(player.getPlayerInfo().getPlayerName())
+                && cell.getUnit().getHeroOrMinion().equals("Minion")){
+                    minions.add(cell.getUnit());
+                }
+            }
+        }
+        return minions;
     }
 }

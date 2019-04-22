@@ -7,6 +7,7 @@ public enum outputMessageType {
     BUY_SUCCESSFUL("Card or item was bought successfully"),
     SELL_SUCCESSFUL("Card or item was sold successfully"),
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
+    NO_CARD_IN_BATTLEGROUND("there is no such card in the battle ground"),
     WRONG_COMMAND("Invalid command"),
     INVALID_DECK_PLAYER1(""),//todo
     INVALID_DECK_PLAYER2(""),//todo

@@ -13,6 +13,7 @@ class Unit extends Card {
     private String heroOrMinion;
     private Spell specialPower;
     private String StringSpecialPower;
+    private String description;
 
     public int getHp() {
         return hp;
@@ -146,5 +147,13 @@ class Unit extends Card {
         for(Flag flag:flags)
             flag.setTurnsInUnitHand(0);
         this.flags=null;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

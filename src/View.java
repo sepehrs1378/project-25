@@ -81,14 +81,42 @@ public class View {
     }
 
     public void showHeroInfo(Unit hero) {
-        System.out.println("Name: " + hero.getCardID() + " - AP: " + hero.getAp() +
+        System.out.println("Name: " + hero.getCardID().split("_")[1] + " - AP: " + hero.getAp() +
                 " - HP: " + hero.getHp() + " - Class: " + hero.getUnitClass() +
                 " - Special Power: " + hero.getSpecialPower().getDescription() +
                 " - Sell Cost: " + hero.getPrice());
     }
 
-    public void showCardInfo(Card card) {
-        //todo
+    public void showMinionInBattle(Unit minion, int[] coordination){
+            System.out.println(minion.getCardID()+" : "+minion.getCardID().split("_")[1]+", health : "+
+                    minion.getHp()+", location:("+coordination[0]+","+coordination[1]+"),power : "
+                    +minion.getAp());
+    }
+
+    public void showCardInfoHero(Unit hero){
+        System.out.println("Hero:");
+        System.out.println("Name: "+hero.getName());
+        System.out.println("Cost: "+hero.getPrice());
+        System.out.println("Desc: "+hero.getDescription());
+    }
+
+    public void showCardInfoMinion(Unit unit){
+        System.out.println("Minion:");
+        System.out.println("Name: "+unit.getName());
+        System.out.println("HP: "+unit.getHp()+" AP: "+unit.getAp()+" MP: "+unit.getMana());
+        System.out.println("Range: "+unit.getRange());
+        //System.out.println("Combo-ability: "+unit.get);
+        //todo Combo-ability
+        System.out.println("Cost: "+unit.getPrice());
+        System.out.println("Desc: "+unit.getDescription());
+    }
+
+    public void showCardInfoSpell(Spell spell){
+        System.out.println("Spell: ");
+        System.out.println("Name: "+spell.getName());
+        System.out.println("MP: "+spell.getMana());
+        System.out.println("Cost: "+spell.getPrice());
+        System.out.println("Desc: "+spell.getDescription());
     }
 
     public void showItemInfo(Item item) {
@@ -107,5 +135,47 @@ public class View {
 
     public void showMatchHistory(Account account){
         //todo
+    }
+    public void showGameInfo(Battle battle){
+        System.out.println("Mana points of player1 is: "+battle.getPlayer1().getMana());
+        System.out.println("Mana points of player2 is: "+battle.getPlayer2().getMana());
+        if(battle.getMode().equals(Constants.CLASSIC)){
+            System.out.println("HP of player1's hero is: "+battle.getPlayer1().getDeck().getHero().getHp());
+            System.out.println("HP of player2's hero is: "+battle.getPlayer2().getDeck().getHero().getHp());
+        }else if(battle.getMode().equals(Constants.ONE_FLAG)){
+            for(int i=0;i<battle.getBattleGround().getCells().length;i++){
+                for(int j=0;j<battle.getBattleGround().getCells()[i].length;j++){
+                    if(battle.getBattleGround().getCells()[i][j].getFlags().size()>0)
+                    {
+                        if(battle.getBattleGround().getCells()[i][j].getUnit().getCardID().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
+                            System.out.println("flag is in row "+i+" column "+j+" in hand of player1");
+                        }else if(battle.getBattleGround().getCells()[i][j].getUnit().getCardID().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
+                            System.out.println("flag is in row "+i+" column "+j+" in hand of player2");
+                        }else
+                            System.out.println("flag is in row "+i+" column "+j);
+                    }
+                }
+            }
+        }else if(battle.getMode().equals(Constants.FLAGS)){
+            int rowCounter=1;
+            int flagCounter=1;
+            for(Cell[] cellRow:battle.getBattleGround().getCells()){
+                int columnCounter=1;
+                for(Cell cell:cellRow){
+                    for(Flag flag:cell.getFlags()){
+                        if(cell.getUnit()!=null){
+                            System.out.println("flag"+flagCounter+" in row "+rowCounter+
+                                    " column "+columnCounter+" "+cell.getUnit().getCardID());
+                        }else {
+                            System.out.println("flag"+flagCounter+" in row "+rowCounter+
+                                    " column "+columnCounter);
+                        }
+                        flagCounter++;
+                    }
+                    columnCounter++;
+                }
+                rowCounter++;
+            }
+        }
     }
 }
