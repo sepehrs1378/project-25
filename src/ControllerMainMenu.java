@@ -1,5 +1,8 @@
+import javax.print.DocFlavor;
+
 public class ControllerMainMenu {
-    private static ControllerMainMenu ourInstance = new ControllerMainMenu();
+    private static final Request request = Request.getInstance();
+    private static final ControllerMainMenu ourInstance = new ControllerMainMenu();
     private static final View view = View.getInstance();
 
     public static ControllerMainMenu getInstance() {
@@ -11,12 +14,11 @@ public class ControllerMainMenu {
 
     public void main() {
         boolean didLogout = false;
-        Request request = new Request();
         while (!didLogout) {
             request.getNewCommand();
             switch (request.getType()) {
                 case ENTER:
-                    enter(request);
+                    enter();
                     break;
                 case SAVE:
                     //todo
@@ -35,7 +37,7 @@ public class ControllerMainMenu {
 
     }
 
-    public void enter(Request request) {
+    public void enter() {
         switch (request.getCommand()) {
             case "enter collection":
                 ControllerCollection.getInstance().main();

@@ -115,30 +115,6 @@ class Unit extends Card {
         return Constants.RANGED;
     }
 
-    public int getMaxRange() {
-        return maxRange;
-    }
-
-    public void setMaxRange(int maxRange) {
-        this.maxRange = maxRange;
-    }
-
-    public int getMinRange() {
-        return minRange;
-    }
-
-    public void setMinRange(int minRange) {
-        this.minRange = minRange;
-    }
-
-    public Spell getSpecialPower() {
-        return specialPower;
-    }
-
-    public void setSpecialPower(Spell specialPower) {
-        this.specialPower = specialPower;
-    }
-
     public void changeHp(int hpChange) {
         hp += hpChange;
         if (hp < 0)

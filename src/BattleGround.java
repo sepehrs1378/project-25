@@ -9,15 +9,14 @@ class BattleGround {
         return cells;
     }
 
-    public int[] getCoordinationsOfUnit(Unit unit) {
-        int[] coordinations=new int[2];
+    public int[] getCoordinationOfUnit(Unit unit) {
+        int[] coordination = new int[2];
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (cells[i][j].getUnit() == unit)
-                {
-                    coordinations[0]=i;
-                    coordinations[1]=j;
-                    return coordinations;
+                if (cells[i][j].getUnit() == unit) {
+                    coordination[0] = i;
+                    coordination[1] = j;
+                    return coordination;
                 }
             }
         }

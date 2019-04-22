@@ -1,4 +1,5 @@
 public class ControllerMultiPlayerMenu {
+    private static final Request request = Request.getInstance();
     private static final View view = View.getInstance();
     private static final ControllerMultiPlayerMenu ourInstance = new ControllerMultiPlayerMenu();
     private static final DataBase database = DataBase.getInstance();
@@ -12,13 +13,12 @@ public class ControllerMultiPlayerMenu {
 
     public void main() {
         view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
-        Request request = new Request();
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
                 case SELECT:
-                    select(request);
+                    select();
                     break;
                 case ENTER:
                     break;
@@ -29,11 +29,11 @@ public class ControllerMultiPlayerMenu {
         }
     }
 
-    private void enter(Request request) {
+    private void enter() {
 
     }
 
-    private void select(Request request) {
+    private void select() {
         if (request.getCommand().matches("select user \\w+")) ;
         {
             Account secondPlayer = Account.getAccount(request.getCommand().split(" ")[2]);
@@ -70,8 +70,6 @@ public class ControllerMultiPlayerMenu {
                 }
 
             }
-
-
         }
     }
 }

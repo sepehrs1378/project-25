@@ -1,6 +1,7 @@
 public class ControllerBattleMenu {
-    private static ControllerBattleMenu ourInstance = new ControllerBattleMenu();
-    private static View view = View.getInstance();
+    private static final Request request = Request.getInstance();
+    private static final ControllerBattleMenu ourInstance = new ControllerBattleMenu();
+    private static final View view = View.getInstance();
 
     public static ControllerBattleMenu getInstance() {
         return ourInstance;
@@ -10,7 +11,6 @@ public class ControllerBattleMenu {
     }
 
     public void main() {
-        Request request = new Request();
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -19,13 +19,13 @@ public class ControllerBattleMenu {
                     didExit = true;
                     break;
                 case ENTER:
-                    enter(request);
+                    enter();
                     break;
             }
         }
     }
 
-    private void enter(Request request) {
+    private void enter() {
         if (request.getCommand().equals("enter single player")) {
             //todo
         } else if (request.getCommand().toLowerCase().equals("enter multi player")) {

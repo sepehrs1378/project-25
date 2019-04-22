@@ -1,11 +1,20 @@
 import java.util.Scanner;
 
 public class Request {
+    private static final Request ourInstance = new Request();
     private static final View view = View.getInstance();
     private static final Scanner scanner = new Scanner(System.in);
     private String command;
     private OutputMessageType outputMessageType;
     private HelpType helpType;
+
+    private Request() {
+
+    }
+
+    public static Request getInstance() {
+        return ourInstance;
+    }
 
     public void getNewCommand() {
         boolean isValid = false;

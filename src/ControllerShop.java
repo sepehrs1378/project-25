@@ -2,6 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class ControllerShop {
+    private static final Request request = Request.getInstance();
     private static final ControllerShop ourInstance = new ControllerShop();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
@@ -17,7 +18,6 @@ class ControllerShop {
 
     public void main() {
         boolean didExit = false;
-        Request request = new Request();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
@@ -29,10 +29,10 @@ class ControllerShop {
                 case SEARCH:
                     break;
                 case BUY:
-                    buy(request);
+                    buy();
                     break;
                 case SELL:
-                    sell(request);
+                    sell();
                     break;
                 case HELP:
                     help();
@@ -44,11 +44,11 @@ class ControllerShop {
         }
     }
 
-    public void show(Request request) {
+    public void show() {
 
     }
 
-    public void sell(Request request) {
+    public void sell() {
         if (!request.getCommand().matches("^sell .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -66,7 +66,7 @@ class ControllerShop {
         }
     }
 
-    public void buy(Request request) {
+    public void buy() {
         if (!request.getCommand().matches("^buy .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -90,7 +90,7 @@ class ControllerShop {
         }
     }
 
-    public void search(Request request) {
+    public void search() {
 
     }
 

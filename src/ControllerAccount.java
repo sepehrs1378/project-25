@@ -1,4 +1,5 @@
 public class ControllerAccount {
+    private static final Request request=Request.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
@@ -12,7 +13,6 @@ public class ControllerAccount {
 
     public void main() {
         boolean didExit = false;
-        Request request = new Request();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
@@ -21,10 +21,10 @@ public class ControllerAccount {
                 case CREATE:
                     break;
                 case SHOW:
-                    show(request);
+                    show();
                     break;
                 case HELP:
-                    help(request);
+                    help();
                     break;
                 case EXIT:
                     didExit = true;
@@ -36,24 +36,24 @@ public class ControllerAccount {
         }
     }
 
-    public void login(Request request) {
+    public void login() {
 
     }
 
-    public void create(Request request) {
+    public void create() {
     }
 
-    public void show(Request request) {
+    public void show() {
         if (!request.getCommand().matches("^show leaderboard$")) {
             request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
             view.printOutputMessage(request.getOutputMessageType());
         } else {
             dataBase.sortAccountsByWins();
-            view.showLeaderBoard(dataBase.getAccounts());
+            view.showLeaderboard(dataBase.getAccounts());
         }
     }
 
-    public void help(Request request) {
+    public void help() {
         request.setHelpType(HelpType.CONTROLLER_ACCOUNT_HELP);
         view.printHelp(request.getHelpType());
     }
