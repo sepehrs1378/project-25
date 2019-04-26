@@ -1,12 +1,14 @@
 import java.util.List;
 
 public class CardSpell extends Spell {
+    private int coolDown;
     private CardSpellTarget target;
 
     public void doSpell(int insertionRow, int insertionColumn) {
         doSpellEffectOnCells(insertionRow, insertionColumn);
         doSpellEffectOnUnits(insertionRow, insertionColumn);
     }
+
     public void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
         for (Cell cell : targetCells) {
@@ -33,5 +35,13 @@ public class CardSpell extends Spell {
             unit.changeHp(hpChange);
         }
         //todo duplicate
+    }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
     }
 }
