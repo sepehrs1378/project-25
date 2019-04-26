@@ -4,6 +4,7 @@ public class ControllerGraveYard {
     private static final Request request = Request.getInstance();
     private static final View view = View.getInstance();
     private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
+    private final DataBase dataBase = DataBase.getInstance();
 
     public static ControllerGraveYard getInstance() {
         return ourInstance;
@@ -18,6 +19,7 @@ public class ControllerGraveYard {
             request.getNewCommand();
             switch (request.getType()) {
                 case SHOW:
+                    show();
                     break;
                 case EXIT:
                     didExit = true;
@@ -37,10 +39,18 @@ public class ControllerGraveYard {
             return;
         }
         if (request.getCommand().matches("^show cards$")) {
-            //todo
+            view.showInfoOfCards(dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().getDeadCards());
         }
         if (request.getCommand().matches("^show info .+$")) {
-            //todo
+            String[] strings = request.getCommand().split("\\s+");
+            String cardId = strings[2];
+            Card card = dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().findCard(cardId);
+            if (card instanceof Unit){
+                Unit unit = (Unit) card;
+                if (unit.getHeroOrMinion().equals("hero")){
+                    view.showCardInfoHero(unit);
+                }
+            }
         }
     }
 

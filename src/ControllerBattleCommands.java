@@ -4,10 +4,9 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class ControllerBattleCommands {
+    private static final Request request=Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
-    private final Request request = Request.getInstance();
-
     private ControllerBattleCommands() {
     }
 
@@ -100,6 +99,7 @@ public class ControllerBattleCommands {
                 }
             }else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
+                view.printOutputMessage(request.getOutputMessageType());
                 //todo
                 view.printOutputMessage(request.getOutputMessageType());
             }

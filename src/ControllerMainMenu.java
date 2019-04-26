@@ -18,9 +18,6 @@ public class ControllerMainMenu {
                 case ENTER:
                     enter();
                     break;
-                case SAVE:
-                    //todo
-                    break;
                 case LOGOUT:
                     didLogout = true;
                     break;
@@ -29,10 +26,6 @@ public class ControllerMainMenu {
                     System.exit(-1);
             }
         }
-    }
-
-    public void save() {
-
     }
 
     public void enter() {

@@ -1,3 +1,5 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +37,10 @@ class BattleGround {
         return null;
     }
 
-    public Card getCardByID(String cardid) {
+    public Card getCardByID(String cardId) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit().getId().equals(cardid)) {
+                if (cell.getUnit().getId().equals(cardId)) {
                     return cell.getUnit();
                 }
             }
@@ -134,5 +136,14 @@ class BattleGround {
 
     public int getDistance(int row1, int column1, int row2, int column2) {
         return Math.abs(row1 - row2) + Math.abs(column1 - column2);
+    }
+
+    public String isUnitFriendlyOrEnemy(Unit unit) {
+        Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
+        Matcher matcher = pattern.matcher(unit.getId());
+        String username = matcher.group(1);
+        if (dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(username))
+            return Constants.FRIEND;
+        return Constants.ENEMY;
     }
 }

@@ -1,4 +1,4 @@
-public class PoisonBuff extends Buff {
+public class InfernoBuff extends Buff {
     private int damagePerTurn;
 
     @Override

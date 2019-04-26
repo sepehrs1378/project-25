@@ -30,13 +30,6 @@ public class View {
                 }
             }
         }
-        System.out.println("Items:");
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i) instanceof Item) {
-                Item item = (Item) cards.get(i);
-                System.out.println(i + " : Name : " + item.getId() + " - Desc : " + item.getDescription());
-            }
-        }
         System.out.println("Cards:");
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Spell) {
