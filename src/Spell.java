@@ -2,14 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract class Spell extends Card {
-    private int coolDown;
     private int apChange;
     private int hpChange;
     private List<Buff> addedBuffsToCells = new ArrayList<>();
     private String deletedBuffsFromCells;
     private List<Buff> addedBuffsToUnits = new ArrayList<>();
     private String deletedBuffsFromUnits;
-    private List<Unit> createdUnits = new ArrayList<>();
     private String description;
 
     public int getCooldown() {
