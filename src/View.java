@@ -81,14 +81,14 @@ public class View {
     }
 
     public void showHeroInfo(Unit hero) {
-        System.out.println("Name: " + hero.getCardID().split("_")[1] + " - AP: " + hero.getAp() +
+        System.out.println("Name: " + hero.getId().split("_")[1] + " - AP: " + hero.getAp() +
                 " - HP: " + hero.getHp() + " - Class: " + hero.getUnitClass() +
                 " - Special Power: " + hero.getSpecialPower().getDescription() +
                 " - Sell Cost: " + hero.getPrice());
     }
 
     public void showMinionInBattle(Unit minion, int[] coordination){
-            System.out.println(minion.getCardID()+" : "+minion.getCardID().split("_")[1]+", health : "+
+            System.out.println(minion.getId()+" : "+minion.getId().split("_")[1]+", health : "+
                     minion.getHp()+", location:("+coordination[0]+","+coordination[1]+"),power : "
                     +minion.getAp());
     }
@@ -151,9 +151,9 @@ public class View {
                 for(int j=0;j<battle.getBattleGround().getCells()[i].length;j++){
                     if(battle.getBattleGround().getCells()[i][j].getFlags().size()>0)
                     {
-                        if(battle.getBattleGround().getCells()[i][j].getUnit().getCardID().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
+                        if(battle.getBattleGround().getCells()[i][j].getUnit().getId().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
                             System.out.println("flag is in row "+i+" column "+j+" in hand of player1");
-                        }else if(battle.getBattleGround().getCells()[i][j].getUnit().getCardID().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
+                        }else if(battle.getBattleGround().getCells()[i][j].getUnit().getId().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
                             System.out.println("flag is in row "+i+" column "+j+" in hand of player2");
                         }else
                             System.out.println("flag is in row "+i+" column "+j);
@@ -169,7 +169,7 @@ public class View {
                     for(Flag flag:cell.getFlags()){
                         if(cell.getUnit()!=null){
                             System.out.println("flag"+flagCounter+" in row "+rowCounter+
-                                    " column "+columnCounter+" "+cell.getUnit().getCardID());
+                                    " column "+columnCounter+" "+cell.getUnit().getId());
                         }else {
                             System.out.println("flag"+flagCounter+" in row "+rowCounter+
                                     " column "+columnCounter);
