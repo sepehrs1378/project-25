@@ -13,6 +13,7 @@ class Unit extends Card {
     private Spell specialPower;
     private boolean didAttackThisTurn;
     private boolean didMoveThisTurn;
+    private String description;
 
     public int getHp() {
         return hp;
@@ -150,6 +151,22 @@ class Unit extends Card {
         this.didMoveThisTurn = didMoveThisTurn;
     }
 
+    public boolean isDisarmed() {
+        for (Buff buff : buffs) {
+            if (buff instanceof DisarmBuff)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isStuned() {
+        for (Buff buff : buffs) {
+            if (buff instanceof StunBuff)
+                return true;
+        }
+        return false;
+    }
+
     public int getDistanceToTarget(int targetRow, int targetColumn) {
         int unitRow = dataBase.getCurrentBattle().getBattleGround()
                 .getCoordinationOfUnit(this)[0];
@@ -159,19 +176,21 @@ class Unit extends Card {
                 .getDistance(unitRow, unitColumn, targetRow, targetColumn);
     }
 
-    public boolean isDisarmed() {
-        for (Buff buff : buffs) {
-            if (buff instanceof DisarmBuff)
-                return true;
-        }
-        return false;
+    public void takeFlags(List<Flag> flags){
+        this.flags=flags;
     }
 
-    public boolean isStunned() {
-        for (Buff buff : buffs) {
-            if (buff instanceof StunBuff)
-                return true;
-        }
-        return false;
+    public void dropFlags(){
+        for(Flag flag:flags)
+            flag.setTurnsInUnitHand(0);
+        this.flags=null;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

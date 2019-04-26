@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DataBase {
+public class
+DataBase {
     private static DataBase ourInstance = new DataBase();
     private static List<Usable> usableList = new ArrayList<>();
     private static List<Collectable> collectableList = new ArrayList<>();
@@ -46,7 +47,8 @@ public class DataBase {
         return accountList;
     }
 
-    public void addAccount() {
+    public void addAccount(Account account) {
+        accountList.add(account);
     }
 
     public void sortAccountsByWins() {

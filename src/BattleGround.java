@@ -1,5 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
@@ -35,6 +37,17 @@ class BattleGround {
         return null;
     }
 
+    public Card getCardByID(String cardid) {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit().getId().equals(cardid)) {
+                    return cell.getUnit();
+                }
+            }
+        }
+        return null;
+    }
+
     public boolean doesHaveUnit(Unit unit) {
         return getCellOfUnit(unit) != null;
     }
@@ -64,6 +77,18 @@ class BattleGround {
         return numberOfFlags;
     }
 
+    public int getNumberOfFlagsForPlayer(Player player) {
+        int numberOfFlags = 0;
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
+                    numberOfFlags += cell.getUnit().getFlags().size();
+                }
+            }
+        }
+        return numberOfFlags;
+    }
+
     public int getNumberOfFlagsOnGround() {
         int numberOfFlags = 0;
         for (Cell[] cellRow : cells) {
@@ -72,6 +97,30 @@ class BattleGround {
             }
         }
         return numberOfFlags;
+    }
+
+    //method below is for oneFlag mode game
+    public Cell getCellWithFlag() {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getFlags().size() > 0)
+                    return cell;
+            }
+        }
+        return null;
+    }
+
+    public List<Unit> getMinionsOfPlayer(Player player) {
+        List<Unit> minions = new ArrayList<>();
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() != null && cell.getUnit().getId().equals(player.getPlayerInfo().getPlayerName())
+                        && cell.getUnit().getHeroOrMinion().equals("Minion")) {
+                    minions.add(cell.getUnit());
+                }
+            }
+        }
+        return minions;
     }
 
     public OutputMessageType moveUnit(int destinationRow, int destinationColumn) {

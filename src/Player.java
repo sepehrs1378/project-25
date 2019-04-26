@@ -13,7 +13,7 @@ class Player {
     private Hand hand;
     private Deck deck;
     private Card nextCard;
-    private int mana = 2;
+    private int mana;
     private GraveYard graveYard = new GraveYard();
     private Unit selectedUnit;
     private Collectable selectedCollectable;
@@ -42,6 +42,15 @@ class Player {
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
+    }
+
+    public void setHand(Deck deck) {
+        for(int i=0;i<Constants.NUMBER_OF_HAND_CARDS;i++){
+            int randomNumber=(int)(Math.random()*deck.getCards().size());
+            hand.addCard(deck.getCards().get(randomNumber));
+            deck.getCards().remove(randomNumber);
+        }
+
     }
 
     public void setDeck(Deck deck) {

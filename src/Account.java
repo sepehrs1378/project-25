@@ -5,7 +5,6 @@ public class Account implements Comparable<Account> {
     private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
     private static List<Account> accounts = DataBase.getInstance().getAccounts();
-    private static Account loggedInAccount = dataBase.getLoggedInAccount();
     private boolean[] levelsOpennessStatus = new boolean[3];
     private String password;
     private String username;
@@ -18,9 +17,6 @@ public class Account implements Comparable<Account> {
         levelsOpennessStatus[0] = true;
     }
 
-    public static boolean checkValidation(String username, String password) {
-        //todo
-    }
     public static Account getAccount(String userName){
         for(Account account:accounts){
             if(account.getUsername().equals(userName)){
@@ -28,27 +24,6 @@ public class Account implements Comparable<Account> {
             }
         }
         return null;
-    }
-
-    public static void loginToAccount(String username, String password) {
-        for (Account account : accounts) {
-            if (account.username.equals(username)) {
-                if (account.password.equals(password)) {
-                    loggedInAccount = account;
-                }
-            } else {
-                controllerAccount.showLoginError(OutputMessageType.INVALID_PASSWORD);
-            }
-        }
-        controllerAccount.showLoginError(OutputMessageType.INVALID_USERNAME);
-    }
-
-    public static Account getLoggedInAccount() {
-        return loggedInAccount;
-    }
-
-    public static void setLoggedInAccount(Account loggedInAccount) {
-        Account.loggedInAccount = loggedInAccount;
     }
 
     public String getUsername() {
