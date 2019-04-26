@@ -8,7 +8,6 @@ class Cell {
     private ArrayList<Flag> flags = new ArrayList<>();
 
     public Cell() {
-
     }
 
     public Unit getUnit() {

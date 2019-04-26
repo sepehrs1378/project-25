@@ -13,11 +13,13 @@ class GraveYard {
         deadCards.add(deadCard);
     }
 
-    public void showInfoOfDeadCards() {
-        controllerGraveYard.showInfoOfCards(deadCards);
+    public Card findCard(String cardId){
+        for (Card card : deadCards){
+            if (card.getId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
     }
-//    public void showInfo(String cardID) {             find a use for this empty method or delete it
-//
-//    }
 
 }

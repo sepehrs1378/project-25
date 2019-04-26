@@ -28,6 +28,7 @@ public enum OutputMessageType {
     TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
     ATTACKED_SUCCESSFULLY(""),
     ALREADY_ATTACKED("Unit has already attacked"),
+    NO_CARD_IN_BATTLEGROUN("There is no card in battle ground"),
     NO_ERROR("");
 
     private String message;

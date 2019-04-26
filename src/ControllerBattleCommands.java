@@ -101,7 +101,7 @@ public class ControllerBattleCommands {
                 }
             }else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
-                view.printError(request.getOutputMessageType());
+                view.printOutputMessage(request.getOutputMessageType());
             }
         }
     }

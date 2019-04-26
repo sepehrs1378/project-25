@@ -37,10 +37,10 @@ class BattleGround {
         return null;
     }
 
-    public Card getCardByID(String cardid) {
+    public Card getCardByID(String cardId) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit().getId().equals(cardid)) {
+                if (cell.getUnit().getId().equals(cardId)) {
                     return cell.getUnit();
                 }
             }
