@@ -3,6 +3,7 @@ public class ControllerAccount {
     private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
+    private final ControllerMainMenu controllerMainMenu = ControllerMainMenu.getInstance();
 
     private ControllerAccount() {
     }
@@ -17,8 +18,10 @@ public class ControllerAccount {
             request.getNewCommand();
             switch (request.getType()) {
                 case LOGIN:
+                    login();
                     break;
                 case CREATE:
+                    create();
                     break;
                 case SHOW:
                     show();
@@ -37,10 +40,36 @@ public class ControllerAccount {
     }
 
     public void login() {
-
+        request.getNewCommand();
+        for (Account account : dataBase.getAccounts()) {
+            if (account.getUsername().equals(request.getCommand())) {
+                request.getNewCommand();
+                if (account.getPassword().equals(request.getCommand())) {
+                    dataBase.setLoggedInAccount(account);
+                    controllerMainMenu.main();
+                }
+            } else {
+                showError(OutputMessageType.INVALID_PASSWORD);
+            }
+        }
+        showError(OutputMessageType.INVALID_USERNAME);
     }
 
     public void create() {
+        request.getNewCommand();
+        for (int i =0; i < dataBase.getAccounts().size(); i++){
+            Account account = dataBase.getAccounts().get(i);
+            if (account.getUsername().equals(request.getCommand())){
+                showError(OutputMessageType.USERNAME_ALREADY_EXISTS);
+                i = -1;
+            }
+        }
+        Account account = new Account();
+        account.setUsername(request.getCommand());
+        request.getNewCommand();
+        account.setPassword(request.getCommand());
+        dataBase.addAccount(account);
+        controllerMainMenu.main();
     }
 
     public void show() {
@@ -58,7 +87,7 @@ public class ControllerAccount {
         view.printHelp(request.getHelpType());
     }
 
-    public void showLoginError(OutputMessageType error) {
+    public void showError(OutputMessageType error) {
         view.printOutputMessage(error);
     }
 }

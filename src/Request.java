@@ -9,7 +9,6 @@ public class Request {
     private HelpType helpType;
 
     private Request() {
-
     }
 
     public static Request getInstance() {
@@ -17,16 +16,7 @@ public class Request {
     }
 
     public void getNewCommand() {
-        boolean isValid = false;
-        while (!isValid) {
             command = scanner.nextLine().toLowerCase().trim().replaceAll("\\s+", " ");
-            if (!getType().equals(RequestType.WRONG_REQUEST))
-                isValid = true;
-            else {
-                outputMessageType = outputMessageType.WRONG_COMMAND;
-                view.printOutputMessage(outputMessageType);
-            }
-        }
     }
 
     public String getCommand() {

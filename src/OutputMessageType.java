@@ -3,6 +3,7 @@ public enum OutputMessageType {
     BATTLE_NOT_FINISHED("Battle isn't finished yet..."),
     INVALID_PASSWORD("Invalid password"),
     INVALID_USERNAME("This user does not exist"),
+    USERNAME_ALREADY_EXISTS("This username already exists"),
     NOT_IN_SHOP("Card/item doesn't exist in shop"),
     INSUFFICIENT_MONEY("You don't have enough money"),
     BOUGHT_SUCCESSFULLY("Card/item was bought successfully"),
