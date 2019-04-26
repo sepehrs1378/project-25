@@ -2,6 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerCollection {
+    private static final Request request=Request.getInstance();
     private static final ControllerCollection ourInstance = new ControllerCollection();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
@@ -17,23 +18,21 @@ public class ControllerCollection {
 
     public void main() {
         boolean didExit = false;
-        Request request =Request.getInstance();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE:
-                    ourInstance.create(request);
+                    ourInstance.create();
                     break;
                 case EXIT:
                     didExit = true;
                     break;
                 case SHOW:
-                    show(request);
+                    show();
                     break;
                 case SEARCH:
                     break;
                 case SAVE:
-                    //todo is it needed?
                     break;
                 case DELETE:
                     ourInstance.delete(request);
@@ -57,7 +56,7 @@ public class ControllerCollection {
         }
     }
 
-    private void create(Request request) {
+    public void create() {
         if (!request.getCommand().matches("^create deck .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -75,7 +74,7 @@ public class ControllerCollection {
         }
     }
 
-    private void show(Request request) {
+    private void show() {
         if (request.getCommand().equals("show")){
             showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
         }
@@ -83,8 +82,11 @@ public class ControllerCollection {
     private void showCardsAndItemsOfCollection(PlayerCollection collection){
 
     }
+    public void save(){
 
-    private void help() {
+    }
+
+    public void help() {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 

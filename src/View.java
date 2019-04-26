@@ -32,6 +32,13 @@ public class View {
                 }
             }
         }
+        System.out.println("Items:");
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) instanceof Item) {
+                Item item = (Item) cards.get(i);
+                System.out.println(i + " : Name : " + item.getItemID() + " - Desc : " + item.getDesc());
+            }
+        }
         System.out.println("Cards:");
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Spell) {
@@ -47,6 +54,12 @@ public class View {
                 }
             }
         }
+        //todo since this method is general, is it possible to make the code more efficient by putting it in a separate
+        //todo Controller class? (i.e. the part that isn't about sout)
+    }
+
+    public void printContentsOfAList(List list) {
+        System.out.println(list);
     }
 
     public void showUsers(List<Account> users, String currentUserName) {
