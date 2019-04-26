@@ -51,9 +51,9 @@ class Target {
     }
 
     public List<Cell> getCells(int insertionRow, int insertionColumn) {
-        if (!typeOfTarget.equals(Constants.CELL))
-            return null;
         List<Cell> targetCells = new ArrayList<>();
+        if (!typeOfTarget.equals(Constants.CELL))
+            return targetCells;
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
