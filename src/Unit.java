@@ -75,10 +75,6 @@ public class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public void dropFlags() {
-
-    }
-
     public void doSpecialPower() {
 
     }
