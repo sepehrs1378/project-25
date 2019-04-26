@@ -20,6 +20,9 @@ public class Constants {
     public static final String RANGED = "ranged";
     public static final String HYBRID = "hybrid";
 
+    public static final String POSITIVE = "positive";
+    public static final String NEGATIVE = "negative";
+
     public static final int BATTLE_GROUND_WIDTH = 5;
     public static final int BATTLE_GROUND_LENGTH = 9;
 

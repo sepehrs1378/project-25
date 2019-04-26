@@ -75,10 +75,6 @@ class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public void dropFlags() {
-
-    }
-
     public void doSpecialPower() {
 
     }
@@ -176,14 +172,28 @@ class Unit extends Card {
                 .getDistance(unitRow, unitColumn, targetRow, targetColumn);
     }
 
-    public void takeFlags(List<Flag> flags){
-        this.flags=flags;
+    public void takeFlags(List<Flag> flags) {
+        this.flags = flags;
     }
 
-    public void dropFlags(){
-        for(Flag flag:flags)
+    public void dropFlags() {
+        for (Flag flag : flags)
             flag.setTurnsInUnitHand(0);
-        this.flags=null;
+        this.flags = null;
+    }
+
+    public int getArmor() {
+        int armor = 0;
+        for (Buff buff : buffs) {
+            if (buff instanceof HolyBuff)
+                armor += ((HolyBuff) buff).getArmor();
+        }
+        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCellOfUnit(this);
+        for (Buff buff : cell.getBuffs()) {
+            if (buff instanceof HolyBuff)
+                armor += ((HolyBuff) buff).getArmor();
+        }
+        return armor;
     }
 
     public String getDescription() {

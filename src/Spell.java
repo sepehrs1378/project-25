@@ -6,9 +6,7 @@ abstract class Spell extends Card {
     private int apChange;
     private int hpChange;
     private List<Buff> addedBuffsToCells = new ArrayList<>();
-    private List<Buff> deletedBuffsFromCells = new ArrayList<>();
     private List<Buff> addedBuffsToUnits = new ArrayList<>();
-    private List<Buff> deletedBuffsFromUnits = new ArrayList<>();
     private String passiveOrCastable;
     private String description;
     private String name;

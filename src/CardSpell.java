@@ -1,6 +1,8 @@
 import java.util.List;
 
 public class CardSpell extends Spell {
+    private static final DataBase dataBase = DataBase.getInstance();
+    private boolean isDispeller;
     private int coolDown;
     private CardSpellTarget target;
 
@@ -15,9 +17,6 @@ public class CardSpell extends Spell {
             for (Buff buff : getAddedBuffsToUnits()) {
                 cell.getBuffs().add(buff);
             }
-            for (Buff buff : deletedBuffsFromCells) {
-                cell.getBuffs().remove(buff);
-            }
         }
         //todo duplicate
     }
@@ -25,14 +24,20 @@ public class CardSpell extends Spell {
     public void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
         for (Unit unit : targetUnits) {
-            for (Buff buff : addedBuffsToUnits) {
+            for (Buff buff : getAddedBuffsToUnits()) {
                 unit.getBuffs().add(buff);
             }
-            for (Buff buff : deletedBuffsFromUnits) {
-                unit.getBuffs().remove(buff);
+            if (isDispeller) {
+                int i = 0;
+                if (dataBase.getCurrentBattle().getBattleGround()
+                        .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
+                    while (i < unit.getBuffs().size()) {
+                        if(unit.getBuffs().get(i).)
+                    }
+                }
             }
-            unit.changeAp(apChange);
-            unit.changeHp(hpChange);
+            unit.changeAp(getApChange());
+            unit.changeHp(getHpChange());
         }
         //todo duplicate
     }
