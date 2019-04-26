@@ -17,7 +17,7 @@ public class ControllerCollection {
 
     public void main() {
         boolean didExit = false;
-        Request request =Request.getInstance();
+        Request request = Request.getInstance();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {

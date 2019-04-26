@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class PlayerCollection {
+public class PlayerCollection {
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();

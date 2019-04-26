@@ -6,13 +6,13 @@ import java.util.List;
 public class ControllerBattleCommands {
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
+    private final Request request = Request.getInstance();
 
     private ControllerBattleCommands() {
     }
 
     public void main() {
         boolean didExit = false;
-        Request request=Request.getInstance();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {

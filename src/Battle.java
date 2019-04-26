@@ -17,7 +17,7 @@ public class Battle {
     }
 
     public void nextTurn() {
-        changePlayerInTurn();
+        changeTurn();
         turnNumber++;
         //todo do buff effects
         //todo delete expired buffs

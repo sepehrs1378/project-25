@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Spell extends Card {
+public class Spell extends Card {
     private Target target;
     private int coolDown;
     private int apChange;

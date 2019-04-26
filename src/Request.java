@@ -60,7 +60,7 @@ public class Request {
             return RequestType.ENTER;
         if (command.matches("^exit$"))
             return RequestType.END;
-        if (command.matches("^show .+$"))
+        if (command.matches("^show\\s*(.)*$"))
             return RequestType.SHOW;
         if (command.matches("^save$"))
             return RequestType.SAVE;
