@@ -3,7 +3,7 @@ import java.util.List;
 
 class PlayerInfo {
     private String playerName;
-    private PlayerCollection collection;
+    private PlayerCollection collection=new PlayerCollection();
     private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
 

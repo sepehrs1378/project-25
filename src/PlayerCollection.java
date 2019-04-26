@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class PlayerCollection {
+public class PlayerCollection {
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
+    private List<Usable> items = new ArrayList<>();
 
     public List<Card> getCards() {
         return cards;
     }
 
-    public List<Item> getItems() {
+    public List<Usable> getItems() {
         return items;
     }
 
@@ -20,7 +20,7 @@ class PlayerCollection {
         cards.add(newCard);
     }
 
-    public void addItem(Item newItem) {
+    public void addItem(Usable newItem) {
         items.add(newItem);
     }
 
@@ -28,7 +28,7 @@ class PlayerCollection {
         cards.remove(card);
     }
 
-    public void deleteItem(Item item) {
+    public void deleteItem(Usable item) {
         items.remove(item);
     }
 
@@ -60,7 +60,7 @@ class PlayerCollection {
         return getCardWithID(id) != null;
     }
 
-    public boolean doesHave
+    //public boolean doesHave
 
     public void addNewDeck() {
         //todo maybe it isn't needed
