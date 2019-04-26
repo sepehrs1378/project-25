@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class ControllerBattleCommands {
+    private static final Request request=Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
     private final Request request = Request.getInstance();
@@ -17,7 +18,7 @@ public class ControllerBattleCommands {
             request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
-                    showGameInfo(request);
+                    showGameInfo();
                     break;
                 case SHOW_MINIONS:
                     break;
@@ -49,11 +50,11 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showGameInfo(Request request) {
+    public void showGameInfo() {
 
     }
 
-    public void showMinions(Request request) {
+    public void showMinions() {
         if (request.getCommand().matches("^show my minions$")) {
 
             return;
