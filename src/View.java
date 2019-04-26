@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 public class View {
@@ -229,8 +230,53 @@ public class View {
                 +" - Sell Cost : "+card.getPrice());
                 counter++;
             }
-
         }
 
+    }
+    public void showDeck(Deck deck,String whiteSpace){
+        System.out.println(whiteSpace+"Heroes :");
+        int counter=1;
+        System.out.println(whiteSpace+"   "+counter+" : Name : "+deck.getHero().getName()+" - AP : "+deck.getHero().getAp()
+        +" - HP : "+deck.getHero().getHp()+" - Class : "+deck.getHero().getClass()+" - Special Power : "
+        +deck.getHero().getSpecialPower());
+        System.out.println(whiteSpace+"Items :");
+        System.out.println(whiteSpace+"   "+counter+" : Name : "+deck.getItem().getName()+" - Desc : "
+        +deck.getItem().getDescription());
+        for (Card card:deck.getCards())
+        {
+            if (card instanceof Spell)
+            {
+                System.out.println(whiteSpace+"   "+counter+" : "+"Type : Spell - Name : "+card.getName()+" - MP : "+card.getMana()
+                        +" - Desc : "+((Spell) card).getDescription()+" Sell Cost : "+card.getPrice());
+                counter++;
+
+            }
+            else if(card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.MINION))
+            {
+                System.out.println(whiteSpace+"   "+counter+" : "+"Minion - Name : "+card.getName()+" - Class : "
+                        +card.getClass()+" - AP : "+((Unit) card).getAp()+" - HP : "+((Unit) card).getHp()
+                        +" - MP : "+card.getMana()+" - Special Power : "+((Unit) card).getSpecialPower()
+                        +" - Sell Cost : "+card.getPrice());
+                counter++;
+            }
+        }
+    }
+    public void showAllDecks(PlayerCollection playerCollection,Deck mainDeck){
+        int counter=1;
+        String mainDeckName="";
+        if(mainDeck!=null)
+        {
+            mainDeckName=mainDeck.getName();
+            System.out.println(counter+" : "+mainDeckName+" :");
+            showDeck(mainDeck,"    ");
+            counter++;
+        }
+        for (Deck deck:playerCollection.getDecks()){
+            if(!deck.getName().equals(mainDeckName)){
+                System.out.println(counter+" : "+deck.getName()+" :");
+                showDeck(deck,"    ");
+            }
+            counter++;
+        }
     }
 }
