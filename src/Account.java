@@ -26,10 +26,6 @@ public class Account implements Comparable<Account> {
         return null;
     }
 
-    public static void loginToAccount(String username, String password) {
-
-    }
-
     public String getUsername() {
         return username;
     }
