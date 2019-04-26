@@ -179,7 +179,7 @@ public class Unit extends Card {
     public void dropFlags(){
         for(Flag flag:flags)
             flag.setTurnsInUnitHand(0);
-        this.flags=null;
+        this.flags = null;
     }
 
     public String getDescription() {

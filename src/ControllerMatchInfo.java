@@ -23,6 +23,7 @@ public class ControllerMatchInfo {
             }else{
                 winOrLoss = "Win!";
             }
+            matchInfo.calculatePassedTime();
             view.showMatchHistory(opponent.getUsername(), winOrLoss, matchInfo.getDiffInSeconds(),
                     matchInfo.getDiffInMinutes(), matchInfo.getDiffInHours(), matchInfo.getDiffInDays());
         }

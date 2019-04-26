@@ -4,6 +4,8 @@ public class Item {
     private String description;
 
     public Item(String id, String description) {
+        String[] strings = id.split("_");
+        this.name = strings[1];
         this.id = id;
         this.description = description;
     }
@@ -26,9 +28,5 @@ public class Item {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

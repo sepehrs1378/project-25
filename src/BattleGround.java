@@ -24,7 +24,6 @@ class BattleGround {
             }
         }
         return null;
-
     }
 
     public Cell getCellOfUnit(Unit unit) {
