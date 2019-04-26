@@ -2,10 +2,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MatchInfo {
-    private static final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstatnce();
+    private final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private Account opponent;
     private Account winner;
     private LocalDateTime matchDate;
+    private long diffInSeconds;
+    private long diffInMinutes;
+    private long diffInHours;
+    private long diffInDays;
 
     public void setOpponent(Account opponent) {
         this.opponent = opponent;
@@ -36,25 +40,25 @@ public class MatchInfo {
         LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), formatter);
         matchDate = LocalDateTime.parse(matchDate.toString(), formatter);
 
-        long diffInSeconds = java.time.Duration.between(now, matchDate).getSeconds();
-        long diffInMinutes = java.time.Duration.between(now, matchDate).toMinutes();
-        long diffInHours = java.time.Duration.between(now, matchDate).toHours();
-        long diffInDays = java.time.Duration.between(now, matchDate).toDays();
-
-        controllerMatchInfo.showMatchHistory(account);
-
-//        String[] dateAndTimeOfMatch = matchDate.toString().split("T");
-//        String[] timeOfMatch = dateAndTimeOfMatch[1].split(":");
-//        String[] dateAndTimeRightNow = LocalDateTime.now().toString().split("T");
-//        String[] timeRightNow = dateAndTimeRightNow[1].split(":");
-//        int hourOfMatch = Integer.parseInt(timeOfMatch[0]);
-//        int hourRightNow = Integer.parseInt(timeRightNow[0]);
-//        int howManyHoursPassed = hourRightNow - hourOfMatch;
-//        int minuteOfMatch = Integer.parseInt(timeOfMatch[1]);
-//        timeOfMatch[2] = timeOfMatch[2].replaceAll("(\\d+)[.](\\d+)", "$1");
-//        int secondOfMatch = Integer.parseInt(timeOfMatch[2]);
-
-
+        diffInSeconds = java.time.Duration.between(now, matchDate).getSeconds();
+        diffInMinutes = java.time.Duration.between(now, matchDate).toMinutes();
+        diffInHours = java.time.Duration.between(now, matchDate).toHours();
+        diffInDays = java.time.Duration.between(now, matchDate).toDays();
     }
 
+    public long getDiffInSeconds() {
+        return diffInSeconds;
+    }
+
+    public long getDiffInMinutes() {
+        return diffInMinutes;
+    }
+
+    public long getDiffInHours() {
+        return diffInHours;
+    }
+
+    public long getDiffInDays() {
+        return diffInDays;
+    }
 }

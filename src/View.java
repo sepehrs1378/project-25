@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import java.util.List;
 
 public class View {
@@ -133,8 +135,22 @@ public class View {
         }
     }
 
-    public void showMatchHistory(Account account) {
-        //todo
+    public void showMatchHistoryTitle(){
+        System.out.println("OPPONENT    WIN/LOSS    TIME");
+    }
+
+    public void showMatchHistory(String opponentName, String winOrLoss, long seconds,
+                                 long minutes, long hours, long days) {
+        System.out.print(opponentName + "   " + winOrLoss);
+        if (days == 0 && hours == 0 && minutes == 0){
+            System.out.println(seconds + "seconds ago");
+        }else if (days == 0 && hours == 0){
+            System.out.println(minutes + "minutes ago");
+        }else if (days == 0){
+            System.out.println(hours + "hours ago");
+        }else {
+            System.out.println(days + "days ago");
+        }
     }
 
     public void showUnitMove(String unitID, int destinationRow, int destinationColumn) {
