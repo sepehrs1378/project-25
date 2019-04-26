@@ -17,7 +17,7 @@ public class ControllerCollection {
 
     public void main() {
         boolean didExit = false;
-        Request request = new Request();
+        Request request =Request.getInstance();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
@@ -28,6 +28,7 @@ public class ControllerCollection {
                     didExit = true;
                     break;
                 case SHOW:
+                    show(request);
                     break;
                 case SEARCH:
                     break;
@@ -56,7 +57,7 @@ public class ControllerCollection {
         }
     }
 
-    public void create(Request request) {
+    private void create(Request request) {
         if (!request.getCommand().matches("^create deck .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -74,11 +75,16 @@ public class ControllerCollection {
         }
     }
 
-    public void show() {
+    private void show(Request request) {
+        if (request.getCommand().equals("show")){
+            showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+        }
+    }
+    private void showCardsAndItemsOfCollection(PlayerCollection collection){
 
     }
 
-    public void help() {
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 

@@ -99,7 +99,7 @@ public class ControllerBattleCommands {
                     }
                 }
             }else {
-                request.setOutputMessageType(outputMessageType.NO_CARD_IN_BATTLEGROUND);
+                request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
                 view.printError(request.getOutputMessageType());
             }
         }
