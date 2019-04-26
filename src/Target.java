@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Target {
+abstract class Target {
     private static DataBase dataBase = DataBase.getInstance();
     private static Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
     private int width;
     private int length;
     private String friendlyOrEnemy;
-    private boolean selfTargeting;
 
     public String getTypeOfTarget() {
         return typeOfTarget;
@@ -26,10 +25,6 @@ class Target {
         return friendlyOrEnemy;
     }
 
-    public boolean isSelfTargeting() {
-        return selfTargeting;
-    }
-
     public void setTypeOfTarget(String typeOfTarget) {
         this.typeOfTarget = typeOfTarget;
     }
@@ -44,10 +39,6 @@ class Target {
 
     public void setFriendlyOrEnemy(String friendlyOrEnemy) {
         this.friendlyOrEnemy = friendlyOrEnemy;
-    }
-
-    public void setSelfTargeting(boolean selfTargeting) {
-        this.selfTargeting = selfTargeting;
     }
 
     public List<Cell> getCells(int insertionRow, int insertionColumn) {
@@ -82,7 +73,6 @@ class Target {
             }
         }
         return targetUnits;
-        //todo
     }
 
     public boolean isCoordinationValid(int row, int column, int insertionRow, int insertionColumn) {
@@ -90,6 +80,14 @@ class Target {
             return false;
         if (column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
             return false;
-        //todo چک کردن بودن مختصات در مربع هدف
+        if (insertionRow - row > (length - 1) / 2 && insertionColumn - column > (width - 1) / 2)
+            return true;
+        if (row - insertionRow > length / 2 && insertionColumn - column > (width - 1) / 2)
+            return true;
+        if (insertionRow - row > (length - 1) / 2 && column - insertionColumn > width / 2)
+            return true;
+        if (row - insertionRow > length / 2 && column - insertionColumn > width / 2)
+            return true;
+        return false;
     }
 }
