@@ -18,7 +18,7 @@ public class View {
         System.out.println(helpType.getMessage());
     }
 
-    public void showInfoOfCards(List<Card> cards) {
+    public void showInfoOfDeadCards(List<Card> cards) {
         System.out.println("Heroes:");
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Unit) {

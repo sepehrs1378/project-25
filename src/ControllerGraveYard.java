@@ -39,7 +39,7 @@ public class ControllerGraveYard {
             return;
         }
         if (request.getCommand().matches("^show cards$")) {
-            view.showInfoOfCards(dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().getDeadCards());
+            view.showInfoOfDeadCards(dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().getDeadCards());
         }
         if (request.getCommand().matches("^show info .+$")) {
             String[] strings = request.getCommand().split("\\s+");
@@ -55,7 +55,7 @@ public class ControllerGraveYard {
     }
 
     public void showInfoOfCards(List<Card> cards) {
-        view.showInfoOfCards(cards);
+        view.showInfoOfDeadCards(cards);
     }
 
 }
