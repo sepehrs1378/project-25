@@ -133,7 +133,7 @@ public class Battle {
         Cell cell=this.getBattleGround().getCellWithFlag();
         if(cell!=null){
             if(cell.getUnit().getFlags().get(0).getTurnsInUnitHand()>=6){
-                if(cell.getUnit().getCardID().contains(player1.getPlayerInfo().getPlayerName()))
+                if(cell.getUnit().getId().contains(player1.getPlayerInfo().getPlayerName()))
                     return player1;
                 return player2;
             }

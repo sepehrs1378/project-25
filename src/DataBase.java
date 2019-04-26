@@ -47,7 +47,8 @@ DataBase {
         return accountList;
     }
 
-    public void addAccount() {
+    public void addAccount(Account account) {
+        accountList.add(account);
     }
 
     public void sortAccountsByWins() {
