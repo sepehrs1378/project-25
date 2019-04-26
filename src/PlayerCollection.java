@@ -6,7 +6,7 @@ class PlayerCollection {
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
+    private List<Usable> items = new ArrayList<>();
 
     public List<Card> getCards() {
         return cards;

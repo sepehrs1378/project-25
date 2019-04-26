@@ -23,7 +23,7 @@ public class Request {
             if (!getType().equals(RequestType.WRONG_REQUEST))
                 isValid = true;
             else {
-                outputMessageType = outputMessageType.WRONG_COMMAND;
+                outputMessageType = OutputMessageType.WRONG_COMMAND;
                 view.printOutputMessage(outputMessageType);
             }
         }

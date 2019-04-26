@@ -24,9 +24,9 @@ public class View {
             if (cards.get(i) instanceof Unit) {
                 Unit unit = (Unit) cards.get(i);
                 if (unit.getHeroOrMinion().equals("Hero")) {
-                    System.out.println("1 : Name : " + unit.getCardID() + " - AP : " + unit.getAp() + " - HP : " +
-                            unit.getHp() + " - Class : " + unit.getTypeOfAttack() + " - Special power : " +
-                            unit.getStringSpecialPower());
+                    System.out.println("1 : Name : " + unit.getId() + " - AP : " + unit.getAp() + " - HP : " +
+                            unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
+                            unit.getSpecialPower().getDescription());
                 }
             }
         }
@@ -34,7 +34,7 @@ public class View {
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Item) {
                 Item item = (Item) cards.get(i);
-                System.out.println(i + " : Name : " + item.getItemID() + " - Desc : " + item.getDesc());
+                System.out.println(i + " : Name : " + item.getId() + " - Desc : " + item.getDescription());
             }
         }
         System.out.println("Cards:");
@@ -47,8 +47,8 @@ public class View {
                 Unit unit = (Unit) cards.get(i);
                 if (unit.getHeroOrMinion().equals("Minion")) {
                     System.out.println(i + " : Type : Minion - Name : " + unit.getName() + " - Class : " +
-                            unit.getTypeOfAttack() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
-                            " - MP : " + unit.getMana() + " - Special power : " + unit.getStringSpecialPower());
+                            unit.getUnitClass() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
+                            " - MP : " + unit.getMana() + " - Special power : " + unit.getSpecialPower().getDescription());
                 }
             }
         }
@@ -179,6 +179,17 @@ public class View {
                     columnCounter++;
                 }
                 rowCounter++;
+            }
+        }
+    }
+    public void showCardsAndItemsOfCollection(PlayerCollection playerCollection){
+        for (Card card:playerCollection.getCards())
+        {
+            if(card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.HERO)){
+                Unit unit=(Unit)card;
+                System.out.println("Heroes :");
+                System.out.println("    1 : Name: "+unit.getName()+" - AP : "+unit.getAp()
+                +" - HP : "+unit.getHp()+" - Class : "+unit.getUnitClass()+" ");
             }
         }
     }

@@ -12,7 +12,7 @@ public class ControllerBattleCommands {
 
     public void main() {
         boolean didExit = false;
-        Request request = new Request();
+        Request request=Request.getInstance();
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
@@ -100,7 +100,8 @@ public class ControllerBattleCommands {
                 }
             }else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
-                view.printError(request.getOutputMessageType());
+                //todo
+                view.printOutputMessage(request.getOutputMessageType());
             }
         }
     }

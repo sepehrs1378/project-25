@@ -77,11 +77,8 @@ public class ControllerCollection {
 
     private void show(Request request) {
         if (request.getCommand().equals("show")){
-            showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+            view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
         }
-    }
-    private void showCardsAndItemsOfCollection(PlayerCollection collection){
-
     }
 
     private void help() {
