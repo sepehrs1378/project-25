@@ -39,8 +39,6 @@ abstract class Spell extends Card {
         this.hpChange = hpChange;
     }
 
-    abstract public void doSpell(int insertionRow, int insertionColumn);
-
     public List<Buff> getAddedBuffsToUnits() {
         return addedBuffsToUnits;
     }
@@ -49,23 +47,9 @@ abstract class Spell extends Card {
         this.addedBuffsToUnits = addedBuffsToUnits;
     }
 
-    public List<Buff> getDeletedBuffsFromUnits() {
-        return deletedBuffsFromUnits;
-    }
-
-    public void setDeletedBuffsFromUnits(List<Buff> deletedBuffsFromUnits) {
-        this.deletedBuffsFromUnits = deletedBuffsFromUnits;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
+
+    abstract public void doSpell(int insertionRow, int insertionColumn);
 }

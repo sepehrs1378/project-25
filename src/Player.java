@@ -12,6 +12,7 @@ class Player {
     private GraveYard graveYard = new GraveYard();
     private Unit selectedUnit;
     private Collectable selectedCollectable;
+    private List<Buff> buffs = new ArrayList<>();
 
     public Player(PlayerInfo playerInfo, Deck deck) {
         this.playerInfo = playerInfo;
@@ -40,8 +41,8 @@ class Player {
     }
 
     public void setHand(Deck deck) {
-        for(int i=0;i<Constants.NUMBER_OF_HAND_CARDS;i++){
-            int randomNumber=(int)(Math.random()*deck.getCards().size());
+        for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
+            int randomNumber = (int) (Math.random() * deck.getCards().size());
             hand.addCard(deck.getCards().get(randomNumber));
             deck.getCards().remove(randomNumber);
         }
@@ -82,15 +83,6 @@ class Player {
 
     public List<Collectable> getCollectables() {
         return collectables;
-    }
-
-    public void setHand(Deck deck) {
-        for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
-            int randomNumber = (int) (Math.random() * deck.getCards().size());
-            hand.addCard(deck.getCards().get(randomNumber));
-            deck.getCards().remove(randomNumber);
-        }
-
     }
 
     public void setNextCard(Deck deck) {
