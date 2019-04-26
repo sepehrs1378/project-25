@@ -58,7 +58,7 @@ class Target {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                if (Math.abs(i - insertionRow) <= width && Math.abs(j - insertionColumn) <= length)
+                if (isCoordinationValid(i, j, insertionRow, insertionColumn))
                     targetCells.add(currentBattle.getBattleGround().getCells()[i][j]);
             }
         }
@@ -66,8 +66,30 @@ class Target {
     }
 
     public List<Unit> getUnits(int insertionRow, int insertionColumn) {
+        List<Unit> targetUnits = new ArrayList<>();
         if (typeOfTarget.equals(Constants.CELL))
-            return null;
+            return targetUnits;
+        Unit unit;
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                unit = currentBattle.getBattleGround().getCells()[i][j].getUnit();
+                if (unit.getHeroOrMinion().equals(typeOfTarget)
+                        && currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(friendlyOrEnemy)
+                        && isCoordinationValid(i, j, insertionRow, insertionColumn))
+                    targetUnits.add(unit);
+            }
+        }
+        return targetUnits;
         //todo
+    }
+
+    public boolean isCoordinationValid(int row, int column, int insertionRow, int insertionColumn) {
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH)
+            return false;
+        if (column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
+            return false;
+        //todo چک کردن بودن مختصات در مربع هدف
     }
 }

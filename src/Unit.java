@@ -150,6 +150,15 @@ class Unit extends Card {
         this.didMoveThisTurn = didMoveThisTurn;
     }
 
+    public int getDistanceToTarget(int targetRow, int targetColumn) {
+        int unitRow = dataBase.getCurrentBattle().getBattleGround()
+                .getCoordinationOfUnit(this)[0];
+        int unitColumn = dataBase.getCurrentBattle().getBattleGround()
+                .getCoordinationOfUnit(this)[1];
+        return dataBase.getCurrentBattle().getBattleGround()
+                .getDistance(unitRow, unitColumn, targetRow, targetColumn);
+    }
+
     public boolean isDisarmed() {
         for (Buff buff : buffs) {
             if (buff instanceof DisarmBuff)
@@ -158,20 +167,11 @@ class Unit extends Card {
         return false;
     }
 
-    public boolean isStuned() {
+    public boolean isStunned() {
         for (Buff buff : buffs) {
             if (buff instanceof StunBuff)
                 return true;
         }
         return false;
-    }
-
-    public int getDistanceToTarget(int targetRow, int targetColumn) {
-        int unitRow = dataBase.getCurrentBattle().getBattleGround()
-                .getCoordinationOfUnit(this)[0];
-        int unitColumn = dataBase.getCurrentBattle().getBattleGround()
-                .getCoordinationOfUnit(this)[1];
-        return dataBase.getCurrentBattle().getBattleGround()
-                .getDistance(unitRow, unitColumn, targetRow, targetColumn);
     }
 }
