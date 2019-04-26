@@ -32,7 +32,6 @@ public class ControllerCollection {
                 case SEARCH:
                     break;
                 case SAVE:
-                    //todo is it needed?
                     break;
                 case DELETE:
                     ourInstance.delete(request);
@@ -72,6 +71,10 @@ public class ControllerCollection {
                 break;
             default:
         }
+    }
+
+    public void save(){
+
     }
 
     public void show() {

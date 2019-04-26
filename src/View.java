@@ -24,8 +24,8 @@ public class View {
             if (cards.get(i) instanceof Unit) {
                 Unit unit = (Unit) cards.get(i);
                 if (unit.getHeroOrMinion().equals("Hero")) {
-                    System.out.println("1 : Name : " + unit.getCardID() + " - AP : " + unit.getAp() + " - HP : " +
-                            unit.getHp() + " - Class : " + unit.getTypeOfAttack() + " - Special power : " +
+                    System.out.println("1 : Name : " + unit.getId() + " - AP : " + unit.getAp() + " - HP : " +
+                            unit.getHp() + " - Class : " + unit.getClass() + " - Special power : " +
                             unit.getStringSpecialPower());
                 }
             }
@@ -47,7 +47,7 @@ public class View {
                 Unit unit = (Unit) cards.get(i);
                 if (unit.getHeroOrMinion().equals("Minion")) {
                     System.out.println(i + " : Type : Minion - Name : " + unit.getName() + " - Class : " +
-                            unit.getTypeOfAttack() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
+                            unit.getClass() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
                             " - MP : " + unit.getMana() + " - Special power : " + unit.getStringSpecialPower());
                 }
             }
