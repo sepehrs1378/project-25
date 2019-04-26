@@ -70,7 +70,7 @@ public class ControllerBattleCommands {
         else if(request.getCommand().equals("show my minions")){
             List<Unit> minions=database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
             for(Unit minion:minions){
-                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationsOfUnit(minion));
+                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
             }
         }
         else if(request.getCommand().equals("show opponent minions")){
@@ -80,7 +80,7 @@ public class ControllerBattleCommands {
             else player=database.getCurrentBattle().getPlayer1();
             List<Unit> minions=database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
             for (Unit minion:minions){
-                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationsOfUnit(minion));
+                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
             }
         }
         else if(request.getCommand().matches("show card info \\w+")){

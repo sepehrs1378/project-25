@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
@@ -31,17 +34,18 @@ class BattleGround {
             }
         return null;
     }
-    public Card getCardByID(String cardid){
-        for(Cell[] cellRow:cells)
-        {
-            for (Cell cell:cellRow){
-                if(cell.getUnit().getCardID().equals(cardid)){
+
+    public Card getCardByID(String cardid) {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit().getId().equals(cardid)) {
                     return cell.getUnit();
                 }
             }
         }
         return null;
     }
+
     public boolean doesHaveUnit(Unit unit) {
         return getCellOfUnit(unit) != null;
     }
@@ -75,8 +79,8 @@ class BattleGround {
         int numberOfFlags = 0;
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if(cell.getUnit()!=null&&cell.getUnit().getCardID().contains(player.getPlayerInfo().getPlayerName())){
-                    numberOfFlags+=cell.getUnit().getFlags().size();
+                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
+                    numberOfFlags += cell.getUnit().getFlags().size();
                 }
             }
         }
@@ -92,24 +96,24 @@ class BattleGround {
         }
         return numberOfFlags;
     }
+
     //method below is for oneFlag mode game
-    public Cell getCellWithFlag(){
-        for (Cell[] cellRow:cells){
-            for(Cell cell:cellRow)
-            {
-                if(cell.getFlags().size()>0)
+    public Cell getCellWithFlag() {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getFlags().size() > 0)
                     return cell;
             }
         }
         return null;
     }
-    public List<Unit> getMinionsOfPlayer(Player player){
-        List<Unit> minions=new ArrayList<>();
-        for(Cell[] cellRow:cells){
-            for(Cell cell:cellRow)
-            {
-                if (cell.getUnit()!=null&&cell.getUnit().getCardID().equals(player.getPlayerInfo().getPlayerName())
-                && cell.getUnit().getHeroOrMinion().equals("Minion")){
+
+    public List<Unit> getMinionsOfPlayer(Player player) {
+        List<Unit> minions = new ArrayList<>();
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() != null && cell.getUnit().getId().equals(player.getPlayerInfo().getPlayerName())
+                        && cell.getUnit().getHeroOrMinion().equals("Minion")) {
                     minions.add(cell.getUnit());
                 }
             }
