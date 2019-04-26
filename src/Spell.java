@@ -2,18 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract class Spell extends Card {
-    private int coolDown;
     private int apChange;
     private int hpChange;
     private List<Buff> addedBuffsToCells = new ArrayList<>();
     private List<Buff> addedBuffsToUnits = new ArrayList<>();
-    private String passiveOrCastable;
     private String description;
     private String name;
-
-    public int getCooldown() {
-        return coolDown;
-    }
 
     public int getApChange() {
         return apChange;
@@ -25,10 +19,6 @@ abstract class Spell extends Card {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setCooldown(int cooldown) {
-        this.coolDown = cooldown;
     }
 
     public void setApChange(int apChange) {
@@ -49,6 +39,14 @@ abstract class Spell extends Card {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Buff> getAddedBuffsToCells() {
+        return addedBuffsToCells;
+    }
+
+    public void setAddedBuffsToCells(List<Buff> addedBuffsToCells) {
+        this.addedBuffsToCells = addedBuffsToCells;
     }
 
     abstract public void doSpell(int insertionRow, int insertionColumn);

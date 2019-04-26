@@ -22,7 +22,7 @@ public class CardSpell extends Spell {
     public void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
         for (Cell cell : targetCells) {
-            for (Buff buff : getAddedBuffsToUnits()) {
+            for (Buff buff : getAddedBuffsToCells()) {
                 cell.getBuffs().add(buff);
             }
         }

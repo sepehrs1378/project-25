@@ -10,7 +10,6 @@ public class Unit extends Card {
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
-    private Spell specialPower;
     private boolean didAttackThisTurn;
     private boolean didMoveThisTurn;
     private String description;
@@ -33,14 +32,6 @@ public class Unit extends Card {
 
     public void setMinRange(int minRange) {
         this.minRange = minRange;
-    }
-
-    public Spell getSpecialPower() {
-        return specialPower;
-    }
-
-    public void setSpecialPower(Spell specialPower) {
-        this.specialPower = specialPower;
     }
 
     public int getAp() {
