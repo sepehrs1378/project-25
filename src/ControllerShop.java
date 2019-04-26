@@ -25,8 +25,10 @@ class ControllerShop {
                     didExit = true;
                     break;
                 case SHOW:
+                    show();
                     break;
                 case SEARCH:
+                    search();
                     break;
                 case BUY:
                     buy();
@@ -45,7 +47,13 @@ class ControllerShop {
     }
 
     public void show() {
-
+        if (request.getCommand().matches("show")) {
+            view.showCardsAndItemsInShop();
+        } else if (request.getCommand().matches("^show collection$")) {
+            view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+        } else {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+        }
     }
 
     public void sell() {
@@ -91,10 +99,60 @@ class ControllerShop {
     }
 
     public void search() {
+        String command = request.getCommand();
+        if (command.matches("search (.+)$")) {
+            String[] strings = command.split("\\s+");
+            Card card = findCard(strings[1]);
+            Usable usable = findUsable(strings[1]);
+            Collectable collectable = findCollectable(strings[1]);
+            showId(card, usable, collectable);
+        } else if (command.matches("^search collection (.+)$")) {
 
+        } else {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+        }
     }
 
     public void help() {
         view.printHelp(HelpType.CONTROLLER_SHOP_HELP);
+    }
+
+    private Card findCard(String cardName) {
+        for (Card card : DataBase.getCardList()) {
+            if (card.getName().equals(cardName)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    private Usable findUsable(String usableName){
+        for (Usable usable : DataBase.getUsableList()){
+            if (usable.getName().equals(usableName)){
+                return usable;
+            }
+        }
+        return null;
+    }
+
+    private Collectable findCollectable(String collectableName){
+        for (Collectable collectable : DataBase.getCollectableList()){
+            if (collectable.getName().equals(collectableName)){
+                return collectable;
+            }
+        }
+        return null;
+    }
+
+    public void showId(Card card, Usable usable, Collectable collectable){
+        if (card != null){
+            view.showId(card.getId());
+        }else if (usable != null){
+            view.showId(usable.getId());
+        }else if (collectable != null){
+            view.showId(collectable.getId());
+        }else {
+            view.showCardOrItemDoesNotExist();
+        }
     }
 }

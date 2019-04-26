@@ -35,7 +35,7 @@ public class MatchInfo {
         return matchDate;
     }
 
-    private void calculatePassedTime() {
+    public void calculatePassedTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), formatter);
         matchDate = LocalDateTime.parse(matchDate.toString(), formatter);

@@ -20,17 +20,11 @@ public class View {
     }
 
     public void showInfoOfDeadCards(List<Card> cards) {
-        System.out.println("Heroes:");
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i) instanceof Unit) {
-                Unit unit = (Unit) cards.get(i);
-                if (unit.getHeroOrMinion().equals("Hero")) {
-                    System.out.println("1 : Name : " + unit.getId() + " - AP : " + unit.getAp() + " - HP : " +
-                            unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
-                            unit.getSpecialPower().getDescription());
-                }
-            }
-        }
+        showInfoOfHeroes(cards);
+        showInfoOfSpellsAndMinions(cards);
+    }
+
+    private void showInfoOfSpellsAndMinions(List<Card> cards) {
         System.out.println("Cards:");
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Spell) {
@@ -46,12 +40,20 @@ public class View {
                 }
             }
         }
-        //todo since this method is general, is it possible to make the code more efficient by putting it in a separate
-        //todo Controller class? (i.e. the part that isn't about sout)
     }
 
-    public void printContentsOfAList(List list) {
-        System.out.println(list);
+    private void showInfoOfHeroes(List<Card> cards) {
+        System.out.println("Heroes:");
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) instanceof Unit) {
+                Unit unit = (Unit) cards.get(i);
+                if (unit.getHeroOrMinion().equals("Hero")) {
+                    System.out.println("1 : Name : " + unit.getId() + " - AP : " + unit.getAp() + " - HP : " +
+                            unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
+                            unit.getSpecialPower().getDescription());
+                }
+            }
+        }
     }
 
     public void showUsers(List<Account> users, String currentUserName) {
@@ -231,7 +233,26 @@ public class View {
                 counter++;
             }
         }
+    }
 
+    public void showCardsAndItemsInShop(){
+        List<Card> cardList = DataBase.getCardList();
+        showInfoOfHeroes(cardList);
+        for (Item item : DataBase.getUsableList()){
+            showItemInfo(item);
+        }
+        for (Item item : DataBase.getCollectableList()){
+            showItemInfo(item);
+        }
+        showInfoOfSpellsAndMinions(cardList);
+    }
+
+    public void showId(String id){
+            System.out.println("A card Or item exists with id : " + id);
+    }
+
+    public void showCardOrItemDoesNotExist(){
+        System.out.println("There is no card or item with this name");
     }
     public void showDeck(Deck deck,String whiteSpace){
         System.out.println(whiteSpace+"Heroes :");

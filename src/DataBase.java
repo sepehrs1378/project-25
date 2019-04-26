@@ -22,6 +22,10 @@ public class DataBase {
         return cardList;
     }
 
+    public static List<Usable> getUsableList(){
+        return usableList;
+    }
+
     public static List<Collectable> getCollectableList() {
         return collectableList;
     }

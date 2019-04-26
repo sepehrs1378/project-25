@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account implements Comparable<Account> {
-    private static final ControllerAccount controllerAccount = ControllerAccount.getInstance();
-    private static final DataBase dataBase = DataBase.getInstance();
     private static List<Account> accounts = DataBase.getInstance().getAccounts();
     private boolean[] levelsOpennessStatus = new boolean[3];
     private String password;
