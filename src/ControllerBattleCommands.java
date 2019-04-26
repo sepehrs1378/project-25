@@ -7,8 +7,6 @@ public class ControllerBattleCommands {
     private static final Request request=Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
-    private final Request request = Request.getInstance();
-
     private ControllerBattleCommands() {
     }
 
@@ -18,7 +16,7 @@ public class ControllerBattleCommands {
             request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
-                    showGameInfo();
+                    showGameInfo(request);
                     break;
                 case SHOW_MINIONS:
                     break;
@@ -50,11 +48,11 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showGameInfo() {
+    public void showGameInfo(Request request) {
 
     }
 
-    public void showMinions() {
+    public void showMinions(Request request) {
         if (request.getCommand().matches("^show my minions$")) {
 
             return;
@@ -101,6 +99,8 @@ public class ControllerBattleCommands {
                 }
             }else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
+                view.printOutputMessage(request.getOutputMessageType());
+                //todo
                 view.printOutputMessage(request.getOutputMessageType());
             }
         }

@@ -22,17 +22,18 @@ public class ControllerCollection {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE:
-                    ourInstance.create();
+                    ourInstance.create(request);
                     break;
                 case EXIT:
                     didExit = true;
                     break;
                 case SHOW:
-                    show();
+                    show(request);
                     break;
                 case SEARCH:
                     break;
                 case SAVE:
+                    //todo is it needed?
                     break;
                 case DELETE:
                     ourInstance.delete(request);
@@ -76,17 +77,11 @@ public class ControllerCollection {
 
     private void show() {
         if (request.getCommand().equals("show")){
-            showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+            view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
         }
     }
-    private void showCardsAndItemsOfCollection(PlayerCollection collection){
 
-    }
-    public void save(){
-
-    }
-
-    public void help() {
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 

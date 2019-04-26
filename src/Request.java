@@ -9,6 +9,7 @@ public class Request {
     private HelpType helpType;
 
     private Request() {
+
     }
 
     public static Request getInstance() {
@@ -16,7 +17,16 @@ public class Request {
     }
 
     public void getNewCommand() {
+        boolean isValid = false;
+        while (!isValid) {
             command = scanner.nextLine().toLowerCase().trim().replaceAll("\\s+", " ");
+            if (!getType().equals(RequestType.WRONG_REQUEST))
+                isValid = true;
+            else {
+                outputMessageType = OutputMessageType.WRONG_COMMAND;
+                view.printOutputMessage(outputMessageType);
+            }
+        }
     }
 
     public String getCommand() {
@@ -50,7 +60,7 @@ public class Request {
             return RequestType.ENTER;
         if (command.matches("^exit$"))
             return RequestType.END;
-        if (command.matches("^show .+$"))
+        if (command.matches("^show\\s*(.)*$"))
             return RequestType.SHOW;
         if (command.matches("^save$"))
             return RequestType.SAVE;

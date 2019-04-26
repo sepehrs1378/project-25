@@ -1,4 +1,4 @@
-class Collectable extends Item {
+public class Collectable extends Item {
     private Spell spell;
 
     public Collectable(String itemID, String description) {

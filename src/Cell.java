@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Cell {
+public class Cell {
     private Unit unit;
     private Item item;
     private List<Buff> buffs = new ArrayList<>();

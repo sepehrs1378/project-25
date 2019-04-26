@@ -187,4 +187,48 @@ public class View {
             }
         }
     }
+    public void showCardsAndItemsOfCollection(PlayerCollection playerCollection){
+        System.out.println("Heroes :");
+        int counter=1;
+        for (Card card:playerCollection.getCards())
+        {
+            if(card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.HERO)){
+                Unit unit=(Unit)card;
+                System.out.println("    "+counter+" : Name: "+unit.getName()+" - AP : "+unit.getAp()
+                +" - HP : "+unit.getHp()+" - Class : "+unit.getUnitClass()+" - Special Power : "+unit.getSpecialPower()
+                +" - Sell cost : "+unit.getPrice());
+                counter++;
+            }
+        }
+        System.out.println("Items :");
+        counter=1;
+        for (Usable item:playerCollection.getItems()){
+            System.out.println("    "+counter+" : Name : "+item.getName()+" - Desc : "+item.getDescription()
+            +" - Sell Cost : "+item.getPrice());
+            counter++;
+        }
+        System.out.println("Cards :");
+        counter=1;
+        for (Card card:playerCollection.getCards())
+        {
+            String outPut=String.format("   %d : ",counter);
+            if (card instanceof Spell)
+            {
+                System.out.println(outPut+"Type : Spell - Name : "+card.getName()+" - MP : "+card.getMana()
+                +" - Desc : "+((Spell) card).getDescription()+" Sell Cost : "+card.getPrice());
+                counter++;
+
+            }
+            else if(card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.MINION))
+            {
+                System.out.println(outPut+"Minion - Name : "+card.getName()+" - Class : "
+                +card.getClass()+" - AP : "+((Unit) card).getAp()+" - HP : "+((Unit) card).getHp()
+                +" - MP : "+card.getMana()+" - Special Power : "+((Unit) card).getSpecialPower()
+                +" - Sell Cost : "+card.getPrice());
+                counter++;
+            }
+
+        }
+
+    }
 }

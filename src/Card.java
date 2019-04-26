@@ -1,7 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Card {
+public class Card {
     private static final DataBase dataBase = DataBase.getInstance();
     private String id;
     private String name;

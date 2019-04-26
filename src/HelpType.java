@@ -5,7 +5,7 @@ public enum HelpType {
     CONTROLLER_ACCOUNT_HELP(""),//todo write the message later
     CONTROLLER_COLLECTION_HELP(""),
     CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
-    MODES_HELP(Constants.FLAGS+"\n"+Constants.ONE_FLAG+"\n"+Constants.CLASSIC);//todo write the message later
+    MODES_HELP(Constants.FLAGS+"\n"+ Constants.ONE_FLAG+"\n"+ Constants.CLASSIC);//todo write the message later
 
     private String message;
 
