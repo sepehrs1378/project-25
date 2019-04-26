@@ -1,5 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import java.util.List;
 
 public class View {
@@ -20,7 +18,7 @@ public class View {
         System.out.println(helpType.getMessage());
     }
 
-    public void showInfoOfCards(List<Card> cards) {
+    public void showInfoOfDeadCards(List<Card> cards) {
         System.out.println("Heroes:");
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i) instanceof Unit) {
@@ -30,13 +28,6 @@ public class View {
                             unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
                             unit.getSpecialPower().getDescription());
                 }
-            }
-        }
-        System.out.println("Items:");
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i) instanceof Item) {
-                Item item = (Item) cards.get(i);
-                System.out.println(i + " : Name : " + item.getItemID() + " - Desc : " + item.getDesc());
             }
         }
         System.out.println("Cards:");
@@ -54,8 +45,6 @@ public class View {
                 }
             }
         }
-        //todo since this method is general, is it possible to make the code more efficient by putting it in a separate
-        //todo Controller class? (i.e. the part that isn't about sout)
     }
 
     public void printContentsOfAList(List list) {

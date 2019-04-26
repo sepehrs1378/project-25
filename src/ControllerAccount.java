@@ -1,5 +1,5 @@
 public class ControllerAccount {
-    private static final Request request=Request.getInstance();
+    private static final Request request = Request.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
