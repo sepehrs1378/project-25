@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerCollection {
-    private static final Request request=Request.getInstance();
+    private static final Request request = Request.getInstance();
     private static final ControllerCollection ourInstance = new ControllerCollection();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
@@ -22,13 +22,13 @@ public class ControllerCollection {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE:
-                    ourInstance.create(request);
+                    ourInstance.create();
                     break;
                 case EXIT:
                     didExit = true;
                     break;
                 case SHOW:
-                    show(request);
+                    ourInstance.show();
                     break;
                 case SEARCH:
                     break;
@@ -46,6 +46,7 @@ public class ControllerCollection {
                     ourInstance.validate(request);
                     break;
                 case SELECT:
+                    ourInstance.select();
                     break;
                 case HELP:
                     ourInstance.help();
@@ -76,8 +77,15 @@ public class ControllerCollection {
     }
 
     private void show() {
-        if (request.getCommand().equals("show")){
+        if (request.getCommand().equals("show")) {
             view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+        } else if (request.getCommand().matches("show deck \\w+")) {
+            PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+            Deck deck=temp.getDeckByName(request.getCommand().split("\\s+")[2]);
+            view.showDeck(deck,"");
+        }else if(request.getCommand().equals("show all decks")){
+            Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
+            view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
         }
     }
 
@@ -85,7 +93,7 @@ public class ControllerCollection {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 
-    public void select(Request request) {
+    public void select() {
         if (!request.getCommand().matches("^select deck .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;

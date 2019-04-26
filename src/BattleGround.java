@@ -113,7 +113,7 @@ class BattleGround {
         List<Unit> minions = new ArrayList<>();
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getId().equals(player.getPlayerInfo().getPlayerName())
+                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())
                         && cell.getUnit().getHeroOrMinion().equals("Minion")) {
                     minions.add(cell.getUnit());
                 }

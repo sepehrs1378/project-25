@@ -1,8 +1,20 @@
 public class HolyBuff extends Buff {
     private int armor;
 
+    public HolyBuff(){
+        setPositiveOrNegative(Constants.POSITIVE);
+    }
+
     @Override
     public void doEffect() {
 
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
     }
 }

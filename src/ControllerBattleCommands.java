@@ -48,10 +48,6 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showGameInfo(Request request) {
-
-    }
-
     public void showMinions(Request request) {
         if (request.getCommand().matches("^show my minions$")) {
 

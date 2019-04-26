@@ -2,8 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class
-DataBase {
+public class DataBase {
     private static DataBase ourInstance = new DataBase();
     private static List<Usable> usableList = new ArrayList<>();
     private static List<Collectable> collectableList = new ArrayList<>();
@@ -57,10 +56,6 @@ DataBase {
 
     public void sortAccountsByWins() {
         Collections.sort(accountList);
-    }
-
-    public void createNewUnits() {
-
     }
 
     public Card getCardWithName(String cardName) {

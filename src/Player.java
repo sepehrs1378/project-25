@@ -5,13 +5,14 @@ class Player {
     private static final DataBase dataBase = DataBase.getInstance();
     private List<Collectable> collectables = new ArrayList<>();
     private PlayerInfo playerInfo;
-    private Hand hand;
+    private Hand hand=new Hand();
     private Deck deck;
     private Card nextCard;
     private int mana;
     private GraveYard graveYard = new GraveYard();
     private Unit selectedUnit;
     private Collectable selectedCollectable;
+    private List<Buff> buffs = new ArrayList<>();
 
     public Player(PlayerInfo playerInfo, Deck deck) {
         this.playerInfo = playerInfo;
@@ -40,8 +41,8 @@ class Player {
     }
 
     public void setHand(Deck deck) {
-        for(int i=0;i<Constants.NUMBER_OF_HAND_CARDS;i++){
-            int randomNumber=(int)(Math.random()*deck.getCards().size());
+        for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
+            int randomNumber = (int) (Math.random() * deck.getCards().size());
             hand.addCard(deck.getCards().get(randomNumber));
             deck.getCards().remove(randomNumber);
         }
@@ -84,14 +85,6 @@ class Player {
         return collectables;
     }
 
-    public void setHand(Deck deck) {
-        for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
-            int randomNumber = (int) (Math.random() * deck.getCards().size());
-            hand.addCard(deck.getCards().get(randomNumber));
-            deck.getCards().remove(randomNumber);
-        }
-
-    }
 
     public void setNextCard(Deck deck) {
         int randomNumber = (int) (Math.random() * deck.getCards().size());
