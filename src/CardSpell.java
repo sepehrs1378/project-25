@@ -6,6 +6,14 @@ public class CardSpell extends Spell {
     private int coolDown;
     private CardSpellTarget target;
 
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
+
     public void doSpell(int insertionRow, int insertionColumn) {
         doSpellEffectOnCells(insertionRow, insertionColumn);
         doSpellEffectOnUnits(insertionRow, insertionColumn);
@@ -18,7 +26,6 @@ public class CardSpell extends Spell {
                 cell.getBuffs().add(buff);
             }
         }
-        //todo duplicate
     }
 
     public void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
@@ -28,25 +35,32 @@ public class CardSpell extends Spell {
                 unit.getBuffs().add(buff);
             }
             if (isDispeller) {
-                int i = 0;
-                if (dataBase.getCurrentBattle().getBattleGround()
-                        .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
-                    while (i < unit.getBuffs().size()) {
-                        if(unit.getBuffs().get(i).)
-                    }
-                }
+                removeBuffsFromUnit(unit);
             }
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
-        //todo duplicate
     }
 
-    public int getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(int coolDown) {
-        this.coolDown = coolDown;
+    private void removeBuffsFromUnit(Unit unit) {
+        int i = 0;
+        if (dataBase.getCurrentBattle().getBattleGround()
+                .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
+            while (i < unit.getBuffs().size()) {
+                if (unit.getBuffs().get(i).getPositiveOrNegative().equals(Constants.NEGATIVE)) {
+                    unit.getBuffs().remove(i);
+                    continue;
+                }
+                i++;
+            }
+        } else {
+            while (i < unit.getBuffs().size()) {
+                if (unit.getBuffs().get(i).getPositiveOrNegative().equals(Constants.POSITIVE)) {
+                    unit.getBuffs().remove(i);
+                    continue;
+                }
+                i++;
+            }
+        }
     }
 }
