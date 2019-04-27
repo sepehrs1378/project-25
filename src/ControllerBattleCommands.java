@@ -16,7 +16,7 @@ public class ControllerBattleCommands {
             request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
-                    showGameInfo(request);
+                    showGameInfo();
                     break;
                 case SHOW_MINIONS:
                     break;

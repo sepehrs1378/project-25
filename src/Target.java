@@ -8,6 +8,7 @@ abstract class Target {
     private int width;
     private int length;
     private String friendlyOrEnemy;
+    private boolean isRandomSelective;
 
     public String getTypeOfTarget() {
         return typeOfTarget;
@@ -41,6 +42,14 @@ abstract class Target {
         this.friendlyOrEnemy = friendlyOrEnemy;
     }
 
+    public boolean isRandomSelective() {
+        return isRandomSelective;
+    }
+
+    public void setRandomSelective(boolean randomSelective) {
+        isRandomSelective = randomSelective;
+    }
+
     public List<Cell> getCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = new ArrayList<>();
         if (!typeOfTarget.equals(Constants.CELL))
@@ -71,6 +80,9 @@ abstract class Target {
                         && isCoordinationValid(i, j, insertionRow, insertionColumn))
                     targetUnits.add(unit);
             }
+        }
+        if(isRandomSelective){
+            //todo
         }
         return targetUnits;
     }
