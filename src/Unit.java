@@ -10,10 +10,10 @@ public class Unit extends Card {
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
+    private String description;
     private boolean didAttackThisTurn;
     private boolean didMoveThisTurn;
-    private String description;
-    private boolean canCombo;
+    private boolean canUseComboAttack;
 
     public int getHp() {
         return hp;
@@ -82,9 +82,18 @@ public class Unit extends Card {
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
                 getUnitWithID(targetID);
-        targetedUnit.changeHp(-this.ap);
+        int damageDealt = calculateDamageDealt(this, targetedUnit);
+        targetedUnit.changeHp(-damageDealt);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
-        //todo check armor of targeted unit
+    }
+
+    private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
+        int damageDealt;
+        if (targetedUnit.isImmuneTo(Constants.WEAKER_AP)
+                && targetedUnit.ap > attackerUnit.ap)
+            damageDealt = 0;
+        else damageDealt = attackerUnit.ap - targetedUnit.getArmor();
+        return damageDealt;
     }
 
     private boolean isTargetUnitWithinRange(String targetID) {
@@ -97,9 +106,10 @@ public class Unit extends Card {
     }
 
     public void counterAttackUnit(Unit unit) {
-        if (!this.isDisarmed())
-            attackUnit(unit.getId());
-        //todo maybe not complete
+        if (!this.isDisarmed()) {
+            attackUnit(unit.getId());//todo delete attackUnit in it and complete it without that
+            //todo maybe not complete
+        }
     }
 
     public List<Flag> getFlags() {
@@ -166,6 +176,15 @@ public class Unit extends Card {
         return false;
     }
 
+    public boolean isImmuneTo(String effect) {
+        for (Buff buff : buffs) {
+            if (buff instanceof ImmunityBuff
+                    && ((ImmunityBuff) buff).getImmunities().contains(effect))
+                return true;
+        }
+        return false;
+    }
+
     public int getDistanceToTarget(int targetRow, int targetColumn) {
         int unitRow = dataBase.getCurrentBattle().getBattleGround()
                 .getCoordinationOfUnit(this)[0];
@@ -199,11 +218,11 @@ public class Unit extends Card {
         return armor;
     }
 
-    public boolean isCanCombo() {
-        return canCombo;
+    public boolean isCanUseComboAttack() {
+        return canUseComboAttack;
     }
 
-    public void setCanCombo(boolean canCombo) {
-        this.canCombo = canCombo;
+    public void setCanUseComboAttack(boolean canUseComboAttack) {
+        this.canUseComboAttack = canUseComboAttack;
     }
 }

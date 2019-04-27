@@ -1,7 +1,6 @@
 public abstract class Buff {
     private String positiveOrNegative;
     private int startTurn;
-    private int endTurn;
     private int delayTurn;
     private int durationTurn;
     private boolean isDispellable;
@@ -16,14 +15,6 @@ public abstract class Buff {
 
     public void setStartTurn(int startTurn) {
         this.startTurn = startTurn;
-    }
-
-    public int getEndTurn() {
-        return endTurn;
-    }
-
-    public void setEndTurn(int endTurn) {
-        this.endTurn = endTurn;
     }
 
     public int getDelayTurn() {

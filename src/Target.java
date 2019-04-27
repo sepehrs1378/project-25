@@ -8,7 +8,7 @@ abstract class Target {
     private int width;
     private int length;
     private String friendlyOrEnemy;
-    private boolean isRandomSelective;
+    private boolean isRandomSelecting;
 
     public String getTypeOfTarget() {
         return typeOfTarget;
@@ -42,12 +42,12 @@ abstract class Target {
         this.friendlyOrEnemy = friendlyOrEnemy;
     }
 
-    public boolean isRandomSelective() {
-        return isRandomSelective;
+    public boolean isRandomSelecting() {
+        return isRandomSelecting;
     }
 
-    public void setRandomSelective(boolean randomSelective) {
-        isRandomSelective = randomSelective;
+    public void setRandomSelecting(boolean randomSelecting) {
+        isRandomSelecting = randomSelecting;
     }
 
     public List<Cell> getCells(int insertionRow, int insertionColumn) {
@@ -81,10 +81,16 @@ abstract class Target {
                     targetUnits.add(unit);
             }
         }
-        if(isRandomSelective){
-            //todo
-        }
+        if (isRandomSelecting)
+            targetUnits = getRandomUnit(targetUnits);
         return targetUnits;
+    }
+
+    private List<Unit> getRandomUnit(List<Unit> units) {
+        int randomNumber = (int) (Math.random() * units.size());
+        units = units.subList(randomNumber, randomNumber + 1);
+        //todo is previous line correct?
+        return units;
     }
 
     public boolean isCoordinationValid(int row, int column, int insertionRow, int insertionColumn) {
