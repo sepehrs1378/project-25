@@ -2,9 +2,8 @@ import java.util.List;
 
 public class CardSpell extends Spell {
     private static final DataBase dataBase = DataBase.getInstance();
-    private boolean isDispeller;
-    private int coolDown;
     private CardSpellTarget target;
+    private int coolDown;
 
     public int getCoolDown() {
         return coolDown;
@@ -34,7 +33,7 @@ public class CardSpell extends Spell {
             for (Buff buff : getAddedBuffsToUnits()) {
                 unit.getBuffs().add(buff);
             }
-            if (isDispeller) {
+            if (isDispeller()) {
                 removeBuffsFromUnit(unit);
             }
             unit.changeAp(getApChange());

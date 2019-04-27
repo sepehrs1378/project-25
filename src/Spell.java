@@ -6,8 +6,10 @@ abstract class Spell extends Card {
     private int hpChange;
     private List<Buff> addedBuffsToCells = new ArrayList<>();
     private List<Buff> addedBuffsToUnits = new ArrayList<>();
+    private SpellActivationType activationType;
     private String description;
     private String name;
+    private boolean isDispeller;
 
     public int getApChange() {
         return apChange;
@@ -50,4 +52,12 @@ abstract class Spell extends Card {
     }
 
     abstract public void doSpell(int insertionRow, int insertionColumn);
+
+    public boolean isDispeller() {
+        return isDispeller;
+    }
+
+    public void setDispeller(boolean dispeller) {
+        isDispeller = dispeller;
+    }
 }

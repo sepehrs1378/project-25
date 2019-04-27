@@ -13,6 +13,7 @@ public class Unit extends Card {
     private boolean didAttackThisTurn;
     private boolean didMoveThisTurn;
     private String description;
+    private boolean canCombo;
 
     public int getHp() {
         return hp;
@@ -83,6 +84,7 @@ public class Unit extends Card {
                 getUnitWithID(targetID);
         targetedUnit.changeHp(-this.ap);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
+        //todo check armor of targeted unit
     }
 
     private boolean isTargetUnitWithinRange(String targetID) {
@@ -95,7 +97,9 @@ public class Unit extends Card {
     }
 
     public void counterAttackUnit(Unit unit) {
-
+        if (!this.isDisarmed())
+            attackUnit(unit.getId());
+        //todo maybe not complete
     }
 
     public List<Flag> getFlags() {
@@ -136,6 +140,14 @@ public class Unit extends Card {
 
     public void setDidMoveThisTurn(boolean didMoveThisTurn) {
         this.didMoveThisTurn = didMoveThisTurn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDisarmed() {
@@ -187,11 +199,11 @@ public class Unit extends Card {
         return armor;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean isCanCombo() {
+        return canCombo;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCanCombo(boolean canCombo) {
+        this.canCombo = canCombo;
     }
 }

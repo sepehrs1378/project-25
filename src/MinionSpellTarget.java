@@ -1,3 +1,4 @@
-public class MinionSpellTarget {
+public class MinionSpellTarget extends Target {
+    private int manhattanDistance;
 
 }

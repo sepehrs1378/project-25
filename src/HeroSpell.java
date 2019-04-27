@@ -2,17 +2,14 @@ import java.util.List;
 
 public class HeroSpell extends Spell {
     private static final DataBase dataBase = DataBase.getInstance();
-    private int cooldown;
     private HeroSpellTarget target;
-    private SpellActivationType activationType;
-    private String passiveOrCastable;
-    private boolean isDispeller;
+    private int cooldown;
 
     public void doSpell(Unit unit) {
         for (Buff buff : getAddedBuffsToUnits()) {
             unit.getBuffs().add(buff);
         }
-        if (isDispeller)
+        if (isDispeller())
             removeBuffsFromUnit(unit);
         unit.changeAp(getHpChange());
         unit.changeHp(getApChange());
@@ -39,7 +36,7 @@ public class HeroSpell extends Spell {
             for (Buff buff : getAddedBuffsToUnits()) {
                 unit.getBuffs().add(buff);
             }
-            if (isDispeller) {
+            if (isDispeller()) {
                 removeBuffsFromUnit(unit);
             }
             unit.changeAp(getApChange());
