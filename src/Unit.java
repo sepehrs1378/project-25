@@ -7,6 +7,7 @@ public class Unit extends Card {
     private int ap;
     private int minRange;
     private int maxRange;
+    private Spell specialPower;
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
@@ -218,11 +219,19 @@ public class Unit extends Card {
         return armor;
     }
 
-    public boolean isCanUseComboAttack() {
+    public boolean canUseComboAttack() {
         return canUseComboAttack;
     }
 
     public void setCanUseComboAttack(boolean canUseComboAttack) {
         this.canUseComboAttack = canUseComboAttack;
+    }
+
+    public Spell getSpecialPower() {
+        return specialPower;
+    }
+
+    public void setSpecialPower(Spell specialPower) {
+        this.specialPower = specialPower;
     }
 }

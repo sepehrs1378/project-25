@@ -5,10 +5,26 @@ abstract class Target {
     private static DataBase dataBase = DataBase.getInstance();
     private static Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
+    private String friendlyOrEnemy;
+    private String targetUnitClass;
     private int width;
     private int length;
-    private String friendlyOrEnemy;
+    private int manhattanDistance;
     private boolean isRandomSelecting;
+    private boolean isSelfTargeting;
+
+    public Target(String typeOfTarget, int width, int length,
+                  String friendlyOrEnemy, boolean isRandomSelecting,
+                  boolean isSelfTargeting, int manhattanDistance, String targetUnitClass) {
+        this.typeOfTarget = typeOfTarget;
+        this.friendlyOrEnemy = friendlyOrEnemy;
+        this.targetUnitClass = targetUnitClass;
+        this.width = width;
+        this.length = length;
+        this.manhattanDistance = manhattanDistance;
+        this.isRandomSelecting = isRandomSelecting;
+        this.isSelfTargeting = isSelfTargeting;
+    }
 
     public String getTypeOfTarget() {
         return typeOfTarget;
@@ -48,6 +64,30 @@ abstract class Target {
 
     public void setRandomSelecting(boolean randomSelecting) {
         isRandomSelecting = randomSelecting;
+    }
+
+    public boolean isSelfTargeting() {
+        return isSelfTargeting;
+    }
+
+    public void setSelfTargeting(boolean selfTargeting) {
+        isSelfTargeting = selfTargeting;
+    }
+
+    public int getManhattanDistance() {
+        return manhattanDistance;
+    }
+
+    public void setManhattanDistance(int manhattanDistance) {
+        this.manhattanDistance = manhattanDistance;
+    }
+
+    public String getTargetUnitClass() {
+        return targetUnitClass;
+    }
+
+    public void setTargetUnitClass(String targetUnitClass) {
+        this.targetUnitClass = targetUnitClass;
     }
 
     public List<Cell> getCells(int insertionRow, int insertionColumn) {

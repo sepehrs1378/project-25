@@ -12,4 +12,9 @@ public class SequentialDamageBuff extends Buff {
     public void doEffect() {
 
     }
+
+    public void doEffect(Unit unit){
+
+        unit.changeHp(-damagePerTurn.get());
+    }
 }
