@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Battle {
     private Player player1;
     private Player player2;
@@ -148,5 +151,14 @@ public class Battle {
         Card card = this.getBattleGround().getCardByID(cardId);
         return null;
         //todo complete this method
+    }
+
+    public List<Player> getPlayersHavingBuff(Buff buff) {
+        List<Player> players = new ArrayList<>();
+        if (player1.getBuffs().contains(buff))
+            players.add(player1);
+        if (player2.getBuffs().contains(buff))
+            players.add(player2);
+        return players;
     }
 }
