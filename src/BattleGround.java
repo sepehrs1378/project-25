@@ -145,4 +145,30 @@ class BattleGround {
             return Constants.FRIEND;
         return Constants.ENEMY;
     }
+
+    public List<Unit> getUnitsHavingBuff(Buff buff) {
+        List<Unit> unitsHavingBuff = new ArrayList<>();
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                if (cells[i][j].getUnit().getBuffs().contains(buff))
+                    unitsHavingBuff.add(cells[i][j].getUnit());
+            }
+        }
+        return unitsHavingBuff;
+    }
+
+    public List<Cell> getCellsHavingBuff(Buff buff) {
+        List<Cell> cellsHavingBuff = new ArrayList<>();
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                if (cells[i][j].getBuffs().contains(buff))
+                    cellsHavingBuff.add(cells[i][j]);
+            }
+        }
+        return cellsHavingBuff;
+    }
 }

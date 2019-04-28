@@ -34,8 +34,7 @@ public class ControllerMultiPlayerMenu {
     }
 
     private void select() {
-        if (request.getCommand().matches("select user \\w+")) ;
-        {
+        if (request.getCommand().matches("select user \\w+")) {
             Account secondPlayer = Account.getAccount(request.getCommand().split(" ")[2]);
             if (secondPlayer == null) {
                 request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
@@ -57,8 +56,8 @@ public class ControllerMultiPlayerMenu {
                     } else if (mode.equals(Constants.ONE_FLAG)) {
                         numberOfFlags = 1;
                     }
-                    if (Account.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
-                        Battle battle = new Battle(Account.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
+                    if (database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
+                        Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
                         database.setCurrentBattle(battle);
                     } else {
                         request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER2);

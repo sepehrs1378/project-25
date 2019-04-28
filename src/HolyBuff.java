@@ -1,13 +1,13 @@
 public class HolyBuff extends Buff {
     private int armor;
 
-    public HolyBuff(){
+    public HolyBuff() {
         setPositiveOrNegative(Constants.POSITIVE);
     }
 
     @Override
     public void doEffect() {
-
+        //todo looks gonna be empty
     }
 
     public int getArmor() {

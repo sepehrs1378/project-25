@@ -11,13 +11,12 @@ class Spell extends Card {
     private List<Buff> addedBuffsToUnits = new ArrayList<>();
     private SpellActivationType activationType;
     private String description;
-    private String name;
     private boolean isDispeller;
 
     public Spell(int apChange, int hpChange, int cooldown,
                  Target target, List<Buff> addedBuffsToCells,
                  List<Buff> addedBuffsToUnits, SpellActivationType activationType
-            , String description, String name, boolean isDispeller) {
+            , String description, boolean isDispeller) {
         this.apChange = apChange;
         this.hpChange = hpChange;
         this.cooldown = cooldown;
@@ -26,7 +25,6 @@ class Spell extends Card {
         this.addedBuffsToUnits = addedBuffsToUnits;
         this.activationType = activationType;
         this.description = description;
-        this.name = name;
         this.isDispeller = isDispeller;
     }
 
@@ -79,9 +77,7 @@ class Spell extends Card {
     }
 
     public void doSpell(Unit unit) {
-        for (Buff buff : getAddedBuffsToUnits()) {
-            unit.getBuffs().add(buff);
-        }
+        addBuffsToUnit(unit);
         if (isDispeller())
             removeBuffsFromUnit(unit);
         unit.changeAp(getHpChange());
@@ -105,19 +101,31 @@ class Spell extends Card {
     public void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
         for (Unit unit : targetUnits) {
-            for (Buff buff : getAddedBuffsToUnits()) {
-                unit.getBuffs().add(buff);
-            }
-            if (isDispeller()) {
+            if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
+                    && dataBase.getCurrentBattle().getBattleGround().
+                    isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
+                continue;
+            addBuffsToUnit(unit);
+            if (isDispeller)
                 removeBuffsFromUnit(unit);
-            }
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
     }
 
+    private void addBuffsToUnit(Unit unit) {
+        for (Buff buff : getAddedBuffsToUnits()) {
+            if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
+                continue;
+            if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
+                continue;
+            unit.getBuffs().add(buff);
+        }
+    }
+
     private void removeBuffsFromUnit(Unit unit) {
         int i = 0;
+        //if unit is friendly we remove negative buffs
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
             while (i < unit.getBuffs().size()) {
@@ -127,7 +135,9 @@ class Spell extends Card {
                 }
                 i++;
             }
-        } else {
+        }
+        //if unit is enemy we remove positive buffs
+        else {
             while (i < unit.getBuffs().size()) {
                 if (unit.getBuffs().get(i).getPositiveOrNegative().equals(Constants.POSITIVE)) {
                     unit.getBuffs().remove(i);
@@ -136,16 +146,6 @@ class Spell extends Card {
                 i++;
             }
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getCooldown() {
