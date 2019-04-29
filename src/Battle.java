@@ -21,12 +21,11 @@ public class Battle {
 
     public void nextTurn() {
         changeTurn();
-        turnNumber++;
         //todo do buff effects
         //todo delete expired buffs
         //todo reset attack and move status of units
         //todo check turns of flag in hand??
-
+        turnNumber++;
     }
 
     public Player getPlayer1() {

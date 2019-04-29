@@ -1,60 +1,40 @@
-public abstract class Buff {
+abstract public class Buff {
+    public static final DataBase dataBase = DataBase.getInstance();
     private String positiveOrNegative;
     private int startTurn;
     private int delayTurn;
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
-    private boolean isActive;
+    private boolean isDead;
+
+    public Buff(int startTurn, int delayTurn,
+                int durationTurn, boolean isDispellable, boolean isContinuous) {
+        this.startTurn = startTurn;
+        this.delayTurn = delayTurn;
+        this.durationTurn = durationTurn;
+        this.isDispellable = isDispellable;
+        this.isContinuous = isContinuous;
+    }
 
     public abstract void doEffect();
 
-    public int getStartTurn() {
-        return startTurn;
-    }
-
-    public void setStartTurn(int startTurn) {
-        this.startTurn = startTurn;
-    }
-
-    public int getDelayTurn() {
-        return delayTurn;
-    }
-
-    public void setDelayTurn(int delayTurn) {
-        this.delayTurn = delayTurn;
-    }
-
-    public int getDurationTurn() {
-        return durationTurn;
-    }
-
-    public void setDurationTurn(int durationTurn) {
-        this.durationTurn = durationTurn;
-    }
-
-    public boolean isDispellable() {
-        return isDispellable;
-    }
-
-    public void setDispellable(boolean dispellable) {
-        isDispellable = dispellable;
-    }
-
-    public boolean isContinuous() {
-        return isContinuous;
-    }
-
-    public void setContinuous(boolean continuous) {
-        isContinuous = continuous;
-    }
-
     public boolean isActive() {
-        return isActive;
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn >= startTurn + delayTurn;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public boolean isInFirstActivationTurn() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn == startTurn + delayTurn;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 
     public String getPositiveOrNegative() {
@@ -63,5 +43,13 @@ public abstract class Buff {
 
     public void setPositiveOrNegative(String positiveOrNegative) {
         this.positiveOrNegative = positiveOrNegative;
+    }
+
+    public int getStartTurn() {
+        return startTurn;
+    }
+
+    public int getDelayTurn() {
+        return delayTurn;
     }
 }

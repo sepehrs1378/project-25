@@ -1,7 +1,9 @@
 public class HolyBuff extends Buff {
     private int armor;
 
-    public HolyBuff() {
+    public HolyBuff(int startTurn, int delayTurn, int durationTurn,
+                    boolean isDispellable, boolean isContinuous) {
+        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
     }
 

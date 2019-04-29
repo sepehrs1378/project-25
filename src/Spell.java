@@ -31,11 +31,10 @@ class Spell extends Card {
     }
 
     public Spell clone() {
-        Spell cloneSpell = new Spell(getId(), getName(), getPrice(),
+        return new Spell(getId(), getName(), getPrice(),
                 getMana(), apChange, hpChange, cooldown,
                 target.clone(), addedBuffsToCells, addedBuffsToUnits,
                 activationType, description, isDispeller);
-        return cloneSpell;
     }
 
     public int getApChange() {

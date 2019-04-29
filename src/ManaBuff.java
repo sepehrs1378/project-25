@@ -4,11 +4,19 @@ public class ManaBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private int manaAddedPerTurn;
 
+    public ManaBuff(int startTurn, int delayTurn, int durationTurn,
+                    boolean isDispellable, boolean isContinuous, int manaAddedPerTurn) {
+        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+        this.manaAddedPerTurn = manaAddedPerTurn;
+    }
+
     @Override
     public void doEffect() {
         List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
-        for (Player player : players) {
-            player.changeMana(manaAddedPerTurn);
+        if (isActive()) {
+            for (Player player : players) {
+                player.changeMana(manaAddedPerTurn);
+            }
         }
     }
 

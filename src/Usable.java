@@ -9,9 +9,8 @@ public class Usable extends Item {
     }
 
     public Usable clone() {
-        Usable cloneUsable = new Usable(getId(), getDescription(),
+        return new Usable(getId(), getDescription(),
                 price, passivePower.clone());
-        return cloneUsable;
     }
 
     public int getPrice() {

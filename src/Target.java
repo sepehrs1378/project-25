@@ -27,10 +27,9 @@ class Target {
     }
 
     public Target clone() {
-        Target cloneTarget = new Target(typeOfTarget, width, length,
+        return new Target(typeOfTarget, width, length,
                 friendlyOrEnemy, isRandomSelecting, isSelfTargeting,
                 manhattanDistance, targetUnitClass);
-        return cloneTarget;
     }
 
     public String getTypeOfTarget() {
