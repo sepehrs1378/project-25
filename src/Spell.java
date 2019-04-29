@@ -13,10 +13,12 @@ class Spell extends Card {
     private String description;
     private boolean isDispeller;
 
-    public Spell(int apChange, int hpChange, int cooldown,
+    public Spell(String id, String name, int price, int mana,
+                 int apChange, int hpChange, int cooldown,
                  Target target, List<Buff> addedBuffsToCells,
                  List<Buff> addedBuffsToUnits, SpellActivationType activationType
             , String description, boolean isDispeller) {
+        super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
         this.cooldown = cooldown;
@@ -26,6 +28,14 @@ class Spell extends Card {
         this.activationType = activationType;
         this.description = description;
         this.isDispeller = isDispeller;
+    }
+
+    public Spell clone() {
+        Spell cloneSpell = new Spell(getId(), getName(), getPrice(),
+                getMana(), apChange, hpChange, cooldown,
+                target.clone(), addedBuffsToCells, addedBuffsToUnits,
+                activationType, description, isDispeller);
+        return cloneSpell;
     }
 
     public int getApChange() {

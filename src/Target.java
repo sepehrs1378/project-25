@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Target {
+class Target {
     private static DataBase dataBase = DataBase.getInstance();
     private static Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
@@ -24,6 +24,13 @@ abstract class Target {
         this.manhattanDistance = manhattanDistance;
         this.isRandomSelecting = isRandomSelecting;
         this.isSelfTargeting = isSelfTargeting;
+    }
+
+    public Target clone() {
+        Target cloneTarget = new Target(typeOfTarget, width, length,
+                friendlyOrEnemy, isRandomSelecting, isSelfTargeting,
+                manhattanDistance, targetUnitClass);
+        return cloneTarget;
     }
 
     public String getTypeOfTarget() {

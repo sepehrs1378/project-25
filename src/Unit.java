@@ -16,6 +16,27 @@ public class Unit extends Card {
     private boolean didMoveThisTurn;
     private boolean canUseComboAttack;
 
+    public Unit(String id, String name, int price, int mana, int hp, int ap,
+                int minRange, int maxRange, Spell specialPower, String heroOrMinion,
+                String description, boolean canUseComboAttack) {
+        super(id, name, price, mana);
+        this.hp = hp;
+        this.ap = ap;
+        this.minRange = minRange;
+        this.maxRange = maxRange;
+        this.specialPower = specialPower;
+        this.heroOrMinion = heroOrMinion;
+        this.description = description;
+        this.canUseComboAttack = canUseComboAttack;
+    }
+
+    public Unit clone() {
+        Unit cloneUnit = new Unit(getId(), getName(), getPrice(),
+                getMana(), hp, ap, minRange, maxRange, specialPower.clone(),
+                heroOrMinion, description, canUseComboAttack);
+        return cloneUnit;
+    }
+
     public int getHp() {
         return hp;
     }

@@ -8,6 +8,13 @@ public class Card {
     private int price;
     private int mana;
 
+    public Card(String id, String name, int price, int mana) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.mana = mana;
+    }
+
     public String getId() {
         return id;
     }
