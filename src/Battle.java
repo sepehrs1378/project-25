@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Battle {
+    public static final DataBase dataBase = DataBase.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -146,8 +147,8 @@ public class Battle {
         return null;
     }
 
-    public Card getCardByCardID(String cardId) {
-        Card card = this.getBattleGround().getCardByID(cardId);
+    public Card getCardByCardID(String id) {
+        Card card = this.getBattleGround().getCardByID(id);
         return null;
         //todo complete this method
     }
@@ -159,5 +160,23 @@ public class Battle {
         if (player2.getBuffs().contains(buff))
             players.add(player2);
         return players;
+    }
+
+    public void reviveContinuousBuffs() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    if (buff.isContinuous())
+                        buff.revive();
+                }
+                for (Buff buff : cell.getUnit().getBuffs()) {
+                    if (buff.isContinuous())
+                        buff.revive();
+                }
+            }
+        }
     }
 }

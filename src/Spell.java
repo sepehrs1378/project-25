@@ -138,7 +138,9 @@ class Spell extends Card {
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
             while (i < unit.getBuffs().size()) {
-                if (unit.getBuffs().get(i).getPositiveOrNegative().equals(Constants.NEGATIVE)) {
+                Buff buff = unit.getBuffs().get(i);
+                if (buff.getPositiveOrNegative().equals(Constants.NEGATIVE)
+                        && buff.isDispellable()) {
                     unit.getBuffs().remove(i);
                     continue;
                 }
@@ -148,7 +150,9 @@ class Spell extends Card {
         //if unit is enemy we remove positive buffs
         else {
             while (i < unit.getBuffs().size()) {
-                if (unit.getBuffs().get(i).getPositiveOrNegative().equals(Constants.POSITIVE)) {
+                Buff buff = unit.getBuffs().get(i);
+                if (buff.getPositiveOrNegative().equals(Constants.POSITIVE)
+                        && buff.isDispellable()) {
                     unit.getBuffs().remove(i);
                     continue;
                 }

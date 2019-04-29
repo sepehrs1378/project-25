@@ -19,6 +19,13 @@ abstract public class Buff {
 
     public abstract void doEffect();
 
+    public void revive() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        this.startTurn = currentTurn;
+        this.isDead = false;
+        //todo meybe not complete
+    }
+
     public boolean isActive() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         return currentTurn >= startTurn + delayTurn;
@@ -51,5 +58,13 @@ abstract public class Buff {
 
     public int getDelayTurn() {
         return delayTurn;
+    }
+
+    public boolean isContinuous() {
+        return isContinuous;
+    }
+
+    public boolean isDispellable() {
+        return isDispellable;
     }
 }
