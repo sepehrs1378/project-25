@@ -1,3 +1,5 @@
+import java.util.List;
+
 abstract public class Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private String positiveOrNegative;
@@ -6,7 +8,6 @@ abstract public class Buff {
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
-    private boolean isDead;
 
     public Buff(int startTurn, int delayTurn,
                 int durationTurn, boolean isDispellable, boolean isContinuous) {
@@ -22,8 +23,7 @@ abstract public class Buff {
     public void revive() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         this.startTurn = currentTurn;
-        this.isDead = false;
-        //todo meybe not complete
+        //todo maybe not complete
     }
 
     public boolean isActive() {
@@ -36,12 +36,21 @@ abstract public class Buff {
         return currentTurn == startTurn + delayTurn;
     }
 
-    public boolean isDead() {
-        return isDead;
+    public boolean isExpired() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn <= startTurn + delayTurn + durationTurn;//todo condition may be wrong
     }
 
-    public void setDead(boolean dead) {
-        isDead = dead;
+    public void remove() {
+        List<Cell> cells = dataBase.getCurrentBattle().getBattleGround().getCellsHavingBuff(this);
+        List<Unit> units = dataBase.getCurrentBattle().getBattleGround().getUnitsHavingBuff(this);
+        List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
+        for (Cell cell : cells)
+            cell.getBuffs().remove(this);
+        for (Unit unit : units)
+            unit.getBuffs().remove(this);
+        for (Player player : players)
+            player.getBuffs().remove(this);
     }
 
     public String getPositiveOrNegative() {

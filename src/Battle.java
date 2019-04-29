@@ -21,11 +21,12 @@ public class Battle {
     }
 
     public void nextTurn() {
-        changeTurn();
-        //todo do buff effects
-        //todo delete expired buffs
-        //todo reset attack and move status of units
+        reviveContinuousBuffs();
+        removeExpiredBuffs();
+        resetUnitsMoveAndAttack();
+        doBuffsEffects();
         //todo check turns of flag in hand??
+        changeTurn();
         turnNumber++;
     }
 
@@ -178,5 +179,60 @@ public class Battle {
                 }
             }
         }
+    }
+
+    public void removeExpiredBuffs() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    if (buff.isExpired())
+                        buff.remove();
+                }
+            }
+        }
+        for (Buff buff : player1.getBuffs()) {
+            if (buff.isExpired())
+                buff.remove();
+        }
+        for (Buff buff : player2.getBuffs()) {
+            if (buff.isExpired())
+                buff.remove();
+        }
+    }
+
+    public void resetUnitsMoveAndAttack() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Unit unit = dataBase.getCurrentBattle().getBattleGround()
+                        .getCells()[i][j].getUnit();
+                unit.setDidAttackThisTurn(false);
+                unit.setDidMoveThisTurn(false);
+            }
+        }
+    }
+
+    public void doBuffsEffects() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    buff.doEffect();
+                }
+                for (Buff buff : cell.getUnit().getBuffs()) {
+                    buff.doEffect();
+                }
+            }
+        }
+        for (Buff buff : player1.getBuffs())
+            buff.doEffect();
+        for (Buff buff : player2.getBuffs())
+            buff.doEffect();
     }
 }
