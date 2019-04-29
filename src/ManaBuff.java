@@ -18,6 +18,7 @@ public class ManaBuff extends Buff {
                 player.changeMana(manaAddedPerTurn);
             }
         }
+        //todo ممکنه تاثیرش به خاطر nextTurn اعمال نشه و بره زیر مقدار دهی معمولی مانا
     }
 
     public int getManaAddedPerTurn() {
