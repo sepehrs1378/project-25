@@ -87,6 +87,7 @@ public class ControllerCollection {
             Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
             view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
         }
+        //todo after separating Hero and Minion check for show methods
     }
 
     private void help() {
@@ -133,8 +134,13 @@ public class ControllerCollection {
         }
     }
 
-    public void add() {
-
+   public void add() {
+        if(request.getCommand().matches("add .+ to deck .+"))
+        {
+            String[] order=request.getCommand().split(" ");
+            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo()
+                    .getCollection().addCard(order[1],order[4]);
+        }
     }
 
     public void delete(Request request) {

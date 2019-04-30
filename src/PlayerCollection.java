@@ -19,6 +19,17 @@ public class PlayerCollection {
     public void addCard(Card newCard) {
         cards.add(newCard);
     }
+    public OutputMessageType addCard(String id,String toDeck){
+        Deck destinationDeck=getDeckByName(toDeck);
+        Card card=getCardWithID(id);
+        Item item=getItemWithID(id);
+        if(){
+            //todo
+        }else if(){
+
+            //todo
+        }
+    }
 
     public void addItem(Usable newItem) {
         items.add(newItem);
