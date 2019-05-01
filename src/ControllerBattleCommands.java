@@ -4,9 +4,10 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class ControllerBattleCommands {
-    private static final Request request=Request.getInstance();
+    private static final Request request = Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
+
     private ControllerBattleCommands() {
     }
 
@@ -55,67 +56,64 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showGameInfo(){
-        if(request.getCommand().equals("game info")){
+    public void showGameInfo() {
+        if (request.getCommand().equals("game info")) {
             view.showGameInfo(database.getCurrentBattle());
         }
     }
-    public void showMinions(){
-        if(request.getCommand().equals("show my minions")){
-            List<Unit> minions=database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
-            for(Unit minion:minions){
-                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
+
+    public void showMinions() {
+        if (request.getCommand().equals("show my minions")) {
+            List<Unit> minions = database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
+            for (Unit minion : minions) {
+                view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
             }
-        }
-        else if(request.getCommand().equals("show opponent minions")){
+        } else if (request.getCommand().equals("show opponent minions")) {
             Player player;
-            if(database.getCurrentBattle().getPlayerInTurn()==database.getCurrentBattle().getPlayer1())
-                player=database.getCurrentBattle().getPlayer2();
-            else player=database.getCurrentBattle().getPlayer1();
-            List<Unit> minions=database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
-            for (Unit minion:minions){
-                view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
+            if (database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer1())
+                player = database.getCurrentBattle().getPlayer2();
+            else player = database.getCurrentBattle().getPlayer1();
+            List<Unit> minions = database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
+            for (Unit minion : minions) {
+                view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
             }
         }
     }
+
     public void show() {
-         if(request.getCommand().matches("show card info \\w+")){
-            String cardId=request.getCommand().split("\\s+")[3];
-            Card card=database.getCurrentBattle().getBattleGround().getCardByID(cardId);
-            if(card!=null){
-                if(card instanceof Spell)
-                {
+        if (request.getCommand().matches("show card info \\w+")) {
+            String cardId = request.getCommand().split("\\s+")[3];
+            Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
+            if (card != null) {
+                if (card instanceof Spell) {
                     view.showCardInfoSpell((Spell) card);
-                }else if(card instanceof Unit){
-                    if(((Unit)card).getHeroOrMinion().equals("Minion")){
-                        view.showCardInfoMinion((Unit)card);
-                    }
-                    else if(((Unit)card).getHeroOrMinion().equals("Hero")){
-                        view.showCardInfoHero((Unit)card);
+                } else if (card instanceof Unit) {
+                    if (((Unit) card).getHeroOrMinion().equals("Minion")) {
+                        view.showCardInfoMinion((Unit) card);
+                    } else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
+                        view.showCardInfoHero((Unit) card);
                     }
                 }
-            }else {
+            } else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
                 view.printOutputMessage(request.getOutputMessageType());
                 //todo
                 view.printOutputMessage(request.getOutputMessageType());
             }
-        }else if(request.getCommand().equals("show collectables")){
+        } else if (request.getCommand().equals("show collectables")) {
             view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
-         }
-         else if(request.getCommand().equals("show info")){
-             if(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable()!=null){
-                 view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
-             }
-         }
-         else if(request.getCommand().equals("show next card")){
-             Card card=database.getCurrentBattle().getPlayerInTurn().getNextCard();
-             if(card instanceof Spell){
-                 view.showCardInfoSpell((Spell)card);
-             }else if(card instanceof Unit){
-                 view.showCardInfoMinion((Unit)card);
-             }
-         }
+        } else if (request.getCommand().equals("show info")) {
+            if (database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
+                view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
+            }
+        } else if (request.getCommand().equals("show next card")) {
+            Card card = database.getCurrentBattle().getPlayerInTurn().getNextCard();
+            if (card instanceof Spell) {
+                view.showCardInfoSpell((Spell) card);
+            } else if (card instanceof Unit) {
+                view.showCardInfoMinion((Unit) card);
+            }
+        }
     }
 
     public void select() {
@@ -155,6 +153,7 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
+
         }
     }
 

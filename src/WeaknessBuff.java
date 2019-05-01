@@ -1,5 +1,3 @@
-import jdk.dynalink.linker.LinkerServices;
-
 import java.util.List;
 
 public class WeaknessBuff extends Buff {

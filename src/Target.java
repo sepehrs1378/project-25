@@ -32,71 +32,7 @@ class Target {
                 manhattanDistance, targetUnitClass);
     }
 
-    public String getTypeOfTarget() {
-        return typeOfTarget;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public String getFriendlyOrEnemy() {
-        return friendlyOrEnemy;
-    }
-
-    public void setTypeOfTarget(String typeOfTarget) {
-        this.typeOfTarget = typeOfTarget;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public void setFriendlyOrEnemy(String friendlyOrEnemy) {
-        this.friendlyOrEnemy = friendlyOrEnemy;
-    }
-
-    public boolean isRandomSelecting() {
-        return isRandomSelecting;
-    }
-
-    public void setRandomSelecting(boolean randomSelecting) {
-        isRandomSelecting = randomSelecting;
-    }
-
-    public boolean isSelfTargeting() {
-        return isSelfTargeting;
-    }
-
-    public void setSelfTargeting(boolean selfTargeting) {
-        isSelfTargeting = selfTargeting;
-    }
-
-    public int getManhattanDistance() {
-        return manhattanDistance;
-    }
-
-    public void setManhattanDistance(int manhattanDistance) {
-        this.manhattanDistance = manhattanDistance;
-    }
-
-    public String getTargetUnitClass() {
-        return targetUnitClass;
-    }
-
-    public void setTargetUnitClass(String targetUnitClass) {
-        this.targetUnitClass = targetUnitClass;
-    }
-
-    public List<Cell> getCells(int insertionRow, int insertionColumn) {
+    public List<Cell> getTargetCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = new ArrayList<>();
         if (!typeOfTarget.equals(Constants.CELL))
             return targetCells;
@@ -111,7 +47,7 @@ class Target {
         return targetCells;
     }
 
-    public List<Unit> getUnits(int insertionRow, int insertionColumn) {
+    public List<Unit> getTargetUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = new ArrayList<>();
         if (typeOfTarget.equals(Constants.CELL))
             return targetUnits;
@@ -152,6 +88,14 @@ class Target {
             return true;
         if (row - insertionRow > length / 2 && column - insertionColumn > width / 2)
             return true;
+        if (!typeOfTarget.equals(Constants.CELL)) {
+            if (getManhattanDistance(row, column, insertionRow, insertionColumn) <= manhattanDistance)
+                return true;
+        }
         return false;
+    }
+
+    public int getManhattanDistance(int row1, int column1, int row2, int column2) {
+        return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 }

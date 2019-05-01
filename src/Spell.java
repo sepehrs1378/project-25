@@ -99,7 +99,7 @@ class Spell extends Card {
     }
 
     public void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
-        List<Cell> targetCells = target.getCells(insertionRow, insertionColumn);
+        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn);
         for (Cell cell : targetCells) {
             for (Buff buff : getAddedBuffsToCells()) {
                 cell.getBuffs().add(buff);
@@ -108,7 +108,7 @@ class Spell extends Card {
     }
 
     public void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
-        List<Unit> targetUnits = target.getUnits(insertionRow, insertionColumn);
+        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
                     && dataBase.getCurrentBattle().getBattleGround().
