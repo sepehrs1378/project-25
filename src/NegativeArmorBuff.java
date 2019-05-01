@@ -11,6 +11,6 @@ public class NegativeArmorBuff extends Buff {
 
     @Override
     public void doEffect() {
-
+        //todo looks gonna be empty
     }
 }
