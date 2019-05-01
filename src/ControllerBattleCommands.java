@@ -1,3 +1,4 @@
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -188,12 +189,24 @@ public class ControllerBattleCommands {
     }
 
     public void use() {
-        Player player=database.getCurrentBattle().getPlayerInTurn();
-        Unit hero=database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-        if(hero.getSpecialPower().getMana()<=player.getMana()
-            && hero.getSpecialPower().getCooldown()==0
-                && hero.getSpecialPower().getActivationType()==SpellActivationType.ON_CAST){
-            //todo hero.getSpecialPower().dospell();
+        if(request.getCommand().matches("use special power [(]\\d+,\\d+[)]")){
+            Pattern pattern=Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
+            Matcher matcher=pattern.matcher(request.getCommand());
+            if(Integer.parseInt(matcher.group(1))<5&& Integer.parseInt(matcher.group(1))>=0
+                && Integer.parseInt(matcher.group(2))<9 && Integer.parseInt(matcher.group(2))>=0){
+
+                Player player=database.getCurrentBattle().getPlayerInTurn();
+                Unit hero=database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+                if(hero.getSpecialPower().getMana()<=player.getMana()
+                        && hero.getSpecialPower().getCooldown()==0
+                        && hero.getSpecialPower().getActivationType()==SpellActivationType.ON_CAST){
+                    hero.getSpecialPower().doSpell(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
+                }
+                else view.printOutputMessage(OutputMessageType.NO_HERO);
+            }
+            else{
+                view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
+            }
         }
     }
 

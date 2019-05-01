@@ -38,6 +38,8 @@ public enum OutputMessageType {
     FOUND_ITEM("found item with id: "),
     FOUND_CARD("found card with id: "),
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
+    NO_HERO("there is no hero in battleGround"),
+    INVALID_NUMBER("the number was out of battleGround boundaries"),
     NO_ERROR("");
 
     private String message;
