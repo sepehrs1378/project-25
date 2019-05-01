@@ -23,9 +23,9 @@ public class PlayerCollection {
         Deck destinationDeck=getDeckByName(toDeck);
         Card card=getCardWithID(id);
         Item item=getItemWithID(id);
-        if(){
-            //todo
-        }else if(){
+        if(card==null && item == null){
+            return OutputMessageType.NOT_IN_COLLECTION;
+        }else if(destinationDeck.getItem()==item || destinationDeck){
 
             //todo
         }

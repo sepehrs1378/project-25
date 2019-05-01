@@ -57,4 +57,13 @@ public class Deck {
     public boolean isValid() {
         return cards.size() == 20 && hero != null;
     }
+
+    public Card getCardByCardId(String cardID){
+        for(Card card:cards){
+            if(card.getId().equals(cardID)){
+                return card;
+            }
+        }
+        return null;
+    }
 }

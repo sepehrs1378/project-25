@@ -87,7 +87,6 @@ public class ControllerCollection {
             Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
             view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
         }
-        //todo after separating Hero and Minion check for show methods
     }
 
     private void help() {
