@@ -1,9 +1,9 @@
 public class Collectable extends Item {
     private Spell spell;
 
-    public Collectable(String itemID, String description) {
+    public Collectable(String itemID, String description, Spell spell) {
         super(itemID, description);
-        //todo what about spell
+        this.spell = spell;
     }
 
     public void doSpell(Card card) {

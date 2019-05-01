@@ -30,67 +30,19 @@ class Spell extends Card {
         this.isDispeller = isDispeller;
     }
 
-    public Spell clone() {
-        return new Spell(getId(), getName(), getPrice(),
-                getMana(), apChange, hpChange, cooldown,
-                target.clone(), addedBuffsToCells, addedBuffsToUnits,
-                activationType, description, isDispeller);
-    }
-
-    public int getApChange() {
-        return apChange;
-    }
-
-    public int getHpChange() {
-        return hpChange;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setApChange(int apChange) {
-        this.apChange = apChange;
-    }
-
-    public void setHpChange(int hpChange) {
-        this.hpChange = hpChange;
-    }
-
-    public List<Buff> getAddedBuffsToUnits() {
-        return addedBuffsToUnits;
-    }
-
-    public void setAddedBuffsToUnits(List<Buff> addedBuffsToUnits) {
-        this.addedBuffsToUnits = addedBuffsToUnits;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Buff> getAddedBuffsToCells() {
-        return addedBuffsToCells;
-    }
-
-    public void setAddedBuffsToCells(List<Buff> addedBuffsToCells) {
-        this.addedBuffsToCells = addedBuffsToCells;
-    }
-
-    public boolean isDispeller() {
-        return isDispeller;
-    }
-
-    public void setDispeller(boolean dispeller) {
-        isDispeller = dispeller;
-    }
-
     public void doSpell(Unit unit) {
         addBuffsToUnit(unit);
         if (isDispeller())
             removeBuffsFromUnit(unit);
         unit.changeAp(getHpChange());
         unit.changeHp(getApChange());
+    }
+
+    public Spell clone() {
+        return new Spell(getId(), getName(), getPrice(),
+                getMana(), apChange, hpChange, cooldown,
+                target.clone(), addedBuffsToCells, addedBuffsToUnits,
+                activationType, description, isDispeller);
     }
 
     public void doSpell(int insertionRow, int insertionColumn) {
@@ -159,6 +111,54 @@ class Spell extends Card {
                 i++;
             }
         }
+    }
+
+    public int getApChange() {
+        return apChange;
+    }
+
+    public int getHpChange() {
+        return hpChange;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setApChange(int apChange) {
+        this.apChange = apChange;
+    }
+
+    public void setHpChange(int hpChange) {
+        this.hpChange = hpChange;
+    }
+
+    public List<Buff> getAddedBuffsToUnits() {
+        return addedBuffsToUnits;
+    }
+
+    public void setAddedBuffsToUnits(List<Buff> addedBuffsToUnits) {
+        this.addedBuffsToUnits = addedBuffsToUnits;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Buff> getAddedBuffsToCells() {
+        return addedBuffsToCells;
+    }
+
+    public void setAddedBuffsToCells(List<Buff> addedBuffsToCells) {
+        this.addedBuffsToCells = addedBuffsToCells;
+    }
+
+    public boolean isDispeller() {
+        return isDispeller;
+    }
+
+    public void setDispeller(boolean dispeller) {
+        isDispeller = dispeller;
     }
 
     public int getCooldown() {

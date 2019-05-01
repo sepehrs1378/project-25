@@ -153,7 +153,7 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-
+                
         }
     }
 
