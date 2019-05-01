@@ -189,7 +189,12 @@ public class ControllerBattleCommands {
 
     public void use() {
         Player player=database.getCurrentBattle().getPlayerInTurn();
-        if()
+        Unit hero=database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+        if(hero.getSpecialPower().getMana()<=player.getMana()
+            && hero.getSpecialPower().getCooldown()==0
+                && hero.getSpecialPower().getActivationType()==SpellActivationType.ON_CAST){
+            //todo hero.getSpecialPower().dospell();
+        }
     }
 
     public void insert() {
