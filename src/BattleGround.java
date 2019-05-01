@@ -171,4 +171,16 @@ class BattleGround {
         }
         return cellsHavingBuff;
     }
+    public void addFlagsToBattleGround(List<Flag> flags){
+        int counter=flags.size();
+        while(counter>0){
+            int column= (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+            int row=(int)(Math.random()*Constants.BATTLE_GROUND_WIDTH);
+            if(cells[row][column].getFlags().size()==0){
+                cells[row][column].getFlags().add(flags.get(counter-1));
+                flags.remove(counter-1);
+                counter--;
+            }
+        }
+    }
 }
