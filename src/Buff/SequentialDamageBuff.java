@@ -1,3 +1,7 @@
+package Buff;
+
+import Buff.Buff;
+
 import java.util.ArrayList;
 import java.util.List;
 

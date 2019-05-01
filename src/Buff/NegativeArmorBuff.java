@@ -1,3 +1,5 @@
+package Buff;
+
 public class NegativeArmorBuff extends Buff {
     public NegativeArmorBuff() {
         setPositiveOrNegative(Constants.NEGATIVE);

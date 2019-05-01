@@ -1,3 +1,5 @@
+package Buff;
+
 public class DisarmBuff extends Buff {
     public DisarmBuff(int startTurn, int delayTurn, int durationTurn,
                       boolean isDispellable, boolean isContinuous) {

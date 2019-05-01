@@ -1,3 +1,5 @@
+import Buff.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,20 +94,24 @@ public class Unit extends Card {
 
     }
 
-    public OutputMessageType attackUnit(String targetID) {
+    public OutputMessageType attackUnit(String targetid) {
         if (dataBase.getCurrentBattle().getPlayerInTurn().
                 getSelectedUnit().didAttackThisTurn)
             return OutputMessageType.ALREADY_ATTACKED;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetID))
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetid))
             return OutputMessageType.INVALID_CARD;
-        if (!isTargetUnitWithinRange(targetID))
+        if (!isTargetUnitWithinRange(targetid))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
-                getUnitWithID(targetID);
+                getUnitWithID(targetid);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
         targetedUnit.changeHp(-damageDealt);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
+    }
+
+    public static OutputMessageType attackCombo(String targetId){
+        //todo
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
