@@ -100,7 +100,22 @@ public class ControllerBattleCommands {
                 //todo
                 view.printOutputMessage(request.getOutputMessageType());
             }
-        }
+        }else if(request.getCommand().equals("show collectables")){
+            view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
+         }
+         else if(request.getCommand().equals("show info")){
+             if(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable()!=null){
+                 view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
+             }
+         }
+         else if(request.getCommand().equals("show next card")){
+             Card card=database.getCurrentBattle().getPlayerInTurn().getNextCard();
+             if(card instanceof Spell){
+                 view.showCardInfoSpell((Spell)card);
+             }else if(card instanceof Unit){
+                 view.showCardInfoMinion((Unit)card);
+             }
+         }
     }
 
     public void select() {
@@ -174,11 +189,11 @@ public class ControllerBattleCommands {
     }
 
     public void use() {
-
+        //todo
     }
 
     public void insert() {
-
+        //todo
     }
 
     public void end() {

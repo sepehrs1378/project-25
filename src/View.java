@@ -1,3 +1,4 @@
+import java.text.CollationElementIterator;
 import java.util.Collections;
 import java.util.List;
 
@@ -304,6 +305,16 @@ public class View {
         for(String string:output){
             System.out.println(string);
         }
+    }
+    public void showCollectables(List<Collectable> collectables){
+        int counter=1;
+        for(Collectable collectable:collectables){
+            System.out.println(counter+" : Name : "+collectable.getName()+" - Desc : "+collectable.getDescription());
+            counter++;
+        }
+    }
+    public void showCollectable(Collectable collectable){
+        System.out.println("Name : "+collectable.getName()+" - Desc : "+collectable.getDescription());
     }
 }
 
