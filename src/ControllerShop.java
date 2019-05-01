@@ -92,37 +92,16 @@ class ControllerShop {
                 view.printOutputMessage(OutputMessageType.CANT_HAVE_MORE_ITEMS);
                 break;
             case BOUGHT_SUCCESSFULLY:
-
-                dataBase.getLoggedInAccount().takeAwayMoney(findCardInShop());
                 view.printOutputMessage(OutputMessageType.BOUGHT_SUCCESSFULLY);
                 break;
             default:
         }
     }
 
-    public void buySuccessful(String name) {
-        Card card = findCardInShop(name);
-        if (card != null) {
-            loggedInAccount.getPlayerInfo().addCardToCollection(card);
-            loggedInAccount.takeAwayMoney(card.getPrice());
-            return;
-        }
-        Usable usable = findUsableInShop(name);
-        if (usable != null) {
-            Usable cloneUsable = usable.clone();
-            loggedInAccount.getPlayerInfo().addUsableToCollection(cloneUsable);
-            loggedInAccount.takeAwayMoney(usable.getPrice());
-        }
-    }
-
     public void search() {
         String command = request.getCommand();
         if (command.matches("search (.+)$")) {
-            String[] strings = command.split("\\s+");
-            Card card = findCardInShop(strings[1]);
-            Usable usable = findUsableInShop(strings[1]);
-            Collectable collectable = findCollectableInShop(strings[1]);
-            showIdInShop(card, usable, collectable);
+            PlayerCollection.searchInShop(command);
         } else if (command.matches("^search collection (.+)$")) {
             String[] strings = command.split("\\s+");
 
@@ -133,33 +112,6 @@ class ControllerShop {
 
     public void help() {
         view.printHelp(HelpType.CONTROLLER_SHOP_HELP);
-    }
-
-    private Card findCardInShop(String cardName) {
-        for (Card card : DataBase.getCardList()) {
-            if (card.getName().equals(cardName)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    private Usable findUsableInShop(String usableName) {
-        for (Usable usable : DataBase.getUsableList()) {
-            if (usable.getName().equals(usableName)) {
-                return usable;
-            }
-        }
-        return null;
-    }
-
-    private Collectable findCollectableInShop(String collectableName) {
-        for (Collectable collectable : DataBase.getCollectableList()) {
-            if (collectable.getName().equals(collectableName)) {
-                return collectable;
-            }
-        }
-        return null;
     }
 
     public void showIdInShop(Card card, Usable usable, Collectable collectable) {

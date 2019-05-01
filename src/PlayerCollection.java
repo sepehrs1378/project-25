@@ -5,6 +5,7 @@ import java.util.List;
 public class PlayerCollection {
     private static final DataBase dataBase = DataBase.getInstance();
     private static final Account loggedInAccount = dataBase.getLoggedInAccount();
+    private static final ControllerShop controllerShop = ControllerShop.getOurInstance();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Usable> items = new ArrayList<>();
@@ -161,15 +162,22 @@ public class PlayerCollection {
         return OutputMessageType.DECK_CREATED;
     }
 
+    private static Collectable findCollectableInShop(String collectableName) {
+        for (Collectable collectable : DataBase.getCollectableList()) {
+            if (collectable.getName().equals(collectableName)) {
+                return collectable;
+            }
+        }
+        return null;
+    }
+
     public OutputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
             if (loggedInAccount.getMoney() < card.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
-            if (items.size() == 3)
-                return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
-                //todo
+                buySuccessful(name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
@@ -180,20 +188,99 @@ public class PlayerCollection {
             if (items.size() == 3)
                 return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
-                //todo
+                buySuccessful(name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
         return OutputMessageType.NOT_IN_SHOP;
     }
 
+    public void buySuccessful(String name) {
+        Card card = findCardInShop(name);
+        if (card != null) {
+            Card cloneCard = card.clone();
+            loggedInAccount.getPlayerInfo().addCardToCollection(cloneCard);
+            loggedInAccount.takeAwayMoney(card.getPrice());
+            defineNewId(cloneCard);
+            return;
+        }
+        Usable usable = findUsableInShop(name);
+        if (usable != null) {
+            Usable cloneUsable = usable.clone();
+            loggedInAccount.getPlayerInfo().addUsableToCollection(cloneUsable);
+            loggedInAccount.takeAwayMoney(usable.getPrice());
+            defineNewId(cloneUsable);
+        }
+    }
+
+
+    private static Card findCardInShop(String cardName) {
+        for (Card card : DataBase.getCardList()) {
+            if (card.getName().equals(cardName)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    private static Usable findUsableInShop(String usableName) {
+        for (Usable usable : DataBase.getUsableList()) {
+            if (usable.getName().equals(usableName)) {
+                return usable;
+            }
+        }
+        return null;
+    }
+
+    private void defineNewId(Object obj) {
+        PlayerCollection collection = loggedInAccount.getPlayerInfo().getCollection();
+        if (obj instanceof Card) {
+            int numOfSimiliarCards = 0;
+            for (Card card : collection.getCards()) {
+                if (card.getName().equals(((Card) obj).getName())) {
+                    numOfSimiliarCards++;
+                }
+            }
+            Card card = (Card) obj;
+            String id = loggedInAccount.getUsername() + "_" + card.getName() + "_" + numOfSimiliarCards;
+            card.setId(id);
+        } else if (obj instanceof Usable) {
+            int numOfSimilarUsables = 0;
+            for (Usable usable : collection.getItems()) {
+                if (usable.getName().equals(((Usable) obj).getName())) {
+                    numOfSimilarUsables++;
+                }
+            }
+            Usable usable = (Usable) obj;
+            String id = loggedInAccount.getUsername() + "_" + usable.getName() + "_" + numOfSimilarUsables;
+            usable.setId(id);
+        }
+    }
+
+    public static void searchInShop(String command) {
+        String[] strings = command.split("\\s+");
+        Card card = findCardInShop(strings[1]);
+        Usable usable = findUsableInShop(strings[1]);
+        Collectable collectable = findCollectableInShop(strings[1]);
+        controllerShop.showIdInShop(card, usable, collectable);
+    }
 
     public OutputMessageType sell(String id) {
         if (doesHaveCard(id)) {
             //todo
+            return OutputMessageType.SOLD_SUCCESSFULLY;
         }
         //todo
         return OutputMessageType.NOT_IN_COLLECTION;
+    }
+
+    public int searchCollection(String name) {
+        PlayerCollection collection = loggedInAccount.getPlayerInfo().getCollection();
+        for (Card card : getCards()){
+            if (card.getName().equals(name)){
+                
+            }
+        }
     }
 
     public OutputMessageType selectDeckAsMain(String deckName) {
@@ -224,7 +311,7 @@ public class PlayerCollection {
                 output.add(item.getId());
             }
         }
-        if (output.size() == 0) {
+        if (output.isEmpty()) {
             output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.toString());
         }
         return output;

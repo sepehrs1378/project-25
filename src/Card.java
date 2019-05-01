@@ -52,4 +52,8 @@ public class Card {
         Matcher matcher = pattern.matcher(id);
         return dataBase.getAccountWithUsername(matcher.group(1));
     }
+
+    public Card clone(){
+        return new Card(getId(), getName(), getPrice(), getMana());
+    }
 }
