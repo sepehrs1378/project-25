@@ -88,27 +88,26 @@ public class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public void doSpecialPower() {
-
-    }
-
-    public OutputMessageType attackUnit(String targetid) {
+    public OutputMessageType attackUnit(String targetId) {
         if (dataBase.getCurrentBattle().getPlayerInTurn().
                 getSelectedUnit().didAttackThisTurn)
             return OutputMessageType.ALREADY_ATTACKED;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetid))
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
             return OutputMessageType.INVALID_CARD;
-        if (!isTargetUnitWithinRange(targetid))
+        if (!isTargetUnitWithinRange(targetId))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
-                getUnitWithID(targetid);
+                getUnitWithID(targetId);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
         targetedUnit.changeHp(-damageDealt);
+        //todo defence spell for targetedUnit
+        if (this.specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
+            this.specialPower.doSpell(targetedUnit);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
-    public static OutputMessageType attackCombo(String targetId){
+    public static OutputMessageType attackCombo(String targetId) {
         //todo
     }
 
