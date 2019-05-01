@@ -33,6 +33,8 @@ public enum OutputMessageType {
     DECK_IS_FULL("Deck Is Full"),
     DECK_HAS_HERO("Deck Has Hero"),
     NO_SUCH_CARD_IN_DECK("no such card in deck"),
+    ITEM_IS_EMTPY("there is no item in the selected deck"),
+    HERO_IS_EMPTY("hero slot is empty in the deck"),
     NO_ERROR("");
 
     private String message;

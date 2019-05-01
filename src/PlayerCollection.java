@@ -57,9 +57,17 @@ public class PlayerCollection {
             if(temp!=null){
                 if(temp instanceof Unit && ((Unit)temp).getHeroOrMinion().equals(Constants.HERO)){
                     deck.setHero(null);
-                }else deck.getCards().remove(temp);
+                }else {
+                    if(deck.hasCard(id)){
+                        deck.getCards().remove(temp);
+                    }
+                    else return OutputMessageType.NO_SUCH_CARD_IN_DECK;
+                }
             }else{
-                if(deck.getItem().getId().equals(id)){
+                if(deck.getItem()==null){
+                    return OutputMessageType.ITEM_IS_EMTPY;
+                }
+                else if(deck.getItem().getId().equals(id)){
                     deck.setItem(null);
                 }else {
                     return OutputMessageType.NO_SUCH_CARD_IN_DECK;
