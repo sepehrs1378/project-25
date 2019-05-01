@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.List;
 
 public class View {
@@ -254,7 +253,7 @@ public class View {
     public void showCardOrItemDoesNotExist(){
         System.out.println("There is no card or item with this name");
     }
-    public void showDeck(Deck deck,String whiteSpace){
+    public void showDeck(Deck deck, String whiteSpace){
         System.out.println(whiteSpace+"Heroes :");
         int counter=1;
         System.out.println(whiteSpace+"   "+counter+" : Name : "+deck.getHero().getName()+" - AP : "+deck.getHero().getAp()
@@ -282,7 +281,7 @@ public class View {
             }
         }
     }
-    public void showAllDecks(PlayerCollection playerCollection,Deck mainDeck){
+    public void showAllDecks(PlayerCollection playerCollection, Deck mainDeck){
         int counter=1;
         String mainDeckName="";
         if(mainDeck!=null)
@@ -300,4 +299,20 @@ public class View {
             counter++;
         }
     }
+    public void printList(List<String> output){
+        for(String string:output){
+            System.out.println(string);
+        }
+    }
+    public void showCollectables(List<Collectable> collectables){
+        int counter=1;
+        for(Collectable collectable:collectables){
+            System.out.println(counter+" : Name : "+collectable.getName()+" - Desc : "+collectable.getDescription());
+            counter++;
+        }
+    }
+    public void showCollectable(Collectable collectable){
+        System.out.println("Name : "+collectable.getName()+" - Desc : "+collectable.getDescription());
+    }
 }
+

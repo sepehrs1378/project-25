@@ -4,6 +4,5 @@ public enum  SpellActivationType {
     ON_DEFEND,
     ON_DEATH,
     ON_SPAWN,
-    ON_TURN,
     PASSIVE;
 }

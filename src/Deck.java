@@ -4,7 +4,7 @@ import java.util.List;
 public class Deck {
     private List<Card> cards = new ArrayList<>();
     private Unit hero;
-    private Usable item;
+    private Item iem;
     private String name;
 
     public Deck(Deck deck) {
@@ -42,7 +42,7 @@ public class Deck {
         this.hero = hero;
     }
 
-    public void setItem(Usable item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
@@ -56,5 +56,29 @@ public class Deck {
 
     public boolean isValid() {
         return cards.size() == 20 && hero != null;
+    }
+
+    public Card getCardByCardId(String cardID){
+        for(Card card:cards){
+            if(card.getId().equals(cardID)){
+                return card;
+            }
+        }
+        return null;
+    }
+    public boolean hasCard(String cardID){
+        for (Card card:cards){
+            if(card.getId().equals(cardID)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean hasCard(Card card){
+        for (Card card1:cards){
+            if(card1==card)
+                return true;
+        }
+        return false;
     }
 }

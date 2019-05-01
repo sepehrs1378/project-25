@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerCollection {
@@ -18,6 +19,62 @@ public class PlayerCollection {
 
     public void addCard(Card newCard) {
         cards.add(newCard);
+    }
+
+    public OutputMessageType addCard(String id, String toDeck) {
+        Deck destinationDeck = getDeckByName(toDeck);
+        Card card = getCardWithID(id);
+        Item item = getItemWithID(id);
+        if (card == null && item == null) {
+            return OutputMessageType.NOT_IN_COLLECTION;
+        } else if (destinationDeck.getItem() == item || destinationDeck.hasCard(card)) {
+            return OutputMessageType.CARD_ALREADY_IN_BATTLE;
+        } else if (destinationDeck.getCards().size() == 20) {
+            return OutputMessageType.DECK_IS_FULL;
+        } else if (destinationDeck.getHero() != null) {
+            return OutputMessageType.DECK_HAS_HERO;
+        } else {
+            if (card != null) {
+                if (card instanceof Unit) {
+                    if (((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+                        destinationDeck.setHero((Unit) card);
+                    } else {
+                        destinationDeck.getCards().add(card);
+                    }
+                }
+            } else if (item != null) {
+                destinationDeck.setItem(item);
+            }
+            return OutputMessageType.NO_ERROR;
+        }
+    }
+
+    public OutputMessageType removeCard(String id, String fromDeck) {
+        Deck deck = getDeckByName(fromDeck);
+        if (deck == null) {
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        } else {
+            Card temp = deck.getCardByCardId(id);
+            if (temp != null) {
+                if (temp instanceof Unit && ((Unit) temp).getHeroOrMinion().equals(Constants.HERO)) {
+                    deck.setHero(null);
+                } else {
+                    if (deck.hasCard(id)) {
+                        deck.getCards().remove(temp);
+                    } else return OutputMessageType.NO_SUCH_CARD_IN_DECK;
+                }
+            } else {
+                if (deck.getItem() == null) {
+                    return OutputMessageType.ITEM_IS_EMTPY;
+                } else if (deck.getItem().getId().equals(id)) {
+                    deck.setItem(null);
+                } else {
+                    return OutputMessageType.NO_SUCH_CARD_IN_DECK;
+                }
+            }
+        }
+        return OutputMessageType.NO_ERROR;
+
     }
 
     public void addItem(Usable newItem) {
@@ -132,7 +189,7 @@ public class PlayerCollection {
 
 
     public OutputMessageType sell(String id) {
-        if(doesHaveCard(id)){
+        if (doesHaveCard(id)) {
             //todo
         }
         //todo
@@ -153,5 +210,23 @@ public class PlayerCollection {
         if (deck.isValid())
             return OutputMessageType.DECK_VALID;
         return OutputMessageType.DECK_NOT_VALID;
+    }
+
+    public List<String> searchCard(String name) {
+        List<String> output = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getName().equals(name)) {
+                output.add(card.getId());
+            }
+        }
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                output.add(item.getId());
+            }
+        }
+        if (output.size() == 0) {
+            output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.toString());
+        }
+        return output;
     }
 }

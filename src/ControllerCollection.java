@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +32,7 @@ public class ControllerCollection {
                     ourInstance.show();
                     break;
                 case SEARCH:
+                    ourInstance.search();
                     break;
                 case SAVE:
                     //todo is it needed?
@@ -39,8 +41,10 @@ public class ControllerCollection {
                     ourInstance.delete(request);
                     break;
                 case ADD:
+                    ourInstance.add();
                     break;
                 case REMOVE:
+                    ourInstance.remove();
                     break;
                 case VALIDATE:
                     ourInstance.validate(request);
@@ -133,8 +137,14 @@ public class ControllerCollection {
         }
     }
 
-    public void add() {
-
+   public void add() {
+        if(request.getCommand().matches("add .+ to deck .+"))
+        {
+            String[] order=request.getCommand().split(" ");
+            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo()
+                    .getCollection().addCard(order[1],order[4]);
+            view.printOutputMessage(outputMessageType);
+        }
     }
 
     public void delete(Request request) {
@@ -157,10 +167,19 @@ public class ControllerCollection {
     }
 
     public void remove() {
-
+        if(request.getCommand().matches("remove .+ from deck .+")){
+            String[] order=request.getCommand().split("\\s+");
+            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .removeCard(order[1],order[4]);
+            view.printOutputMessage(outputMessageType);
+        }
     }
 
     public void search() {
-
+        if(request.getCommand().matches("search\\s+.+")){
+            List<String> output =dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .searchCard(request.getCommand().split("\\s+")[1].split("_")[1]);
+            view.printList(output);
+        }
     }
 }

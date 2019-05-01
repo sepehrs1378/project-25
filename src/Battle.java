@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Battle {
+    public static final DataBase dataBase = DataBase.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -14,14 +18,21 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.setNumberOfFlags(numberOfFlags);
+        List<Flag> temp=new ArrayList<>();
+        for(int i=0;i<numberOfFlags;i++){
+            temp.add(new Flag());
+        }
+        this.battleGround.addFlagsToBattleGround(temp);
     }
 
     public void nextTurn() {
+        reviveContinuousBuffs();
+        removeExpiredBuffs();
+        resetUnitsMoveAndAttack();
+        doBuffsEffects();
+        //todo check turns of flag in hand??
         changeTurn();
         turnNumber++;
-        //todo do buff effects
-        //todo delete expired buffs
-        //todo reset attack and move status of units
     }
 
     public Player getPlayer1() {
@@ -142,9 +153,92 @@ public class Battle {
         return null;
     }
 
-    public Card getCardByCardID(String cardId) {
-        Card card = this.getBattleGround().getCardByID(cardId);
+    public Card getCardByCardID(String id) {
+        Card card = this.getBattleGround().getCardByID(id);
         return null;
         //todo complete this method
     }
+
+    public List<Player> getPlayersHavingBuff(Buff buff) {
+        List<Player> players = new ArrayList<>();
+        if (player1.getBuffs().contains(buff))
+            players.add(player1);
+        if (player2.getBuffs().contains(buff))
+            players.add(player2);
+        return players;
+    }
+
+    public void reviveContinuousBuffs() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    if (buff.isContinuous())
+                        buff.revive();
+                }
+                for (Buff buff : cell.getUnit().getBuffs()) {
+                    if (buff.isContinuous())
+                        buff.revive();
+                }
+            }
+        }
+    }
+
+    public void removeExpiredBuffs() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    if (buff.isExpired())
+                        buff.remove();
+                }
+            }
+        }
+        for (Buff buff : player1.getBuffs()) {
+            if (buff.isExpired())
+                buff.remove();
+        }
+        for (Buff buff : player2.getBuffs()) {
+            if (buff.isExpired())
+                buff.remove();
+        }
+    }
+
+    public void resetUnitsMoveAndAttack() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Unit unit = dataBase.getCurrentBattle().getBattleGround()
+                        .getCells()[i][j].getUnit();
+                unit.setDidAttackThisTurn(false);
+                unit.setDidMoveThisTurn(false);
+            }
+        }
+    }
+
+    public void doBuffsEffects() {
+        int i;
+        int j;
+        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                for (Buff buff : cell.getBuffs()) {
+                    buff.doEffect();
+                }
+                for (Buff buff : cell.getUnit().getBuffs()) {
+                    buff.doEffect();
+                }
+            }
+        }
+        for (Buff buff : player1.getBuffs())
+            buff.doEffect();
+        for (Buff buff : player2.getBuffs())
+            buff.doEffect();
+    }
+
 }

@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Player {
+public class Player {
     private static final DataBase dataBase = DataBase.getInstance();
     private List<Collectable> collectables = new ArrayList<>();
     private PlayerInfo playerInfo;
-    private Hand hand=new Hand();
+    private Hand hand = new Hand();
     private Deck deck;
     private Card nextCard;
     private int mana;
@@ -55,6 +55,10 @@ class Player {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public void changeMana(int mana) {
+        this.mana += mana;
     }
 
     public GraveYard getGraveYard() {
@@ -125,5 +129,13 @@ class Player {
             return OutputMessageType.SELECTED;
         }
         return OutputMessageType.INVALID_COLLECTABLE_CARD;
+    }
+
+    public List<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public void setBuffs(List<Buff> buffs) {
+        this.buffs = buffs;
     }
 }

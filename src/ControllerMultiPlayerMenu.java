@@ -34,8 +34,7 @@ public class ControllerMultiPlayerMenu {
     }
 
     private void select() {
-        if (request.getCommand().matches("select user \\w+")) ;
-        {
+        if (request.getCommand().matches("select user \\w+")) {
             Account secondPlayer = Account.getAccount(request.getCommand().split(" ")[2]);
             if (secondPlayer == null) {
                 request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);

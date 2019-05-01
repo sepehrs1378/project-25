@@ -2,10 +2,15 @@ public class Usable extends Item {
     private int price;
     private Spell passivePower;
 
-    public Usable(String itemID, String description, int price) {
-        super(itemID, description);
+    public Usable(String id, String description, int price, Spell passivePower) {
+        super(id, description);
         this.price = price;
-        //todo what about passivePower??
+        this.passivePower = passivePower;
+    }
+
+    public Usable clone() {
+        return new Usable(getId(), getDescription(),
+                price, passivePower.clone());
     }
 
     public int getPrice() {

@@ -1,69 +1,56 @@
-public abstract class Buff {
+import java.util.List;
+
+abstract public class Buff {
+    public static final DataBase dataBase = DataBase.getInstance();
     private String positiveOrNegative;
     private int startTurn;
-    private int endTurn;
     private int delayTurn;
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
-    private boolean isActive;
+
+    public Buff(int startTurn, int delayTurn,
+                int durationTurn, boolean isDispellable, boolean isContinuous) {
+        this.startTurn = startTurn;
+        this.delayTurn = delayTurn;
+        this.durationTurn = durationTurn;
+        this.isDispellable = isDispellable;
+        this.isContinuous = isContinuous;
+    }
 
     public abstract void doEffect();
 
-    public int getStartTurn() {
-        return startTurn;
-    }
-
-    public void setStartTurn(int startTurn) {
-        this.startTurn = startTurn;
-    }
-
-    public int getEndTurn() {
-        return endTurn;
-    }
-
-    public void setEndTurn(int endTurn) {
-        this.endTurn = endTurn;
-    }
-
-    public int getDelayTurn() {
-        return delayTurn;
-    }
-
-    public void setDelayTurn(int delayTurn) {
-        this.delayTurn = delayTurn;
-    }
-
-    public int getDurationTurn() {
-        return durationTurn;
-    }
-
-    public void setDurationTurn(int durationTurn) {
-        this.durationTurn = durationTurn;
-    }
-
-    public boolean isDispellable() {
-        return isDispellable;
-    }
-
-    public void setDispellable(boolean dispellable) {
-        isDispellable = dispellable;
-    }
-
-    public boolean isContinuous() {
-        return isContinuous;
-    }
-
-    public void setContinuous(boolean continuous) {
-        isContinuous = continuous;
+    public void revive() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        this.startTurn = currentTurn;
+        //todo maybe not complete
     }
 
     public boolean isActive() {
-        return isActive;
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn >= startTurn + delayTurn;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public boolean isInFirstActivationTurn() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn == startTurn + delayTurn;
+    }
+
+    public boolean isExpired() {
+        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+        return currentTurn <= startTurn + delayTurn + durationTurn;//todo condition may be wrong
+    }
+
+    public void remove() {
+        List<Cell> cells = dataBase.getCurrentBattle().getBattleGround().getCellsHavingBuff(this);
+        List<Unit> units = dataBase.getCurrentBattle().getBattleGround().getUnitsHavingBuff(this);
+        List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
+        for (Cell cell : cells)
+            cell.getBuffs().remove(this);
+        for (Unit unit : units)
+            unit.getBuffs().remove(this);
+        for (Player player : players)
+            player.getBuffs().remove(this);
     }
 
     public String getPositiveOrNegative() {
@@ -72,5 +59,21 @@ public abstract class Buff {
 
     public void setPositiveOrNegative(String positiveOrNegative) {
         this.positiveOrNegative = positiveOrNegative;
+    }
+
+    public int getStartTurn() {
+        return startTurn;
+    }
+
+    public int getDelayTurn() {
+        return delayTurn;
+    }
+
+    public boolean isContinuous() {
+        return isContinuous;
+    }
+
+    public boolean isDispellable() {
+        return isDispellable;
     }
 }

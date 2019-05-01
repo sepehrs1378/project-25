@@ -1,4 +1,6 @@
+
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class Cell {
@@ -28,10 +30,6 @@ public class Cell {
 
     public void setItem(Item item) {
         this.item = item;
-    }
-
-    public void addBuff(Buff newBuff) {
-        buffs.add(newBuff);
     }
 
     public void deleteBuff(Buff buff) {

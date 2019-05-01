@@ -7,13 +7,34 @@ public class Unit extends Card {
     private int ap;
     private int minRange;
     private int maxRange;
+    private Spell specialPower;
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
-    private Spell specialPower;
+    private String description;
     private boolean didAttackThisTurn;
     private boolean didMoveThisTurn;
-    private String description;
+    private boolean canUseComboAttack;
+
+    public Unit(String id, String name, int price, int mana, int hp, int ap,
+                int minRange, int maxRange, Spell specialPower, String heroOrMinion,
+                String description, boolean canUseComboAttack) {
+        super(id, name, price, mana);
+        this.hp = hp;
+        this.ap = ap;
+        this.minRange = minRange;
+        this.maxRange = maxRange;
+        this.specialPower = specialPower;
+        this.heroOrMinion = heroOrMinion;
+        this.description = description;
+        this.canUseComboAttack = canUseComboAttack;
+    }
+
+    public Unit clone() {
+        return new Unit(getId(), getName(), getPrice(),
+                getMana(), hp, ap, minRange, maxRange, specialPower.clone(),
+                heroOrMinion, description, canUseComboAttack);
+    }
 
     public int getHp() {
         return hp;
@@ -33,14 +54,6 @@ public class Unit extends Card {
 
     public void setMinRange(int minRange) {
         this.minRange = minRange;
-    }
-
-    public Spell getSpecialPower() {
-        return specialPower;
-    }
-
-    public void setSpecialPower(Spell specialPower) {
-        this.specialPower = specialPower;
     }
 
     public int getAp() {
@@ -79,19 +92,33 @@ public class Unit extends Card {
 
     }
 
-    public OutputMessageType attackUnit(String targetID) {
+    public OutputMessageType attackUnit(String targetid) {
         if (dataBase.getCurrentBattle().getPlayerInTurn().
                 getSelectedUnit().didAttackThisTurn)
             return OutputMessageType.ALREADY_ATTACKED;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetID))
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetid))
             return OutputMessageType.INVALID_CARD;
-        if (!isTargetUnitWithinRange(targetID))
+        if (!isTargetUnitWithinRange(targetid))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
-                getUnitWithID(targetID);
-        targetedUnit.changeHp(-this.ap);
+                getUnitWithID(targetid);
+        int damageDealt = calculateDamageDealt(this, targetedUnit);
+        targetedUnit.changeHp(-damageDealt);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
+    }
+
+    public static OutputMessageType attackCombo(String targetId){
+        //todo
+    }
+
+    private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
+        int damageDealt;
+        if (targetedUnit.isImmuneTo(Constants.WEAKER_AP)
+                && targetedUnit.ap > attackerUnit.ap)
+            damageDealt = 0;
+        else damageDealt = attackerUnit.ap - targetedUnit.getArmor();
+        return damageDealt;
     }
 
     private boolean isTargetUnitWithinRange(String targetID) {
@@ -104,7 +131,10 @@ public class Unit extends Card {
     }
 
     public void counterAttackUnit(Unit unit) {
-
+        if (!this.isDisarmed()) {
+            attackUnit(unit.getId());//todo delete attackUnit in it and complete it without that
+            //todo maybe not complete
+        }
     }
 
     public List<Flag> getFlags() {
@@ -147,6 +177,14 @@ public class Unit extends Card {
         this.didMoveThisTurn = didMoveThisTurn;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean isDisarmed() {
         for (Buff buff : buffs) {
             if (buff instanceof DisarmBuff)
@@ -158,6 +196,15 @@ public class Unit extends Card {
     public boolean isStuned() {
         for (Buff buff : buffs) {
             if (buff instanceof StunBuff)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isImmuneTo(String effect) {
+        for (Buff buff : buffs) {
+            if (buff instanceof ImmunityBuff
+                    && ((ImmunityBuff) buff).getImmunities().contains(effect))
                 return true;
         }
         return false;
@@ -196,11 +243,19 @@ public class Unit extends Card {
         return armor;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean canUseComboAttack() {
+        return canUseComboAttack;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCanUseComboAttack(boolean canUseComboAttack) {
+        this.canUseComboAttack = canUseComboAttack;
+    }
+
+    public Spell getSpecialPower() {
+        return specialPower;
+    }
+
+    public void setSpecialPower(Spell specialPower) {
+        this.specialPower = specialPower;
     }
 }

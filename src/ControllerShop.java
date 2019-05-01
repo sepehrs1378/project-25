@@ -68,6 +68,7 @@ class ControllerShop {
                 view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
                 break;
             case SOLD_SUCCESSFULLY:
+
                 view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
                 break;
             default:
