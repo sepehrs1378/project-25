@@ -66,4 +66,12 @@ public class Deck {
         }
         return null;
     }
+    public boolean hasCard(String cardID){
+        for (Card card:cards){
+            if(card.getId().equals(cardID)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
