@@ -25,7 +25,7 @@ public class PlayerCollection {
         Item item=getItemWithID(id);
         if(card==null && item == null){
             return OutputMessageType.NOT_IN_COLLECTION;
-        }else if(destinationDeck.getItem()==item || destinationDeck){
+        }else if(destinationDeck.getItem()==item ||destinationDeck.hasCard(card)){
 
             //todo
         }

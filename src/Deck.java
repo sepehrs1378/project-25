@@ -74,4 +74,11 @@ public class Deck {
         }
         return false;
     }
+    public boolean hasCard(Card card){
+        for (Card card1:cards){
+            if(card1==card)
+                return true;
+        }
+        return false;
+    }
 }
