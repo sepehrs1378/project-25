@@ -183,4 +183,15 @@ class BattleGround {
             }
         }
     }
+    public Unit getHeroOfPlayer(Player player){
+        for (Cell[] cellRow:cells){
+            for (Cell cell:cellRow){
+                if(cell.getUnit()!=null&&cell.getUnit().getHeroOrMinion().equals(Constants.HERO)
+                && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())){
+                    return cell.getUnit();
+                }
+            }
+        }
+        return null;
+    }
 }

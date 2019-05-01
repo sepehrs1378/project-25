@@ -109,7 +109,7 @@ public class Unit extends Card {
     }
 
     public static OutputMessageType attackCombo(String targetId){
-        //todo
+        return null;//todo
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {

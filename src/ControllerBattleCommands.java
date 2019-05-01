@@ -188,7 +188,8 @@ public class ControllerBattleCommands {
     }
 
     public void use() {
-        //todo
+        Player player=database.getCurrentBattle().getPlayerInTurn();
+        if()
     }
 
     public void insert() {
