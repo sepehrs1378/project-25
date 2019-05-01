@@ -305,5 +305,12 @@ public class View {
             System.out.println(string);
         }
     }
+    public void showCollectables(List<Collectable> collectables){
+        int counter=1;
+        for(Collectable collectable:collectables){
+            System.out.println(counter+" : Name : "+collectable.getName()+" - Desc : "+collectable.getDescription());
+            counter++;
+        }
+    }
 }
 

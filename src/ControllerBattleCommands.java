@@ -100,7 +100,9 @@ public class ControllerBattleCommands {
                 //todo
                 view.printOutputMessage(request.getOutputMessageType());
             }
-        }
+        }else if(request.getCommand().equals("show collectables")){
+            view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
+         }
     }
 
     public void select() {
