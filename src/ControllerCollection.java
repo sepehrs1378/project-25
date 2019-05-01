@@ -39,6 +39,7 @@ public class ControllerCollection {
                     ourInstance.delete(request);
                     break;
                 case ADD:
+                    ourInstance.add();
                     break;
                 case REMOVE:
                     break;
@@ -163,7 +164,12 @@ public class ControllerCollection {
     }
 
     public void remove() {
-
+        if(request.getCommand().matches("remove .+ from deck .+")){
+            String[] order=request.getCommand().split("\\s+");
+            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .removeCard(order[1],order[4]);
+            view.printOutputMessage(outputMessageType);
+        }
     }
 
     public void search() {
