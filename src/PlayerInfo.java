@@ -3,12 +3,16 @@ import java.util.List;
 
 class PlayerInfo {
     private String playerName;
-    private PlayerCollection collection=new PlayerCollection();
+    private PlayerCollection collection = new PlayerCollection();
     private List<Deck> decks = new ArrayList<>();
     //private Deck mainDeck;
 
     public void addCardToCollection(Card newCard) {
         collection.addCard(newCard);
+    }
+
+    public void addUsableToCollection(Usable usable){
+        collection.addItem(usable);
     }
 
 //    public void setMainDeck(Deck mainDeck) {
