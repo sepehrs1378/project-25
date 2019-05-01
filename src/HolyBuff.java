@@ -1,5 +1,3 @@
-package Buff;
-
 public class HolyBuff extends Buff {
     private int armor;
 

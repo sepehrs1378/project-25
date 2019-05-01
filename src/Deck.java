@@ -4,7 +4,7 @@ import java.util.List;
 public class Deck {
     private List<Card> cards = new ArrayList<>();
     private Unit hero;
-    private Item item;
+    private Item iem;
     private String name;
 
     public Deck(Deck deck) {

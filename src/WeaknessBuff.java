@@ -1,5 +1,3 @@
-package Buff;
-
 import java.util.List;
 
 public class WeaknessBuff extends Buff {

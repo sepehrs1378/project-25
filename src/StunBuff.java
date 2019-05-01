@@ -1,5 +1,3 @@
-package Buff;
-
 public class StunBuff extends Buff {
     public StunBuff(int startTurn, int delayTurn, int durationTurn,
                     boolean isDispellable, boolean isContinuous) {
