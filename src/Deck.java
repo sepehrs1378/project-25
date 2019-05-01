@@ -4,7 +4,7 @@ import java.util.List;
 public class Deck {
     private List<Card> cards = new ArrayList<>();
     private Unit hero;
-    private Usable item;
+    private Item item;
     private String name;
 
     public Deck(Deck deck) {
@@ -42,7 +42,7 @@ public class Deck {
         this.hero = hero;
     }
 
-    public void setItem(Usable item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 

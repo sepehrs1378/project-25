@@ -139,6 +139,7 @@ public class ControllerCollection {
             String[] order=request.getCommand().split(" ");
             OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo()
                     .getCollection().addCard(order[1],order[4]);
+            view.printOutputMessage(outputMessageType);
         }
     }
 

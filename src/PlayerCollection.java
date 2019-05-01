@@ -26,8 +26,24 @@ public class PlayerCollection {
         if(card==null && item == null){
             return OutputMessageType.NOT_IN_COLLECTION;
         }else if(destinationDeck.getItem()==item ||destinationDeck.hasCard(card)){
-
-            //todo
+            return OutputMessageType.CARD_ALREADY_IN_BATTLE;
+        }else if(destinationDeck.getCards().size()==20){
+            return OutputMessageType.DECK_IS_FULL;
+        }else if(destinationDeck.getHero()!=null){
+            return OutputMessageType.DECK_HAS_HERO;
+        }else {
+            if(card!=null){
+                if(card instanceof Unit){
+                    if(((Unit)card).getHeroOrMinion().equals(Constants.HERO)){
+                        destinationDeck.setHero((Unit)card);
+                    }else{
+                        destinationDeck.getCards().add(card);
+                    }
+                }
+            }else if(item!=null){
+                destinationDeck.setItem(item);
+            }
+            return OutputMessageType.NO_ERROR;
         }
     }
 
