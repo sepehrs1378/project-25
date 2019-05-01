@@ -19,24 +19,31 @@ public class ControllerBattleCommands {
                     showGameInfo();
                     break;
                 case SHOW_MINIONS:
+                    showMinions();
                     break;
                 case SHOW:
+                    show();
                     break;
                 case SELECT:
+                    select();
                     break;
                 case MOVE:
+                    move();
                     break;
                 case ATTACK:
+                    attack();
                     break;
                 case USE:
+                    use();
                     break;
                 case INSERT:
+                    insert();
                     break;
                 case END:
-                    end(request);
+                    end();
                     break;
                 case ENTER:
-                    enter(request);
+                    enter();
                     break;
                 case EXIT:
                     didExit = true;
@@ -48,21 +55,13 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showMinions(Request request) {
-        if (request.getCommand().matches("^show my minions$")) {
-
-            return;
-        }
-        if (request.getCommand().matches("^show opponent minions$")) {
-
-        }
-    }
-
-    public void show(Request request) {
-        if(request.getCommand().equals("show game info")){
+    public void showGameInfo(){
+        if(request.getCommand().equals("game info")){
             view.showGameInfo(database.getCurrentBattle());
         }
-        else if(request.getCommand().equals("show my minions")){
+    }
+    public void showMinions(){
+        if(request.getCommand().equals("show my minions")){
             List<Unit> minions=database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
             for(Unit minion:minions){
                 view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
@@ -78,7 +77,9 @@ public class ControllerBattleCommands {
                 view.showMinionInBattle(minion,database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
             }
         }
-        else if(request.getCommand().matches("show card info \\w+")){
+    }
+    public void show() {
+         if(request.getCommand().matches("show card info \\w+")){
             String cardId=request.getCommand().split("\\s+")[3];
             Card card=database.getCurrentBattle().getBattleGround().getCardByID(cardId);
             if(card!=null){
@@ -102,7 +103,7 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void select(Request request) {
+    public void select() {
         if (!request.getCommand().matches("^select .+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -119,7 +120,7 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void move(Request request) {
+    public void move() {
         if (!request.getCommand().matches("^move to \\d+ \\d+$")) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -142,7 +143,7 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void attack(Request request) {
+    public void attack() {
         if (request.getCommand().matches("^attack .+$")) {
             Pattern pattern = Pattern.compile("^attack (.+)$");
             Matcher matcher = pattern.matcher(request.getCommand());
@@ -180,7 +181,7 @@ public class ControllerBattleCommands {
 
     }
 
-    public void end(Request request) {
+    public void end() {
         if (request.getCommand().equals("end game")) {
             if (!database.getCurrentBattle().isBattleFinished()) {
                 request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
@@ -198,7 +199,7 @@ public class ControllerBattleCommands {
         view.printOutputMessage(request.getOutputMessageType());
     }
 
-    public void enter(Request request) {
+    public void enter() {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
             view.printOutputMessage(request.getOutputMessageType());

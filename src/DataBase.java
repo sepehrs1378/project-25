@@ -1,3 +1,4 @@
+import javax.accessibility.AccessibleValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +11,13 @@ public class DataBase {
     private static List<Account> accountList = new ArrayList<>();
     private static Account loggedInAccount;
     private static Battle currentBattle;
+    private static Account computerPlayerLevel1=new Account();
+    private static Account computerPlayerLevel2=new Account();
+    private static Account computerPlayerLevel3=new Account();
+    private static Account computerPlayerCostum=new Account();
+    static {
+
+    }
 
     public static DataBase getInstance() {
         return ourInstance;
