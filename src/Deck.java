@@ -34,7 +34,7 @@ public class Deck {
         return hero;
     }
 
-    public Usable getItem() {
+    public Item getItem() {
         return item;
     }
 
