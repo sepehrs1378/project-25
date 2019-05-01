@@ -73,6 +73,7 @@ public class PlayerCollection {
                 }
             }
         }
+        return OutputMessageType.NO_ERROR;
 
     }
 
@@ -211,8 +212,8 @@ public class PlayerCollection {
         return OutputMessageType.DECK_NOT_VALID;
     }
 
-    public List<String> search(String name) {
-        ArrayList<String> output = new ArrayList<>();
+    public List<String> searchCard(String name) {
+        List<String> output = new ArrayList<>();
         for (Card card : cards) {
             if (card.getName().equals(name)) {
                 output.add(card.getId());

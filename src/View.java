@@ -300,4 +300,10 @@ public class View {
             counter++;
         }
     }
+    public void printList(List<String> output){
+        for(String string:output){
+            System.out.println(string);
+        }
+    }
 }
+

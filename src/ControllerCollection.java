@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +33,7 @@ public class ControllerCollection {
                     ourInstance.show();
                     break;
                 case SEARCH:
+                    ourInstance.search();
                     break;
                 case SAVE:
                     //todo is it needed?
@@ -175,9 +178,9 @@ public class ControllerCollection {
 
     public void search() {
         if(request.getCommand().matches("search\\s+.+")){
-            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                    .searchCard(request.getCommand().split("\\s+")[1]);
-            view.printOutputMessage(outputMessageType);
+            List<String> output =dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .searchCard(request.getCommand().split("\\s+")[1].split("_")[1]);
+            view.printList(output);
         }
     }
 }
