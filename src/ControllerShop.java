@@ -102,11 +102,12 @@ class ControllerShop {
         String command = request.getCommand();
         if (command.matches("search (.+)$")) {
             String[] strings = command.split("\\s+");
-            Card card = findCard(strings[1]);
-            Usable usable = findUsable(strings[1]);
-            Collectable collectable = findCollectable(strings[1]);
-            showId(card, usable, collectable);
+            Card card = findCardInShop(strings[1]);
+            Usable usable = findUsableInShop(strings[1]);
+            Collectable collectable = findCollectableInShop(strings[1]);
+            showIdInShop(card, usable, collectable);
         } else if (command.matches("^search collection (.+)$")) {
+            String[] strings = command.split("\\s+");
 
         } else {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -117,7 +118,7 @@ class ControllerShop {
         view.printHelp(HelpType.CONTROLLER_SHOP_HELP);
     }
 
-    private Card findCard(String cardName) {
+    private Card findCardInShop(String cardName) {
         for (Card card : DataBase.getCardList()) {
             if (card.getName().equals(cardName)) {
                 return card;
@@ -126,7 +127,7 @@ class ControllerShop {
         return null;
     }
 
-    private Usable findUsable(String usableName){
+    private Usable findUsableInShop(String usableName){
         for (Usable usable : DataBase.getUsableList()){
             if (usable.getName().equals(usableName)){
                 return usable;
@@ -135,7 +136,7 @@ class ControllerShop {
         return null;
     }
 
-    private Collectable findCollectable(String collectableName){
+    private Collectable findCollectableInShop(String collectableName){
         for (Collectable collectable : DataBase.getCollectableList()){
             if (collectable.getName().equals(collectableName)){
                 return collectable;
@@ -144,7 +145,7 @@ class ControllerShop {
         return null;
     }
 
-    public void showId(Card card, Usable usable, Collectable collectable){
+    public void showIdInShop(Card card, Usable usable, Collectable collectable){
         if (card != null){
             view.showId(card.getId());
         }else if (usable != null){
