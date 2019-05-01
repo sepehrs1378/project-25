@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerCollection {
@@ -45,6 +46,27 @@ public class PlayerCollection {
             }
             return OutputMessageType.NO_ERROR;
         }
+    }
+
+    public OutputMessageType removeCard(String id,String fromDeck){
+        Deck deck= getDeckByName(fromDeck);
+        if(deck==null){
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        }else {
+            Card temp=deck.getCardByCardId(id);
+            if(temp!=null){
+                if(temp instanceof Unit && ((Unit)temp).getHeroOrMinion().equals(Constants.HERO)){
+                    deck.setHero(null);
+                }else deck.getCards().remove(temp);
+            }else{
+                if(deck.getItem().getId().equals(id)){
+                    deck.setItem(null);
+                }else {
+                    return OutputMessageType.NO_SUCH_CARD_IN_DECK;
+                }
+            }
+        }
+
     }
 
     public void addItem(Usable newItem) {

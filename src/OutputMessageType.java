@@ -32,6 +32,7 @@ public enum OutputMessageType {
     CARD_ALREADY_IN_BATTLE("Card exists in Deck"),
     DECK_IS_FULL("Deck Is Full"),
     DECK_HAS_HERO("Deck Has Hero"),
+    NO_SUCH_CARD_IN_DECK("no such card in deck"),
     NO_ERROR("");
 
     private String message;
