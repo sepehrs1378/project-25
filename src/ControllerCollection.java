@@ -42,6 +42,7 @@ public class ControllerCollection {
                     ourInstance.add();
                     break;
                 case REMOVE:
+                    ourInstance.remove();
                     break;
                 case VALIDATE:
                     ourInstance.validate(request);
@@ -173,6 +174,10 @@ public class ControllerCollection {
     }
 
     public void search() {
-
+        if(request.getCommand().matches("search\\s+.+")){
+            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .searchCard(request.getCommand().split("\\s+")[1]);
+            view.printOutputMessage(outputMessageType);
+        }
     }
 }

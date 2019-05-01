@@ -10,8 +10,8 @@ public enum OutputMessageType {
     NOT_IN_COLLECTION("You don't have the card or item"),
     SOLD_SUCCESSFULLY("Card or item was sold successfully"),
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
-    INVALID_DECK_PLAYER1(""),//todo
-    INVALID_DECK_PLAYER2(""),//todo
+    INVALID_DECK_PLAYER1("player1's deck is invalid"),
+    INVALID_DECK_PLAYER2("player2's deck is invalid"),
     CANT_HAVE_MORE_ITEMS("You can't have more items"),
     DECK_CREATED("Deck was created"),
     DECK_DOESNT_EXIST("Deck doesn't exist"),
@@ -35,6 +35,9 @@ public enum OutputMessageType {
     NO_SUCH_CARD_IN_DECK("no such card in deck"),
     ITEM_IS_EMTPY("there is no item in the selected deck"),
     HERO_IS_EMPTY("hero slot is empty in the deck"),
+    FOUND_ITEM("found item with id: "),
+    FOUND_CARD("found card with id: "),
+    NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
     NO_ERROR("");
 
     private String message;
