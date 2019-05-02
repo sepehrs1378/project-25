@@ -226,84 +226,84 @@ public class DataBase {
 
     public void makeMinions() {
         //1
-        Unit kamandarFars = new Unit("shop_kamandarFars_1","kamandarFars",300,2,5,4,2,7,null,Constants.MINION,"",false);
+        Unit kamandarFars = new Unit("shop_kamandarFars_1", "kamandarFars", 300, 2, 5, 4, 2, 7, null, Constants.MINION, "", false);
         cardList.add(kamandarFars);
 
         //2
-        Target shamshirZanFarsTarget= new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
-        StunBuff shamshirZanFarsBuff = new StunBuff(1,true,false);
-        Spell shamshirZanFarsSpell = new Spell("","",0,0,0,0,0,shamshirZanFarsTarget,shamshirZanFarsBuff,SpellActivationType.ON_ATTACK,"",false);
-        Unit shamshirZanFars = new Unit("shop_shamshirZanFars_1","shamshirZanFars",400,2,6,4,1,1,shamshirZanFarsSpell,Constants.MINION,"",false);
+        Target shamshirZanFarsTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        StunBuff shamshirZanFarsBuff = new StunBuff(1, true, false);
+        Spell shamshirZanFarsSpell = new Spell("", "", 0, 0, 0, 0, 0, shamshirZanFarsTarget, shamshirZanFarsBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit shamshirZanFars = new Unit("shop_shamshirZanFars_1", "shamshirZanFars", 400, 2, 6, 4, 1, 1, shamshirZanFarsSpell, Constants.MINION, "", false);
         cardList.add(shamshirZanFars);
 
         //3
-        Unit neizeDarFars = new Unit("shop_neizeDarFars_1","neizeDarFars",500,1,5,3,1,3,null,Constants.MINION,"",false);
+        Unit neizeDarFars = new Unit("shop_neizeDarFars_1", "neizeDarFars", 500, 1, 5, 3, 1, 3, null, Constants.MINION, "", false);
         cardList.add(neizeDarFars);
 
         //4
-        Unit asbSavarFars = new Unit("shop_asbSavarFars_1","asbSavarFars",200,4,10,6,1,1,null,Constants.MINION,"",false);
+        Unit asbSavarFars = new Unit("shop_asbSavarFars_1", "asbSavarFars", 200, 4, 10, 6, 1, 1, null, Constants.MINION, "", false);
         cardList.add(asbSavarFars);
 
         //5
         //todo check if this is true? (i think it is good to add a powerBuff for each attack)
-        Target pahlevanFarsTarget = new Target(Constants.MINION,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
-        Spell pahlevanFarsSpell = new Spell("","",0,0,5,0,0,pahlevanFarsTarget,(Buff)null,SpellActivationType.ON_ATTACK,"",false);
-        Unit pahlevanFars= new Unit("shop_pahlevanFars_1","pahlevanFars",600,9,24,6,1,1,pahlevanFarsSpell,Constants.MINION,"",false);
+        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
+        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
         cardList.add(pahlevanFars);
 
         //6
-        Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1","sepahSalarFars",800,7,12,4,1,1,null,Constants.MINION,"",true);
+        Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1", "sepahSalarFars", 800, 7, 12, 4, 1, 1, null, Constants.MINION, "", true);
         cardList.add(sepahSalarFars);
 
         //7
-        Unit kamandarToorani = new Unit ("shop_kamandarToorani_1","kamandarToorani",500,1,3,4,2,5,null,Constants.MINION,"",false);
+        Unit kamandarToorani = new Unit("shop_kamandarToorani_1", "kamandarToorani", 500, 1, 3, 4, 2, 5, null, Constants.MINION, "", false);
         cardList.add(kamandarToorani);
 
         //8
-        Unit gholabSangDarToorani = new Unit("shop_gholabSangDarToorani_1","gholabSangDarToorani",600,1,4,2,2,7,null,Constants.MINION,"",false);
+        Unit gholabSangDarToorani = new Unit("shop_gholabSangDarToorani_1", "gholabSangDarToorani", 600, 1, 4, 2, 2, 7, null, Constants.MINION, "", false);
         cardList.add(gholabSangDarToorani);
 
         //9
-        Unit neizeDarToorani = new Unit("shop_neizeDarToorani_1","neizeDarToorani",600,1,4,4,1,3,null,Constants.MINION,"",false);
+        Unit neizeDarToorani = new Unit("shop_neizeDarToorani_1", "neizeDarToorani", 600, 1, 4, 4, 1, 3, null, Constants.MINION, "", false);
         cardList.add(neizeDarToorani);
 
         //10
-        Target jasoosTooraniTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
+        Target jasoosTooraniTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         List<Buff> jasoosTooraniBuffs = new ArrayList<>();
-        DisarmBuff jasoosTooraniBuff1 = new DisarmBuff(1,true,false);
-        PoisonBuff jasoosTooraniBuff2 = new PoisonBuff(4,true,false,1);
+        DisarmBuff jasoosTooraniBuff1 = new DisarmBuff(1, true, false);
+        PoisonBuff jasoosTooraniBuff2 = new PoisonBuff(4, true, false, 1);
         jasoosTooraniBuffs.add(jasoosTooraniBuff1);
         jasoosTooraniBuffs.add(jasoosTooraniBuff2);
-        Spell jasoosTooraniSpell = new Spell("","",0,0,0,0,0,jasoosTooraniTarget,jasoosTooraniBuffs,SpellActivationType.ON_ATTACK,"",false);
-        Unit jasoosToorani=new Unit("shop_jasoosToorani_1","jasoosToorani",700,4,6,6,1,1,jasoosTooraniSpell,Constants.MINION,"",false);
+        Spell jasoosTooraniSpell = new Spell("", "", 0, 0, 0, 0, 0, jasoosTooraniTarget, jasoosTooraniBuffs, SpellActivationType.ON_ATTACK, "", false);
+        Unit jasoosToorani = new Unit("shop_jasoosToorani_1", "jasoosToorani", 700, 4, 6, 6, 1, 1, jasoosTooraniSpell, Constants.MINION, "", false);
         cardList.add(jasoosToorani);
 
         //11
-        Unit gorzdarToorani=new Unit("shop_gorzdarToorani_1","gorzdarToorani",450,2,3,10,1,1,null,Constants.MINION,"",false);
+        Unit gorzdarToorani = new Unit("shop_gorzdarToorani_1", "gorzdarToorani", 450, 2, 3, 10, 1, 1, null, Constants.MINION, "", false);
         cardList.add(gorzdarToorani);
 
         //12
-        Unit shahzadehToorani = new Unit("shop_shahzadehToorani_1","shahzadehToorani",800,6,6,10,1,1,null,Constants.MINION,"",true);
+        Unit shahzadehToorani = new Unit("shop_shahzadehToorani_1", "shahzadehToorani", 800, 6, 6, 10, 1, 1, null, Constants.MINION, "", true);
         cardList.add(shahzadehToorani);
 
         //13
-        Unit divSiah=new Unit("shop_divSiah_1","divSiah",300,9,14,10,1,7,null,Constants.MINION,"",false);
+        Unit divSiah = new Unit("shop_divSiah_1", "divSiah", 300, 9, 14, 10, 1, 7, null, Constants.MINION, "", false);
         cardList.add(divSiah);
 
         //14
-        Unit ghoolSangAndaz= new Unit("shop_ghoolSangAndaz_1","ghoolSangAndaz",300,9,12,12,2,7,null,Constants.MINION,"",false);
+        Unit ghoolSangAndaz = new Unit("shop_ghoolSangAndaz_1", "ghoolSangAndaz", 300, 9, 12, 12, 2, 7, null, Constants.MINION, "", false);
         cardList.add(ghoolSangAndaz);
 
         //15
         //todo what the hell is wrong with HP?
-        Target oghabTarget=new Target(Constants.MINION,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
-        PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE,true,false,10,0);
-        Spell oghabSpell = new Spell("","",0,0,0,0,0,oghabTarget,oghabBuff,SpellActivationType.PASSIVE,"",false);
-        Unit oghab =new Unit("shop_oghab_1","oghab",200,2,0,2,1,3,oghabSpell,Constants.MINION,"",false);
+        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
+        Spell oghabSpell = new Spell("", "", 0, 0, 0, 0, 0, oghabTarget, oghabBuff, SpellActivationType.PASSIVE, "", false);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, oghabSpell, Constants.MINION, "", false);
         cardList.add(oghab);
 
         //16
-        Unit divGorazSavar = new Unit("shop_divGorazSavar_1","divGorazSavar",300,6,16,8,1,1,null,Constants.MINION,"",false);
+        Unit divGorazSavar = new Unit("shop_divGorazSavar_1", "divGorazSavar", 300, 6, 16, 8, 1, 1, null, Constants.MINION, "", false);
         cardList.add(divGorazSavar);
 
         //17
@@ -311,14 +311,14 @@ public class DataBase {
         cardList.add(null);
 
         //18
-        Target marSamiTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
-        PoisonBuff marSamiBuff = new PoisonBuff(3,true,false,1);
-        Spell marSamiSpell = new Spell("","",0,0,0,0,0,marSamiTarget,marSamiBuff,SpellActivationType.ON_ATTACK,"",false);
-        Unit marSami = new Unit("shop_marSami_1","marSami",300,4,5,6,2,4,marSamiSpell,Constants.MINION,"",false);
+        Target marSamiTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        PoisonBuff marSamiBuff = new PoisonBuff(3, true, false, 1);
+        Spell marSamiSpell = new Spell("", "", 0, 0, 0, 0, 0, marSamiTarget, marSamiBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit marSami = new Unit("shop_marSami_1", "marSami", 300, 4, 5, 6, 2, 4, marSamiSpell, Constants.MINION, "", false);
         cardList.add(marSami);
 
         //19
-        Unit ejdehaAtashAndaz = new Unit("shop_ejdehaAtashAndaz_1","ejdehaAtashAndaz",250,5,9,5,2,4,null,Constants.MINION,"",false);
+        Unit ejdehaAtashAndaz = new Unit("shop_ejdehaAtashAndaz_1", "ejdehaAtashAndaz", 250, 5, 9, 5, 2, 4, null, Constants.MINION, "", false);
         cardList.add(ejdehaAtashAndaz);
 
         //20
@@ -366,28 +366,29 @@ public class DataBase {
         //40
 
     }
+
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
-    public void makeItems(){
+    public void makeItems() {
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
         //1             //1
-        Target tajDanayeeTarget = new Target(Constants.NONE, 1,1,Constants.FRIEND,false,true,0,Constants.ALL);
-        ManaBuff tajDanayeeBuff= new ManaBuff(3,false,false,1);
-        Spell tajDanayeeSpell= new Spell("","",0,0,0,0,0,tajDanayeeTarget,tajDanayeeBuff,SpellActivationType.PASSIVE,"",false);
-        Usable tajDanayee = new Usable("shop_tajDanayee_1","",300,tajDanayeeSpell);
+        Target tajDanayeeTarget = new Target(Constants.NONE, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        ManaBuff tajDanayeeBuff = new ManaBuff(3, false, false, 1);
+        Spell tajDanayeeSpell = new Spell("", "", 0, 0, 0, 0, 0, tajDanayeeTarget, tajDanayeeBuff, SpellActivationType.PASSIVE, "", false);
+        Usable tajDanayee = new Usable("shop_tajDanayee_1", "", 300, tajDanayeeSpell);
         usableList.add(tajDanayee);
 
         //2             //2
-        Target namoosSeparTarget = new Target(Constants.HERO,1,1,Constants.FRIEND,false,false,0,Constants.ALL);
-        HolyBuff namoosSeparBuff = new HolyBuff(Integer.MAX_VALUE,true,false,12);
-        Spell namoosSeparSpell = new Spell("","",0,0,0,0,0,namoosSeparTarget,namoosSeparBuff,SpellActivationType.PASSIVE,"",false);
-        Usable namoosSepar = new Usable("shop_namoosSepar_1","",4000,namoosSeparSpell);
+        Target namoosSeparTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
+        HolyBuff namoosSeparBuff = new HolyBuff(Integer.MAX_VALUE, true, false, 12);
+        Spell namoosSeparSpell = new Spell("", "", 0, 0, 0, 0, 0, namoosSeparTarget, namoosSeparBuff, SpellActivationType.PASSIVE, "", false);
+        Usable namoosSepar = new Usable("shop_namoosSepar_1", "", 4000, namoosSeparSpell);
         usableList.add(namoosSepar);
 
         //3
         //todo in item all spells are passive but this doesn't seem passive, i created the required parts but not Usable itself
-        Target kamanDamolTarget = new Target(Constants.HERO,1,1,Constants.ENEMY,false,false,0,Constants.RANGED_HYBRID);
-        DisarmBuff kamanDamoolBuff = new DisarmBuff(1,true,false);
+        Target kamanDamolTarget = new Target(Constants.HERO, 1, 1, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
+        DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //todo
         usableList.add(null);
 
