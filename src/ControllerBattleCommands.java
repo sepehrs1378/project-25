@@ -1,4 +1,3 @@
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +98,6 @@ public class ControllerBattleCommands {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
                 view.printOutputMessage(request.getOutputMessageType());
                 //todo
-                view.printOutputMessage(request.getOutputMessageType());
             }
         } else if (request.getCommand().equals("show collectables")) {
             view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
@@ -114,6 +112,9 @@ public class ControllerBattleCommands {
             } else if (card instanceof Unit) {
                 view.showCardInfoMinion((Unit) card);
             }
+        }
+        else if(request.getCommand().equals("show hand")){
+            view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
         }
     }
 
