@@ -23,7 +23,7 @@ public class DataBase {
     private DataBase() {
     }
 
-    public void makeSpells() {
+    public void makeCardSpells() {
         Target TotalDisarmTarget=new Target()
     }
 
