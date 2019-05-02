@@ -4,6 +4,7 @@ public class Constants {
     private Constants() {
     }
 
+    public static final String NONE = "none";
     public static final String ALL = "all";
 
     public static final String PASSIVE = "passive";
