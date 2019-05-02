@@ -95,43 +95,34 @@ public class ControllerBattleCommands {
             if (card != null) {
                 if (card instanceof Spell) {
                     view.showCardInfoSpell((Spell) card);
-                }
-                else if (card instanceof Unit) {
+                } else if (card instanceof Unit) {
                     if (((Unit) card).getHeroOrMinion().equals("Minion")) {
                         view.showCardInfoMinion((Unit) card);
-                    }
-                    else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
+                    } else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
                         view.showCardInfoHero((Unit) card);
                     }
                 }
-            }
-            else {
+            } else {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
                 view.printOutputMessage(request.getOutputMessageType());
                 //todo
             }
-        }
-        else if (request.getCommand().equals("show collectables")) {
+        } else if (request.getCommand().equals("show collectables")) {
             view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
-        }
-        else if (request.getCommand().equals("show info")) {
+        } else if (request.getCommand().equals("show info")) {
             if (database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
                 view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
             }
-        }
-        else if (request.getCommand().equals("show next card")) {
+        } else if (request.getCommand().equals("show next card")) {
             Card card = database.getCurrentBattle().getPlayerInTurn().getNextCard();
             if (card instanceof Spell) {
                 view.showCardInfoSpell((Spell) card);
-            }
-            else if (card instanceof Unit) {
+            } else if (card instanceof Unit) {
                 view.showCardInfoMinion((Unit) card);
             }
-        }
-        else if (request.getCommand().equals("show hand")) {
+        } else if (request.getCommand().equals("show hand")) {
             view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
-        }
-        else if(request.getCommand().equals("show menu")){
+        } else if (request.getCommand().equals("show menu")) {
             view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
         }
 
@@ -283,5 +274,9 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
+    }
+
+    public void help() {
+
     }
 }
