@@ -1,3 +1,6 @@
+import java.nio.charset.IllegalCharsetNameException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -125,7 +128,6 @@ public class ControllerBattleCommands {
         } else if (request.getCommand().equals("show menu")) {
             view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
         }
-
     }
 
     public void select() {
@@ -165,7 +167,6 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-
         }
     }
 
@@ -177,7 +178,6 @@ public class ControllerBattleCommands {
                 view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
                 return;
             }
-
             switch (database.getCurrentBattle().getPlayerInTurn()
                     .getSelectedUnit().attackUnit(matcher.group(1))) {
                 case TARGET_NOT_IN_RANGE:
@@ -194,6 +194,14 @@ public class ControllerBattleCommands {
             return;
         }
         if (request.getCommand().matches("^attack combo .+$")) {
+            String[] orderPieces = request.getCommand().split(" ");
+            String[] attackers = new String[orderPieces.length - 3];
+            if (orderPieces.length - 3 >= 0)
+                System.arraycopy(orderPieces, 3, attackers, 0
+                        , orderPieces.length - 3);
+            switch (Unit.attackCombo(orderPieces[2], attackers)) {
+                case
+            }
             //todo
         }
         view.printOutputMessage(OutputMessageType.WRONG_COMMAND);

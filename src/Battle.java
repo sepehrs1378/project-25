@@ -95,11 +95,19 @@ public class Battle {
     }
 
     public void killUnit(Unit unit) {
+        if (unit.getId().contains(player1.getPlayerInfo().getPlayerName())) {
+            if (unit.getSpecialPower().getActivationType()
+                    .equals(SpellActivationType.ON_DEATH)) {
+                unit.getSpecialPower().
+            } do {
+                player1.getGraveYard().addDeadCard(unit);
+            }
+        } else {
+            if (unit.getId().contains(player2.getPlayerInfo().getPlayerName())) {
+                player2.getGraveYard().addDeadCard(unit);
+            }
+        }
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
-        if (unit.getId().contains(player1.getPlayerInfo().getPlayerName()))
-            player1.getGraveYard().addDeadCard(unit);
-        else if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
-            player2.getGraveYard().addDeadCard(unit);
     }
 
     public void setManaBasedOnTurnNumber() {
