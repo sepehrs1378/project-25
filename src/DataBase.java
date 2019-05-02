@@ -293,6 +293,7 @@ public class DataBase {
         cardList.add(ghoolSangAndaz);
 
         //15
+        //todo what the hell is wrong with HP?
         Target oghabTarget=new Target(Constants.MINION,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE,true,false,10,0);
         Spell oghabSpell = new Spell("","",0,0,0,0,0,oghabTarget,oghabBuff,SpellActivationType.PASSIVE,"",false);
