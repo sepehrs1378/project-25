@@ -212,23 +212,32 @@ public class ControllerBattleCommands {
         if (request.getCommand().matches("insert .+ in [(](\\d+),(\\d+)[)]")) {
             Pattern pattern = Pattern.compile("insert (.+) in [(](\\d+),(\\d+)[)]");
             Matcher matcher = pattern.matcher(request.getCommand());
-            Card card = database.getCurrentBattle().getBattleGround().getCardByID(matcher.group(1));
-            //todo must search in the hand
+            Card card = database.getCurrentBattle().getPlayerInTurn().getHand().getCard(matcher.group(1));
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
             if (card == null) {
-                view.printOutputMessage(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
+                view.printOutputMessage(OutputMessageType.NO_SUCH_CARD_IN_HAND);
             }
-            else{
+            else if(card instanceof Unit){
                 if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
                     view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
                 }
                 else if(column>=Constants.BATTLE_GROUND_LENGTH || column < 0){
                     view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
                 }
-                else{
+                if(database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit()==null){
+                    database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
+                    database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
+                    database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
+                                                                            .getPlayerInTurn().getDeck());
 
                 }
+                else{
+                    view.printOutputMessage(OutputMessageType.THIS_CELL_IS_FULL);
+                }
+            }
+            else if(card instanceof Spell){
+                //todo spell
             }
         }
     }
