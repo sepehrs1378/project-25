@@ -1,26 +1,28 @@
 public enum HelpType {
-    CONTROLLER_SHOP_HELP("exit" +
-            "\nshow collection" +
-            "\nsearch [item name | card name]" +
-            "\nsearch collection [item name | card name]" +
-            "\nbuy [item name | card name]" +
-            "\nsell [card id | item id]" +
-            "\nshow" +
-            "\nhelp"),
+    CONTROLLER_SHOP_HELP("Shop Commands:" +
+            "\n\texit" +
+            "\n\tshow collection" +
+            "\n\tsearch [item name | card name]" +
+            "\n\tsearch collection [item name | card name]" +
+            "\n\tbuy [item name | card name]" +
+            "\n\tsell [card id | item id]" +
+            "\n\tshow" +
+            "\n\thelp"),
     CONTROLLER_ACCOUNT_HELP(""),//todo write the message later
-    CONTROLLER_COLLECTION_HELP("exit" +
-            "\nshow" +
-            "\nsearch [card name | item name]" +
-            "\nsave" +
-            "\ncreate deck [deck name]" +
-            "\ndelete deck [deck name]" +
-            "\nadd [card id | item id | hero id] to deck [deck name]" +
-            "\nremove [card id | item id | hero id] from deck [deck name]" +
-            "\nvalidate deck [deck name]" +
-            "\nselect deck [deck name]" +
-            "\nshow all decks" +
-            "\nshow deck [deck name]" +
-            "\nhelp"),
+    CONTROLLER_COLLECTION_HELP("Collection Commands:" +
+            "\n\texit" +
+            "\n\tshow" +
+            "\n\tsearch [card name | item name]" +
+            "\n\tsave" +
+            "\n\tcreate deck [deck name]" +
+            "\n\tdelete deck [deck name]" +
+            "\n\tadd [card id | item id | hero id] to deck [deck name]" +
+            "\n\tremove [card id | item id | hero id] from deck [deck name]" +
+            "\n\tvalidate deck [deck name]" +
+            "\n\tselect deck [deck name]" +
+            "\n\tshow all decks" +
+            "\n\tshow deck [deck name]" +
+            "\n\thelp"),
     BATTLE_COMMANDS_HELP("BATTLE COMMAND HELP:" +
             "\n\tgame info" +
             "\n\tshow my minions" +
