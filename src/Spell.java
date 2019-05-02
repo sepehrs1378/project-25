@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 class Spell extends Card {
@@ -7,27 +6,41 @@ class Spell extends Card {
     private int hpChange;
     private int cooldown;
     private Target target;
-    private List<Buff> addedBuffsToCells;
-    private List<Buff> addedBuffsToUnits;
+    private List<Buff> addedBuffs;
     private SpellActivationType activationType;
     private String description;
     private boolean isDispeller;
 
     public Spell(String id, String name, int price, int mana,
                  int apChange, int hpChange, int cooldown,
-                 Target target, List<Buff> addedBuffsToCells,
-                 List<Buff> addedBuffsToUnits, SpellActivationType activationType
+                 Target target, Buff addedBuff,
+                 SpellActivationType activationType,
+                 String description, boolean isDispeller) {
+        super(id, name, price, mana);
+        this.apChange = apChange;
+        this.hpChange = hpChange;
+        this.cooldown = cooldown;
+        this.target = target;
+        this.activationType = activationType;
+        this.description = description;
+        this.isDispeller = isDispeller;
+        this.addedBuffs.add(addedBuff);
+    }
+
+    public Spell(String id, String name, int price, int mana,
+                 int apChange, int hpChange, int cooldown,
+                 Target target, List<Buff> addedBuffs
+            , SpellActivationType activationType
             , String description, boolean isDispeller) {
         super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
         this.cooldown = cooldown;
         this.target = target;
-        this.addedBuffsToCells = addedBuffsToCells;
-        this.addedBuffsToUnits = addedBuffsToUnits;
         this.activationType = activationType;
         this.description = description;
         this.isDispeller = isDispeller;
+        this.addedBuffs = addedBuffs;
     }
 
     public void doSpell(Unit unit) {
@@ -46,14 +59,14 @@ class Spell extends Card {
     public Spell clone() {
         return new Spell(getId(), getName(), getPrice(),
                 getMana(), apChange, hpChange, cooldown,
-                target.clone(), addedBuffsToCells, addedBuffsToUnits,
-                activationType, description, isDispeller);
+                target.clone(), addedBuffs, activationType,
+                description, isDispeller);
     }
 
     private void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn);
         for (Cell cell : targetCells) {
-            for (Buff buff : getAddedBuffsToCells()) {
+            for (Buff buff : getAddedBuffs()) {
                 cell.getBuffs().add(buff);
             }
         }
@@ -75,7 +88,7 @@ class Spell extends Card {
     }
 
     private void addBuffsToUnit(Unit unit) {
-        for (Buff buff : getAddedBuffsToUnits()) {
+        for (Buff buff : getAddedBuffs()) {
             if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
                 continue;
             if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
@@ -125,55 +138,19 @@ class Spell extends Card {
         return description;
     }
 
-    public void setApChange(int apChange) {
-        this.apChange = apChange;
-    }
-
-    public void setHpChange(int hpChange) {
-        this.hpChange = hpChange;
-    }
-
-    public List<Buff> getAddedBuffsToUnits() {
-        return addedBuffsToUnits;
-    }
-
-    public void setAddedBuffsToUnits(List<Buff> addedBuffsToUnits) {
-        this.addedBuffsToUnits = addedBuffsToUnits;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Buff> getAddedBuffsToCells() {
-        return addedBuffsToCells;
-    }
-
-    public void setAddedBuffsToCells(List<Buff> addedBuffsToCells) {
-        this.addedBuffsToCells = addedBuffsToCells;
+    public List<Buff> getAddedBuffs() {
+        return addedBuffs;
     }
 
     public boolean isDispeller() {
         return isDispeller;
     }
 
-    public void setDispeller(boolean dispeller) {
-        isDispeller = dispeller;
-    }
-
     public int getCooldown() {
         return cooldown;
     }
 
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
-    }
-
     public SpellActivationType getActivationType() {
         return activationType;
-    }
-
-    public void setActivationType(SpellActivationType activationType) {
-        this.activationType = activationType;
     }
 }

@@ -1,14 +1,13 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImmunityBuff extends Buff {
-    private List<String> immunities = new ArrayList<>();
+    private String immunite;
 
     public ImmunityBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, String... immunities) {
+            , boolean isContinuous, String immunite) {
         super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
-        this.immunities = immunities;//todo
+        this.immunite = immunite;
     }
 
     @Override
@@ -16,11 +15,7 @@ public class ImmunityBuff extends Buff {
         //todo looks gonna be empty
     }
 
-    public List<String> getImmunities() {
-        return immunities;
-    }
-
-    public void setImmunities(List<String> immunities) {
-        this.immunities = immunities;
+    public String getImmunite() {
+        return immunite;
     }
 }
