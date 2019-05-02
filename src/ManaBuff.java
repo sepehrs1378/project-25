@@ -4,9 +4,9 @@ public class ManaBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private int manaAddedPerTurn;
 
-    public ManaBuff(int startTurn, int delayTurn, int durationTurn,
-                    boolean isDispellable, boolean isContinuous, int manaAddedPerTurn) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public ManaBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, int manaAddedPerTurn) {
+        super(durationTurn, isDispellable, isContinuous);
         this.manaAddedPerTurn = manaAddedPerTurn;
     }
 

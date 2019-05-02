@@ -4,9 +4,9 @@ public class InfernoBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private int damagePerTurn;
 
-    public InfernoBuff(int startTurn, int delayTurn, int durationTurn,
-                       boolean isDispellable, boolean isContinuous, int damagePerTurn) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public InfernoBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, int damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous);
         this.damagePerTurn = damagePerTurn;
     }
 

@@ -24,7 +24,10 @@ public class DataBase {
     }
 
     public void makeCardSpells() {
-        Target TotalDisarmTarget=new Target()
+        List<Buff> addedBuffsToCellsTotalDisarm = new ArrayList<>();
+        List<Buff> addedBuffsToUnits = new ArrayList<>();
+        Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, )
     }
 
     public void makeHeroes() {
