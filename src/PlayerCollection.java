@@ -267,8 +267,9 @@ public class PlayerCollection {
                 loggedInAccount.addMoney(card.getPrice());
                 cards.remove(card);
                 for (Deck deck : decks) {
-                    for () {
-
+                    deck.getCards().remove(card);
+                    if (deck.getHero().equals(card)){
+                        deck.setHero(null);
                     }
                 }
             }
@@ -276,10 +277,14 @@ public class PlayerCollection {
                 Usable usable = (Usable) obj;
                 loggedInAccount.addMoney(usable.getPrice());
                 items.remove(usable);
+                for (Deck deck : decks){
+                    if (deck.getItem().equals(usable)){
+                        deck.setItem(null);
+                    }
+                }
             }
             return OutputMessageType.SOLD_SUCCESSFULLY;
         }
-        //todo
         return OutputMessageType.NOT_IN_COLLECTION;
     }
 
