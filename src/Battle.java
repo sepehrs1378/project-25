@@ -249,7 +249,7 @@ public class Battle {
             buff.doEffect();
     }
 
-    public OutputMessageType insert(Card card, int row, int column){
+    public OutputMessageType insert(Card card, int row, int column) {
         if (card == null) {
             return OutputMessageType.NO_SUCH_CARD_IN_HAND;
         } else if (card instanceof Unit) {
@@ -293,7 +293,7 @@ public class Battle {
             String temp = "";
             temp += unit.getId() + ":" +
                     "\n\tCan Attack: " + !unit.didAttackThisTurn()
-                    + "\n\tCan Move: " + !unit.didMoveThisTurn()+
+                    + "\n\tCan Move: " + !unit.didMoveThisTurn() +
                     "\n\tAttack Options: ";
             Player player;
             if (player2 == playerInTurn) {
@@ -301,10 +301,10 @@ public class Battle {
             } else {
                 player = player2;
             }
-            if (!unit.didAttackThisTurn()){
+            if (!unit.didAttackThisTurn()) {
                 for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
-                    if(unit.canAttackTarget(enemyUnit)){
-                        temp+="\n\t\t"+enemyUnit.getId();
+                    if (unit.canAttackTarget(enemyUnit)) {
+                        temp += "\n\t\t" + enemyUnit.getId();
                     }
                 }
             }

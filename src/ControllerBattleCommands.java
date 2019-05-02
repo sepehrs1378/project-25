@@ -213,15 +213,15 @@ public class ControllerBattleCommands {
             Matcher matcher = pattern.matcher(request.getCommand());
             if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
                     && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
-                int row=Integer.parseInt(matcher.group(1));
-                int column= Integer.parseInt(matcher.group(2));
+                int row = Integer.parseInt(matcher.group(1));
+                int column = Integer.parseInt(matcher.group(2));
                 Player player = database.getCurrentBattle().getPlayerInTurn();
                 Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-                view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero,player,row,column));
+                view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero, player, row, column));
             } else {
                 view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
             }
-        }else view.printOutputMessage(OutputMessageType.INVALID_COMMAND);
+        } else view.printOutputMessage(OutputMessageType.INVALID_COMMAND);
     }
 
     public void insert() {
@@ -231,7 +231,7 @@ public class ControllerBattleCommands {
             Card card = database.getCurrentBattle().getPlayerInTurn().getHand().getCardByName(matcher.group(1));
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
-            view.printOutputMessage(database.getCurrentBattle().insert(card,row,column));
+            view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
         }
     }
 
