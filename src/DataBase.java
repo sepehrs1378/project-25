@@ -200,7 +200,7 @@ public class DataBase {
         cardList.add(kaveh);
 
         //7
-        //todo abstract like kingsGuard
+        //todo abstract like kingsGuardSpell
         cardList.add(null);
 
         //8
@@ -277,14 +277,27 @@ public class DataBase {
         cardList.add(jasoosToorani);
 
         //11
+        Unit gorzdarToorani=new Unit("shop_gorzdarToorani_1","gorzdarToorani",450,2,3,10,1,1,null,Constants.MINION,"",false);
+        cardList.add(gorzdarToorani);
 
         //12
+        Unit shahzadehToorani = new Unit("shop_shahzadehToorani_1","shahzadehToorani",800,6,6,10,1,1,null,Constants.MINION,"",true);
+        cardList.add(shahzadehToorani);
 
         //13
+        Unit divSiah=new Unit("shop_divSiah_1","divSiah",300,9,14,10,1,7,null,Constants.MINION,"",false);
+        cardList.add(divSiah);
 
         //14
+        Unit ghoolSangAndaz= new Unit("shop_ghoolSangAndaz_1","ghoolSangAndaz",300,9,12,12,2,7,null,Constants.MINION,"",false);
+        cardList.add(ghoolSangAndaz);
 
         //15
+        Target oghabTarget=new Target(Constants.MINION,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
+        PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE,true,false,10,0);
+        Spell oghabSpell = new Spell("","",0,0,0,0,0,oghabTarget,oghabBuff,SpellActivationType.PASSIVE,"",false);
+        Unit oghab =new Unit("shop_oghab_1","oghab",200,2,0,2,1,3,oghabSpell,Constants.MINION,"",false);
+        cardList.add(oghab);
 
         //16
 
