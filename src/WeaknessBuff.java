@@ -4,10 +4,9 @@ public class WeaknessBuff extends Buff {
     private int apMinus;
     private int hpMinus;
 
-    public WeaknessBuff(int startTurn, int delayTurn, int durationTurn,
-                        boolean isDispellable, boolean isContinuous,
-                        int hpMinus, int apMinus) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public WeaknessBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, int hpMinus, int apMinus) {
+        super(durationTurn, isDispellable, isContinuous);
         this.hpMinus = hpMinus;
         this.apMinus = apMinus;
     }

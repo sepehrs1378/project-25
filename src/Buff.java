@@ -4,15 +4,12 @@ abstract public class Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private String positiveOrNegative;
     private int startTurn;
-    private int delayTurn;
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
 
-    public Buff(int startTurn, int delayTurn,
-                int durationTurn, boolean isDispellable, boolean isContinuous) {
-        this.startTurn = startTurn;
-        this.delayTurn = delayTurn;
+    public Buff(int durationTurn, boolean isDispellable
+            , boolean isContinuous) {
         this.durationTurn = durationTurn;
         this.isDispellable = isDispellable;
         this.isContinuous = isContinuous;
@@ -28,17 +25,17 @@ abstract public class Buff {
 
     public boolean isActive() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn >= startTurn + delayTurn;
+        return currentTurn >= startTurn ;
     }
 
     public boolean isInFirstActivationTurn() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn == startTurn + delayTurn;
+        return currentTurn == startTurn ;
     }
 
     public boolean isExpired() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn <= startTurn + delayTurn + durationTurn;//todo condition may be wrong
+        return currentTurn <= startTurn + durationTurn;//todo condition may be wrong
     }
 
     public void remove() {
@@ -63,10 +60,6 @@ abstract public class Buff {
 
     public int getStartTurn() {
         return startTurn;
-    }
-
-    public int getDelayTurn() {
-        return delayTurn;
     }
 
     public boolean isContinuous() {

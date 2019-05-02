@@ -7,8 +7,8 @@ class Spell extends Card {
     private int hpChange;
     private int cooldown;
     private Target target;
-    private List<Buff> addedBuffsToCells = new ArrayList<>();
-    private List<Buff> addedBuffsToUnits = new ArrayList<>();
+    private List<Buff> addedBuffsToCells;
+    private List<Buff> addedBuffsToUnits;
     private SpellActivationType activationType;
     private String description;
     private boolean isDispeller;
@@ -38,16 +38,16 @@ class Spell extends Card {
         unit.changeHp(getApChange());
     }
 
+    public void doSpell(int insertionRow, int insertionColumn) {
+        doSpellEffectOnCells(insertionRow, insertionColumn);
+        doSpellEffectOnUnits(insertionRow, insertionColumn);
+    }
+
     public Spell clone() {
         return new Spell(getId(), getName(), getPrice(),
                 getMana(), apChange, hpChange, cooldown,
                 target.clone(), addedBuffsToCells, addedBuffsToUnits,
                 activationType, description, isDispeller);
-    }
-
-    public void doSpell(int insertionRow, int insertionColumn) {
-        doSpellEffectOnCells(insertionRow, insertionColumn);
-        doSpellEffectOnUnits(insertionRow, insertionColumn);
     }
 
     private void doSpellEffectOnCells(int insertionRow, int insertionColumn) {

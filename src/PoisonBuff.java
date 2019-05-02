@@ -4,9 +4,9 @@ public class PoisonBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private int damagePerTurn;
 
-    public PoisonBuff(int startTurn, int delayTurn, int durationTurn,
-                      boolean isDispellable, boolean isContinuous, int damagePerTurn) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public PoisonBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, int damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.NEGATIVE);
         this.damagePerTurn = damagePerTurn;
     }

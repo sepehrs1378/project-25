@@ -1,7 +1,6 @@
 public class StunBuff extends Buff {
-    public StunBuff(int startTurn, int delayTurn, int durationTurn,
-                    boolean isDispellable, boolean isContinuous) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public StunBuff(int durationTurn, boolean isDispellable, boolean isContinuous) {
+        super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.NEGATIVE);
     }
 
