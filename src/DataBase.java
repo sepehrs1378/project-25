@@ -1,3 +1,6 @@
+import com.sun.source.doctree.UnknownInlineTagTree;
+
+import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -247,15 +250,31 @@ public class DataBase {
         cardList.add(pahlevanFars);
 
         //6
-
+        Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1","sepahSalarFars",800,7,12,4,1,1,null,Constants.MINION,"",true);
+        cardList.add(sepahSalarFars);
 
         //7
+        Unit kamandarToorani = new Unit ("shop_kamandarToorani_1","kamandarToorani",500,1,3,4,2,5,null,Constants.MINION,"",false);
+        cardList.add(kamandarToorani);
 
         //8
+        Unit gholabSangDarToorani = new Unit("shop_gholabSangDarToorani_1","gholabSangDarToorani",600,1,4,2,2,7,null,Constants.MINION,"",false);
+        cardList.add(gholabSangDarToorani);
 
         //9
+        Unit neizeDarToorani = new Unit("shop_neizeDarToorani_1","neizeDarToorani",600,1,4,4,1,3,null,Constants.MINION,"",false);
+        cardList.add(neizeDarToorani);
 
         //10
+        Target jasoosTooraniTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
+        List<Buff> jasoosTooraniBuffs = new ArrayList<>();
+        DisarmBuff jasoosTooraniBuff1 = new DisarmBuff(1,true,false);
+        PoisonBuff jasoosTooraniBuff2 = new PoisonBuff(4,true,false,1);
+        jasoosTooraniBuffs.add(jasoosTooraniBuff1);
+        jasoosTooraniBuffs.add(jasoosTooraniBuff2);
+        Spell jasoosTooraniSpell = new Spell("","",0,0,0,0,0,jasoosTooraniTarget,jasoosTooraniBuffs,SpellActivationType.ON_ATTACK,"",false);
+        Unit jasoosToorani=new Unit("shop_jasoosToorani_1","jasoosToorani",700,4,6,6,1,1,jasoosTooraniSpell,Constants.MINION,"",false);
+        cardList.add(jasoosToorani);
 
         //11
 
