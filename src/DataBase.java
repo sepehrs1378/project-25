@@ -4,6 +4,7 @@ import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Spliterator;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
@@ -301,15 +302,28 @@ public class DataBase {
         cardList.add(oghab);
 
         //16
+        Unit divGorazSavar = new Unit("shop_divGorazSavar_1","divGorazSavar",300,6,16,8,1,1,null,Constants.MINION,"",false);
+        cardList.add(divGorazSavar);
 
         //17
+        //todo same problem with KingGuardSpell from now on i,ll call it kingsGuardProblem :)
+        cardList.add(null);
 
         //18
+        Target marSamiTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
+        PoisonBuff marSamiBuff = new PoisonBuff(3,true,false,1);
+        Spell marSamiSpell = new Spell("","",0,0,0,0,0,marSamiTarget,marSamiBuff,SpellActivationType.ON_ATTACK,"",false);
+        Unit marSami = new Unit("shop_marSami_1","marSami",300,4,5,6,2,4,marSamiSpell,Constants.MINION,"",false);
+        cardList.add(marSami);
 
         //19
+        Unit ejdehaAtashAndaz = new Unit("shop_ejdehaAtashAndaz_1","ejdehaAtashAndaz",250,5,9,5,2,4,null,Constants.MINION,"",false);
+        cardList.add(ejdehaAtashAndaz);
 
         //20
+        //todo don't know how to make this on :/
 
+        //todo ForAliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         //21
 
         //22
@@ -353,6 +367,47 @@ public class DataBase {
     }
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
     public void makeItems(){
+        //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
+
+        //1
+        
+        //2
+
+        //3
+
+        //4
+
+        //5
+
+        //6
+
+        //7
+
+        //8
+
+        //9
+
+        //10
+
+        //11
+
+        //12
+
+        //13
+
+        //14
+
+        //15
+
+        //16
+
+        //17
+
+        //18
+
+        //19
+
+        //20
 
     }
 
