@@ -294,17 +294,22 @@ public class Battle {
             temp += unit.getId() + ":" +
                     "\n\tCan Attack: " + !unit.didAttackThisTurn()
                     + "\n\tCan Move: " + !unit.didMoveThisTurn()+
-                    "\n\tAttack Options: \n";
+                    "\n\tAttack Options: ";
             Player player;
             if (player2 == playerInTurn) {
                 player = player1;
             } else {
                 player = player2;
             }
-            for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
-                if(unit.)
+            if (!unit.didAttackThisTurn()){
+                for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
+                    if(unit.canAttackTarget(enemyUnit)){
+                        temp+="\n\t\t"+enemyUnit.getId();
+                    }
+                }
             }
-
+            output.add(temp);
         }
+        return output;
     }
 }

@@ -263,7 +263,6 @@ public class ControllerBattleCommands {
     }
 
     public void help() {
-        view.printList();
-
+        view.printList(database.getCurrentBattle().getAvailableMoves());
     }
 }
