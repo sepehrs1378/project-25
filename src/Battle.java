@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Battle {
-    public static final DataBase dataBase = DataBase.getInstance();
+    public static final DataBase database = DataBase.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -173,7 +173,7 @@ public class Battle {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     if (buff.isContinuous())
                         buff.revive();
@@ -191,7 +191,7 @@ public class Battle {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     if (buff.isExpired())
                         buff.remove();
@@ -213,7 +213,7 @@ public class Battle {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Unit unit = dataBase.getCurrentBattle().getBattleGround()
+                Unit unit = database.getCurrentBattle().getBattleGround()
                         .getCells()[i][j].getUnit();
                 unit.setDidAttackThisTurn(false);
                 unit.setDidMoveThisTurn(false);
@@ -226,7 +226,7 @@ public class Battle {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     buff.doEffect();
                 }
@@ -239,6 +239,44 @@ public class Battle {
             buff.doEffect();
         for (Buff buff : player2.getBuffs())
             buff.doEffect();
+    }
+
+    public OutputMessageType insert(Card card, int row, int column){
+        if (card == null) {
+            return OutputMessageType.NO_SUCH_CARD_IN_HAND;
+        } else if (card instanceof Unit) {
+            if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
+                return OutputMessageType.INVALID_NUMBER;
+            } else if (column >= Constants.BATTLE_GROUND_LENGTH || column < 0) {
+                return OutputMessageType.INVALID_NUMBER;
+            }
+            if (database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
+                database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
+                database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
+                database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
+                        .getPlayerInTurn().getDeck());
+
+            } else {
+                return OutputMessageType.THIS_CELL_IS_FULL;
+            }
+        } else if (card instanceof Spell) {
+            Spell temp=(Spell)card;
+            temp.doSpell(row,column);
+            database.getCurrentBattle().getPlayerInTurn().getGraveYard().addDeadCard(card);
+            database.getCurrentBattle().getPlayerInTurn().getHand().deleteCard(card);
+        }
+        return OutputMessageType.NO_ERROR;
+    }
+
+    public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column){
+        if (hero.getSpecialPower().getMana() <= player.getMana()
+                && hero.getSpecialPower().getCooldown() == 0
+                && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
+            hero.getSpecialPower().doSpell(row, column);
+        } else{
+            return OutputMessageType.NO_HERO;
+        }
+        return OutputMessageType.NO_ERROR;
     }
 
 }
