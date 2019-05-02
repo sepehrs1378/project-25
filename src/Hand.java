@@ -16,4 +16,13 @@ class Hand {
         cards.remove(card);
     }
 
+    public Card getCard(String cardId){
+        for(Card card:cards){
+            if(card.getId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
+    }
+
 }

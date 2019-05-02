@@ -209,7 +209,28 @@ public class ControllerBattleCommands {
     }
 
     public void insert() {
-        //todo
+        if (request.getCommand().matches("insert .+ in [(](\\d+),(\\d+)[)]")) {
+            Pattern pattern = Pattern.compile("insert (.+) in [(](\\d+),(\\d+)[)]");
+            Matcher matcher = pattern.matcher(request.getCommand());
+            Card card = database.getCurrentBattle().getBattleGround().getCardByID(matcher.group(1));
+            //todo must search in the hand
+            int row = Integer.parseInt(matcher.group(2));
+            int column = Integer.parseInt(matcher.group(3));
+            if (card == null) {
+                view.printOutputMessage(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
+            }
+            else{
+                if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
+                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
+                }
+                else if(column>=Constants.BATTLE_GROUND_LENGTH || column < 0){
+                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
+                }
+                else{
+
+                }
+            }
+        }
     }
 
     public void end() {
