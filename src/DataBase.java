@@ -158,39 +158,39 @@ public class DataBase {
         cardList.add(divSefid);
 
         //2
-        Target simorghTarget=new Target(Constants.HERO_MINION,Integer.MAX_VALUE,Integer.MAX_VALUE,Constants.ENEMY,false,false,0,Constants.ALL);
-        StunBuff simorghBuff = new StunBuff(1,true,false);
-        Spell simorghSpell = new Spell("","",0,5,0,0,8,simorghTarget,simorghBuff,SpellActivationType.ON_CAST,"",false);
-        Unit simorgh = new Unit("shop_simorgh_1","simorgh",9000,0,50,4,1,1,simorghSpell,Constants.HERO,"",false);
+        Target simorghTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        StunBuff simorghBuff = new StunBuff(1, true, false);
+        Spell simorghSpell = new Spell("", "", 0, 5, 0, 0, 8, simorghTarget, simorghBuff, SpellActivationType.ON_CAST, "", false);
+        Unit simorgh = new Unit("shop_simorgh_1", "simorgh", 9000, 0, 50, 4, 1, 1, simorghSpell, Constants.HERO, "", false);
         cardList.add(simorgh);
 
         //3
-        Target ejdehaHaftSarTarget= new Target(Constants.HERO_MINION, 1,1,Constants.ENEMY,false,false,0,Constants.ALL);
-        DisarmBuff ejdehaHaftSarBuff = new DisarmBuff(Integer.MAX_VALUE,true,false);
-        Spell ejdehaHaftSarSpellSpell = new Spell("","",0,0,0,0,1,ejdehaHaftSarTarget,ejdehaHaftSarBuff,SpellActivationType.ON_CAST,"",false);
-        Unit ejdehaHaftSar = new Unit("shop_ejdehaHaftSar_1","ejdehaHaftSar",8000,0,50,4,1,1,ejdehaHaftSarSpellSpell,Constants.HERO,"",false);
+        Target ejdehaHaftSarTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        DisarmBuff ejdehaHaftSarBuff = new DisarmBuff(Integer.MAX_VALUE, true, false);
+        Spell ejdehaHaftSarSpellSpell = new Spell("", "", 0, 0, 0, 0, 1, ejdehaHaftSarTarget, ejdehaHaftSarBuff, SpellActivationType.ON_CAST, "", false);
+        Unit ejdehaHaftSar = new Unit("shop_ejdehaHaftSar_1", "ejdehaHaftSar", 8000, 0, 50, 4, 1, 1, ejdehaHaftSarSpellSpell, Constants.HERO, "", false);
         cardList.add(ejdehaHaftSar);
 
         //4
-        Target rakhshTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,true,0,Constants.ALL);
-        StunBuff rakhshBuff = new StunBuff(1,true,false);
-        Spell rakhshSpell = new Spell("","",0,1,0,0,2,rakhshTarget,rakhshBuff,SpellActivationType.ON_CAST,"",false);
-        Unit rakhsh = new Unit("shop_rakhsh_1","rakhsh",8000,0,50,4,1,1,rakhshSpell,Constants.HERO,"",false);
+        Target rakhshTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
+        StunBuff rakhshBuff = new StunBuff(1, true, false);
+        Spell rakhshSpell = new Spell("", "", 0, 1, 0, 0, 2, rakhshTarget, rakhshBuff, SpellActivationType.ON_CAST, "", false);
+        Unit rakhsh = new Unit("shop_rakhsh_1", "rakhsh", 8000, 0, 50, 4, 1, 1, rakhshSpell, Constants.HERO, "", false);
         cardList.add(rakhsh);
 
         //5
-        Target zahakTarget= new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
-        PoisonBuff zhakBuff = new PoisonBuff(3,true, false,1);
-        Spell zahakSpell = new Spell("","",0,0,0,0,0,zahakTarget,zhakBuff,SpellActivationType.ON_CAST,"",false);
-        Unit zahak = new Unit("shop_zahak_1","zahak",10000,0,50,2,1,1,zahakSpell,Constants.HERO,"",false);
+        Target zahakTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        PoisonBuff zhakBuff = new PoisonBuff(3, true, false, 1);
+        Spell zahakSpell = new Spell("", "", 0, 0, 0, 0, 0, zahakTarget, zhakBuff, SpellActivationType.ON_CAST, "", false);
+        Unit zahak = new Unit("shop_zahak_1", "zahak", 10000, 0, 50, 2, 1, 1, zahakSpell, Constants.HERO, "", false);
         cardList.add(zahak);
 
         //6
         //todo is this true?
-        Target kavehTarget = new Target(Constants.CELL,1,1,Constants.NONE,false,false,0,Constants.NONE);
-        HolyBuff kavehBuff = new HolyBuff(3,true,false,1);
-        Spell kavehSpell = new Spell("","",0,1,0,0,3,kavehTarget,kavehBuff,SpellActivationType.ON_CAST,"",false);
-        Unit kaveh= new Unit("shop_kaveh_1","kaveh",8000,0,50,4,1,1,kavehSpell,Constants.HERO,"",false);
+        Target kavehTarget = new Target(Constants.CELL, 1, 1, Constants.NONE, false, false, 0, Constants.NONE);
+        HolyBuff kavehBuff = new HolyBuff(3, true, false, 1);
+        Spell kavehSpell = new Spell("", "", 0, 1, 0, 0, 3, kavehTarget, kavehBuff, SpellActivationType.ON_CAST, "", false);
+        Unit kaveh = new Unit("shop_kaveh_1", "kaveh", 8000, 0, 50, 4, 1, 1, kavehSpell, Constants.HERO, "", false);
         cardList.add(kaveh);
 
         //7
@@ -198,21 +198,21 @@ public class DataBase {
         cardList.add(null);
 
         //8
-        Target afsanehTarget = new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,true,0,Constants.ALL);
-        Spell afsanehSpell=new Spell("","",0,1,2,0,0,afsanehTarget,(Buff)null,SpellActivationType.ON_CAST,"",true);
-        Unit afsaneh = new Unit("shop_afsaneh_1","afsaneh",11000,0,40,3,2,3,afsanehSpell,Constants.HERO,"",false);
+        Target afsanehTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
+        Spell afsanehSpell = new Spell("", "", 0, 1, 2, 0, 0, afsanehTarget, (Buff) null, SpellActivationType.ON_CAST, "", true);
+        Unit afsaneh = new Unit("shop_afsaneh_1", "afsaneh", 11000, 0, 40, 3, 2, 3, afsanehSpell, Constants.HERO, "", false);
         cardList.add(afsaneh);
 
         //9
         //todo check this
-        Target esfandiarTarget = new Target(Constants.HERO,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
-        HolyBuff esfandiarBuff = new HolyBuff(Integer.MAX_VALUE,false,true,3);
-        Spell esfandiarSpell = new Spell("","",0,0,0,0,0,esfandiarTarget,esfandiarBuff,SpellActivationType.ON_SPAWN,"",false);
-        Unit esfandiar = new Unit("shop_esfandiar_1","esfandiar",12000,0,35,3,1,3,esfandiarSpell,Constants.HERO,"",false);
+        Target esfandiarTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        HolyBuff esfandiarBuff = new HolyBuff(Integer.MAX_VALUE, false, true, 3);
+        Spell esfandiarSpell = new Spell("", "", 0, 0, 0, 0, 0, esfandiarTarget, esfandiarBuff, SpellActivationType.ON_SPAWN, "", false);
+        Unit esfandiar = new Unit("shop_esfandiar_1", "esfandiar", 12000, 0, 35, 3, 1, 3, esfandiarSpell, Constants.HERO, "", false);
         cardList.add(esfandiar);
 
         //10
-        Unit rostam = new Unit("shop_rostam_1","rostam",8000,0,55,7,1,4,null,Constants.HERO,"",false);
+        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, null, Constants.HERO, "", false);
         cardList.add(rostam);
     }
 
