@@ -9,12 +9,12 @@ public class DataBase {
     private static List<Collectable> collectableList = new ArrayList<>();
     private static List<Card> cardList = new ArrayList<>();
     private static List<Account> accountList = new ArrayList<>();
-    private static Account loggedInAccount;
-    private static Battle currentBattle;
-    private static Account computerPlayerLevel1 = new Account();
-    private static Account computerPlayerLevel2 = new Account();
-    private static Account computerPlayerLevel3 = new Account();
-    private static Account computerPlayerCostum = new Account();
+    private Account loggedInAccount;
+    private Battle currentBattle;
+    private Account computerPlayerLevel1 = new Account();
+    private Account computerPlayerLevel2 = new Account();
+    private Account computerPlayerLevel3 = new Account();
+    private Account computerPlayerCostume = new Account();
 
     static {
 
@@ -39,12 +39,28 @@ public class DataBase {
         return collectableList;
     }
 
+    public Account getComputerPlayerLevel1() {
+        return computerPlayerLevel1;
+    }
+
+    public Account getComputerPlayerLevel2() {
+        return computerPlayerLevel2;
+    }
+
+    public Account getComputerPlayerLevel3() {
+        return computerPlayerLevel3;
+    }
+
+    public Account getComputerPlayerCostume() {
+        return computerPlayerCostume;
+    }
+
     public Account getLoggedInAccount() {
         return loggedInAccount;
     }
 
     public void setLoggedInAccount(Account loggedInAccount) {
-        DataBase.loggedInAccount = loggedInAccount;
+        this.loggedInAccount = loggedInAccount;
     }
 
     public Battle getCurrentBattle() {
@@ -52,7 +68,7 @@ public class DataBase {
     }
 
     public void setCurrentBattle(Battle currentBattle) {
-        DataBase.currentBattle = currentBattle;
+        this.currentBattle = currentBattle;
     }
 
     public List<Account> getAccounts() {

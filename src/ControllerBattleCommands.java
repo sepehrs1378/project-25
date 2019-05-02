@@ -7,6 +7,11 @@ public class ControllerBattleCommands {
     private static final Request request = Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
+    private static final ControllerBattleCommands instance = new ControllerBattleCommands();
+
+    public static ControllerBattleCommands getInstance() {
+        return instance;
+    }
 
     private ControllerBattleCommands() {
     }
@@ -217,26 +222,22 @@ public class ControllerBattleCommands {
             int column = Integer.parseInt(matcher.group(3));
             if (card == null) {
                 view.printOutputMessage(OutputMessageType.NO_SUCH_CARD_IN_HAND);
-            }
-            else if(card instanceof Unit){
+            } else if (card instanceof Unit) {
                 if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
                     view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
-                }
-                else if(column>=Constants.BATTLE_GROUND_LENGTH || column < 0){
+                } else if (column >= Constants.BATTLE_GROUND_LENGTH || column < 0) {
                     view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
                 }
-                if(database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit()==null){
+                if (database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
                     database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
                     database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
                     database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
-                                                                            .getPlayerInTurn().getDeck());
+                            .getPlayerInTurn().getDeck());
 
-                }
-                else{
+                } else {
                     view.printOutputMessage(OutputMessageType.THIS_CELL_IS_FULL);
                 }
-            }
-            else if(card instanceof Spell){
+            } else if (card instanceof Spell) {
                 //todo spell
             }
         }
