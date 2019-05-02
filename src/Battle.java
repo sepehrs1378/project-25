@@ -260,23 +260,43 @@ public class Battle {
                 return OutputMessageType.THIS_CELL_IS_FULL;
             }
         } else if (card instanceof Spell) {
-            Spell temp=(Spell)card;
-            temp.doSpell(row,column);
+            Spell temp = (Spell) card;
+            temp.doSpell(row, column);
             database.getCurrentBattle().getPlayerInTurn().getGraveYard().addDeadCard(card);
             database.getCurrentBattle().getPlayerInTurn().getHand().deleteCard(card);
         }
         return OutputMessageType.NO_ERROR;
     }
 
-    public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column){
+    public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
         if (hero.getSpecialPower().getMana() <= player.getMana()
                 && hero.getSpecialPower().getCooldown() == 0
                 && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
             hero.getSpecialPower().doSpell(row, column);
-        } else{
+        } else {
             return OutputMessageType.NO_HERO;
         }
         return OutputMessageType.NO_ERROR;
     }
 
+    public List<String> getAvailableMoves() {
+        List<String> output = new ArrayList<>();
+        for (Unit unit : battleGround.getUnitsOfPlayer(playerInTurn)) {
+            String temp = "";
+            temp += unit.getId() + ":" +
+                    "\n\tCan Attack: " + !unit.didAttackThisTurn()
+                    + "\n\tCan Move: " + !unit.didMoveThisTurn()+
+                    "\n\tAttack Options: \n";
+            Player player;
+            if (player2 == playerInTurn) {
+                player = player1;
+            } else {
+                player = player2;
+            }
+            for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
+                if(unit.)
+            }
+
+        }
+    }
 }

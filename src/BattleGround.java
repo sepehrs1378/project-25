@@ -196,4 +196,17 @@ class BattleGround {
         }
         return null;
     }
+
+    public List<Unit> getUnitsOfPlayer(Player player){
+        List<Unit> units=new ArrayList<>();
+        for(Cell[] cellRow:cells){
+            for (Cell cell:cellRow){
+                if(cell.getUnit()!=null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())){
+                    units.add(cell.getUnit());
+                }
+
+            }
+        }
+        return units;
+    }
 }

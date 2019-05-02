@@ -255,6 +255,7 @@ public class ControllerBattleCommands {
     }
 
     public void help() {
+        view.printList();
 
     }
 }
