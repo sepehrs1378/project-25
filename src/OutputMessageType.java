@@ -47,6 +47,7 @@ public enum OutputMessageType {
     INVALID_NUMBER("the number was out of battleGround boundaries"),
     NO_SUCH_CARD_IN_HAND("no such card in hand"),
     THIS_CELL_IS_FULL("this cell is full"),
+    INVALID_COMMAND("invalid command"),
     NO_ERROR("");
 
     private String message;

@@ -223,18 +223,15 @@ public class ControllerBattleCommands {
             Matcher matcher = pattern.matcher(request.getCommand());
             if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
                     && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
-
+                int row = Integer.parseInt(matcher.group(1));
+                int column = Integer.parseInt(matcher.group(2));
                 Player player = database.getCurrentBattle().getPlayerInTurn();
                 Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-                if (hero.getSpecialPower().getMana() <= player.getMana()
-                        && hero.getSpecialPower().getCooldown() == 0
-                        && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
-                    hero.getSpecialPower().doSpell(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
-                } else view.printOutputMessage(OutputMessageType.NO_HERO);
+                view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero, player, row, column));
             } else {
                 view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
             }
-        }
+        } else view.printOutputMessage(OutputMessageType.INVALID_COMMAND);
     }
 
     public void insert() {
@@ -244,26 +241,7 @@ public class ControllerBattleCommands {
             Card card = database.getCurrentBattle().getPlayerInTurn().getHand().getCardByName(matcher.group(1));
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
-            if (card == null) {
-                view.printOutputMessage(OutputMessageType.NO_SUCH_CARD_IN_HAND);
-            } else if (card instanceof Unit) {
-                if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
-                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
-                } else if (column >= Constants.BATTLE_GROUND_LENGTH || column < 0) {
-                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
-                }
-                if (database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
-                    database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
-                    database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
-                    database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
-                            .getPlayerInTurn().getDeck());
-
-                } else {
-                    view.printOutputMessage(OutputMessageType.THIS_CELL_IS_FULL);
-                }
-            } else if (card instanceof Spell) {
-                //todo spell
-            }
+            view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
         }
     }
 
@@ -295,6 +273,6 @@ public class ControllerBattleCommands {
     }
 
     public void help() {
-
+        view.printList(database.getCurrentBattle().getAvailableMoves());
     }
 }
