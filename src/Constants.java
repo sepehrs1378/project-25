@@ -1,6 +1,10 @@
+import java.net.PortUnreachableException;
+
 public class Constants {
     private Constants() {
     }
+
+    public static final String ALL = "all";
 
     public static final String PASSIVE = "passive";
     public static final String CASTABLE = "castable";
@@ -14,11 +18,15 @@ public class Constants {
 
     public static final String HERO = "hero";
     public static final String MINION = "minion";
+    public static final String HERO_MINION = "hero and minions";
     public static final String CELL = "cell";
 
     public static final String MELEE = "melee";
     public static final String RANGED = "ranged";
     public static final String HYBRID = "hybrid";
+    public static final String MELLE_RANGED = "melee and ranged";
+    public static final String RANGED_HYBRID = "ranged and hybrid";
+    public static final String MELEE_HYBRID = "melee and hybrid";
 
     public static final String POSITIVE = "positive";
     public static final String NEGATIVE = "negative";

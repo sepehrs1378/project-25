@@ -5,20 +5,16 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
-    private static List<Usable> usableList = new ArrayList<>();
-    private static List<Collectable> collectableList = new ArrayList<>();
-    private static List<Card> cardList = new ArrayList<>();
-    private static List<Account> accountList = new ArrayList<>();
+    private List<Usable> usableList = new ArrayList<>();
+    private List<Collectable> collectableList = new ArrayList<>();
+    private List<Card> cardList = new ArrayList<>();
+    private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
     private Account computerPlayerLevel1 = new Account();
     private Account computerPlayerLevel2 = new Account();
     private Account computerPlayerLevel3 = new Account();
     private Account computerPlayerCostume = new Account();
-
-    static {
-
-    }
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -27,15 +23,35 @@ public class DataBase {
     private DataBase() {
     }
 
-    public static List<Card> getCardList() {
+    public void makeSpells() {
+        Target TotalDisarmTarget=new Target()
+    }
+
+    public void makeHeroes() {
+
+    }
+
+    public void makeMinions() {
+
+    }
+
+    public void makeUsables() {
+
+    }
+
+    public void makeCollectables() {
+
+    }
+
+    public List<Card> getCardList() {
         return cardList;
     }
 
-    public static List<Usable> getUsableList() {
+    public List<Usable> getUsableList() {
         return usableList;
     }
 
-    public static List<Collectable> getCollectableList() {
+    public List<Collectable> getCollectableList() {
         return collectableList;
     }
 

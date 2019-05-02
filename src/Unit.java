@@ -118,7 +118,7 @@ public class Unit extends Card {
         }
     }
 
-    private boolean canAttackTarget(Unit unit) {
+    public boolean canAttackTarget(Unit unit) {
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
             return false;
