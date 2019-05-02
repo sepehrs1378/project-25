@@ -1,6 +1,3 @@
-import java.nio.charset.IllegalCharsetNameException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -141,7 +138,11 @@ public class ControllerBattleCommands {
             case INVALID_COLLECTABLE_CARD:
                 view.printOutputMessage(OutputMessageType.INVALID_COLLECTABLE_CARD);
                 break;
+            case UNIT_IS_STUNNED:
+                view.printOutputMessage(OutputMessageType.UNIT_IS_STUNNED);
+                break;
             case SELECTED:
+                view.printOutputMessage(OutputMessageType.SELECTED);
                 break;
             default:
         }
@@ -179,7 +180,7 @@ public class ControllerBattleCommands {
                 return;
             }
             switch (database.getCurrentBattle().getPlayerInTurn()
-                    .getSelectedUnit().attackUnit(matcher.group(1))) {
+                    .getSelectedUnit().attack(matcher.group(1))) {
                 case TARGET_NOT_IN_RANGE:
                     view.printOutputMessage(OutputMessageType.TARGET_NOT_IN_RANGE);
                     break;
@@ -200,7 +201,16 @@ public class ControllerBattleCommands {
                 System.arraycopy(orderPieces, 3, attackers, 0
                         , orderPieces.length - 3);
             switch (Unit.attackCombo(orderPieces[2], attackers)) {
-                case
+                case A_UNIT_CANT_ATTACK_TARGET:
+                    view.printOutputMessage(OutputMessageType.A_UNIT_CANT_ATTACK_TARGET);
+                    break;
+                case A_UNIT_DOESNT_EXIST:
+                    view.printOutputMessage(OutputMessageType.A_UNIT_DOESNT_EXIST);
+                    break;
+                case COMBO_ATTACK_SUCCESSFUL:
+                    view.printOutputMessage(OutputMessageType.COMBO_ATTACK_SUCCESSFUL);
+                    break;
+                default:
             }
             //todo
         }

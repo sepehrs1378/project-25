@@ -44,18 +44,6 @@ public class Unit extends Card {
         return maxRange;
     }
 
-    public void setMaxRange(int maxRange) {
-        this.maxRange = maxRange;
-    }
-
-    public int getMinRange() {
-        return minRange;
-    }
-
-    public void setMinRange(int minRange) {
-        this.minRange = minRange;
-    }
-
     public int getAp() {
         return ap;
     }
@@ -72,14 +60,13 @@ public class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public OutputMessageType attackUnit(String targetId) {
-        if (dataBase.getCurrentBattle().getPlayerInTurn().
-                getSelectedUnit().didAttackThisTurn)
-            return OutputMessageType.ALREADY_ATTACKED;
+    public void attackUnit(String targetId) {
+        if (this.didAttackThisTurn)
+            return;
         if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
-            return OutputMessageType.INVALID_CARD;
+            return;
         if (!isTargetUnitWithinRange(targetId))
-            return OutputMessageType.TARGET_NOT_IN_RANGE;
+            return;
         this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
                 getUnitWithID(targetId);
@@ -87,6 +74,17 @@ public class Unit extends Card {
         targetedUnit.changeHp(-damageDealt);
         if (this.specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
             this.specialPower.doSpell(targetedUnit);
+    }
+
+    public OutputMessageType attack(String targetId) {
+        if (dataBase.getCurrentBattle().getPlayerInTurn().
+                getSelectedUnit().didAttackThisTurn)
+            return OutputMessageType.ALREADY_ATTACKED;
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
+            return OutputMessageType.INVALID_CARD;
+        if (!isTargetUnitWithinRange(targetId))
+            return OutputMessageType.TARGET_NOT_IN_RANGE;
+        this.attackUnit(targetId);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
@@ -94,20 +92,37 @@ public class Unit extends Card {
         Unit target = dataBase.getCurrentBattle()
                 .getBattleGround().getUnitWithID(targetId);
         List<Unit> attackers = new ArrayList<>();
-        for (String attackerId : attackersIds)
-            attackers.add(dataBase.getCurrentBattle()
-                    .getBattleGround().getUnitWithID(attackerId));
-        for (Unit unit : attackers) {
-            if (!unit.canAttackTarget(target))
+        for (String attackerId : attackersIds) {
+            Unit attacker = dataBase.getCurrentBattle()
+                    .getBattleGround().getUnitWithID(attackerId);
+            if (attacker == null)
+                return OutputMessageType.A_UNIT_DOESNT_EXIST;
+            if (!attacker.canUseComboAttack)
+                return OutputMessageType.A_UNIT_CANT_USE_COMBO;
+            if (!attacker.canAttackTarget(target))
                 return OutputMessageType.A_UNIT_CANT_ATTACK_TARGET;
+            attackers.add(attacker);
         }
-
-        return null;//todo
+        for (Unit attacker : attackers) {
+            attacker.attackUnit(targetId);
+        }
+        Unit targetUnit = dataBase.getCurrentBattle()
+                .getBattleGround().getUnitWithID(targetId);
+        targetUnit.counterAttackUnit(attackers.get(0));
+        return OutputMessageType.COMBO_ATTACK_SUCCESSFUL;
     }
 
-    public boolean canAttackTarget(Unit unit) {
+    public void counterAttackUnit(Unit unit) {
+        if (!this.isDisarmed() && !this.isStuned()) {
+            attackUnit(unit.getId());
+        }
+    }
+
+    private boolean canAttackTarget(Unit unit) {
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+            return false;
+        if (this.isStuned())
             return false;
         if (this.didAttackThisTurn)
             return false;
@@ -133,13 +148,6 @@ public class Unit extends Card {
                 battleGround.getCoordinationOfUnit(targetUnit)[0],
                 battleGround.getCoordinationOfUnit(targetUnit)[1]);
         return distanceToTarget <= maxRange && distanceToTarget >= minRange;
-    }
-
-    public void counterAttackUnit(Unit unit) {
-        if (!this.isDisarmed()) {
-            attackUnit(unit.getId());//todo delete attackUnit in it and complete it without that
-            //todo maybe not complete
-        }
     }
 
     public List<Flag> getFlags() {
@@ -184,10 +192,6 @@ public class Unit extends Card {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isDisarmed() {

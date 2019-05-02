@@ -5,8 +5,4 @@ public class Collectable extends Item {
         super(itemID, description);
         this.spell = spell;
     }
-
-    public void doSpell(Card card) {
-
-    }
 }
