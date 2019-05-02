@@ -21,6 +21,25 @@ public enum HelpType {
             "\nshow all decks" +
             "\nshow deck [deck name]" +
             "\nhelp"),
+    BATTLE_COMMANDS_HELP("BATTLE COMMAND HELP:" +
+            "\n\tgame info" +
+            "\n\tshow my minions" +
+            "\n\tshow opponent minions" +
+            "\n\tshow card info [card id]" +
+            "\n\tselect [card id]" +
+            "\n\tmove to ([row],[column])" +
+            "\n\tattack [opponent card id]" +
+            "\n\tattack combo [opponent card id] [my card id] [my card id]..." +
+            "\n\tuse special power ([row],[column])" +
+            "\n\tshow hand" +
+            "\n\tinsert [card name] in ([row],[column])" +
+            "\n\tend turn" +
+            "\n\tshow collectables" +
+            "\n\tselect [collectable id])" +
+            "\n\tshow next card" +
+            "\n\tenter graveyard" +
+            "\n\thelp" +
+            "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
     STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
     CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
