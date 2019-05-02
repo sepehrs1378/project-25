@@ -1,5 +1,6 @@
 import com.sun.source.doctree.UnknownInlineTagTree;
 
+import java.awt.event.MouseAdapter;
 import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -368,12 +369,27 @@ public class DataBase {
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
     public void makeItems(){
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
+        //inPeyvast     inEachList
+        //1             //1
+        Target tajDanayeeTarget = new Target(Constants.NONE, 1,1,Constants.FRIEND,false,true,0,Constants.ALL);
+        ManaBuff tajDanayeeBuff= new ManaBuff(3,false,false,1);
+        Spell tajDanayeeSpell= new Spell("","",0,0,0,0,0,tajDanayeeTarget,tajDanayeeBuff,SpellActivationType.PASSIVE,"",false);
+        Usable tajDanayee = new Usable("shop_tajDanayee_1","",300,tajDanayeeSpell);
+        usableList.add(tajDanayee);
 
-        //1
-        
-        //2
+        //2             //2
+        Target namoosSeparTarget = new Target(Constants.HERO,1,1,Constants.FRIEND,false,false,0,Constants.ALL);
+        HolyBuff namoosSeparBuff = new HolyBuff(Integer.MAX_VALUE,true,false,12);
+        Spell namoosSeparSpell = new Spell("","",0,0,0,0,0,namoosSeparTarget,namoosSeparBuff,SpellActivationType.PASSIVE,"",false);
+        Usable namoosSepar = new Usable("shop_namoosSepar_1","",4000,namoosSeparSpell);
+        usableList.add(namoosSepar);
 
         //3
+        //todo in item all spells are passive but this doesn't seem passive, i created the required parts but not Usable itself
+        Target kamanDamolTarget = new Target(Constants.HERO,1,1,Constants.ENEMY,false,false,0,Constants.RANGED_HYBRID);
+        DisarmBuff kamanDamoolBuff = new DisarmBuff(1,true,false);
+        //todo
+        usableList.add(null);
 
         //4
 
