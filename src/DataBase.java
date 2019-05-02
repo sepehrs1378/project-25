@@ -11,10 +11,11 @@ public class DataBase {
     private static List<Account> accountList = new ArrayList<>();
     private static Account loggedInAccount;
     private static Battle currentBattle;
-    private static Account computerPlayerLevel1=new Account();
-    private static Account computerPlayerLevel2=new Account();
-    private static Account computerPlayerLevel3=new Account();
-    private static Account computerPlayerCostum=new Account();
+    private static Account computerPlayerLevel1 = new Account();
+    private static Account computerPlayerLevel2 = new Account();
+    private static Account computerPlayerLevel3 = new Account();
+    private static Account computerPlayerCostum = new Account();
+
     static {
 
     }
@@ -30,7 +31,7 @@ public class DataBase {
         return cardList;
     }
 
-    public static List<Usable> getUsableList(){
+    public static List<Usable> getUsableList() {
         return usableList;
     }
 

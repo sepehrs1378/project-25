@@ -1,5 +1,5 @@
 public class ControllerAccount {
-    private static final Request request= Request.getInstance();
+    private static final Request request = Request.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = new ControllerAccount();
     private static final View view = View.getInstance();
@@ -57,9 +57,9 @@ public class ControllerAccount {
 
     public void create() {
         request.getNewCommand();
-        for (int i =0; i < dataBase.getAccounts().size(); i++){
+        for (int i = 0; i < dataBase.getAccounts().size(); i++) {
             Account account = dataBase.getAccounts().get(i);
-            if (account.getUsername().equals(request.getCommand())){
+            if (account.getUsername().equals(request.getCommand())) {
                 showError(OutputMessageType.USERNAME_ALREADY_EXISTS);
                 i = -1;
             }

@@ -15,9 +15,9 @@ public class Account implements Comparable<Account> {
         levelsOpennessStatus[0] = true;
     }
 
-    public static Account getAccount(String userName){
-        for(Account account:accounts){
-            if(account.getUsername().equals(userName)){
+    public static Account getAccount(String userName) {
+        for (Account account : accounts) {
+            if (account.getUsername().equals(userName)) {
                 return account;
             }
         }

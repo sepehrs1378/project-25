@@ -11,7 +11,7 @@ class PlayerInfo {
         collection.addCard(newCard);
     }
 
-    public void addUsableToCollection(Usable usable){
+    public void addUsableToCollection(Usable usable) {
         collection.addItem(usable);
     }
 
@@ -31,7 +31,7 @@ class PlayerInfo {
 //        return mainDeck;
 //    }
 
-    public String getPlayerName(){
+    public String getPlayerName() {
         return playerName;
     }
 

@@ -6,21 +6,21 @@ public class ControllerMatchInfo {
     private static final View view = View.getInstance();
     private final DataBase dataBase = DataBase.getInstance();
 
-    private ControllerMatchInfo(){
+    private ControllerMatchInfo() {
     }
 
-    public static ControllerMatchInfo getInstance(){
+    public static ControllerMatchInfo getInstance() {
         return ourInstance;
     }
 
-    public void showMatchHistory(Account account){
+    public void showMatchHistory(Account account) {
         List<MatchInfo> matchList = new ArrayList<>(account.getMatchList());
-        for (MatchInfo matchInfo : matchList){
+        for (MatchInfo matchInfo : matchList) {
             Account opponent = matchInfo.getOpponent();
             String winOrLoss;
-            if (matchInfo.getWinner().equals(opponent)){
+            if (matchInfo.getWinner().equals(opponent)) {
                 winOrLoss = "Loss!";
-            }else{
+            } else {
                 winOrLoss = "Win!";
             }
             matchInfo.calculatePassedTime();

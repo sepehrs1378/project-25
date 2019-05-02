@@ -81,7 +81,7 @@ public class ControllerBattleCommands {
     }
 
     public void show() {
-        if (request.getCommand().matches("show card info \\w+")) {
+        if (request.getCommand().matches("show card info .+")) {
             String cardId = request.getCommand().split("\\s+")[3];
             Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
             if (card != null) {
@@ -112,8 +112,7 @@ public class ControllerBattleCommands {
             } else if (card instanceof Unit) {
                 view.showCardInfoMinion((Unit) card);
             }
-        }
-        else if(request.getCommand().equals("show hand")){
+        } else if (request.getCommand().equals("show hand")) {
             view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
         }
     }
@@ -155,7 +154,7 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-                
+
         }
     }
 
@@ -190,22 +189,20 @@ public class ControllerBattleCommands {
     }
 
     public void use() {
-        if(request.getCommand().matches("use special power [(]\\d+,\\d+[)]")){
-            Pattern pattern=Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
-            Matcher matcher=pattern.matcher(request.getCommand());
-            if(Integer.parseInt(matcher.group(1))<5&& Integer.parseInt(matcher.group(1))>=0
-                && Integer.parseInt(matcher.group(2))<9 && Integer.parseInt(matcher.group(2))>=0){
+        if (request.getCommand().matches("use special power [(]\\d+,\\d+[)]")) {
+            Pattern pattern = Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
+            Matcher matcher = pattern.matcher(request.getCommand());
+            if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
+                    && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
 
-                Player player=database.getCurrentBattle().getPlayerInTurn();
-                Unit hero=database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-                if(hero.getSpecialPower().getMana()<=player.getMana()
-                        && hero.getSpecialPower().getCooldown()==0
-                        && hero.getSpecialPower().getActivationType()==SpellActivationType.ON_CAST){
+                Player player = database.getCurrentBattle().getPlayerInTurn();
+                Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+                if (hero.getSpecialPower().getMana() <= player.getMana()
+                        && hero.getSpecialPower().getCooldown() == 0
+                        && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
                     hero.getSpecialPower().doSpell(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
-                }
-                else view.printOutputMessage(OutputMessageType.NO_HERO);
-            }
-            else{
+                } else view.printOutputMessage(OutputMessageType.NO_HERO);
+            } else {
                 view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
             }
         }

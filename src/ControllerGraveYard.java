@@ -45,9 +45,9 @@ public class ControllerGraveYard {
             String[] strings = request.getCommand().split("\\s+");
             String cardId = strings[2];
             Card card = dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().findCard(cardId);
-            if (card instanceof Unit){
+            if (card instanceof Unit) {
                 Unit unit = (Unit) card;
-                if (unit.getHeroOrMinion().equals("hero")){
+                if (unit.getHeroOrMinion().equals("hero")) {
                     view.showCardInfoHero(unit);
                 }
             }

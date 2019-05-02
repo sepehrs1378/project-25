@@ -18,8 +18,8 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.setNumberOfFlags(numberOfFlags);
-        List<Flag> temp=new ArrayList<>();
-        for(int i=0;i<numberOfFlags;i++){
+        List<Flag> temp = new ArrayList<>();
+        for (int i = 0; i < numberOfFlags; i++) {
             temp.add(new Flag());
         }
         this.battleGround.addFlagsToBattleGround(temp);

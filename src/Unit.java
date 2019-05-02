@@ -107,7 +107,7 @@ public class Unit extends Card {
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
-    public static OutputMessageType attackCombo(String targetId){
+    public static OutputMessageType attackCombo(String targetId) {
         return null;//todo
     }
 

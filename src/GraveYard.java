@@ -13,9 +13,9 @@ class GraveYard {
         deadCards.add(deadCard);
     }
 
-    public Card findCard(String cardId){
-        for (Card card : deadCards){
-            if (card.getId().equals(cardId)){
+    public Card findCard(String cardId) {
+        for (Card card : deadCards) {
+            if (card.getId().equals(cardId)) {
                 return card;
             }
         }
