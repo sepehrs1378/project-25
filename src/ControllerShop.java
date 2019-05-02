@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,17 +58,18 @@ class ControllerShop {
     }
 
     public void sell() {
-        if (!request.getCommand().matches("^sell .+$")) {
+        Pattern pattern = Pattern.compile("^sell (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()){
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^sell (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1))) {
             case NOT_IN_COLLECTION:
                 view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
                 break;
             case SOLD_SUCCESSFULLY:
+                loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1));
                 view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
                 break;
             default:
@@ -104,7 +106,9 @@ class ControllerShop {
             PlayerCollection.searchInShop(command);
         } else if (command.matches("^search collection (.+)$")) {
             String[] strings = command.split("\\s+");
-
+            ArrayList<String> cardsAndItems =
+                    new ArrayList<>(loggedInAccount.getPlayerInfo().getCollection().searchCardOrItemWithName(strings[2]));
+            view.printList(cardsAndItems);
         } else {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
         }

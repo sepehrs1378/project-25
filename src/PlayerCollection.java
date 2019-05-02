@@ -266,21 +266,22 @@ public class PlayerCollection {
     }
 
     public OutputMessageType sell(String id) {
-        if (doesHaveCard(id)) {
-            //todo
+        Object obj = searchCardOrItemWithId(id);
+        if (obj != null) {
+            if (obj instanceof Card) {
+                Card card = (Card) obj;
+                loggedInAccount.addMoney(card.getPrice());
+                cards.remove(card);
+            }
+            if (obj instanceof Usable) {
+                Usable usable = (Usable) obj;
+                loggedInAccount.addMoney(usable.getPrice());
+                items.remove(usable);                //should I find index and then remove or i can simply remove object
+            }
             return OutputMessageType.SOLD_SUCCESSFULLY;
         }
         //todo
         return OutputMessageType.NOT_IN_COLLECTION;
-    }
-
-    public int searchCollection(String name) {
-        PlayerCollection collection = loggedInAccount.getPlayerInfo().getCollection();
-        for (Card card : getCards()){
-            if (card.getName().equals(name)){
-                
-            }
-        }
     }
 
     public OutputMessageType selectDeckAsMain(String deckName) {
@@ -299,7 +300,21 @@ public class PlayerCollection {
         return OutputMessageType.DECK_NOT_VALID;
     }
 
-    public List<String> searchCard(String name) {
+    public Object searchCardOrItemWithId(String id) {
+        for (Card card : cards) {
+            if (card.getId().equals(id)) {
+                return card;
+            }
+        }
+        for (Item item : items) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public List<String> searchCardOrItemWithName(String name) {
         List<String> output = new ArrayList<>();
         for (Card card : cards) {
             if (card.getName().equals(name)) {
