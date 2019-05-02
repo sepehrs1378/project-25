@@ -1,5 +1,5 @@
-public class Flag{
-    private int turnsInUnitHand=0;
+public class Flag {
+    private int turnsInUnitHand = 0;
 
     public int getTurnsInUnitHand() {
         return turnsInUnitHand;

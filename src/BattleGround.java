@@ -171,23 +171,25 @@ class BattleGround {
         }
         return cellsHavingBuff;
     }
-    public void addFlagsToBattleGround(List<Flag> flags){
-        int counter=flags.size();
-        while(counter>0){
-            int column= (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
-            int row=(int)(Math.random()*Constants.BATTLE_GROUND_WIDTH);
-            if(cells[row][column].getFlags().size()==0){
-                cells[row][column].getFlags().add(flags.get(counter-1));
-                flags.remove(counter-1);
+
+    public void addFlagsToBattleGround(List<Flag> flags) {
+        int counter = flags.size();
+        while (counter > 0) {
+            int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+            int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
+            if (cells[row][column].getFlags().size() == 0) {
+                cells[row][column].getFlags().add(flags.get(counter - 1));
+                flags.remove(counter - 1);
                 counter--;
             }
         }
     }
-    public Unit getHeroOfPlayer(Player player){
-        for (Cell[] cellRow:cells){
-            for (Cell cell:cellRow){
-                if(cell.getUnit()!=null&&cell.getUnit().getHeroOrMinion().equals(Constants.HERO)
-                && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())){
+
+    public Unit getHeroOfPlayer(Player player) {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() != null && cell.getUnit().getHeroOrMinion().equals(Constants.HERO)
+                        && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
                     return cell.getUnit();
                 }
             }

@@ -60,7 +60,7 @@ class ControllerShop {
     public void sell() {
         Pattern pattern = Pattern.compile("^sell (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()){
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }

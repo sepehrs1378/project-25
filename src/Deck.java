@@ -58,25 +58,27 @@ public class Deck {
         return cards.size() == 20 && hero != null;
     }
 
-    public Card getCardByCardId(String cardID){
-        for(Card card:cards){
-            if(card.getId().equals(cardID)){
+    public Card getCardByCardId(String cardID) {
+        for (Card card : cards) {
+            if (card.getId().equals(cardID)) {
                 return card;
             }
         }
         return null;
     }
-    public boolean hasCard(String cardID){
-        for (Card card:cards){
-            if(card.getId().equals(cardID)){
+
+    public boolean hasCard(String cardID) {
+        for (Card card : cards) {
+            if (card.getId().equals(cardID)) {
                 return true;
             }
         }
         return false;
     }
-    public boolean hasCard(Card card){
-        for (Card card1:cards){
-            if(card1==card)
+
+    public boolean hasCard(Card card) {
+        for (Card card1 : cards) {
+            if (card1 == card)
                 return true;
         }
         return false;

@@ -30,7 +30,7 @@ public enum OutputMessageType {
     TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
     ATTACKED_SUCCESSFULLY(""),
     ALREADY_ATTACKED("Unit has already attacked"),
-    NO_CARD_IN_BATTLEGROUND("There is no card in battle ground"),
+    NO_CARD_IN_BATTLEGROUND("There is no such card in battle ground"),
     CARD_ALREADY_IN_BATTLE("Card exists in Deck"),
     DECK_IS_FULL("Deck Is Full"),
     DECK_HAS_HERO("Deck Has Hero"),
@@ -42,6 +42,8 @@ public enum OutputMessageType {
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
     NO_HERO("there is no hero in battleGround"),
     INVALID_NUMBER("the number was out of battleGround boundaries"),
+    NO_SUCH_CARD_IN_HAND("no such card in hand"),
+    THIS_CELL_IS_FULL("this cell is full"),
     NO_ERROR("");
 
     private String message;

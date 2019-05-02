@@ -53,7 +53,7 @@ public class Card {
         return dataBase.getAccountWithUsername(matcher.group(1));
     }
 
-    public Card clone(){
+    public Card clone() {
         return new Card(getId(), getName(), getPrice(), getMana());
     }
 }

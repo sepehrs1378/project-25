@@ -43,7 +43,7 @@ public class PlayerCollection {
                         destinationDeck.getCards().add(card);
                     }
                 }
-            } else if (item != null) {
+            } else {
                 destinationDeck.setItem(item);
             }
             return OutputMessageType.NO_ERROR;
@@ -116,12 +116,6 @@ public class PlayerCollection {
 
     public boolean doesHaveItem(String id) {
         return getCardWithID(id) != null;
-    }
-
-    //public boolean doesHave
-
-    public void addNewDeck() {
-        //todo maybe it isn't needed
     }
 
     public OutputMessageType deleteDeck(String deckName) {
@@ -272,16 +266,25 @@ public class PlayerCollection {
                 Card card = (Card) obj;
                 loggedInAccount.addMoney(card.getPrice());
                 cards.remove(card);
+                for (Deck deck : decks) {
+                    deck.getCards().remove(card);
+                    if (deck.getHero().equals(card)){
+                        deck.setHero(null);
+                    }
+                }
             }
             if (obj instanceof Usable) {
                 Usable usable = (Usable) obj;
                 loggedInAccount.addMoney(usable.getPrice());
                 items.remove(usable);
-                //should I find index and then remove or i can simply remove object
+                for (Deck deck : decks){
+                    if (deck.getItem().equals(usable)){
+                        deck.setItem(null);
+                    }
+                }
             }
             return OutputMessageType.SOLD_SUCCESSFULLY;
         }
-        //todo
         return OutputMessageType.NOT_IN_COLLECTION;
     }
 

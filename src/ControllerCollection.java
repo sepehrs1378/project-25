@@ -85,11 +85,11 @@ public class ControllerCollection {
             view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
         } else if (request.getCommand().matches("show deck \\w+")) {
             PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-            Deck deck=temp.getDeckByName(request.getCommand().split("\\s+")[2]);
-            view.showDeck(deck,"");
-        }else if(request.getCommand().equals("show all decks")){
-            Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
-            view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
+            Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
+            view.showDeck(deck, "");
+        } else if (request.getCommand().equals("show all decks")) {
+            Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
+            view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
         }
     }
 
@@ -137,12 +137,11 @@ public class ControllerCollection {
         }
     }
 
-   public void add() {
-        if(request.getCommand().matches("add .+ to deck .+"))
-        {
-            String[] order=request.getCommand().split(" ");
-            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo()
-                    .getCollection().addCard(order[1],order[4]);
+    public void add() {
+        if (request.getCommand().matches("add .+ to deck .+")) {
+            String[] order = request.getCommand().split(" ");
+            OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo()
+                    .getCollection().addCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
         }
     }
@@ -167,17 +166,17 @@ public class ControllerCollection {
     }
 
     public void remove() {
-        if(request.getCommand().matches("remove .+ from deck .+")){
-            String[] order=request.getCommand().split("\\s+");
-            OutputMessageType outputMessageType=dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                    .removeCard(order[1],order[4]);
+        if (request.getCommand().matches("remove .+ from deck .+")) {
+            String[] order = request.getCommand().split("\\s+");
+            OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                    .removeCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
         }
     }
 
     public void search() {
-        if(request.getCommand().matches("search\\s+.+")){
-            List<String> output =dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+        if (request.getCommand().matches("search\\s+.+")) {
+            List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                     .searchCardOrItemWithName(request.getCommand().split("\\s+")[1].split("_")[1]);
             view.printList(output);
         }

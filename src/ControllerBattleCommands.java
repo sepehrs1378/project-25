@@ -10,6 +10,11 @@ public class ControllerBattleCommands {
     private static final Request request = Request.getInstance();
     private static final DataBase database = DataBase.getInstance();
     private static final View view = View.getInstance();
+    private static final ControllerBattleCommands instance = new ControllerBattleCommands();
+
+    public static ControllerBattleCommands getInstance() {
+        return instance;
+    }
 
     private ControllerBattleCommands() {
     }
@@ -33,6 +38,9 @@ public class ControllerBattleCommands {
                     break;
                 case MOVE:
                     move();
+                    break;
+                case HELP:
+                    help();
                     break;
                 case ATTACK:
                     attack();
@@ -84,7 +92,7 @@ public class ControllerBattleCommands {
     }
 
     public void show() {
-        if (request.getCommand().matches("show card info \\w+")) {
+        if (request.getCommand().matches("show card info .+")) {
             String cardId = request.getCommand().split("\\s+")[3];
             Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
             if (card != null) {
@@ -101,7 +109,6 @@ public class ControllerBattleCommands {
                 request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
                 view.printOutputMessage(request.getOutputMessageType());
                 //todo
-                view.printOutputMessage(request.getOutputMessageType());
             }
         } else if (request.getCommand().equals("show collectables")) {
             view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
@@ -116,6 +123,10 @@ public class ControllerBattleCommands {
             } else if (card instanceof Unit) {
                 view.showCardInfoMinion((Unit) card);
             }
+        } else if (request.getCommand().equals("show hand")) {
+            view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
+        } else if (request.getCommand().equals("show menu")) {
+            view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
         }
     }
 
@@ -156,7 +167,6 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-
         }
     }
 
@@ -186,9 +196,10 @@ public class ControllerBattleCommands {
         if (request.getCommand().matches("^attack combo .+$")) {
             String[] orderPieces = request.getCommand().split(" ");
             String[] attackers = new String[orderPieces.length - 3];
-            for (int i = 3; i < orderPieces.length; i++)
-                attackers[i - 3] = orderPieces[i];
-            switch (Unit.attackCombo(orderPieces[2], attackers)){
+            if (orderPieces.length - 3 >= 0)
+                System.arraycopy(orderPieces, 3, attackers, 0
+                        , orderPieces.length - 3);
+            switch (Unit.attackCombo(orderPieces[2], attackers)) {
                 case
             }
             //todo
@@ -217,7 +228,33 @@ public class ControllerBattleCommands {
     }
 
     public void insert() {
-        //todo
+        if (request.getCommand().matches("insert .+ in [(](\\d+),(\\d+)[)]")) {
+            Pattern pattern = Pattern.compile("insert (.+) in [(](\\d+),(\\d+)[)]");
+            Matcher matcher = pattern.matcher(request.getCommand());
+            Card card = database.getCurrentBattle().getPlayerInTurn().getHand().getCardByName(matcher.group(1));
+            int row = Integer.parseInt(matcher.group(2));
+            int column = Integer.parseInt(matcher.group(3));
+            if (card == null) {
+                view.printOutputMessage(OutputMessageType.NO_SUCH_CARD_IN_HAND);
+            } else if (card instanceof Unit) {
+                if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
+                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
+                } else if (column >= Constants.BATTLE_GROUND_LENGTH || column < 0) {
+                    view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
+                }
+                if (database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
+                    database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
+                    database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
+                    database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
+                            .getPlayerInTurn().getDeck());
+
+                } else {
+                    view.printOutputMessage(OutputMessageType.THIS_CELL_IS_FULL);
+                }
+            } else if (card instanceof Spell) {
+                //todo spell
+            }
+        }
     }
 
     public void end() {
@@ -245,5 +282,9 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
+    }
+
+    public void help() {
+
     }
 }

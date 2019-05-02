@@ -90,8 +90,30 @@ public class Unit extends Card {
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
-    public static OutputMessageType attackCombo(String targetId, String[] attackers) {
-        for ()
+    public static OutputMessageType attackCombo(String targetId, String[] attackersIds) {
+        Unit target = dataBase.getCurrentBattle()
+                .getBattleGround().getUnitWithID(targetId);
+        List<Unit> attackers = new ArrayList<>();
+        for (String attackerId : attackersIds)
+            attackers.add(dataBase.getCurrentBattle()
+                    .getBattleGround().getUnitWithID(attackerId));
+        for (Unit unit : attackers) {
+            if (!unit.canAttackTarget(target))
+                return OutputMessageType.A_UNIT_CANT_ATTACK_TARGET;
+        }
+
+        return null;//todo
+    }
+
+    public boolean canAttackTarget(Unit unit) {
+        if (dataBase.getCurrentBattle().getBattleGround()
+                .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+            return false;
+        if (this.didAttackThisTurn)
+            return false;
+        if (!isTargetUnitWithinRange(unit.getId()))
+            return false;
+        return true;
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
