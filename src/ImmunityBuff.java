@@ -4,11 +4,11 @@ import java.util.List;
 public class ImmunityBuff extends Buff {
     private List<String> immunities = new ArrayList<>();
 
-    public ImmunityBuff(int startTurn, int delayTurn, int durationTurn,
-                        boolean isDispellable, boolean isContinuous, List<String> immunities) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public ImmunityBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, String... immunities) {
+        super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
-        this.immunities = immunities;
+        this.immunities = immunities;//todo
     }
 
     @Override

@@ -2,6 +2,7 @@ import javax.accessibility.AccessibleValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
@@ -23,8 +24,11 @@ public class DataBase {
     private DataBase() {
     }
 
-    public void makeSpells() {
-        Target TotalDisarmTarget=new Target()
+    public void makeCardSpells() {
+        List<Buff> addedBuffsToCellsTotalDisarm = new ArrayList<>();
+        List<Buff> addedBuffsToUnits = new ArrayList<>();
+        Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, )
     }
 
     public void makeHeroes() {

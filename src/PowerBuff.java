@@ -4,10 +4,9 @@ public class PowerBuff extends Buff {
     private int apPlus;
     private int hpPlus;
 
-    public PowerBuff(int startTurn, int delayTurn, int durationTurn,
-                     boolean isDispellable, boolean isContinuous,
-                     int hpPlus, int apPlus) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+    public PowerBuff(int durationTurn, boolean isDispellable
+            , boolean isContinuous, int hpPlus, int apPlus) {
+        super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
         this.hpPlus = hpPlus;
         this.apPlus = apPlus;

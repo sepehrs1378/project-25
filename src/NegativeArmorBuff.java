@@ -1,10 +1,9 @@
 public class NegativeArmorBuff extends Buff {
-    private int negativeArmorAmount;
+    private int negativeArmorAmount;//todo use it
 
-    public NegativeArmorBuff(int startTurn, int delayTurn
-            , int durationTurn, boolean isContinuous
+    public NegativeArmorBuff(int durationTurn, boolean isContinuous
             , boolean isDispellable, int negativeArmorAmount) {
-        super(startTurn, delayTurn, durationTurn, isDispellable, isContinuous);
+        super(durationTurn, isDispellable, isContinuous);
         this.negativeArmorAmount = negativeArmorAmount;
         setPositiveOrNegative(Constants.NEGATIVE);
     }
