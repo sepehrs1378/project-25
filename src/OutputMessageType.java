@@ -1,5 +1,7 @@
 public enum OutputMessageType {
     WRONG_COMMAND("Wrong command"),
+    A_UNIT_CANT_ATTACK_TARGET("A unit can't attack target"),
+    COMBO_ATTACK_SUCCESSFULLY("combo attack successful"),
     BATTLE_NOT_FINISHED("Battle isn't finished yet..."),
     INVALID_PASSWORD("Invalid password"),
     INVALID_USERNAME("This user does not exist"),

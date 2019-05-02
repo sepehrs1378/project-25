@@ -235,24 +235,24 @@ public class PlayerCollection {
     private void defineNewId(Object obj) {
         PlayerCollection collection = loggedInAccount.getPlayerInfo().getCollection();
         if (obj instanceof Card) {
-            int numOfSimiliarCards = 0;
+            int numberOfSimilarCards = 0;
             for (Card card : collection.getCards()) {
                 if (card.getName().equals(((Card) obj).getName())) {
-                    numOfSimiliarCards++;
+                    numberOfSimilarCards++;
                 }
             }
             Card card = (Card) obj;
-            String id = loggedInAccount.getUsername() + "_" + card.getName() + "_" + numOfSimiliarCards;
+            String id = loggedInAccount.getUsername() + "_" + card.getName() + "_" + numberOfSimilarCards;
             card.setId(id);
         } else if (obj instanceof Usable) {
-            int numOfSimilarUsables = 0;
+            int numberOfSimilarUsables = 0;
             for (Usable usable : collection.getItems()) {
                 if (usable.getName().equals(((Usable) obj).getName())) {
-                    numOfSimilarUsables++;
+                    numberOfSimilarUsables++;
                 }
             }
             Usable usable = (Usable) obj;
-            String id = loggedInAccount.getUsername() + "_" + usable.getName() + "_" + numOfSimilarUsables;
+            String id = loggedInAccount.getUsername() + "_" + usable.getName() + "_" + numberOfSimilarUsables;
             usable.setId(id);
         }
     }
@@ -276,7 +276,8 @@ public class PlayerCollection {
             if (obj instanceof Usable) {
                 Usable usable = (Usable) obj;
                 loggedInAccount.addMoney(usable.getPrice());
-                items.remove(usable);                //should I find index and then remove or i can simply remove object
+                items.remove(usable);
+                //should I find index and then remove or i can simply remove object
             }
             return OutputMessageType.SOLD_SUCCESSFULLY;
         }

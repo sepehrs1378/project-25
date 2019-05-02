@@ -32,6 +32,7 @@ public class Constants {
     public static final String POISON = "poison";
     public static final String ENEMY_CARD_SPELL = "enemy card spell";
     public static final String WEAKER_AP = "weaker ap";
+    public static final String HOLY_BUFF = "holy buff";
 
     public static final String ID_PATTERN = "^(.+)_(.+)_(\\d+)$";
 }

@@ -96,6 +96,8 @@ public class Request {
             return RequestType.END;
         if (command.matches("^game info$"))
             return RequestType.GAME_INFO;
+        if (command.matches("^/.+$"))
+            return RequestType.CHEATS;
         return RequestType.WRONG_REQUEST;
     }
 }

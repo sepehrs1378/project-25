@@ -13,7 +13,7 @@ public class ImmunityBuff extends Buff {
 
     @Override
     public void doEffect() {
-
+        //todo looks gonna be empty
     }
 
     public List<String> getImmunities() {

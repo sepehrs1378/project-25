@@ -18,8 +18,8 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.setNumberOfFlags(numberOfFlags);
-        List<Flag> temp=new ArrayList<>();
-        for(int i=0;i<numberOfFlags;i++){
+        List<Flag> temp = new ArrayList<>();
+        for (int i = 0; i < numberOfFlags; i++) {
             temp.add(new Flag());
         }
         this.battleGround.addFlagsToBattleGround(temp);
@@ -95,11 +95,19 @@ public class Battle {
     }
 
     public void killUnit(Unit unit) {
+        if (unit.getId().contains(player1.getPlayerInfo().getPlayerName())) {
+            if (unit.getSpecialPower().getActivationType()
+                    .equals(SpellActivationType.ON_DEATH)) {
+                unit.getSpecialPower().
+            } do {
+                player1.getGraveYard().addDeadCard(unit);
+            }
+        } else {
+            if (unit.getId().contains(player2.getPlayerInfo().getPlayerName())) {
+                player2.getGraveYard().addDeadCard(unit);
+            }
+        }
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
-        if (unit.getId().contains(player1.getPlayerInfo().getPlayerName()))
-            player1.getGraveYard().addDeadCard(unit);
-        else if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
-            player2.getGraveYard().addDeadCard(unit);
     }
 
     public void setManaBasedOnTurnNumber() {

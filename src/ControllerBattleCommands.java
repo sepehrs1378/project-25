@@ -1,4 +1,6 @@
 import java.nio.charset.IllegalCharsetNameException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,7 +156,7 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-                
+
         }
     }
 
@@ -166,7 +168,6 @@ public class ControllerBattleCommands {
                 view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
                 return;
             }
-
             switch (database.getCurrentBattle().getPlayerInTurn()
                     .getSelectedUnit().attackUnit(matcher.group(1))) {
                 case TARGET_NOT_IN_RANGE:
@@ -183,28 +184,33 @@ public class ControllerBattleCommands {
             return;
         }
         if (request.getCommand().matches("^attack combo .+$")) {
+            String[] orderPieces = request.getCommand().split(" ");
+            String[] attackers = new String[orderPieces.length - 3];
+            for (int i = 3; i < orderPieces.length; i++)
+                attackers[i - 3] = orderPieces[i];
+            switch (Unit.attackCombo(orderPieces[2], attackers)){
+                case
+            }
             //todo
         }
         view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void use() {
-        if(request.getCommand().matches("use special power [(]\\d+,\\d+[)]")){
-            Pattern pattern=Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
-            Matcher matcher=pattern.matcher(request.getCommand());
-            if(Integer.parseInt(matcher.group(1))<5&& Integer.parseInt(matcher.group(1))>=0
-                && Integer.parseInt(matcher.group(2))<9 && Integer.parseInt(matcher.group(2))>=0){
+        if (request.getCommand().matches("use special power [(]\\d+,\\d+[)]")) {
+            Pattern pattern = Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
+            Matcher matcher = pattern.matcher(request.getCommand());
+            if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
+                    && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
 
-                Player player=database.getCurrentBattle().getPlayerInTurn();
-                Unit hero=database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-                if(hero.getSpecialPower().getMana()<=player.getMana()
-                        && hero.getSpecialPower().getCooldown()==0
-                        && hero.getSpecialPower().getActivationType()==SpellActivationType.ON_CAST){
+                Player player = database.getCurrentBattle().getPlayerInTurn();
+                Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+                if (hero.getSpecialPower().getMana() <= player.getMana()
+                        && hero.getSpecialPower().getCooldown() == 0
+                        && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
                     hero.getSpecialPower().doSpell(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
-                }
-                else view.printOutputMessage(OutputMessageType.NO_HERO);
-            }
-            else{
+                } else view.printOutputMessage(OutputMessageType.NO_HERO);
+            } else {
                 view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
             }
         }

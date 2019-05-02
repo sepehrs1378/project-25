@@ -64,24 +64,8 @@ public class Unit extends Card {
         return heroOrMinion;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setAp(int ap) {
-        this.ap = ap;
-    }
-
-    public void setHeroOrMinion(String heroOrMinion) {
-        this.heroOrMinion = heroOrMinion;
-    }
-
     public List<Buff> getBuffs() {
         return buffs;
-    }
-
-    public void setBuffs(List<Buff> buffs) {
-        this.buffs = buffs;
     }
 
     public void addFlag(Flag newFlag) {
@@ -101,23 +85,23 @@ public class Unit extends Card {
                 getUnitWithID(targetId);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
         targetedUnit.changeHp(-damageDealt);
-        //todo defence spell for targetedUnit
         if (this.specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
             this.specialPower.doSpell(targetedUnit);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 
-    public static OutputMessageType attackCombo(String targetId){
-        return null;//todo
+    public static OutputMessageType attackCombo(String targetId, String[] attackers) {
+        for ()
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
-        int damageDealt;
         if (targetedUnit.isImmuneTo(Constants.WEAKER_AP)
                 && targetedUnit.ap > attackerUnit.ap)
-            damageDealt = 0;
-        else damageDealt = attackerUnit.ap - targetedUnit.getArmor();
-        return damageDealt;
+            return 0;
+        if (this.isImmuneTo(Constants.HOLY_BUFF))
+            return attackerUnit.ap;
+        else
+            return attackerUnit.ap - targetedUnit.getArmor();
     }
 
     private boolean isTargetUnitWithinRange(String targetID) {
