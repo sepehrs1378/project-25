@@ -30,7 +30,12 @@ public class ControllerMultiPlayerMenu {
     }
 
     private void enter() {
-
+        if(request.getCommand().equals("story")){
+            //todo
+        }
+        else if(request.getCommand().equals("custom")){
+            //todo
+        }
     }
 
     private void select() {

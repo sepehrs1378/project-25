@@ -7,7 +7,7 @@ public class ControllerSinglePlayerMenu {
 
     }
     public void main(){
-        view.printHelp(HelpType.);
+        view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -21,5 +21,15 @@ public class ControllerSinglePlayerMenu {
                     break;
             }
         }
+    }
+    public void enter(){
+        if (request.getCommand().equals("story")){
+            view.printHelp(HelpType.//todo);
+        }else if(request.getCommand().equals("custom")){
+
+        }
+    }
+    public static ControllerSinglePlayerMenu getInstance(){
+        return ourInstance;
     }
 }
