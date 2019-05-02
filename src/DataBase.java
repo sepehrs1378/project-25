@@ -1,4 +1,3 @@
-import javax.accessibility.AccessibleValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,10 +23,15 @@ public class DataBase {
     }
 
     public void makeCardSpells() {
-        List<Buff> addedBuffsToCellsTotalDisarm = new ArrayList<>();
-        List<Buff> addedBuffsToUnits = new ArrayList<>();
         Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, )
+        Buff totalDisarmBuff = new DisarmBuff(1000, true, false);
+        Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, totalDisarmBuff, SpellActivationType.ON_CAST, "", false);
+        cardList.add(totalDisarm);
+
+        Target areaDispelTarget = new Target(Constants.HERO_MINION, 2, 2, Constants.ALL, false, false, 0, Constants.ALL);
+        Spell areaDispel = new Spell("shop_areaDispel_1", "areaDispel", 1500, 2, 0, 0, 0, areaDispelTarget, (Buff) null, SpellActivationType.ON_CAST, "", true);
+        cardList.add(areaDispel);
+
     }
 
     public void makeHeroes() {

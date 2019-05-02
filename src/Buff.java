@@ -7,6 +7,7 @@ abstract public class Buff {
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
+    private boolean isActive;
 
     public Buff(int durationTurn, boolean isDispellable
             , boolean isContinuous) {
@@ -20,17 +21,18 @@ abstract public class Buff {
     public void revive() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         this.startTurn = currentTurn;
+        this.setActive(true);
         //todo maybe not complete
     }
 
     public boolean isActive() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn >= startTurn ;
+        return currentTurn >= startTurn;
     }
 
     public boolean isInFirstActivationTurn() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn == startTurn ;
+        return currentTurn == startTurn;
     }
 
     public boolean isExpired() {
@@ -68,5 +70,13 @@ abstract public class Buff {
 
     public boolean isDispellable() {
         return isDispellable;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isActive(boolean active) {
+        return isActive;
     }
 }
