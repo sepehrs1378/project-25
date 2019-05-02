@@ -157,7 +157,7 @@ public class PlayerCollection {
     }
 
     private static Collectable findCollectableInShop(String collectableName) {
-        for (Collectable collectable : DataBase.getCollectableList()) {
+        for (Collectable collectable : dataBase.getCollectableList()) {
             if (collectable.getName().equals(collectableName)) {
                 return collectable;
             }
@@ -209,7 +209,7 @@ public class PlayerCollection {
 
 
     private static Card findCardInShop(String cardName) {
-        for (Card card : DataBase.getCardList()) {
+        for (Card card : dataBase.getCardList()) {
             if (card.getName().equals(cardName)) {
                 return card;
             }
@@ -218,7 +218,7 @@ public class PlayerCollection {
     }
 
     private static Usable findUsableInShop(String usableName) {
-        for (Usable usable : DataBase.getUsableList()) {
+        for (Usable usable : dataBase.getUsableList()) {
             if (usable.getName().equals(usableName)) {
                 return usable;
             }

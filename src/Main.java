@@ -5,3 +5,4 @@ public class Main {
     }
 }
 //todo select collectable is not completely true (the part that it must go into a new menu for select and use)
+//todo do we use a Card or its Clone in the Battle?

@@ -20,6 +20,9 @@ public class DataBase {
     }
 
     private DataBase() {
+        makeCardSpells();
+        makeHeroes();
+        makeMinions();
     }
 
     public void makeCardSpells() {
@@ -186,7 +189,7 @@ public class DataBase {
         cardList.add(zahak);
 
         //6
-        //todo is this true?
+        //todo is this true? (what is the difference between holyBuff and immunityBuff?)
         Target kavehTarget = new Target(Constants.CELL, 1, 1, Constants.NONE, false, false, 0, Constants.NONE);
         HolyBuff kavehBuff = new HolyBuff(3, true, false, 1);
         Spell kavehSpell = new Spell("", "", 0, 1, 0, 0, 3, kavehTarget, kavehBuff, SpellActivationType.ON_CAST, "", false);
@@ -217,14 +220,106 @@ public class DataBase {
     }
 
     public void makeMinions() {
+        //1
+        Unit kamandarFars = new Unit("shop_kamandarFars_1","kamandarFars",300,2,5,4,2,7,null,Constants.MINION,"",false);
+        cardList.add(kamandarFars);
+
+        //2
+        Target shamshirZanFarsTarget= new Target(Constants.HERO_MINION,1,1,Constants.ENEMY,false,false,0,Constants.ALL);
+        StunBuff shamshirZanFarsBuff = new StunBuff(1,true,false);
+        Spell shamshirZanFarsSpell = new Spell("","",0,0,0,0,0,shamshirZanFarsTarget,shamshirZanFarsBuff,SpellActivationType.ON_ATTACK,"",false);
+        Unit shamshirZanFars = new Unit("shop_shamshirZanFars_1","shamshirZanFars",400,2,6,4,1,1,shamshirZanFarsSpell,Constants.MINION,"",false);
+        cardList.add(shamshirZanFars);
+
+        //3
+        Unit neizeDarFars = new Unit("shop_neizeDarFars_1","neizeDarFars",500,1,5,3,1,3,null,Constants.MINION,"",false);
+        cardList.add(neizeDarFars);
+
+        //4
+        Unit asbSavarFars = new Unit("shop_asbSavarFars_1","asbSavarFars",200,4,10,6,1,1,null,Constants.MINION,"",false);
+        cardList.add(asbSavarFars);
+
+        //5
+        //todo check if this is true? (i think it is good to add a powerBuff for each attack)
+        Target pahlevanFarsTarget = new Target(Constants.MINION,1,1,Constants.FRIEND,false,true,0,Constants.ALL);
+        Spell pahlevanFarsSpell = new Spell("","",0,0,5,0,0,pahlevanFarsTarget,(Buff)null,SpellActivationType.ON_ATTACK,"",false);
+        Unit pahlevanFars= new Unit("shop_pahlevanFars_1","pahlevanFars",600,9,24,6,1,1,pahlevanFarsSpell,Constants.MINION,"",false);
+        cardList.add(pahlevanFars);
+
+        //6
+
+
+        //7
+
+        //8
+
+        //9
+
+        //10
+
+        //11
+
+        //12
+
+        //13
+
+        //14
+
+        //15
+
+        //16
+
+        //17
+
+        //18
+
+        //19
+
+        //20
+
+        //21
+
+        //22
+
+        //23
+
+        //24
+
+        //25
+
+        //26
+
+        //27
+
+        //28
+
+        //29
+
+        //30
+
+        //31
+
+        //32
+
+        //33
+
+        //34
+
+        //35
+
+        //36
+
+        //37
+
+        //38
+
+        //39
+
+        //40
 
     }
-
-    public void makeUsables() {
-
-    }
-
-    public void makeCollectables() {
+    //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
+    public void makeItems(){
 
     }
 

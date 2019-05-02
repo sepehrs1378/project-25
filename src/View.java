@@ -100,8 +100,7 @@ public class View {
         System.out.println("Name: " + unit.getName());
         System.out.println("HP: " + unit.getHp() + " AP: " + unit.getAp() + " MP: " + unit.getMana());
         System.out.println("Range: " + unit.getMaxRange());
-        //System.out.println("Combo-ability: "+unit.get);
-        //todo Combo-ability
+        System.out.println("Combo-ability: "+unit.canUseComboAttack());
         System.out.println("Cost: " + unit.getPrice());
         System.out.println("Desc: " + unit.getDescription());
     }
@@ -231,12 +230,12 @@ public class View {
     }
 
     public void showCardsAndItemsInShop() {
-        List<Card> cardList = DataBase.getCardList();
+        List<Card> cardList = DataBase.getInstance().getCardList();
         showInfoOfHeroes(cardList);
-        for (Item item : DataBase.getUsableList()) {
+        for (Item item : DataBase.getInstance().getUsableList()) {
             showItemInfo(item);
         }
-        for (Item item : DataBase.getCollectableList()) {
+        for (Item item : DataBase.getInstance().getCollectableList()) {
             showItemInfo(item);
         }
         showInfoOfSpellsAndMinions(cardList);
