@@ -10,10 +10,10 @@ public class DataBase {
     private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
-    private Account computerPlayerLevel1 = new Account("computerPlayerLevel1", "");
-    private Account computerPlayerLevel2 = new Account("computerPlayerLevel2", "");
-    private Account computerPlayerLevel3 = new Account("computerPlayerLevel3", "");
-    private Account computerPlayerCostume = new Account("computerPlayerCostume", "");
+    private Account computerPlayerLevel1;
+    private Account computerPlayerLevel2;
+    private Account computerPlayerLevel3;
+    private Account computerPlayerCostume;
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -683,5 +683,9 @@ public class DataBase {
             }
         }
         return null;
+    }
+
+    public boolean doesAccountExist(String username) {
+        return getAccountWithUsername(username) != null;
     }
 }

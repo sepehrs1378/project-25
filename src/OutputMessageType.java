@@ -51,6 +51,8 @@ public enum OutputMessageType {
     PASSWORD_CANT_BE_EMPTY("password can't be empty please enter a correct password"),
     INVALID_COMMAND("invalid command"),
     CARD_INSERTED("Card Inserted"),
+    BAD_PASSWORD("Please enter a correct password"),
+    ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
     NO_ERROR("");
 
     private String message;

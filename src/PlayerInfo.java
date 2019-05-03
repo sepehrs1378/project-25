@@ -5,10 +5,9 @@ class PlayerInfo {
     private String playerName;
     private PlayerCollection collection = new PlayerCollection();
     private List<Deck> decks = new ArrayList<>();
-    //private Deck mainDeck;
 
-    public PlayerInfo(String playerName){
-        this.playerName=playerName;
+    public PlayerInfo(String playerName) {
+        this.playerName = playerName;
     }
 
     public void addCardToCollection(Card newCard) {
@@ -19,10 +18,6 @@ class PlayerInfo {
         collection.addItem(usable);
     }
 
-//    public void setMainDeck(Deck mainDeck) {
-//        this.mainDeck = mainDeck;
-//    }
-
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
@@ -30,10 +25,6 @@ class PlayerInfo {
     public PlayerCollection getCollection() {
         return collection;
     }
-
-//    public Deck getMainDeck() {
-//        return mainDeck;
-//    }
 
     public String getPlayerName() {
         return playerName;

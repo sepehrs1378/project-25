@@ -52,7 +52,7 @@ public class Request {
     public RequestType getType() {
         if (command == null || command.equals(""))
             return RequestType.WRONG_REQUEST;
-        if (command.matches("^logout .+$"))
+        if (command.matches("^logout$"))
             return RequestType.LOGOUT;
         if (command.matches("^login .+$"))
             return RequestType.LOGIN;
@@ -98,6 +98,8 @@ public class Request {
             return RequestType.GAME_INFO;
         if (command.matches("^/.+$"))
             return RequestType.CHEATS;
+        if (command.matches("^password .+$"))
+            return RequestType.PASSWORD;
         return RequestType.WRONG_REQUEST;
     }
 }

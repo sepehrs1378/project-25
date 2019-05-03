@@ -8,7 +8,7 @@ public enum HelpType {
             "\n\tsell [card id | item id]" +
             "\n\tshow" +
             "\n\thelp"),
-    CONTROLLER_ACCOUNT_HELP(""),//todo write the message later
+    CONTROLLER_ACCOUNT_HELP("HELP ACCOUNT MENU"),//todo write the message later
     CONTROLLER_COLLECTION_HELP("Collection Commands:" +
             "\n\texit" +
             "\n\tshow" +
@@ -45,6 +45,7 @@ public enum HelpType {
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
     STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
     CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
+    CONTROLLER_MAIN_MENU_HELP("EMPTY MAIN MENU"),
     MODES_HELP(Constants.FLAGS + "\n" + Constants.ONE_FLAG + "\n" + Constants.CLASSIC);//todo write the message later
 
     private String message;

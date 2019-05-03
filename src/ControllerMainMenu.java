@@ -1,5 +1,6 @@
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance = new ControllerMainMenu();
+    private DataBase dataBase = DataBase.getInstance();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
 
@@ -19,7 +20,11 @@ public class ControllerMainMenu {
                     enter();
                     break;
                 case LOGOUT:
+                    logout();
                     didLogout = true;
+                    break;
+                case HELP:
+                    help();
                     break;
                 default:
                     System.out.println("!!!!!! bad input in ControllerMainMenu.main");
@@ -43,5 +48,13 @@ public class ControllerMainMenu {
                 request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
                 view.printOutputMessage(request.getOutputMessageType());
         }
+    }
+
+    public void logout() {
+        dataBase.setLoggedInAccount(null);
+    }
+
+    public void help() {
+        view.printHelp(HelpType.CONTROLLER_MAIN_MENU_HELP);
     }
 }

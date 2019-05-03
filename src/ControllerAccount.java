@@ -33,56 +33,48 @@ public class ControllerAccount {
                     didExit = true;
                     break;
                 default:
-                    System.out.println("!!!!!! bad requestType in Controller.main");
+                    System.out.println("!!!!!! bad requestType in ControllerAccount.main");
                     System.exit(-1);
             }
         }
     }
 
     public void login() {
-        request.getNewCommand();
-        for (Account account : dataBase.getAccounts()) {
-            if (account.getUsername().equals(request.getCommand())) {
-                request.getNewCommand();
-                if (account.getPassword().equals(request.getCommand())) {
-                    dataBase.setLoggedInAccount(account);
-                    controllerMainMenu.main();
-                }
-            } else {
-                showError(OutputMessageType.INVALID_PASSWORD);
-            }
+        String username = request.getCommand().split(" ")[1];
+        if (!dataBase.doesAccountExist(username)) {
+            view.printOutputMessage(OutputMessageType.ACCOUNT_DOESNT_EXIST);
+            return;
         }
-        showError(OutputMessageType.INVALID_USERNAME);
+        request.getNewCommand();
+        Account account = dataBase.getAccountWithUsername(username);
+        String password = request.getCommand().split(" ")[1];
+        if (account.getPassword().equals(password)) {
+            dataBase.setLoggedInAccount(account);
+            controllerMainMenu.main();
+        } else
+            showError(OutputMessageType.INVALID_USERNAME);
     }
 
     public void create() {
-        boolean isUserNameUnique = false;
-        while (!isUserNameUnique) {
-            request.getNewCommand();
-            boolean flag = false;
-            for (Account account : dataBase.getAccounts()) {
-                if (request.getCommand().equals(account.getUsername())) {
-                    flag = true;
-                }
-            }
-            if (!flag) {
-                isUserNameUnique = true;
-            } else {
-                view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
-            }
+        String username = request.getCommand().split(" ")[2];
+        System.out.println("*");
+        if (dataBase.doesAccountExist(username)) {
+            view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
+            return;
         }
         view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
-        String userName = request.getCommand();
+        System.out.println("*");
         while (true) {
             request.getNewCommand();
-            if (!request.getCommand().equals("")) {
+            if (!request.getCommand().equals(""))
+                //todo check for password validation
                 break;
-            } else {
-                view.printOutputMessage(OutputMessageType.PASSWORD_CANT_BE_EMPTY);
-            }
+            else
+                view.printOutputMessage(OutputMessageType.BAD_PASSWORD);
+
         }
         String password = request.getCommand();
-        Account account = new Account(userName, password);
+        Account account = new Account(username, password);
         dataBase.addAccount(account);
         controllerMainMenu.main();
     }
@@ -98,8 +90,7 @@ public class ControllerAccount {
     }
 
     public void help() {
-        request.setHelpType(HelpType.CONTROLLER_ACCOUNT_HELP);
-        view.printHelp(request.getHelpType());
+        view.printHelp(HelpType.CONTROLLER_ACCOUNT_HELP);
     }
 
     public void showError(OutputMessageType error) {

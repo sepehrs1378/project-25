@@ -1,5 +1,6 @@
 public enum RequestType {
     WRONG_REQUEST,
+    PASSWORD,
     CHEATS,
     LOGIN,
     LOGOUT,
