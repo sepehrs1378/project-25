@@ -327,7 +327,7 @@ public class DataBase {
         //todo ForAliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         //21
         Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2,Constants.ALL );
-        HolyBuff marGhoolPeikarBuff = new HolyBuff(Integer.MAX_VALUE, true, false, -1);
+        NegativeArmorBuff marGhoolPeikarBuff = new NegativeArmorBuff(Integer.MAX_VALUE, true, false, 1);
         Spell marGhoolPeikarSpell = new Spell("", "", 0, 0, 0, 0, 0, marGhoolPeikarTarget, marGhoolPeikarBuff, SpellActivationType.ON_SPAWN, "", false);
         Unit marGhoolPeikar = new Unit("shop_marGhoolPeikar_1", "marGhoolPeikar", 500, 8, 14, 7, 2, 5, marGhoolPeikarSpell, Constants.MINION, "", false);
         cardList.add(marGhoolPeikar);
@@ -341,23 +341,74 @@ public class DataBase {
 
         //23
         Target palangTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
-        WeaknessBuff palangBuff = new WeaknessBuff(1, false, false, 8, );
+        WeaknessBuff palangBuff = new WeaknessBuff(1, true, false, 8, 0);
+        Spell palangSpell = new Spell("", "", 0, 0, 0, 0, 1, palangTarget, palangBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit palang = new Unit("shop_palang_1", "palang", 400, 4, 6, 2, 1, 1, palangSpell, Constants.MINION, "", false);
+        cardList.add(palang);
 
         //24
-
+        Target gorgTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        WeaknessBuff gorgBuff = new WeaknessBuff(1, true, false, 6, 0);
+        Spell gorgSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgTarget, gorgBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit gorg = new Unit("shop_gorg_1", "gorg", 400, 3, 6, 1, 1, 1, gorgSpell, Constants.MINION, "", false);
+        cardList.add(gorg);
         //25
+        Target jadoogarTarget = new Target(Constants.MINION, 3, 3, Constants.FRIEND, false, false, 0, Constants.ALL);
+        List<Buff> jadoogarBuffs = new ArrayList<>();
+        PowerBuff jadoogarBuff1 = new PowerBuff(1, true, false, 0, 2);
+        WeaknessBuff jadoogarBuff2 = new WeaknessBuff(1, true, false, 1, 0);
+        jadoogarBuffs.add(jadoogarBuff1);
+        jadoogarBuffs.add(jadoogarBuff2);
+        Spell jadoogarSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarTarget, jadoogarBuffs, SpellActivationType.PASSIVE, "", false);
+        Unit jadoogar = new Unit("shop_jadoogar_1", "jadoogar", 550, 4, 5 , 4, 2, 3, jadoogarSpell, Constants.MINION, "", false);
+        cardList.add(jadoogar);
 
         //26
+        Target jadoogarAzamTarget = new Target(Constants.MINION, 3, 3, Constants.FRIEND, false, false, 0, Constants.ALL);
+        List<Buff> jadoogarAzamBuffs = new ArrayList<>();
+        PowerBuff jadoogarAzamBuff1 = new PowerBuff(1, true, false, 0, 2);
+        HolyBuff jadoogarAzamBuff2 = new HolyBuff(1, true, true, 1);
+        jadoogarAzamBuffs.add(jadoogarAzamBuff1);
+        jadoogarAzamBuffs.add(jadoogarAzamBuff2);
+        Spell jadoogarAzamSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarAzamTarget, jadoogarAzamBuffs, SpellActivationType.PASSIVE, "", false);
+        Unit jadoogarAzam = new Unit("shop_jadoogarAzam_1", "jadoogarAzam", 550, 6, 6, 6, 2, 5, jadoogarAzamSpell, Constants.MINION, "", false);
+        cardList.add(jadoogarAzam);
 
         //27
+        //todo spell activation type ambiguous
+        Target genTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        PowerBuff genBuff = new PowerBuff(Integer.MAX_VALUE, true, true, 0, 1);
+        Spell genSpell = new Spell("", "", 0, 0, 0, 0, 0, genTarget, genBuff, SpellActivationType.PASSIVE, "", false);
+        Unit gen = new Unit("shop_gen_1", "gen", 500, 5, 10, 4, 2, 4, genSpell, Constants.MINION, "", false);
+        cardList.add(gen);
 
         //28
+        Target gorazVahshiTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        ImmunityBuff gorazVahshiBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.DISARM);
+        Spell gorazVahshiSpell = new Spell("", "", 0, 0, 0, 0, 0, gorazVahshiTarget, gorazVahshiBuff, SpellActivationType.ON_DEFEND, "", false);
+        Unit gorazVahshi = new Unit("shop_gorazVahshi_1", "gorazVahshi", 500, 6, 10, 14, 1, 1, gorazVahshiSpell, Constants.MINION, "", false);
+        cardList.add(gorazVahshi);
 
         //29
+        Target piranTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        ImmunityBuff piranBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.POISON);
+        Spell piranSpell = new Spell("", "", 0, 0, 0, 0, 0, piranTarget, piranBuff, SpellActivationType.ON_DEFEND, "", false);
+        Unit piran = new Unit("shop_piran_1", "piran", 400, 8, 20, 12, 1, 1, piranSpell, Constants.MINION, "", false);
+        cardList.add(piran);
 
         //30
+        Target givTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.RANGED);
+        ImmunityBuff givBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.ENEMY_CARD_SPELL);
+        Spell givSpell = new Spell("", "", 0, 0, 0, 0, 0, givTarget, givBuff, SpellActivationType.ON_DEFEND, "", false);
+        Unit giv = new Unit("shop_giv_1", "giv", 450, 4, 5, 7, 2, 5, givSpell, Constants.MINION, "", false);
+        cardList.add(giv);
 
         //31
+        Target bahmanTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
+        WeaknessBuff bahmanBuff = new WeaknessBuff(1, true, false, 16 , 0);
+        Spell bahmanSpell = new Spell("", "", 0, 0, 0, 0, 0, bahmanTarget, bahmanBuff, SpellActivationType.ON_SPAWN, "", false);
+        Unit bahman = new Unit("shop_bahman_1", "bahman", 450, 8, 16, 9, 1, 1, bahmanSpell, Constants.MINION, "", false);
+        cardList.add(bahman);
 
         //32
 
