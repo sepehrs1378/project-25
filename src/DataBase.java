@@ -1,11 +1,6 @@
-import com.sun.source.doctree.UnknownInlineTagTree;
-
-import java.awt.event.MouseAdapter;
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Spliterator;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
@@ -497,6 +492,19 @@ public class DataBase {
         Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
         Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
         collectableList.add(shamshirChini);
+
+    }
+
+    public void makeComputerPlayer1(){
+
+
+    }
+
+    public void makeComputerPlayer2(){
+
+    }
+
+    public void makeComputerPlayer3(){
 
     }
 
