@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class ImmunityBuff extends Buff {
     private String immunite;
 

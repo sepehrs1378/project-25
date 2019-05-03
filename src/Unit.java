@@ -136,9 +136,10 @@ public class Unit extends Card {
                 && targetedUnit.ap > attackerUnit.ap)
             return 0;
         if (this.isImmuneTo(Constants.HOLY_BUFF))
-            return attackerUnit.ap;
+            return attackerUnit.ap + targetedUnit.getNegativeArmor();
         else
-            return attackerUnit.ap - targetedUnit.getArmor();
+            return attackerUnit.ap - targetedUnit.getPositiveArmor()
+                    + targetedUnit.getNegativeArmor();
     }
 
     private boolean isTargetUnitWithinRange(String targetID) {
@@ -238,7 +239,16 @@ public class Unit extends Card {
         this.flags = null;
     }
 
-    public int getArmor() {
+    public int getNegativeArmor() {
+        int armor = 0;
+        for (Buff buff : buffs) {
+            if (buff instanceof NegativeArmorBuff)
+                armor += ((NegativeArmorBuff) buff).getNegativeArmorAmount();
+        }
+        return armor;
+    }
+
+    public int getPositiveArmor() {
         int armor = 0;
         for (Buff buff : buffs) {
             if (buff instanceof HolyBuff)
