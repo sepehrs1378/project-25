@@ -1,8 +1,8 @@
 public class ControllerSinglePlayerMenu {
-    private static final ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
-    private final Request request = Request.getInstance();
-    private final View view = View.getInstance();
-    private final DataBase database = DataBase.getInstance();
+    private static ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
+    private Request request = Request.getInstance();
+    private View view = View.getInstance();
+    private DataBase database = DataBase.getInstance();
 
     private ControllerSinglePlayerMenu() {
 

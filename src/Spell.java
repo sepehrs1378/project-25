@@ -1,7 +1,7 @@
 import java.util.List;
 
 class Spell extends Card {
-    private final DataBase dataBase = DataBase.getInstance();
+    private DataBase dataBase = DataBase.getInstance();
     private int apChange;
     private int hpChange;
     private int coolDown;

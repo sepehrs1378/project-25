@@ -2,9 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerMatchInfo {
-    private static final ControllerMatchInfo ourInstance = new ControllerMatchInfo();
-    private final View view = View.getInstance();
-    private final DataBase dataBase = DataBase.getInstance();
+    private static ControllerMatchInfo ourInstance = new ControllerMatchInfo();
+    private View view = View.getInstance();
 
     private ControllerMatchInfo() {
     }

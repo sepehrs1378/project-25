@@ -1,10 +1,10 @@
 import java.util.List;
 
 public class ControllerGraveYard {
-    private static final ControllerGraveYard ourInstance = new ControllerGraveYard();
-    private final Request request = Request.getInstance();
-    private final View view = View.getInstance();
-    private final DataBase dataBase = DataBase.getInstance();
+    private static ControllerGraveYard ourInstance = new ControllerGraveYard();
+    private Request request = Request.getInstance();
+    private View view = View.getInstance();
+    private DataBase dataBase = DataBase.getInstance();
 
     public static ControllerGraveYard getInstance() {
         return ourInstance;

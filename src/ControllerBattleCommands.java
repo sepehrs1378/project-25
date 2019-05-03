@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class ControllerBattleCommands {
-    private static final ControllerBattleCommands instance = new ControllerBattleCommands();
-    private final Request request = Request.getInstance();
-    private final DataBase database = DataBase.getInstance();
-    private final View view = View.getInstance();
+    private static ControllerBattleCommands instance = new ControllerBattleCommands();
+    private Request request = Request.getInstance();
+    private DataBase database = DataBase.getInstance();
+    private View view = View.getInstance();
 
     public static ControllerBattleCommands getInstance() {
         return instance;

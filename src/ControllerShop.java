@@ -3,11 +3,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class ControllerShop {
-    private static final ControllerShop ourInstance = new ControllerShop();
-    private final Request request = Request.getInstance();
-    private final DataBase dataBase = DataBase.getInstance();
-    private final Account loggedInAccount = dataBase.getLoggedInAccount();
-    private final View view = View.getInstance();
+    private static ControllerShop ourInstance = new ControllerShop();
+    private Request request = Request.getInstance();
+    private DataBase dataBase = DataBase.getInstance();
+    private Account loggedInAccount = dataBase.getLoggedInAccount();
+    private View view = View.getInstance();
 
     private ControllerShop() {
 

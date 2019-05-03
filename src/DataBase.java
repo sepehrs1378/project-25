@@ -4,7 +4,6 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
-    private ControllerShop controllerShop = ControllerShop.getOurInstance();
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
@@ -674,7 +673,7 @@ public class DataBase {
         Card card = findCardInShop(strings[1]);
         Usable usable = findUsableInShop(strings[1]);
         Collectable collectable = findCollectableInShop(strings[1]);
-        controllerShop.showIdInShop(card, usable, collectable);
+        ControllerShop.getOurInstance().showIdInShop(card, usable, collectable);
     }
 
     public static Collectable findCollectableInShop(String collectableName) {
