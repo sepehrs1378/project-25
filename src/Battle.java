@@ -246,26 +246,21 @@ public class Battle {
     }
 
     public OutputMessageType insert(Card card, int row, int column) {
-        if (card == null) {
+        if (card == null)
             return OutputMessageType.NO_SUCH_CARD_IN_HAND;
-        } else if (card instanceof Unit) {
-            if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0) {
+        if (card instanceof Unit) {
+            if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0
+                    || column >= Constants.BATTLE_GROUND_LENGTH || column < 0)
                 return OutputMessageType.INVALID_NUMBER;
-            } else if (column >= Constants.BATTLE_GROUND_LENGTH || column < 0) {
-                return OutputMessageType.INVALID_NUMBER;
-            }
             if (database.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
                 database.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
                 database.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
                 database.getCurrentBattle().getPlayerInTurn().setNextCard(database.getCurrentBattle()
                         .getPlayerInTurn().getDeck());
-
-            } else {
-                return OutputMessageType.THIS_CELL_IS_FULL;
-            }
+                //todo is it complete
+            } else return OutputMessageType.THIS_CELL_IS_FULL;
         } else if (card instanceof Spell) {
-            Spell temp = (Spell) card;
-            temp.doSpell(row, column);
+            ((Spell) card).doSpell(row, column);
             database.getCurrentBattle().getPlayerInTurn().getGraveYard().addDeadCard(card);
             database.getCurrentBattle().getPlayerInTurn().getHand().deleteCard(card);
         }

@@ -21,6 +21,7 @@ public class Constants {
     public static final String MINION = "minion";
     public static final String HERO_MINION = "hero and minions";
     public static final String PLAYER = "player";
+
     public static final String CELL = "cell";
 
     public static final String MELEE = "melee";
