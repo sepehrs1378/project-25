@@ -3,7 +3,7 @@ import java.util.List;
 
 public class ControllerMatchInfo {
     private static final ControllerMatchInfo ourInstance = new ControllerMatchInfo();
-    private static final View view = View.getInstance();
+    private final View view = View.getInstance();
     private final DataBase dataBase = DataBase.getInstance();
 
     private ControllerMatchInfo() {

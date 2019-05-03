@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Unit extends Card {
-    private static final DataBase dataBase = DataBase.getInstance();
+    private final DataBase dataBase = DataBase.getInstance();
     private int hp;
     private int ap;
     private int minRange;

@@ -1,7 +1,7 @@
 public class ControllerMainMenu {
-    private static final Request request = Request.getInstance();
     private static final ControllerMainMenu ourInstance = new ControllerMainMenu();
-    private static final View view = View.getInstance();
+    private final Request request = Request.getInstance();
+    private final View view = View.getInstance();
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;

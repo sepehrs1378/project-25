@@ -1,8 +1,8 @@
 public class ControllerAccount {
-    private static final Request request = Request.getInstance();
-    private static final DataBase dataBase = DataBase.getInstance();
     private static final ControllerAccount ourInstance = new ControllerAccount();
-    private static final View view = View.getInstance();
+    private final Request request = Request.getInstance();
+    private final DataBase dataBase = DataBase.getInstance();
+    private final View view = View.getInstance();
     private final ControllerMainMenu controllerMainMenu = ControllerMainMenu.getInstance();
 
     private ControllerAccount() {
@@ -57,34 +57,32 @@ public class ControllerAccount {
 
     public void create() {
         boolean isUserNameUnique = false;
-        while (!isUserNameUnique){
+        while (!isUserNameUnique) {
             request.getNewCommand();
-            boolean flag= false;
-            for (Account account: dataBase.getAccounts()){
-                if(request.getCommand().equals(account.getUsername())){
-                    flag =true;
+            boolean flag = false;
+            for (Account account : dataBase.getAccounts()) {
+                if (request.getCommand().equals(account.getUsername())) {
+                    flag = true;
                 }
             }
-            if (!flag){
+            if (!flag) {
                 isUserNameUnique = true;
-            }
-            else {
+            } else {
                 view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
             }
         }
         view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
         String userName = request.getCommand();
-        while (true){
+        while (true) {
             request.getNewCommand();
-            if(!request.getCommand().equals("")){
+            if (!request.getCommand().equals("")) {
                 break;
-            }
-            else {
+            } else {
                 view.printOutputMessage(OutputMessageType.PASSWORD_CANT_BE_EMPTY);
             }
         }
-        String password =request.getCommand();
-        Account account = new Account(userName,password);
+        String password = request.getCommand();
+        Account account = new Account(userName, password);
         dataBase.addAccount(account);
         controllerMainMenu.main();
     }

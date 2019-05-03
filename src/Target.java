@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Target {
-    private static DataBase dataBase = DataBase.getInstance();
-    private static Battle currentBattle = dataBase.getCurrentBattle();
+    private DataBase dataBase = DataBase.getInstance();
+    private Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
     private String friendlyOrEnemy;
     private String targetUnitClass;

@@ -1,8 +1,8 @@
 public class ControllerMultiPlayerMenu {
-    private static final Request request = Request.getInstance();
-    private static final View view = View.getInstance();
     private static final ControllerMultiPlayerMenu ourInstance = new ControllerMultiPlayerMenu();
-    private static final DataBase database = DataBase.getInstance();
+    private final Request request = Request.getInstance();
+    private final View view = View.getInstance();
+    private final DataBase database = DataBase.getInstance();
 
     public static ControllerMultiPlayerMenu getInstance() {
         return ourInstance;

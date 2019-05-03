@@ -3,11 +3,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerCollection {
-    private static final Request request = Request.getInstance();
     private static final ControllerCollection ourInstance = new ControllerCollection();
-    private static final DataBase dataBase = DataBase.getInstance();
-    private static final Account loggedInAccount = dataBase.getLoggedInAccount();
-    private static final View view = View.getInstance();
+    private final Request request = Request.getInstance();
+    private final DataBase dataBase = DataBase.getInstance();
+    private final Account loggedInAccount = dataBase.getLoggedInAccount();
+    private final View view = View.getInstance();
 
     private ControllerCollection() {
 

@@ -10,19 +10,23 @@ public class DataBase {
     private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
-    private Account computerPlayerLevel1 = new Account();
-    private Account computerPlayerLevel2 = new Account();
-    private Account computerPlayerLevel3 = new Account();
-    private Account computerPlayerCostume = new Account();
+    private Account computerPlayerLevel1 = new Account("computerPlayerLevel1", "");
+    private Account computerPlayerLevel2 = new Account("computerPlayerLevel2", "");
+    private Account computerPlayerLevel3 = new Account("computerPlayerLevel3", "");
+    private Account computerPlayerCostume = new Account("computerPlayerCostume", "");
 
     public static DataBase getInstance() {
         return ourInstance;
     }
 
     private DataBase() {
+    }
+
+    public void makeEveryThing() {
         makeCardSpells();
         makeHeroes();
         makeMinions();
+        makeItems();
     }
 
     public void makeCardSpells() {
@@ -301,9 +305,9 @@ public class DataBase {
         cardList.add(divGorazSavar);
 
         //17
-        Target ghoolTakCheshmTarget = new Target(Constants.MINION,3,3,Constants.ENEMY,false,false,0,Constants.ALL);
-        Spell ghoolTakCheshmSpell = new Spell("","",0,0,0,-2,0,ghoolTakCheshmTarget,(Buff)null,SpellActivationType.ON_DEATH,"",false);
-        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1","ghoolTakCheshm",500,7,12,11,2,4,ghoolTakCheshmSpell,Constants.MINION,"",false);
+        Target ghoolTakCheshmTarget = new Target(Constants.MINION, 3, 3, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell ghoolTakCheshmSpell = new Spell("", "", 0, 0, 0, -2, 0, ghoolTakCheshmTarget, (Buff) null, SpellActivationType.ON_DEATH, "", false);
+        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1", "ghoolTakCheshm", 500, 7, 12, 11, 2, 4, ghoolTakCheshmSpell, Constants.MINION, "", false);
         cardList.add(ghoolTakCheshm);
 
         //18
@@ -356,7 +360,7 @@ public class DataBase {
         jadoogarBuffs.add(jadoogarBuff1);
         jadoogarBuffs.add(jadoogarBuff2);
         Spell jadoogarSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarTarget, jadoogarBuffs, SpellActivationType.PASSIVE, "", false);
-        Unit jadoogar = new Unit("shop_jadoogar_1", "jadoogar", 550, 4, 5 , 4, 2, 3, jadoogarSpell, Constants.MINION, "", false);
+        Unit jadoogar = new Unit("shop_jadoogar_1", "jadoogar", 550, 4, 5, 4, 2, 3, jadoogarSpell, Constants.MINION, "", false);
         cardList.add(jadoogar);
 
         //26
@@ -401,7 +405,7 @@ public class DataBase {
 
         //31
         Target bahmanTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
-        WeaknessBuff bahmanBuff = new WeaknessBuff(1, true, false, 16 , 0);
+        WeaknessBuff bahmanBuff = new WeaknessBuff(1, true, false, 16, 0);
         Spell bahmanSpell = new Spell("", "", 0, 0, 0, 0, 0, bahmanTarget, bahmanBuff, SpellActivationType.ON_SPAWN, "", false);
         Unit bahman = new Unit("shop_bahman_1", "bahman", 450, 8, 16, 9, 1, 1, bahmanSpell, Constants.MINION, "", false);
         cardList.add(bahman);
@@ -543,19 +547,6 @@ public class DataBase {
         Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
         Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
         collectableList.add(shamshirChini);
-
-    }
-
-    public void makeComputerPlayer1(){
-
-
-    }
-
-    public void makeComputerPlayer2(){
-
-    }
-
-    public void makeComputerPlayer3(){
 
     }
 

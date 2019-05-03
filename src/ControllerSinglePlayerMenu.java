@@ -1,11 +1,8 @@
-import javax.naming.ldap.Control;
-import java.util.Scanner;
-
 public class ControllerSinglePlayerMenu {
-    private static final Request request = Request.getInstance();
     private static final ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
-    private static final View view = View.getInstance();
-    private static final DataBase database = DataBase.getInstance();
+    private final Request request = Request.getInstance();
+    private final View view = View.getInstance();
+    private final DataBase database = DataBase.getInstance();
 
     private ControllerSinglePlayerMenu() {
 
