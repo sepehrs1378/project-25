@@ -443,6 +443,7 @@ public class DataBase {
         collectableList.add(majoonRooinTani);
 
         //10            //6
+        collectableList.add(null);
         //todo
 
         //11            //7
@@ -452,6 +453,7 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
+        usableList.add(null);
         //todo
         //todo what does it mean?
 
@@ -469,18 +471,23 @@ public class DataBase {
         usableList.add(kingWisdom);
 
         //15            //7
+        usableList.add(null);
         //todo
 
         //16            //8
+        usableList.add(null);
         //todo
 
         //17            //9
+        usableList.add(null);
         //todo
 
         //18            //10
+        usableList.add(null);
         //todo
 
         //19            //11
+        usableList.add(null);
         //todo
 
         //20            //9
