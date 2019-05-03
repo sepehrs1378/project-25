@@ -103,7 +103,7 @@ class ControllerShop {
     public void search() {
         String command = request.getCommand();
         if (command.matches("search (.+)$")) {
-            PlayerCollection.searchInShop(command);
+            dataBase.searchInShop(command);
         } else if (command.matches("^search collection (.+)$")) {
             String[] strings = command.split("\\s+");
             ArrayList<String> cardsAndItems =

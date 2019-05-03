@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
+    private ControllerShop controllerShop = ControllerShop.getOurInstance();
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
@@ -646,6 +647,41 @@ public class DataBase {
         for (Account account : accountList) {
             if (account.getUsername().equals(username))
                 return account;
+        }
+        return null;
+    }
+
+    public Card findCardInShop(String cardName) {
+        for (Card card : cardList) {
+            if (card.getName().equals(cardName)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public Usable findUsableInShop(String usableName) {
+        for (Usable usable : usableList) {
+            if (usable.getName().equals(usableName)) {
+                return usable;
+            }
+        }
+        return null;
+    }
+
+    public void searchInShop(String command) {
+        String[] strings = command.split("\\s+");
+        Card card = findCardInShop(strings[1]);
+        Usable usable = findUsableInShop(strings[1]);
+        Collectable collectable = findCollectableInShop(strings[1]);
+        controllerShop.showIdInShop(card, usable, collectable);
+    }
+
+    public static Collectable findCollectableInShop(String collectableName) {
+        for (Collectable collectable : DataBase.getInstance().getCollectableList()) {
+            if (collectable.getName().equals(collectableName)) {
+                return collectable;
+            }
         }
         return null;
     }

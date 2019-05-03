@@ -89,11 +89,11 @@ public class Unit extends Card {
     }
 
     public static OutputMessageType attackCombo(String targetId, String[] attackersIds) {
-        Unit target = dataBase.getCurrentBattle()
+        Unit target = DataBase.getInstance().getCurrentBattle()
                 .getBattleGround().getUnitWithID(targetId);
         List<Unit> attackers = new ArrayList<>();
         for (String attackerId : attackersIds) {
-            Unit attacker = dataBase.getCurrentBattle()
+            Unit attacker = DataBase.getInstance().getCurrentBattle()
                     .getBattleGround().getUnitWithID(attackerId);
             if (attacker == null)
                 return OutputMessageType.A_UNIT_DOESNT_EXIST;
@@ -106,7 +106,7 @@ public class Unit extends Card {
         for (Unit attacker : attackers) {
             attacker.attackUnit(targetId);
         }
-        Unit targetUnit = dataBase.getCurrentBattle()
+        Unit targetUnit = DataBase.getInstance().getCurrentBattle()
                 .getBattleGround().getUnitWithID(targetId);
         targetUnit.counterAttackUnit(attackers.get(0));
         return OutputMessageType.COMBO_ATTACK_SUCCESSFUL;

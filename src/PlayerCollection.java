@@ -3,9 +3,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayerCollection {
-    private static final DataBase dataBase = DataBase.getInstance();
-    private static final Account loggedInAccount = dataBase.getLoggedInAccount();
     private static final ControllerShop controllerShop = ControllerShop.getOurInstance();
+    private final DataBase dataBase = DataBase.getInstance();
+    private final Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Usable> items = new ArrayList<>();
@@ -156,15 +156,6 @@ public class PlayerCollection {
         return OutputMessageType.DECK_CREATED;
     }
 
-    private static Collectable findCollectableInShop(String collectableName) {
-        for (Collectable collectable : dataBase.getCollectableList()) {
-            if (collectable.getName().equals(collectableName)) {
-                return collectable;
-            }
-        }
-        return null;
-    }
-
     public OutputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
@@ -190,46 +181,27 @@ public class PlayerCollection {
     }
 
     public void buySuccessful(String name) {
-        Card card = findCardInShop(name);
+        Card card = dataBase.findCardInShop(name);
         if (card != null) {
             Card cloneCard = card.clone();
             loggedInAccount.takeAwayMoney(card.getPrice());
             defineNewId(cloneCard);
-            if (cloneCard instanceof Unit){
+            if (cloneCard instanceof Unit) {
                 Unit unit = ((Unit) cloneCard).clone();
                 loggedInAccount.getPlayerInfo().addCardToCollection(unit);
-            }else if (cloneCard instanceof Spell){
+            } else if (cloneCard instanceof Spell) {
                 Spell spell = ((Spell) cloneCard).clone();
                 loggedInAccount.getPlayerInfo().addCardToCollection(spell);
             }
             return;
         }
-        Usable usable = findUsableInShop(name);
+        Usable usable = dataBase.findUsableInShop(name);
         if (usable != null) {
             Usable cloneUsable = usable.clone();
             loggedInAccount.getPlayerInfo().addUsableToCollection(cloneUsable);
             loggedInAccount.takeAwayMoney(usable.getPrice());
             defineNewId(cloneUsable);
         }
-    }
-
-
-    private static Card findCardInShop(String cardName) {
-        for (Card card : dataBase.getCardList()) {
-            if (card.getName().equals(cardName)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    private static Usable findUsableInShop(String usableName) {
-        for (Usable usable : dataBase.getUsableList()) {
-            if (usable.getName().equals(usableName)) {
-                return usable;
-            }
-        }
-        return null;
     }
 
     private void defineNewId(Object obj) {
@@ -257,14 +229,6 @@ public class PlayerCollection {
         }
     }
 
-    public static void searchInShop(String command) {
-        String[] strings = command.split("\\s+");
-        Card card = findCardInShop(strings[1]);
-        Usable usable = findUsableInShop(strings[1]);
-        Collectable collectable = findCollectableInShop(strings[1]);
-        controllerShop.showIdInShop(card, usable, collectable);
-    }
-
     public OutputMessageType sell(String id) {
         Object obj = searchCardOrItemWithId(id);
         if (obj != null) {
@@ -274,7 +238,7 @@ public class PlayerCollection {
                 cards.remove(card);
                 for (Deck deck : decks) {
                     deck.getCards().remove(card);
-                    if (deck.getHero().equals(card)){
+                    if (deck.getHero().equals(card)) {
                         deck.setHero(null);
                     }
                 }
@@ -283,8 +247,8 @@ public class PlayerCollection {
                 Usable usable = (Usable) obj;
                 loggedInAccount.addMoney(usable.getPrice());
                 items.remove(usable);
-                for (Deck deck : decks){
-                    if (deck.getItem().equals(usable)){
+                for (Deck deck : decks) {
+                    if (deck.getItem().equals(usable)) {
                         deck.setItem(null);
                     }
                 }
