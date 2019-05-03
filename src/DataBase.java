@@ -406,13 +406,13 @@ public class DataBase {
         //4             //1
         Target nooshadrooTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
         Spell nooshdarooSpell = new Spell("", "", 0, 0, 0, 6, 0, nooshadrooTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Collectable nooshdaroo = new Collectable("shop_nooshdaroo_1", "", nooshdarooSpell);
+        Collectable nooshdaroo = new Collectable("battle_nooshdaroo_1", "", nooshdarooSpell);
         collectableList.add(nooshdaroo);
 
         //5             //2
         Target tirDoShakhTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.RANGED_HYBRID);
         Spell tirDoShakhSpell = new Spell("", "", 0, 0, 2, 0, 0, tirDoShakhTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Collectable tirDoShakh = new Collectable("", "", tirDoShakhSpell);
+        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", "", tirDoShakhSpell);
         collectableList.add(tirDoShakh);
 
         //6             //4
@@ -425,45 +425,69 @@ public class DataBase {
         Target exirTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
         PowerBuff exirBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 3);
         Spell exirSpell = new Spell("", "", 0, 0, 0, 3, 0, exirTarget, exirBuff, SpellActivationType.ON_CAST, "", false);
-        Collectable exir = new Collectable("shop_exir_1", "exir", exirSpell);
+        Collectable exir = new Collectable("battle_exir_1", "exir", exirSpell);
         collectableList.add(exir);
 
         //8             //4
         Target majoonManaTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
         ManaBuff majoonManaBuff = new ManaBuff(1, false, false, 3);
-        Spell majoonManaSpell=new Spell("","",0,0,0,0,0,majoonManaTarget,majoonManaBuff,SpellActivationType.ON_CAST,"",false);
-        Collectable majoonMana=new Collectable("shop_majoonMana_1","",majoonManaSpell);
+        Spell majoonManaSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonManaTarget, majoonManaBuff, SpellActivationType.ON_CAST, "", false);
+        Collectable majoonMana = new Collectable("battle_majoonMana_1", "", majoonManaSpell);
         collectableList.add(majoonMana);
 
         //9             //5
-        Target majoonRooinTaniTarget=new Target(Constants.HERO_MINION,Integer.MAX_VALUE,Integer.MAX_VALUE,Constants.FRIEND,true,false,0,Constants.ALL);
-        HolyBuff majoonRooinTaniBuff=new HolyBuff(2,true,false,10);
-        Spell majoonRooinTaniSpell=new Spell("","",0,0,0,0,0,majoonRooinTaniTarget,majoonRooinTaniBuff,SpellActivationType.ON_CAST,"",false);
-        Collectable majoonRooinTani=new Collectable("shop_majoonRooinTani_1","majoonRooinTani",majoonRooinTaniSpell);
+        Target majoonRooinTaniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        HolyBuff majoonRooinTaniBuff = new HolyBuff(2, true, false, 10);
+        Spell majoonRooinTaniSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonRooinTaniTarget, majoonRooinTaniBuff, SpellActivationType.ON_CAST, "", false);
+        Collectable majoonRooinTani = new Collectable("battle_majoonRooinTani_1", "majoonRooinTani", majoonRooinTaniSpell);
         collectableList.add(majoonRooinTani);
 
-        //10
+        //10            //6
+        //todo
 
+        //11            //7
+        Target randomDamageTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        Spell randomDamageSpell = new Spell("", "", 0, 0, 2, 0, 0, randomDamageTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable randomDamage = new Collectable("battle_randomDamage_1", "randomDamage", randomDamageSpell);
+        collectableList.add(randomDamage);
 
-        //11
+        //12            //5
+        //todo
+        //todo what does it mean?
 
-        //12
+        //13            //8
+        Target bladesOfAgilityTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        Spell bladesOfAgilitySpell = new Spell("", "", 0, 0, 6, 0, 0, bladesOfAgilityTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable bladesOfAgility = new Collectable("battle_bladesOfAgility_1", "bladesOfAgility", bladesOfAgilitySpell);
+        collectableList.add(bladesOfAgility);
 
-        //13
+        //14            //6
+        Target kingWisdomTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
+        ManaBuff kingWisdomBuff = new ManaBuff(Integer.MAX_VALUE, false, false, 1);
+        Spell kingWisdomSpell = new Spell("", "", 0, 0, 0, 0, 0, kingWisdomTarget, kingWisdomBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Usable kingWisdom = new Usable("shop_kingWisdom_1", "", 9000, kingWisdomSpell);
+        usableList.add(kingWisdom);
 
-        //14
+        //15            //7
+        //todo
 
-        //15
+        //16            //8
+        //todo
 
-        //16
+        //17            //9
+        //todo
 
-        //17
+        //18            //10
+        //todo
 
-        //18
+        //19            //11
+        //todo
 
-        //19
-
-        //20
+        //20            //9
+        Target shamshirChiniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
+        Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
+        collectableList.add(shamshirChini);
 
     }
 
