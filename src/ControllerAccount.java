@@ -1,9 +1,9 @@
 public class ControllerAccount {
-    private static final ControllerAccount ourInstance = new ControllerAccount();
-    private final Request request = Request.getInstance();
-    private final DataBase dataBase = DataBase.getInstance();
-    private final View view = View.getInstance();
-    private final ControllerMainMenu controllerMainMenu = ControllerMainMenu.getInstance();
+    private static ControllerAccount ourInstance = new ControllerAccount();
+    private Request request = Request.getInstance();
+    private DataBase dataBase = DataBase.getInstance();
+    private View view = View.getInstance();
+    private ControllerMainMenu controllerMainMenu = ControllerMainMenu.getInstance();
 
     private ControllerAccount() {
     }

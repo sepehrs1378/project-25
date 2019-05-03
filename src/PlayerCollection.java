@@ -3,9 +3,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayerCollection {
-    private static final ControllerShop controllerShop = ControllerShop.getOurInstance();
-    private final DataBase dataBase = DataBase.getInstance();
-    private final Account loggedInAccount = dataBase.getLoggedInAccount();
+    private DataBase dataBase = DataBase.getInstance();
+    private Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Usable> items = new ArrayList<>();
