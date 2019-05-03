@@ -274,7 +274,7 @@ public class Battle {
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
         if (hero.getSpecialPower().getMana() <= player.getMana()
-                && hero.getSpecialPower().getCooldown() == 0
+                && hero.getSpecialPower().getCoolDown() == 0
                 && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
             hero.getSpecialPower().doSpell(row, column);
         } else {

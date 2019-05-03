@@ -4,7 +4,7 @@ class Spell extends Card {
     public static final DataBase dataBase = DataBase.getInstance();
     private int apChange;
     private int hpChange;
-    private int cooldown;
+    private int coolDown;
     private Target target;
     private List<Buff> addedBuffs;
     private SpellActivationType activationType;
@@ -12,14 +12,14 @@ class Spell extends Card {
     private boolean isDispeller;
 
     public Spell(String id, String name, int price, int mana,
-                 int apChange, int hpChange, int cooldown,
+                 int apChange, int hpChange, int coolDown,
                  Target target, Buff addedBuff,
                  SpellActivationType activationType,
                  String description, boolean isDispeller) {
         super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
-        this.cooldown = cooldown;
+        this.coolDown = coolDown;
         this.target = target;
         this.activationType = activationType;
         this.description = description;
@@ -28,14 +28,14 @@ class Spell extends Card {
     }
 
     public Spell(String id, String name, int price, int mana,
-                 int apChange, int hpChange, int cooldown,
+                 int apChange, int hpChange, int coolDown,
                  Target target, List<Buff> addedBuffs
             , SpellActivationType activationType
             , String description, boolean isDispeller) {
         super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
-        this.cooldown = cooldown;
+        this.coolDown = coolDown;
         this.target = target;
         this.activationType = activationType;
         this.description = description;
@@ -58,7 +58,7 @@ class Spell extends Card {
 
     public Spell clone() {
         return new Spell(getId(), getName(), getPrice(),
-                getMana(), apChange, hpChange, cooldown,
+                getMana(), apChange, hpChange, coolDown,
                 target.clone(), addedBuffs, activationType,
                 description, isDispeller);
     }
@@ -146,8 +146,8 @@ class Spell extends Card {
         return isDispeller;
     }
 
-    public int getCooldown() {
-        return cooldown;
+    public int getCoolDown() {
+        return coolDown;
     }
 
     public SpellActivationType getActivationType() {
