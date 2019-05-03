@@ -1,11 +1,6 @@
-import com.sun.source.doctree.UnknownInlineTagTree;
-
-import java.awt.event.MouseAdapter;
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Spliterator;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
@@ -438,6 +433,19 @@ public class DataBase {
         //19
 
         //20
+
+    }
+
+    public void makeComputerPlayer1(){
+
+
+    }
+
+    public void makeComputerPlayer2(){
+
+    }
+
+    public void makeComputerPlayer3(){
 
     }
 

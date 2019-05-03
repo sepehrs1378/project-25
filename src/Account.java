@@ -15,6 +15,12 @@ public class Account implements Comparable<Account> {
         levelsOpennessStatus[0] = true;
     }
 
+    public Account (String userName,String password){
+        this.username=userName;
+        this.password = password;
+        this.playerInfo = new PlayerInfo(userName);
+    }
+
     public static Account getAccount(String userName) {
         for (Account account : accounts) {
             if (account.getUsername().equals(userName)) {
