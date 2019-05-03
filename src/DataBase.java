@@ -306,8 +306,10 @@ public class DataBase {
         cardList.add(divGorazSavar);
 
         //17
-        //todo same problem with KingGuardSpell from now on i,ll call it kingsGuardProblem :)
-        cardList.add(null);
+        Target ghoolTakCheshmTarget = new Target(Constants.MINION,3,3,Constants.ENEMY,false,false,0,Constants.ALL);
+        Spell ghoolTakCheshmSpell = new Spell("","",0,0,0,-2,0,ghoolTakCheshmTarget,(Buff)null,SpellActivationType.ON_DEATH,"",false);
+        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1","ghoolTakCheshm",500,7,12,11,2,4,ghoolTakCheshmSpell,Constants.MINION,"",false);
+        cardList.add(ghoolTakCheshm);
 
         //18
         Target marSamiTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
