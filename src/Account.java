@@ -18,6 +18,7 @@ public class Account implements Comparable<Account> {
         this.username=userName;
         this.password = password;
         this.playerInfo = new PlayerInfo(userName);
+        this.money = Constants.MONEY;
     }
 
     public String getUsername() {

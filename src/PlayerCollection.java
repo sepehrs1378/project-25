@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PlayerCollection {
     private DataBase dataBase = DataBase.getInstance();
-    private Account loggedInAccount = dataBase.getLoggedInAccount();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Usable> items = new ArrayList<>();
@@ -158,16 +157,16 @@ public class PlayerCollection {
     public OutputMessageType buy(String name) {
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
-            if (loggedInAccount.getMoney() < card.getPrice())
+            if (dataBase.getLoggedInAccount().getMoney() < card.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
             else {
                 buySuccessful(name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
-        if (dataBase.doesUsableExist(name)) {
+        else if (dataBase.doesUsableExist(name)) {
             Usable usable = dataBase.getUsableWithName(name);
-            if (loggedInAccount.getMoney() < usable.getPrice())
+            if (dataBase.getLoggedInAccount().getMoney() < usable.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
             if (items.size() == 3)
                 return OutputMessageType.CANT_HAVE_MORE_ITEMS;
@@ -183,47 +182,47 @@ public class PlayerCollection {
         Card card = dataBase.findCardInShop(name);
         if (card != null) {
             Card cloneCard = card.clone();
-            loggedInAccount.takeAwayMoney(card.getPrice());
+            dataBase.getLoggedInAccount().takeAwayMoney(card.getPrice());
             defineNewId(cloneCard);
             if (cloneCard instanceof Unit) {
                 Unit unit = ((Unit) cloneCard).clone();
-                loggedInAccount.getPlayerInfo().addCardToCollection(unit);
+                dataBase.getLoggedInAccount().getPlayerInfo().addCardToCollection(unit);
             } else if (cloneCard instanceof Spell) {
                 Spell spell = ((Spell) cloneCard).clone();
-                loggedInAccount.getPlayerInfo().addCardToCollection(spell);
+                dataBase.getLoggedInAccount().getPlayerInfo().addCardToCollection(spell);
             }
             return;
         }
         Usable usable = dataBase.findUsableInShop(name);
         if (usable != null) {
             Usable cloneUsable = usable.clone();
-            loggedInAccount.getPlayerInfo().addUsableToCollection(cloneUsable);
-            loggedInAccount.takeAwayMoney(usable.getPrice());
+            dataBase.getLoggedInAccount().getPlayerInfo().addUsableToCollection(cloneUsable);
+            dataBase.getLoggedInAccount().takeAwayMoney(usable.getPrice());
             defineNewId(cloneUsable);
         }
     }
 
     private void defineNewId(Object obj) {
-        PlayerCollection collection = loggedInAccount.getPlayerInfo().getCollection();
+        PlayerCollection collection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
         if (obj instanceof Card) {
-            int numberOfSimilarCards = 0;
+            int numberOfSimilarCards = 1;
             for (Card card : collection.getCards()) {
                 if (card.getName().equals(((Card) obj).getName())) {
                     numberOfSimilarCards++;
                 }
             }
             Card card = (Card) obj;
-            String id = loggedInAccount.getUsername() + "_" + card.getName() + "_" + numberOfSimilarCards;
+            String id = dataBase.getLoggedInAccount().getUsername() + "_" + card.getName() + "_" + numberOfSimilarCards;
             card.setId(id);
         } else if (obj instanceof Usable) {
-            int numberOfSimilarUsables = 0;
+            int numberOfSimilarUsables = 1;
             for (Usable usable : collection.getItems()) {
                 if (usable.getName().equals(((Usable) obj).getName())) {
                     numberOfSimilarUsables++;
                 }
             }
             Usable usable = (Usable) obj;
-            String id = loggedInAccount.getUsername() + "_" + usable.getName() + "_" + numberOfSimilarUsables;
+            String id = dataBase.getLoggedInAccount().getUsername() + "_" + usable.getName() + "_" + numberOfSimilarUsables;
             usable.setId(id);
         }
     }
@@ -233,7 +232,7 @@ public class PlayerCollection {
         if (obj != null) {
             if (obj instanceof Card) {
                 Card card = (Card) obj;
-                loggedInAccount.addMoney(card.getPrice());
+                dataBase.getLoggedInAccount().addMoney(card.getPrice());
                 cards.remove(card);
                 for (Deck deck : decks) {
                     deck.getCards().remove(card);
@@ -244,7 +243,7 @@ public class PlayerCollection {
             }
             if (obj instanceof Usable) {
                 Usable usable = (Usable) obj;
-                loggedInAccount.addMoney(usable.getPrice());
+                dataBase.getLoggedInAccount().addMoney(usable.getPrice());
                 items.remove(usable);
                 for (Deck deck : decks) {
                     if (deck.getItem().equals(usable)) {

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 class Spell extends Card {
@@ -6,7 +7,7 @@ class Spell extends Card {
     private int hpChange;
     private int coolDown;
     private Target target;
-    private List<Buff> addedBuffs;
+    private List<Buff> addedBuffs = new ArrayList<>();
     private SpellActivationType activationType;
     private String description;
     private boolean isDispeller;

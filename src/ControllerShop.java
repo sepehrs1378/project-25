@@ -77,12 +77,12 @@ class ControllerShop {
     }
 
     public void buy() {
-        if (!request.getCommand().matches("^buy .+$")) {
+        Pattern pattern = Pattern.compile("^buy (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^buy (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().buy(matcher.group(1))) {
             case NOT_IN_SHOP:
                 view.printOutputMessage(OutputMessageType.NOT_IN_SHOP);

@@ -145,7 +145,7 @@ public class DataBase {
 
         //19
         //Target kingsGuardTarget = new Target()
-        cardList.add(null);
+        //cardList.add(null);
         //todo
 
         //20
@@ -201,7 +201,7 @@ public class DataBase {
 
         //7
         //todo abstract like kingsGuardSpell
-        cardList.add(null);
+        //cardList.add(null);
 
         //8
         Target afsanehTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
@@ -486,7 +486,7 @@ public class DataBase {
         Target kamanDamolTarget = new Target(Constants.HERO, 1, 1, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //todo
-        usableList.add(null);
+        //usableList.add(null);
 
         //4             //1
         Target nooshadrooTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
@@ -528,7 +528,7 @@ public class DataBase {
         collectableList.add(majoonRooinTani);
 
         //10            //6
-        collectableList.add(null);
+        //collectableList.add(null);
         //todo
 
         //11            //7
@@ -538,7 +538,7 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
-        usableList.add(null);
+        //usableList.add(null);
         //todo
         //todo what does it mean?
 
@@ -556,23 +556,23 @@ public class DataBase {
         usableList.add(kingWisdom);
 
         //15            //7
-        usableList.add(null);
+        //usableList.add(null);
         //todo
 
         //16            //8
-        usableList.add(null);
+        //usableList.add(null);
         //todo
 
         //17            //9
-        usableList.add(null);
+        //usableList.add(null);
         //todo
 
         //18            //10
-        usableList.add(null);
+        //usableList.add(null);
         //todo
 
         //19            //11
-        usableList.add(null);
+        //usableList.add(null);
         //todo
 
         //20            //9
@@ -641,7 +641,7 @@ public class DataBase {
 
     public Card getCardWithName(String cardName) {
         for (Card card : cardList) {
-            if (card.getId().equals(cardName))
+            if (card.getName().equals(cardName))
                 return card;
         }
         return null;
@@ -653,7 +653,7 @@ public class DataBase {
 
     public Usable getUsableWithName(String usableName) {
         for (Usable usable : usableList) {
-            if (usable.getId().equals(usableName))
+            if (usable.getName().equals(usableName))
                 return usable;
         }
         return null;
