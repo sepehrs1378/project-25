@@ -177,7 +177,7 @@ public class ControllerCollection {
     public void search() {
         if (request.getCommand().matches("search\\s+.+")) {
             List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                    .searchCardOrItemWithName(request.getCommand().split("\\s+")[1].split("_")[1]);
+                    .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
             view.printList(output);
         }
     }

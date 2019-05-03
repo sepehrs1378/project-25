@@ -207,7 +207,8 @@ public class View {
             if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
                 Unit unit = (Unit) card;
                 System.out.println("    " + counter + " : Name: " + unit.getName() + " - AP : " + unit.getAp()
-                        + " - HP : " + unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special Power : " + unit.getSpecialPower()
+                        + " - HP : " + unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special Power : " +
+                        ((unit.getSpecialPower()==null)?null:unit.getSpecialPower().getDescription())
                         + " - Sell cost : " + unit.getPrice());
                 counter++;
             }
@@ -231,7 +232,8 @@ public class View {
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
                 System.out.println(outPut + "Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
-                        + " - MP : " + card.getMana() + " - Special Power : " + ((Unit) card).getSpecialPower()
+                        + " - MP : " + card.getMana() + " - Special Power : "
+                        + ((((Unit)card).getSpecialPower()==null)?null:((Unit)card).getSpecialPower().getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }

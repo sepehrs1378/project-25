@@ -6,7 +6,6 @@ class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
-    private Account loggedInAccount = dataBase.getLoggedInAccount();
     private View view = View.getInstance();
 
     private ControllerShop() {
@@ -64,12 +63,12 @@ class ControllerShop {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1))) {
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(matcher.group(1))) {
             case NOT_IN_COLLECTION:
                 view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
                 break;
             case SOLD_SUCCESSFULLY:
-                loggedInAccount.getPlayerInfo().getCollection().sell(matcher.group(1));
+                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(matcher.group(1));
                 view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
                 break;
             default:
@@ -83,7 +82,7 @@ class ControllerShop {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection().buy(matcher.group(1))) {
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(matcher.group(1))) {
             case NOT_IN_SHOP:
                 view.printOutputMessage(OutputMessageType.NOT_IN_SHOP);
                 break;
@@ -102,13 +101,13 @@ class ControllerShop {
 
     public void search() {
         String command = request.getCommand();
-        if (command.matches("search (.+)$")) {
-            dataBase.searchInShop(command);
-        } else if (command.matches("^search collection (.+)$")) {
+        if (command.matches("^search collection (.+)$")) {
             String[] strings = command.split("\\s+");
             ArrayList<String> cardsAndItems =
-                    new ArrayList<>(loggedInAccount.getPlayerInfo().getCollection().searchCardOrItemWithName(strings[2]));
+                    new ArrayList<>(dataBase.getLoggedInAccount().getPlayerInfo().getCollection().searchCardOrItemWithName(strings[2]));
             view.printList(cardsAndItems);
+        } else if (command.matches("^search (.+)$")) {
+            dataBase.searchInShop(command);
         } else {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
         }

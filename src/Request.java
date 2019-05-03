@@ -52,97 +52,109 @@ public class Request {
     public RequestType getType() {
         if (command == null || command.equals(""))
             return RequestType.WRONG_REQUEST;
-        if (command.matches("^logout$")) {
+        if (command.toLowerCase().matches("^logout$")) {
             command = command.toLowerCase();
             return RequestType.LOGOUT;
         }
-        if (command.matches("^login .+$")) {
+        if (command.toLowerCase().matches("^login .+$")) {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.LOGIN;
         }
-        if (command.matches("^enter .+$")) {
+        if (command.toLowerCase().matches("^enter .+$")) {
             command = command.toLowerCase();
             return RequestType.ENTER;
         }
-        if (command.matches("^exit$")) {
+        if (command.toLowerCase().matches("^exit$")) {
             command = command.toLowerCase();
-            return RequestType.END;
+            return RequestType.EXIT;
         }
-        if (command.matches("^show\\s*(.)*$")) {
+        if (command.toLowerCase().matches("^show\\s*(.)*$")) {
             command = command.toLowerCase();
             return RequestType.SHOW;
         }
-        if (command.matches("^save$")) {
+        if (command.toLowerCase().matches("^save$")) {
             command = command.toLowerCase();
             return RequestType.SAVE;
         }
-        if (command.matches("^search .+$")) {
-            command = command.toLowerCase();
+        if (command.toLowerCase().matches("^search .+$")) {
+            String[] strings = command.split(" ");
+            String output="";
+            int counter = 0;
+            for (String string:strings){
+                if(counter!=strings.length-1){
+                    output+=string.toLowerCase()+" ";
+                }
+                else {
+                    output+=string;
+                }
+                counter++;
+            }
+            command = output;
             return RequestType.SEARCH;
         }
-        if (command.matches("^help$")) {
+        if (command.toLowerCase().matches("^help$")) {
             command = command.toLowerCase();
             return RequestType.HELP;
         }
-        if (command.matches("^buy .+$")) {
+        if (command.toLowerCase().matches("^buy .+$")) {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.BUY;
         }
-        if (command.matches("^sell .+$")) {
+        if (command.toLowerCase().matches("^sell .+$")) {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.SELL;
         }
-        if (command.matches("^create .+$")) {
+        if (command.toLowerCase().matches("^create .+$")) {
             command = command.toLowerCase();
             return RequestType.CREATE;
         }
-        if (command.matches("^delete .+$")) {
+        if (command.toLowerCase().matches("^delete .+$")) {
             command = command.toLowerCase();
             return RequestType.DELETE;
         }
-        if (command.matches("^add .+$")) {
+        if (command.toLowerCase().matches("^add .+$")) {
             command = command.toLowerCase();
             return RequestType.ADD;
         }
-        if (command.matches("^select .+$")) {
+        if (command.toLowerCase().matches("^select .+$")) {
             command = command.toLowerCase();
             return RequestType.SELECT;
         }
-        if (command.matches("^validate .+$")) {
+        if (command.toLowerCase().matches("^validate .+$")) {
             command = command.toLowerCase();
             return RequestType.VALIDATE;
         }
-        if (command.matches("^show \\w+ minions$")) {
+        if (command.toLowerCase().matches("^show \\w+ minions$")) {
             command = command.toLowerCase();
             return RequestType.SHOW_MINIONS;
         }
-        if (command.matches("^move to .+$")) {
+        if (command.toLowerCase().matches("^move to .+$")) {
             command = command.toLowerCase();
             return RequestType.MOVE;
         }
-        if (command.matches("^attack .+$")) {
+        if (command.toLowerCase().matches("^attack .+$")) {
             command = command.toLowerCase();
             return RequestType.ATTACK;
         }
-        if (command.matches("^use .+$")) {
+        if (command.toLowerCase().matches("^use .+$")) {
             command = command.toLowerCase();
             return RequestType.USE;
         }
-        if (command.matches("^insert .+$")) {
+        if (command.toLowerCase().matches("^insert .+$")) {
             command = command.toLowerCase();
             return RequestType.INSERT;
         }
-        if (command.matches("^end .+$")) {
+        if (command.toLowerCase().matches("^end .+$")) {
             command = command.toLowerCase();
             return RequestType.END;
         }
-        if (command.matches("^game info$")) {
+        if (command.toLowerCase().matches("^game info$")) {
             command = command.toLowerCase();
             return RequestType.GAME_INFO;
         }
-        if (command.matches("^/.+$"))
+        if (command.toLowerCase().matches("^/.+$"))
             return RequestType.CHEATS;
-        if (command.matches("^password .+$")) {
+        if (command.toLowerCase().matches("^password .+$")) {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.PASSWORD;
         }
