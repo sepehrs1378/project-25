@@ -189,7 +189,6 @@ public class DataBase {
         cardList.add(zahak);
 
         //6
-        //todo is this true? (what is the difference between holyBuff and immunityBuff?)
         Target kavehTarget = new Target(Constants.CELL, 1, 1, Constants.NONE, false, false, 0, Constants.NONE);
         HolyBuff kavehBuff = new HolyBuff(3, true, false, 1);
         Spell kavehSpell = new Spell("", "", 0, 1, 0, 0, 3, kavehTarget, kavehBuff, SpellActivationType.ON_CAST, "", false);
@@ -318,9 +317,12 @@ public class DataBase {
         cardList.add(ejdehaAtashAndaz);
 
         //20
-        //todo don't know how to make this one :/
+        Target shirDarandeTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        ImmunityBuff shirDarandeBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.HOLY_BUFF);
+        Spell shirDarandeSpell = new Spell("", "", 0, 0, 0, 0, 0, shirDarandeTarget, shirDarandeBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit shirDarande = new Unit("shop_shirDarande_1", "shirDarande", 600, 2, 1, 8, 1, 1, shirDarandeSpell, Constants.MINION, "", false);
+        cardList.add(shirDarande);
 
-        //todo ForAliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         //21
         Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2, Constants.ALL);
         NegativeArmorBuff marGhoolPeikarBuff = new NegativeArmorBuff(Integer.MAX_VALUE, true, false, 1);
@@ -407,23 +409,54 @@ public class DataBase {
         cardList.add(bahman);
 
         //32
+        Target ashkboosTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        ImmunityBuff ashkboosBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.WEAKER_AP);
+        Spell ashkboosSpell = new Spell("", "", 0, 0, 0, 0, 0, ashkboosTarget, ashkboosBuff, SpellActivationType.ON_DEFEND, "", false);
+        Unit ashkboos = new Unit("shop_ashkboos_1", "ashkboos", 400, 7, 14, 8, 1, 1, ashkboosSpell, Constants.MINION, "", false);
+        cardList.add(ashkboos);
 
         //33
+        Unit iraj = new Unit("shop_iraj_1", "iraj", 500, 4, 6, 20, 2, 3, null, Constants.MINION, "", false);
+        cardList.add(iraj);
 
         //34
+        Unit ghoolBozorg = new Unit("shop_ghoolBozorg_1", "ghoolBozorg", 600, 9, 30, 8, 1, 2, null, Constants.MINION, "", false);
+        cardList.add(ghoolBozorg);
 
         //35
+        Target ghoolDoSarTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell ghoolDoSarSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoolDoSarTarget, (Buff)null, SpellActivationType.ON_ATTACK, "", true);
+        Unit ghoolDoSar = new Unit("shop_ghoolDoSar_1", "ghoolDoSar", 550, 4, 10, 4, 1, 1, ghoolDoSarSpell, Constants.MINION, "", false);
+        cardList.add(ghoolDoSar);
 
         //36
+        Target naneSarmaTarget = new Target(Constants.MINION, 3, 3, Constants.ENEMY, false, false, 0, Constants.ALL);
+        StunBuff naneSarmaBuff = new StunBuff(1, true, false);
+        Spell naneSarmaSpell = new Spell("", "", 0, 0, 0, 0, 0, naneSarmaTarget, naneSarmaBuff, SpellActivationType.ON_SPAWN, "", false);
+        Unit naneSarma = new Unit("shop_naneSarma_1", "naneSarma", 500, 3, 3, 4, 2, 5, naneSarmaSpell, Constants.MINION, "", false);
+        cardList.add(naneSarma);
 
         //37
+        Target fooladZerehTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        HolyBuff fooladZerehBuff = new HolyBuff(Integer.MAX_VALUE, true, true, 12);
+        Spell fooladZerehSpell = new Spell("", "", 0, 0, 0, 0, 0, fooladZerehTarget, fooladZerehBuff, SpellActivationType.PASSIVE, "", false);
+        Unit fooladZereh = new Unit("shop_fooladZereh_1", "fooladZereh", 650, 3, 1, 1, 1, 1, fooladZerehSpell, Constants.MINION, "", false);
+        cardList.add(fooladZereh);
 
         //38
+        Target siavashTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        WeaknessBuff siavashBuff = new WeaknessBuff(1, false, false, 6, 0);
+        Spell siavashSpell = new Spell("", "", 0, 0, 0, 0, 0, siavashTarget, siavashBuff, SpellActivationType.ON_DEATH, "", false);
+        Unit siavash = new Unit("shop_siavash_1", "siavash", 350, 4, 8, 5, 1, 1, siavashSpell, Constants.MINION, "", false);
+        cardList.add(siavash);
 
         //39
+        Unit shahGhool = new Unit("shop_shahGhool_1", "shahGhool", 600, 5, 10, 4, 1, 1, null, Constants.MINION, "", true);
+        cardList.add(shahGhool)
 
         //40
-
+        Unit arzhangDiv = new Unit("shop_arzhangDiv_1", "arzhangDiv", 600, 3, 6, 6, 1, 1, null, Constants.MINION, "", true);
+        cardList.add(arzhangDiv);
     }
 
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
