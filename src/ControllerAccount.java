@@ -57,23 +57,25 @@ public class ControllerAccount {
 
     public void create() {
         String username = request.getCommand().split(" ")[2];
-        System.out.println("*");
         if (dataBase.doesAccountExist(username)) {
             view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
             return;
         }
         view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
-        System.out.println("*");
+        String password;
         while (true) {
             request.getNewCommand();
-            if (!request.getCommand().equals(""))
+            if (request.getType() != RequestType.PASSWORD) {
+                view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+                continue;
+            }
+            password = request.getCommand().split(" ")[1];
+            if (!password.equals(""))
                 //todo check for password validation
                 break;
             else
                 view.printOutputMessage(OutputMessageType.BAD_PASSWORD);
-
         }
-        String password = request.getCommand();
         Account account = new Account(username, password);
         dataBase.addAccount(account);
         controllerMainMenu.main();
