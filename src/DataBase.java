@@ -322,14 +322,26 @@ public class DataBase {
         cardList.add(ejdehaAtashAndaz);
 
         //20
-        //todo don't know how to make this on :/
+        //todo don't know how to make this one :/
 
         //todo ForAliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         //21
+        Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2,Constants.ALL );
+        HolyBuff marGhoolPeikarBuff = new HolyBuff(Integer.MAX_VALUE, true, false, -1);
+        Spell marGhoolPeikarSpell = new Spell("", "", 0, 0, 0, 0, 0, marGhoolPeikarTarget, marGhoolPeikarBuff, SpellActivationType.ON_SPAWN, "", false);
+        Unit marGhoolPeikar = new Unit("shop_marGhoolPeikar_1", "marGhoolPeikar", 500, 8, 14, 7, 2, 5, marGhoolPeikarSpell, Constants.MINION, "", false);
+        cardList.add(marGhoolPeikar);
 
         //22
+        Target gorgSefidTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        SequentialDamageBuff gorgSefidBuff = new SequentialDamageBuff(2, false, true, 6, 4);
+        Spell gorgSefidSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgSefidTarget, gorgSefidBuff, SpellActivationType.ON_ATTACK, "", false);
+        Unit gorgSefid = new Unit("shop_gorgSefid_1", "gorgSefid", 400, 5, 8, 2, 1, 1, gorgSefidSpell, Constants.MINION, "", false);
+        cardList.add(gorgSefid);
 
         //23
+        Target palangTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
+        WeaknessBuff palangBuff = new WeaknessBuff(1, false, false, 8, );
 
         //24
 
