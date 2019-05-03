@@ -7,6 +7,10 @@ class PlayerInfo {
     private List<Deck> decks = new ArrayList<>();
     //private Deck mainDeck;
 
+    public PlayerInfo(String playerName){
+        this.playerName=playerName;
+    }
+
     public void addCardToCollection(Card newCard) {
         collection.addCard(newCard);
     }

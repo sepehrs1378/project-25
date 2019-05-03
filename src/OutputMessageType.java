@@ -47,6 +47,8 @@ public enum OutputMessageType {
     INVALID_NUMBER("the number was out of battleGround boundaries"),
     NO_SUCH_CARD_IN_HAND("no such card in hand"),
     THIS_CELL_IS_FULL("this cell is full"),
+    PLEASE_ENTER_PASSWORD("please enter password:"),
+    PASSWORD_CANT_BE_EMPTY("password can't be empty please enter a correct password"),
     INVALID_COMMAND("invalid command"),
     CARD_INSERTED("Card Inserted"),
     NO_ERROR("");

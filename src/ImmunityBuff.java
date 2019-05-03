@@ -1,11 +1,11 @@
 public class ImmunityBuff extends Buff {
-    private String immunite;
+    private String immunity;
 
     public ImmunityBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, String immunite) {
+            , boolean isContinuous, String immunity) {
         super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
-        this.immunite = immunite;
+        this.immunity = immunity;
     }
 
     @Override
@@ -13,7 +13,7 @@ public class ImmunityBuff extends Buff {
         //todo looks gonna be empty
     }
 
-    public String getImmunite() {
-        return immunite;
+    public String getImmunity() {
+        return immunity;
     }
 }

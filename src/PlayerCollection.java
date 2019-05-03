@@ -193,9 +193,15 @@ public class PlayerCollection {
         Card card = findCardInShop(name);
         if (card != null) {
             Card cloneCard = card.clone();
-            loggedInAccount.getPlayerInfo().addCardToCollection(cloneCard);
             loggedInAccount.takeAwayMoney(card.getPrice());
             defineNewId(cloneCard);
+            if (cloneCard instanceof Unit){
+                Unit unit = ((Unit) cloneCard).clone();
+                loggedInAccount.getPlayerInfo().addCardToCollection(unit);
+            }else if (cloneCard instanceof Spell){
+                Spell spell = ((Spell) cloneCard).clone();
+                loggedInAccount.getPlayerInfo().addCardToCollection(spell);
+            }
             return;
         }
         Usable usable = findUsableInShop(name);
