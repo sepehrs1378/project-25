@@ -1,9 +1,13 @@
 public class Collectable extends Item {
     private Spell spell;
 
-    public Collectable(String itemID, String description, Spell spell) {
-        super(itemID, description);
+    public Collectable(String id, String description, Spell spell) {
+        super(id, description);
         this.spell = spell;
+    }
+
+    public Collectable clone() {
+        return new Collectable(getId(), getDescription(), spell.clone());
     }
 
     public Spell getSpell() {

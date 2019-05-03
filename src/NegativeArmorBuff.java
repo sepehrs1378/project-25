@@ -1,5 +1,5 @@
 public class NegativeArmorBuff extends Buff {
-    private int negativeArmorAmount;//todo use it
+    private int negativeArmorAmount;
 
     public NegativeArmorBuff(int durationTurn, boolean isContinuous
             , boolean isDispellable, int negativeArmorAmount) {
@@ -11,5 +11,9 @@ public class NegativeArmorBuff extends Buff {
     @Override
     public void doEffect() {
         //todo looks gonna be empty
+    }
+
+    public int getNegativeArmorAmount() {
+        return negativeArmorAmount;
     }
 }

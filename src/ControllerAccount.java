@@ -56,18 +56,35 @@ public class ControllerAccount {
     }
 
     public void create() {
-        request.getNewCommand();
-        for (int i = 0; i < dataBase.getAccounts().size(); i++) {
-            Account account = dataBase.getAccounts().get(i);
-            if (account.getUsername().equals(request.getCommand())) {
-                showError(OutputMessageType.USERNAME_ALREADY_EXISTS);
-                i = -1;
+        boolean isUserNameUnique = false;
+        while (!isUserNameUnique){
+            request.getNewCommand();
+            boolean flag= false;
+            for (Account account: dataBase.getAccounts()){
+                if(request.getCommand().equals(account.getUsername())){
+                    flag =true;
+                }
+            }
+            if (!flag){
+                isUserNameUnique = true;
+            }
+            else {
+                view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
             }
         }
-        Account account = new Account();
-        account.setUsername(request.getCommand());
-        request.getNewCommand();
-        account.setPassword(request.getCommand());
+        view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
+        String userName = request.getCommand();
+        while (true){
+            request.getNewCommand();
+            if(!request.getCommand().equals("")){
+                break;
+            }
+            else {
+                view.printOutputMessage(OutputMessageType.PASSWORD_CANT_BE_EMPTY);
+            }
+        }
+        String password =request.getCommand();
+        Account account = new Account(userName,password);
         dataBase.addAccount(account);
         controllerMainMenu.main();
     }

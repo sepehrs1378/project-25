@@ -1,11 +1,6 @@
-import com.sun.source.doctree.UnknownInlineTagTree;
-
-import java.awt.event.MouseAdapter;
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Spliterator;
 
 public class DataBase {
     private static DataBase ourInstance = new DataBase();
@@ -246,10 +241,10 @@ public class DataBase {
 
         //5
         //todo check if this is true? (i think it is good to add a powerBuff for each attack)
-        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
-        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
-        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
-        cardList.add(pahlevanFars);
+//        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+//        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
+//        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
+//        cardList.add(pahlevanFars);
 
         //6
         Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1", "sepahSalarFars", 800, 7, 12, 4, 1, 1, null, Constants.MINION, "", true);
@@ -295,7 +290,6 @@ public class DataBase {
         cardList.add(ghoolSangAndaz);
 
         //15
-        //todo what the hell is wrong with HP?
         Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
         Spell oghabSpell = new Spell("", "", 0, 0, 0, 0, 0, oghabTarget, oghabBuff, SpellActivationType.PASSIVE, "", false);
@@ -307,8 +301,10 @@ public class DataBase {
         cardList.add(divGorazSavar);
 
         //17
-        //todo same problem with KingGuardSpell from now on i,ll call it kingsGuardProblem :)
-        cardList.add(null);
+        Target ghoolTakCheshmTarget = new Target(Constants.MINION,3,3,Constants.ENEMY,false,false,0,Constants.ALL);
+        Spell ghoolTakCheshmSpell = new Spell("","",0,0,0,-2,0,ghoolTakCheshmTarget,(Buff)null,SpellActivationType.ON_DEATH,"",false);
+        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1","ghoolTakCheshm",500,7,12,11,2,4,ghoolTakCheshmSpell,Constants.MINION,"",false);
+        cardList.add(ghoolTakCheshm);
 
         //18
         Target marSamiTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
@@ -326,7 +322,7 @@ public class DataBase {
 
         //todo ForAliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         //21
-        Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2,Constants.ALL );
+        Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2, Constants.ALL);
         NegativeArmorBuff marGhoolPeikarBuff = new NegativeArmorBuff(Integer.MAX_VALUE, true, false, 1);
         Spell marGhoolPeikarSpell = new Spell("", "", 0, 0, 0, 0, 0, marGhoolPeikarTarget, marGhoolPeikarBuff, SpellActivationType.ON_SPAWN, "", false);
         Unit marGhoolPeikar = new Unit("shop_marGhoolPeikar_1", "marGhoolPeikar", 500, 8, 14, 7, 2, 5, marGhoolPeikarSpell, Constants.MINION, "", false);
@@ -435,7 +431,7 @@ public class DataBase {
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
         //1             //1
-        Target tajDanayeeTarget = new Target(Constants.NONE, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        Target tajDanayeeTarget = new Target(Constants.PLAYER, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
         ManaBuff tajDanayeeBuff = new ManaBuff(3, false, false, 1);
         Spell tajDanayeeSpell = new Spell("", "", 0, 0, 0, 0, 0, tajDanayeeTarget, tajDanayeeBuff, SpellActivationType.PASSIVE, "", false);
         Usable tajDanayee = new Usable("shop_tajDanayee_1", "", 300, tajDanayeeSpell);
@@ -448,46 +444,118 @@ public class DataBase {
         Usable namoosSepar = new Usable("shop_namoosSepar_1", "", 4000, namoosSeparSpell);
         usableList.add(namoosSepar);
 
-        //3
+        //3             //3
         //todo in item all spells are passive but this doesn't seem passive, i created the required parts but not Usable itself
         Target kamanDamolTarget = new Target(Constants.HERO, 1, 1, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //todo
         usableList.add(null);
 
-        //4
+        //4             //1
+        Target nooshadrooTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        Spell nooshdarooSpell = new Spell("", "", 0, 0, 0, 6, 0, nooshadrooTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable nooshdaroo = new Collectable("battle_nooshdaroo_1", "", nooshdarooSpell);
+        collectableList.add(nooshdaroo);
 
-        //5
+        //5             //2
+        Target tirDoShakhTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.RANGED_HYBRID);
+        Spell tirDoShakhSpell = new Spell("", "", 0, 0, 2, 0, 0, tirDoShakhTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", "", tirDoShakhSpell);
+        collectableList.add(tirDoShakh);
 
-        //6
+        //6             //4
+        Target parSimorghTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
+        Spell parSimorghSpell = new Spell("", "", 0, 0, -2, 0, 0, parSimorghTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false);
+        Usable parSimorgh = new Usable("shop_parSimorgh_1", "", 3500, parSimorghSpell);
+        usableList.add(parSimorgh);
 
-        //7
+        //7             //3
+        Target exirTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        PowerBuff exirBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 3);
+        Spell exirSpell = new Spell("", "", 0, 0, 0, 3, 0, exirTarget, exirBuff, SpellActivationType.ON_CAST, "", false);
+        Collectable exir = new Collectable("battle_exir_1", "exir", exirSpell);
+        collectableList.add(exir);
 
-        //8
+        //8             //4
+        Target majoonManaTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
+        ManaBuff majoonManaBuff = new ManaBuff(1, false, false, 3);
+        Spell majoonManaSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonManaTarget, majoonManaBuff, SpellActivationType.ON_CAST, "", false);
+        Collectable majoonMana = new Collectable("battle_majoonMana_1", "", majoonManaSpell);
+        collectableList.add(majoonMana);
 
-        //9
+        //9             //5
+        Target majoonRooinTaniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        HolyBuff majoonRooinTaniBuff = new HolyBuff(2, true, false, 10);
+        Spell majoonRooinTaniSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonRooinTaniTarget, majoonRooinTaniBuff, SpellActivationType.ON_CAST, "", false);
+        Collectable majoonRooinTani = new Collectable("battle_majoonRooinTani_1", "majoonRooinTani", majoonRooinTaniSpell);
+        collectableList.add(majoonRooinTani);
 
-        //10
+        //10            //6
+        collectableList.add(null);
+        //todo
 
-        //11
+        //11            //7
+        Target randomDamageTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        Spell randomDamageSpell = new Spell("", "", 0, 0, 2, 0, 0, randomDamageTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable randomDamage = new Collectable("battle_randomDamage_1", "randomDamage", randomDamageSpell);
+        collectableList.add(randomDamage);
 
-        //12
+        //12            //5
+        usableList.add(null);
+        //todo
+        //todo what does it mean?
 
-        //13
+        //13            //8
+        Target bladesOfAgilityTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        Spell bladesOfAgilitySpell = new Spell("", "", 0, 0, 6, 0, 0, bladesOfAgilityTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable bladesOfAgility = new Collectable("battle_bladesOfAgility_1", "bladesOfAgility", bladesOfAgilitySpell);
+        collectableList.add(bladesOfAgility);
 
-        //14
+        //14            //6
+        Target kingWisdomTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
+        ManaBuff kingWisdomBuff = new ManaBuff(Integer.MAX_VALUE, false, false, 1);
+        Spell kingWisdomSpell = new Spell("", "", 0, 0, 0, 0, 0, kingWisdomTarget, kingWisdomBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Usable kingWisdom = new Usable("shop_kingWisdom_1", "", 9000, kingWisdomSpell);
+        usableList.add(kingWisdom);
 
-        //15
+        //15            //7
+        usableList.add(null);
+        //todo
 
-        //16
+        //16            //8
+        usableList.add(null);
+        //todo
 
-        //17
+        //17            //9
+        usableList.add(null);
+        //todo
 
-        //18
+        //18            //10
+        usableList.add(null);
+        //todo
 
-        //19
+        //19            //11
+        usableList.add(null);
+        //todo
 
-        //20
+        //20            //9
+        Target shamshirChiniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
+        Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
+        collectableList.add(shamshirChini);
+
+    }
+
+    public void makeComputerPlayer1(){
+
+
+    }
+
+    public void makeComputerPlayer2(){
+
+    }
+
+    public void makeComputerPlayer3(){
 
     }
 
