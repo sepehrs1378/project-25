@@ -68,9 +68,21 @@ public class ControllerAccount {
             if (!flag){
                 isUserNameUnique = true;
             }
+            else {
+                view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
+            }
         }
+        view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
         String userName = request.getCommand();
-        request.getNewCommand();
+        while (true){
+            request.getNewCommand();
+            if(!request.getCommand().equals("")){
+                break;
+            }
+            else {
+                view.printOutputMessage(OutputMessageType.PASSWORD_CANT_BE_EMPTY);
+            }
+        }
         String password =request.getCommand();
         Account account = new Account(userName,password);
         dataBase.addAccount(account);
