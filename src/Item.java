@@ -10,6 +10,10 @@ public class Item {
         this.description = description;
     }
 
+    public Item clone() {
+        return new Item(id, description);
+    }
+
     public String getId() {
         return id;
     }
