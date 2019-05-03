@@ -452,7 +452,7 @@ public class DataBase {
 
         //39
         Unit shahGhool = new Unit("shop_shahGhool_1", "shahGhool", 600, 5, 10, 4, 1, 1, null, Constants.MINION, "", true);
-        cardList.add(shahGhool)
+        cardList.add(shahGhool);
 
         //40
         Unit arzhangDiv = new Unit("shop_arzhangDiv_1", "arzhangDiv", 600, 3, 6, 6, 1, 1, null, Constants.MINION, "", true);
