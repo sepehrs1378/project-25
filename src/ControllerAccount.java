@@ -56,14 +56,6 @@ public class ControllerAccount {
     }
 
     public void create() {
-//        request.getNewCommand();
-//        for (int i = 0; i < dataBase.getAccounts().size(); i++) {
-//            Account account = dataBase.getAccounts().get(i);
-//            if (account.getUsername().equals(request.getCommand())) {
-//                showError(OutputMessageType.USERNAME_ALREADY_EXISTS);
-//                i = -1;
-//            }
-//        }
         boolean isUserNameUnique = false;
         while (!isUserNameUnique){
             request.getNewCommand();
