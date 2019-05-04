@@ -161,6 +161,10 @@ public class Request {
             setCommandWithUnderLine();
             return RequestType.REMOVE;
         }
+        if(command.toLowerCase().matches("^start .+$")){
+            command = command.toLowerCase();
+            return RequestType.START;
+        }
         return RequestType.WRONG_REQUEST;
     }
 

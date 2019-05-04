@@ -19,8 +19,7 @@ abstract public class Buff {
     public abstract void doEffect();
 
     public void revive() {
-        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        this.startTurn = currentTurn;
+        this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
         this.setActive(true);
         //todo maybe not completed
     }

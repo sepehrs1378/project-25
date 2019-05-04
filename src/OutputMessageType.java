@@ -33,6 +33,7 @@ public enum OutputMessageType {
     UNIT_NOT_SELECTED("No unit is selected"),
     UNIT_MOVED("Selected unit moved"),
     TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
+    NO_FLAG_NUMBER("please enter number of flags in flags mode!"),
     ATTACKED_SUCCESSFULLY(""),
     ALREADY_ATTACKED("Unit has already attacked"),
     NO_CARD_IN_BATTLEGROUND("There is no such card in battle ground"),
