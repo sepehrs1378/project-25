@@ -23,41 +23,40 @@ public class ControllerCollection {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE:
-                    ourInstance.create();
+                    create();
                     break;
                 case EXIT:
                     didExit = true;
                     break;
                 case SHOW:
-                    ourInstance.show();
+                    show();
                     break;
                 case SEARCH:
-                    ourInstance.search();
+                    search();
                     break;
                 case SAVE:
                     //todo is it needed?
                     break;
                 case DELETE:
-                    ourInstance.delete(request);
+                    delete(request);
                     break;
                 case ADD:
-                    ourInstance.add();
+                    add();
                     break;
                 case REMOVE:
-                    ourInstance.remove();
+                    remove();
                     break;
                 case VALIDATE:
-                    ourInstance.validate(request);
+                    validate(request);
                     break;
                 case SELECT:
-                    ourInstance.select();
+                    select();
                     break;
                 case HELP:
-                    ourInstance.help();
+                    help();
                     break;
                 default:
-                    System.out.println("!!!!!! bad input in ControllerCollection.main");
-                    System.exit(-1);
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }

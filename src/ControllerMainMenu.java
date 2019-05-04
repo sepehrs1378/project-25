@@ -27,8 +27,7 @@ public class ControllerMainMenu {
                     help();
                     break;
                 default:
-                    System.out.println("!!!!!! bad input in ControllerMainMenu.main");
-                    System.exit(-1);
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }

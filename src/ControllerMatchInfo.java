@@ -27,5 +27,4 @@ public class ControllerMatchInfo {
                     matchInfo.getDiffInMinutes(), matchInfo.getDiffInHours(), matchInfo.getDiffInDays());
         }
     }
-
 }

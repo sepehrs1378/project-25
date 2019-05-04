@@ -58,8 +58,7 @@ public class ControllerBattleCommands {
                     didExit = true;
                     break;
                 default:
-                    System.out.println("!!!!!! bad input in ControllerBattleCommands.main");
-                    System.exit(-1);
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }
