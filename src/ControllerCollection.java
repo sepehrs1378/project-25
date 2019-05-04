@@ -62,7 +62,7 @@ public class ControllerCollection {
     }
 
     public void create() {
-        Pattern pattern = Pattern.compile("^create deck (.+)$");
+        Pattern pattern = Pattern.compile("^create deck (\\w+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
         if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -89,6 +89,8 @@ public class ControllerCollection {
         } else if (request.getCommand().equals("show all decks")) {
             Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
             view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
+        }else {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
         }
     }
 

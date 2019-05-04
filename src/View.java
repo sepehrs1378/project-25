@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.List;
 
 public class View {
@@ -230,7 +228,7 @@ public class View {
                 counter++;
 
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
-                System.out.println(outPut + "Minion - Name : " + card.getName() + " - Class : "
+                System.out.println(outPut + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : "
                         + ((((Unit) card).getSpecialPower() == null) ? "" : ((Unit) card).getSpecialPower().getDescription())
@@ -287,7 +285,7 @@ public class View {
                 counter++;
 
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
-                System.out.println(whiteSpace + "   " + counter + " : " + "Minion - Name : " + card.getName() + " - Class : "
+                System.out.println(whiteSpace + "   " + counter + " : " + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : " + ((Unit) card).getSpecialPower()
                         + " - Sell Cost : " + card.getPrice());
