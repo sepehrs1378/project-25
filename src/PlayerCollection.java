@@ -318,7 +318,7 @@ public class PlayerCollection {
             }
         }
         if (output.isEmpty()) {
-            output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.toString());
+            output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.getMessage());
         }
         return output;
     }
