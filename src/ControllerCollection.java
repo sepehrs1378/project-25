@@ -63,12 +63,12 @@ public class ControllerCollection {
     }
 
     public void create() {
-        if (!request.getCommand().matches("^create deck .+$")) {
+        Pattern pattern = Pattern.compile("^create deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()){
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^create deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
             case DECK_ALREADY_EXISTS:
                 view.printOutputMessage(OutputMessageType.DECK_ALREADY_EXISTS);
