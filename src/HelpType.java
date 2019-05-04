@@ -53,7 +53,7 @@ public enum HelpType {
             "\tenter collection\n" +
             "\tenter shop\n" +
             "\tenter battle\n" +
-            "\texit\n" +
+            "\tlogout\n" +
             "\thelp\n"),
     MODES_HELP("flags\none-flag\nclassic");
 

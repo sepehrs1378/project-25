@@ -25,8 +25,7 @@ public class ControllerGraveYard {
                     didExit = true;
                     break;
                 default:
-                    System.out.println("!!!!!! bad input in ControllerGraveYard.main");
-                    System.exit(-1);
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }
