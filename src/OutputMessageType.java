@@ -20,6 +20,7 @@ public enum OutputMessageType {
     CANT_HAVE_MORE_ITEMS("You can't have more items"),
     DECK_CREATED("Deck has been successfully created"),
     LOGGED_IN_SUCCESSFULLY("you have successfully logged into your account"),
+    ENTER_PASSWORD("please enter your password"),
     DECK_DOESNT_EXIST("Deck doesn't exist"),
     DECK_DELETED("Deck was deleted"),
     DECK_SELECTED("Deck was selected as main deck"),
