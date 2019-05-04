@@ -60,3 +60,5 @@ add sepehr_ejdehaAtashAndaz_1 to deck sepehr
 add sepehr_gen_1 to deck sepehr
 add sepehr_marSami_1 to deck sepehr
 add sepehr_iraj_1 to deck sepehr
+add sepehr_rostam_1 to deck sepehr
+add sepehr_tajDanayee_1 to deck sepehr
