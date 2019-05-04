@@ -36,6 +36,7 @@ buy ejdehaAtashAndaz
 buy marSami
 buy gen
 buy palang
+buy tajDanayee
 exit
 enter collection
 create deck deck1

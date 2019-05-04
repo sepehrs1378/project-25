@@ -44,6 +44,7 @@ public class ControllerAccount {
             view.printOutputMessage(OutputMessageType.ACCOUNT_DOESNT_EXIST);
             return;
         }
+        view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
         request.getNewCommand();
         Account account = dataBase.getAccountWithUsername(username);
         if (request.getCommand().split(" ").length < 2){
@@ -53,6 +54,7 @@ public class ControllerAccount {
         String password = request.getCommand().split(" ")[1];
         if (account.getPassword().equals(password)) {
             dataBase.setLoggedInAccount(account);
+            view.printOutputMessage(OutputMessageType.LOGGED_IN_SUCCESSFULLY);
             controllerMainMenu.main();
         } else
             showError(OutputMessageType.INVALID_USERNAME);

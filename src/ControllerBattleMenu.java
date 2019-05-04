@@ -21,10 +21,17 @@ public class ControllerBattleMenu {
                 case ENTER:
                     enter();
                     break;
+                case HELP:
+                    help();
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
+    }
+
+    private void help(){
+        view.printHelp(HelpType.CONTROLLER_BATTLEMENU_HELP);
     }
 
     private void enter() {

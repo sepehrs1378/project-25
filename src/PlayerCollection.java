@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class PlayerCollection {
@@ -25,13 +23,16 @@ public class PlayerCollection {
         Deck destinationDeck = getDeckByName(toDeck);
         Card card = getCardWithID(id);
         Item item = getItemWithID(id);
+        if (destinationDeck == null){
+            return OutputMessageType.DECK_DOESNT_EXIST;
+        }
         if (card == null && item == null) {
             return OutputMessageType.NOT_IN_COLLECTION;
-        } else if (destinationDeck.getItem() == item || destinationDeck.hasCard(card)) {
-            return OutputMessageType.CARD_ALREADY_IN_BATTLE;
+        } else if ((item!= null && destinationDeck.getItem() == item) ||(card!= null && destinationDeck.hasCard(card))) {
+            return OutputMessageType.CARD_ALREADY_IN_DECK;
         } else if (destinationDeck.getCards().size() == 20) {
             return OutputMessageType.DECK_IS_FULL;
-        } else if (destinationDeck.getHero() != null) {
+        } else if (card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.HERO)&&destinationDeck.getHero() != null) {
             return OutputMessageType.DECK_HAS_HERO;
         } else {
             if (card != null) {
@@ -45,7 +46,7 @@ public class PlayerCollection {
             } else {
                 destinationDeck.setItem(item);
             }
-            return OutputMessageType.NO_ERROR;
+            return OutputMessageType.CARD_ADDED_SUCCESSFULLY;
         }
     }
 
@@ -73,7 +74,7 @@ public class PlayerCollection {
                 }
             }
         }
-        return OutputMessageType.NO_ERROR;
+        return OutputMessageType.CARD_REMOVED_SUCCESSFULLY;
 
     }
 

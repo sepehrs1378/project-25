@@ -62,7 +62,7 @@ public class ControllerCollection {
     }
 
     public void create() {
-        Pattern pattern = Pattern.compile("^create deck (.+)$");
+        Pattern pattern = Pattern.compile("^create deck (\\w+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
         if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -98,7 +98,7 @@ public class ControllerCollection {
     }
 
     public void select() {
-        Pattern pattern = Pattern.compile("^select deck (.+)$");
+        Pattern pattern = Pattern.compile("^select deck (\\w+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
         if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -117,12 +117,12 @@ public class ControllerCollection {
     }
 
     public void validate(Request request) {
-        if (!request.getCommand().matches("^validate deck .+$")) {
+        Pattern pattern = Pattern.compile("^validate deck (\\w+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()){
             view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
             return;
         }
-        Pattern pattern = Pattern.compile("^validate deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
@@ -138,16 +138,16 @@ public class ControllerCollection {
     }
 
     public void add() {
-        if (request.getCommand().matches("add .+ to deck .+")) {
+        if (request.getCommand().matches("add \\w+ to deck \\w+")) {
             String[] order = request.getCommand().split(" ");
             OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo()
                     .getCollection().addCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
-        }
+        }else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void delete(Request request) {
-        Pattern pattern = Pattern.compile("^delete deck (.+)$");
+        Pattern pattern = Pattern.compile("^delete deck (\\w+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
         if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -166,19 +166,20 @@ public class ControllerCollection {
     }
 
     public void remove() {
-        if (request.getCommand().matches("remove .+ from deck .+")) {
+        if (request.getCommand().matches("remove \\w+ from deck \\w+")) {
             String[] order = request.getCommand().split("\\s+");
             OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                     .removeCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
-        }
+        }else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void search() {
-        if (request.getCommand().matches("search\\s+.+")) {
+        if (request.getCommand().matches("search\\s+\\w+")) {
             List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                     .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
             view.printList(output);
         }
+        else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 }

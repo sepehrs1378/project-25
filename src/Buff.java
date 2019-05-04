@@ -22,7 +22,7 @@ abstract public class Buff {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         this.startTurn = currentTurn;
         this.setActive(true);
-        //todo maybe not complete
+        //todo maybe not completed
     }
 
     public boolean isActive() {
