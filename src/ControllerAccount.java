@@ -44,6 +44,7 @@ public class ControllerAccount {
             view.printOutputMessage(OutputMessageType.ACCOUNT_DOESNT_EXIST);
             return;
         }
+        view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
         request.getNewCommand();
         Account account = dataBase.getAccountWithUsername(username);
         if (request.getCommand().split(" ").length < 2){
