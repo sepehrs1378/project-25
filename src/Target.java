@@ -11,11 +11,11 @@ class Target {
     private int length;
     private int manhattanDistance;
     private boolean isRandomSelecting;
-    private boolean isSelfTargeting;
+    private boolean doesAffectAllCards;
 
     public Target(String typeOfTarget, int width, int length,
                   String friendlyOrEnemy, boolean isRandomSelecting,
-                  boolean isSelfTargeting, int manhattanDistance, String targetUnitClass) {
+                  boolean doesAffectAllCards, int manhattanDistance, String targetUnitClass) {
         this.typeOfTarget = typeOfTarget;
         this.friendlyOrEnemy = friendlyOrEnemy;
         this.targetUnitClass = targetUnitClass;
@@ -23,12 +23,12 @@ class Target {
         this.length = length;
         this.manhattanDistance = manhattanDistance;
         this.isRandomSelecting = isRandomSelecting;
-        this.isSelfTargeting = isSelfTargeting;
+        this.doesAffectAllCards = doesAffectAllCards;
     }
 
     public Target clone() {
         return new Target(typeOfTarget, width, length,
-                friendlyOrEnemy, isRandomSelecting, isSelfTargeting,
+                friendlyOrEnemy, isRandomSelecting, doesAffectAllCards,
                 manhattanDistance, targetUnitClass);
     }
 

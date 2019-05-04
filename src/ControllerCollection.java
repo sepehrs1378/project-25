@@ -76,6 +76,7 @@ public class ControllerCollection {
                 view.printOutputMessage(OutputMessageType.DECK_CREATED);
                 break;
             default:
+                view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
         }
     }
 
