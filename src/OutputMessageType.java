@@ -38,6 +38,7 @@ public enum OutputMessageType {
     NO_CARD_IN_BATTLEGROUND("There is no such card in battle ground"),
     CARD_ALREADY_IN_DECK("Card exists in Deck"),
     CARD_ADDED_SUCCESSFULLY("Card added successfully"),
+    CARD_REMOVED_SUCCESSFULLY("Card removed successfully"),
     DECK_IS_FULL("Deck Is Full"),
     DECK_HAS_HERO("Deck Has Hero"),
     NO_SUCH_CARD_IN_DECK("no such card in deck"),

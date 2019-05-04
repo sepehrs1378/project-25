@@ -179,7 +179,7 @@ public class DataBase {
         cardList.add(ejdehaHaftSar);
 
         //4
-        Target rakhshTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
+        Target rakhshTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff rakhshBuff = new StunBuff(1, true, false);
         Spell rakhshSpell = new Spell("", "", 0, 1, 0, 0, 2, rakhshTarget, rakhshBuff, SpellActivationType.ON_CAST, "", false);
         Unit rakhsh = new Unit("shop_rakhsh_1", "rakhsh", 8000, 0, 50, 4, 1, 1, rakhshSpell, Constants.HERO, "", false);
@@ -200,9 +200,9 @@ public class DataBase {
         cardList.add(kaveh);
 
         //7
-        Target arashTarget = new Target(Constants.HERO_MINION,1,Integer.MAX_VALUE,Constants.ENEMY,false,false,0,Constants.ALL);
-        Spell arashSpell = new Spell("","",0,2,0,-4,2,arashTarget,(Buff)null,SpellActivationType.ON_CAST,"",false);
-        Unit arash = new Unit("shop_arash_1","arash",10000,0,30,2,2,6,arashSpell,Constants.HERO,"",false);
+        Target arashTarget = new Target(Constants.HERO_MINION, 1, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell arashSpell = new Spell("", "", 0, 2, 0, -4, 2, arashTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Unit arash = new Unit("shop_arash_1", "arash", 10000, 0, 30, 2, 2, 6, arashSpell, Constants.HERO, "", false);
         cardList.add(arash);
 
         //8
@@ -213,7 +213,7 @@ public class DataBase {
 
         //9
         //todo check this
-        Target esfandiarTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        Target esfandiarTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         HolyBuff esfandiarBuff = new HolyBuff(Integer.MAX_VALUE, false, true, 3);
         Spell esfandiarSpell = new Spell("", "", 0, 0, 0, 0, 0, esfandiarTarget, esfandiarBuff, SpellActivationType.ON_SPAWN, "", false);
         Unit esfandiar = new Unit("shop_esfandiar_1", "esfandiar", 12000, 0, 35, 3, 1, 3, esfandiarSpell, Constants.HERO, "", false);
@@ -295,10 +295,9 @@ public class DataBase {
         cardList.add(ghoolSangAndaz);
 
         //15
-        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
+        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
-        Spell oghabSpell = new Spell("", "", 0, 0, 0, 0, 0, oghabTarget, oghabBuff, SpellActivationType.PASSIVE, "", false);
-        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, oghabSpell, Constants.MINION, "", false);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, "", false, oghabBuff);
         cardList.add(oghab);
 
         //16
@@ -323,7 +322,7 @@ public class DataBase {
         cardList.add(ejdehaAtashAndaz);
 
         //20
-        Target shirDarandeTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        Target shirDarandeTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.MELEE);
         ImmunityBuff shirDarandeBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.HOLY_BUFF);
         Spell shirDarandeSpell = new Spell("", "", 0, 0, 0, 0, 0, shirDarandeTarget, shirDarandeBuff, SpellActivationType.ON_ATTACK, "", false);
         Unit shirDarande = new Unit("shop_shirDarande_1", "shirDarande", 600, 2, 1, 8, 1, 1, shirDarandeSpell, Constants.MINION, "", false);
@@ -415,7 +414,7 @@ public class DataBase {
         cardList.add(bahman);
 
         //32
-        Target ashkboosTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.MELEE);
+        Target ashkboosTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
         ImmunityBuff ashkboosBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.WEAKER_AP);
         Spell ashkboosSpell = new Spell("", "", 0, 0, 0, 0, 0, ashkboosTarget, ashkboosBuff, SpellActivationType.ON_DEFEND, "", false);
         Unit ashkboos = new Unit("shop_ashkboos_1", "ashkboos", 400, 7, 14, 8, 1, 1, ashkboosSpell, Constants.MINION, "", false);
@@ -450,7 +449,7 @@ public class DataBase {
         cardList.add(fooladZereh);
 
         //38
-        Target siavashTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Target siavashTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, true, 0, Constants.ALL);
         WeaknessBuff siavashBuff = new WeaknessBuff(1, false, false, 6, 0);
         Spell siavashSpell = new Spell("", "", 0, 0, 0, 0, 0, siavashTarget, siavashBuff, SpellActivationType.ON_DEATH, "", false);
         Unit siavash = new Unit("shop_siavash_1", "siavash", 350, 4, 8, 5, 1, 1, siavashSpell, Constants.MINION, "", false);
@@ -558,31 +557,51 @@ public class DataBase {
         usableList.add(kingWisdom);
 
         //15            //7
-        //usableList.add(null);
-        //todo
+        Target assassinationDaggerSpellTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        Spell assassinationDaggerSpellSpell = new Spell("", "", 0, 0, 0, -1, 0, assassinationDaggerSpellTarget, (Buff) null, SpellActivationType.ON_SPAWN, "", false);
+        Target assassinationDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
+        Usable assassinationDagger = new Usable("shop_assassinationDagger_1", "", 15000, assassinationDaggerSpell);
+        usableList.add(assassinationDagger);
 
         //16            //8
-        //usableList.add(null);
-        //todo
+        Target poisonousDaggerSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
+        PoisonBuff poisonousDaggerSpellBuff = new PoisonBuff(1, true, false, 1);
+        Spell poisonousDaggerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerSpellTarget, poisonousDaggerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
+        Target poisonousDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, poisonousDaggerSpellSpell);
+        Usable poisonousDagger = new Usable("shop_poisonousDagger_1", "", 7000, poisonousDaggerSpell);
+        usableList.add(poisonousDagger);
 
         //17            //9
-        //usableList.add(null);
-        //todo
+        Target shockHammerSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
+        DisarmBuff shockHammerSpellBuff = new DisarmBuff(1, true, false);
+        Spell shockHammerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerSpellTarget, shockHammerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
+        Target shockHammerTarget = new Target(Constants.WHOLE_HEROES, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, shockHammerSpellSpell);
+        Usable shockHammer = new Usable("shop_shockHammer_1", "", 15000, shockHammerSpell);
+        usableList.add(shockHammer);
 
         //18            //10
-        //usableList.add(null);
-        //todo
+        Target soulEaterSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
+        PowerBuff soulEaterSpellBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 1);
+        Spell soulEaterSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterSpellTarget, soulEaterSpellBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Target soulEaterTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, soulEaterSpellSpell);
+        Usable soulEater = new Usable("shop_soulEater_1", "", 25000, soulEaterSpell);
 
         //19            //11
-        //usableList.add(null);
-        //todo
+        Target ghoslTamidTarget = new Target(Constants.WHOLE_MINIONS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
+        HolyBuff ghoslTamidBuff = new HolyBuff(2, true, false, 1);
+        Spell ghoslTamidSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoslTamidTarget, ghoslTamidBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Usable ghoslTamid = new Usable("shop_ghoslTamid_1", "", 20000, ghoslTamidSpell);
+        usableList.add(ghoslTamid);
 
         //20            //9
         Target shamshirChiniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
         Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
         Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
         collectableList.add(shamshirChini);
-
     }
 
     public List<Card> getCardList() {

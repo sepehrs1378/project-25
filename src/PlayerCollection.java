@@ -74,7 +74,7 @@ public class PlayerCollection {
                 }
             }
         }
-        return OutputMessageType.NO_ERROR;
+        return OutputMessageType.CARD_REMOVED_SUCCESSFULLY;
 
     }
 

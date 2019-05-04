@@ -7,7 +7,7 @@ public class Unit extends Card {
     private int ap;
     private int minRange;
     private int maxRange;
-    private Spell specialPower;
+    private List<Spell> specialPowers = new ArrayList<>();
     private List<Flag> flags = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private String heroOrMinion;
@@ -24,15 +24,30 @@ public class Unit extends Card {
         this.ap = ap;
         this.minRange = minRange;
         this.maxRange = maxRange;
-        this.specialPower = specialPower;
+        this.specialPowers.add(specialPower);
         this.heroOrMinion = heroOrMinion;
         this.description = description;
         this.canUseComboAttack = canUseComboAttack;
     }
 
+    public Unit(String id, String name, int price, int mana, int hp, int ap,
+                int minRange, int maxRange, Spell specialPower, String heroOrMinion,
+                String description, boolean canUseComboAttack, Buff buff) {
+        super(id, name, price, mana);
+        this.hp = hp;
+        this.ap = ap;
+        this.minRange = minRange;
+        this.maxRange = maxRange;
+        this.specialPowers.add(specialPower);
+        this.heroOrMinion = heroOrMinion;
+        this.description = description;
+        this.canUseComboAttack = canUseComboAttack;
+        this.buffs.add(buff);
+    }
+
     public Unit clone() {
         return new Unit(getId(), getName(), getPrice(),
-                getMana(), hp, ap, minRange, maxRange, ((specialPower == null) ? null : specialPower.clone()),
+                getMana(), hp, ap, minRange, maxRange, ((specialPowers == null) ? null : specialPowers.clone()),
                 heroOrMinion, description, canUseComboAttack);
     }
 
@@ -72,8 +87,10 @@ public class Unit extends Card {
                 getUnitWithID(targetId);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
         targetedUnit.changeHp(-damageDealt);
-        if (this.specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
-            this.specialPower.doSpell(targetedUnit);
+        for (Spell specialPower : specialPowers) {
+            if (specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
+                specialPower.doSpell(targetedUnit);
+        }
     }
 
     public OutputMessageType attack(String targetId) {
@@ -113,7 +130,7 @@ public class Unit extends Card {
     }
 
     public void counterAttackUnit(Unit unit) {
-        if (!this.isDisarmed() && !this.isStuned()) {
+        if (!this.isDisarmed() && !this.isStunned()) {
             attackUnit(unit.getId());
         }
     }
@@ -122,7 +139,7 @@ public class Unit extends Card {
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
             return false;
-        if (this.isStuned())
+        if (this.isStunned())
             return false;
         if (this.didAttackThisTurn)
             return false;
@@ -203,7 +220,7 @@ public class Unit extends Card {
         return false;
     }
 
-    public boolean isStuned() {
+    public boolean isStunned() {
         for (Buff buff : buffs) {
             if (buff instanceof StunBuff)
                 return true;
@@ -270,11 +287,11 @@ public class Unit extends Card {
         this.canUseComboAttack = canUseComboAttack;
     }
 
-    public Spell getSpecialPower() {
-        return specialPower;
+    public List<Spell> getSpecialPowers() {
+        return specialPowers;
     }
 
-    public void setSpecialPower(Spell specialPower) {
-        this.specialPower = specialPower;
+    public Spell getMainSpecialPower() {
+        return specialPowers.get(0);
     }
 }

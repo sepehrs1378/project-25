@@ -157,6 +157,18 @@ public class Request {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.PASSWORD;
         }
+        if(command.toLowerCase().matches("^remove .+$")){
+            String[] strings = command.split("\\s+");
+            String output="";
+            for (String string:strings){
+                if(string.contains("_")){
+                    output+=string+" ";
+                }
+                else output+= string.toLowerCase()+" ";
+            }
+            command = output.trim();
+            return RequestType.REMOVE;
+        }
         return RequestType.WRONG_REQUEST;
     }
 }

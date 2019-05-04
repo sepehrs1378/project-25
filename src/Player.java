@@ -118,7 +118,7 @@ public class Player {
     }
 
     public OutputMessageType select(String id) {
-        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStuned())
+        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStunned())
             return OutputMessageType.UNIT_IS_STUNNED;
         if (doesHaveCollectable(id)) {
             selectedUnit = null;
