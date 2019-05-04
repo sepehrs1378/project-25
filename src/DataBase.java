@@ -200,8 +200,10 @@ public class DataBase {
         cardList.add(kaveh);
 
         //7
-        //todo abstract like kingsGuardSpell
-        //cardList.add(null);
+        Target arashTarget = new Target(Constants.HERO_MINION,1,Integer.MAX_VALUE,Constants.ENEMY,false,false,0,Constants.ALL);
+        Spell arashSpell = new Spell("","",0,2,0,-4,2,arashTarget,(Buff)null,SpellActivationType.ON_CAST,"",false);
+        Unit arash = new Unit("shop_arash_1","arash",10000,0,30,2,2,6,arashSpell,Constants.HERO,"",false);
+        cardList.add(arash);
 
         //8
         Target afsanehTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
