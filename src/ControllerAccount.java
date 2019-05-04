@@ -53,6 +53,7 @@ public class ControllerAccount {
         String password = request.getCommand().split(" ")[1];
         if (account.getPassword().equals(password)) {
             dataBase.setLoggedInAccount(account);
+            view.printOutputMessage(OutputMessageType.LOGGED_IN_SUCCESSFULLY);
             controllerMainMenu.main();
         } else
             showError(OutputMessageType.INVALID_USERNAME);
