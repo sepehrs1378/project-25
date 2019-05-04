@@ -54,6 +54,6 @@ public class Card {
     }
 
     public Card clone() {
-        return new Card(getId(), getName(), getPrice(), getMana());
+        return new Card(id, name, price, mana);
     }
 }

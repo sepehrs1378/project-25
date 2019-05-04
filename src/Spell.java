@@ -47,7 +47,7 @@ class Spell extends Card {
     public void doSpell(Unit unit) {
         addBuffsToUnit(unit);
         if (isDispeller())
-            dispellBuffsOfUnit(unit);
+            dispelBuffsOfUnit(unit);
         unit.changeAp(getHpChange());
         unit.changeHp(getApChange());
     }
@@ -82,7 +82,7 @@ class Spell extends Card {
                 continue;
             addBuffsToUnit(unit);
             if (isDispeller)
-                dispellBuffsOfUnit(unit);
+                dispelBuffsOfUnit(unit);
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
@@ -98,7 +98,7 @@ class Spell extends Card {
         }
     }
 
-    private void dispellBuffsOfUnit(Unit unit) {
+    private void dispelBuffsOfUnit(Unit unit) {
         int i = 0;
         //if unit is friendly we remove negative buffs
         if (dataBase.getCurrentBattle().getBattleGround()
