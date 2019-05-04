@@ -62,12 +62,12 @@ public class ControllerCollection {
     }
 
     public void create() {
-        if (!request.getCommand().matches("^create deck .+$")) {
+        Pattern pattern = Pattern.compile("^create deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^create deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
             case DECK_ALREADY_EXISTS:
                 view.printOutputMessage(OutputMessageType.DECK_ALREADY_EXISTS);
@@ -98,12 +98,12 @@ public class ControllerCollection {
     }
 
     public void select() {
-        if (!request.getCommand().matches("^select deck .+$")) {
+        Pattern pattern = Pattern.compile("^select deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^select deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection()
                 .selectDeckAsMain(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
@@ -147,12 +147,12 @@ public class ControllerCollection {
     }
 
     public void delete(Request request) {
-        if (request.getCommand().matches("^delete deck .+$")) {
+        Pattern pattern = Pattern.compile("^delete deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^delete deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);

@@ -3,7 +3,8 @@ import java.net.PortUnreachableException;
 public class Constants {
     private Constants() {
     }
-    public static final int MONEY= 1000000;
+
+    public static final int MONEY = 1000000;
 
     public static final String NONE = "none";
     public static final String ALL = "all";

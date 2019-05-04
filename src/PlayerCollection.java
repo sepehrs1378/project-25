@@ -164,8 +164,7 @@ public class PlayerCollection {
                 buySuccessful(name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
-        }
-        else if (dataBase.doesUsableExist(name)) {
+        } else if (dataBase.doesUsableExist(name)) {
             Usable usable = dataBase.getUsableWithName(name);
             if (dataBase.getLoggedInAccount().getMoney() < usable.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
@@ -205,43 +204,42 @@ public class PlayerCollection {
 
     private void defineNewId(Object obj) {
         PlayerCollection collection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-        boolean didExit=false;
-        int counter =1;
+        boolean didExit = false;
+        int counter = 1;
         String id = "";
-        if(obj instanceof Card)
-        {
-            while(!didExit){
-                id = dataBase.getLoggedInAccount().getUsername()+"_"+((Card)obj).getName()+"_"+counter;
-                didExit = isIdUnique(collection.getCards(),id);
+        if (obj instanceof Card) {
+            while (!didExit) {
+                id = dataBase.getLoggedInAccount().getUsername() + "_" + ((Card) obj).getName() + "_" + counter;
+                didExit = isIdUnique(collection.getCards(), id);
                 counter++;
             }
-            ((Card)obj).setId(id);
-        }else if(obj instanceof Usable){
-            while(!didExit){
-                id = dataBase.getLoggedInAccount().getUsername()+"_"+((Usable)obj).getName()+"_"+counter;
-                didExit = isIdUnique(id,collection.getItems());
+            ((Card) obj).setId(id);
+        } else if (obj instanceof Usable) {
+            while (!didExit) {
+                id = dataBase.getLoggedInAccount().getUsername() + "_" + ((Usable) obj).getName() + "_" + counter;
+                didExit = isIdUnique(id, collection.getItems());
                 counter++;
             }
-            ((Usable)obj).setId(id);
+            ((Usable) obj).setId(id);
         }
     }
 
-    public boolean isIdUnique(List<Card> collection,String id){
-        boolean isUnique=true;
-        for (Card card:collection){
-            if(card.getId().equals(id)){
-                isUnique=false;
+    public boolean isIdUnique(List<Card> collection, String id) {
+        boolean isUnique = true;
+        for (Card card : collection) {
+            if (card.getId().equals(id)) {
+                isUnique = false;
                 break;
             }
         }
         return isUnique;
     }
 
-    public boolean isIdUnique(String id,List<Usable> collection){
-        boolean isUnique=true;
-        for (Usable usable:collection){
-            if(usable.getId().equals(id)){
-                isUnique=false;
+    public boolean isIdUnique(String id, List<Usable> collection) {
+        boolean isUnique = true;
+        for (Usable usable : collection) {
+            if (usable.getId().equals(id)) {
+                isUnique = false;
                 break;
             }
         }
@@ -320,7 +318,7 @@ public class PlayerCollection {
             }
         }
         if (output.isEmpty()) {
-            output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.toString());
+            output.add(OutputMessageType.NO_SUCH_CARD_IN_COLLECTION.getMessage());
         }
         return output;
     }

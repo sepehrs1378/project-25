@@ -46,6 +46,10 @@ public class ControllerAccount {
         }
         request.getNewCommand();
         Account account = dataBase.getAccountWithUsername(username);
+        if (request.getCommand().split(" ").length < 2){
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
         String password = request.getCommand().split(" ")[1];
         if (account.getPassword().equals(password)) {
             dataBase.setLoggedInAccount(account);
@@ -55,7 +59,7 @@ public class ControllerAccount {
     }
 
     public void create() {
-        if (!request.getCommand().matches("^create account .+$")) {
+        if (request.getCommand().split(" ").length < 3){
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
@@ -80,6 +84,7 @@ public class ControllerAccount {
                 view.printOutputMessage(OutputMessageType.BAD_PASSWORD);
         }
         Account account = new Account(username, password);
+        dataBase.setLoggedInAccount(account);
         dataBase.addAccount(account);
         controllerMainMenu.main();
     }
