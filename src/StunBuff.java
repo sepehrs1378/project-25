@@ -6,6 +6,6 @@ public class StunBuff extends Buff {
 
     @Override
     public void doEffect() {
-        //todo looks gonna be empty
+        //todo looks like it's gonna' be empty
     }
 }

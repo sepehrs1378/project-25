@@ -116,12 +116,12 @@ public class ControllerCollection {
     }
 
     public void validate(Request request) {
-        if (!request.getCommand().matches("^validate deck .+$")) {
+        Pattern pattern = Pattern.compile("^validate deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()){
             view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
             return;
         }
-        Pattern pattern = Pattern.compile("^validate deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
