@@ -46,9 +46,9 @@ public class Unit extends Card {
     }
 
     public Unit clone() {
-        return new Unit(getId(), getName(), getPrice(),
-                getMana(), hp, ap, minRange, maxRange, ((specialPowers == null) ? null : specialPowers.clone()),
-                heroOrMinion, description, canUseComboAttack);
+        Unit cloneUnit = new Unit(getId(), getName(), getPrice(), getMana(), hp, ap, minRange, maxRange, getMainSpecialPower(), heroOrMinion, description, canUseComboAttack);
+        cloneUnit.specialPowers = this.specialPowers;
+        return cloneUnit;
     }
 
     public int getHp() {
