@@ -82,4 +82,3 @@ hs_err_pid*
 
 *.iml
 target/
-!/src/input1.txt

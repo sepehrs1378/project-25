@@ -39,5 +39,24 @@ buy palang
 buy tajDanayee
 exit
 enter collection
-create deck deck1
-create deck deck2
+create deck sepehr
+add sepehr_palang_1 to deck sepehr
+add sepehr_bahman_1 to deck sepehr
+add sepehr_kamandarFars_1 to deck sepehr
+add sepehr_totalDisarm_1 to deck sepehr
+add sepehr_areaDispel_1 to deck sepehr
+add sepehr_madness_1 to deck sepehr
+add sepehr_fireBall_1 to deck sepehr
+add sepehr_poisonLake_1 to deck sepehr
+add sepehr_allPower_1 to deck sepehr
+add sepehr_naneSarma_1 to deck sepehr
+add sepehr_kamandarFars_2 to deck sepehr
+add sepehr_shamshirZanFars_1 to deck sepehr
+add sepehr_divSiah_1 to deck sepehr
+add sepehr_piran_1 to deck sepehr
+add sepehr_shahGhool_1 to deck sepehr
+add sepehr_jadoogar_1 to deck sepehr
+add sepehr_ejdehaAtashAndaz_1 to deck sepehr
+add sepehr_gen_1 to deck sepehr
+add sepehr_marSami_1 to deck sepehr
+add sepehr_iraj_1 to deck sepehr
