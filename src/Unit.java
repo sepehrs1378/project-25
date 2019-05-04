@@ -290,4 +290,8 @@ public class Unit extends Card {
     public List<Spell> getSpecialPowers() {
         return specialPowers;
     }
+
+    public Spell getMainSpecialPower() {
+        return specialPowers.get(0);
+    }
 }
