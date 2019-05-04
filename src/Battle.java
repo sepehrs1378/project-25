@@ -99,9 +99,9 @@ public class Battle {
             player1.getGraveYard().addDeadCard(unit);
         if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
             player2.getGraveYard().addDeadCard(unit);
-        if (unit.getSpecialPower().getActivationType()
+        if (unit.getSpecialPowers().getActivationType()
                 .equals(SpellActivationType.ON_DEATH))
-            unit.getSpecialPower().doSpell(battleGround.getCoordinationOfUnit(unit)[0]
+            unit.getSpecialPowers().doSpell(battleGround.getCoordinationOfUnit(unit)[0]
                     , battleGround.getCoordinationOfUnit(unit)[1]);
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
     }
@@ -268,10 +268,10 @@ public class Battle {
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
-        if (hero.getSpecialPower().getMana() <= player.getMana()
-                && hero.getSpecialPower().getCoolDown() == 0
-                && hero.getSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
-            hero.getSpecialPower().doSpell(row, column);
+        if (hero.getSpecialPowers().getMana() <= player.getMana()
+                && hero.getSpecialPowers().getCoolDown() == 0
+                && hero.getSpecialPowers().getActivationType() == SpellActivationType.ON_CAST) {
+            hero.getSpecialPowers().doSpell(row, column);
         } else {
             return OutputMessageType.NO_HERO;
         }

@@ -36,3 +36,7 @@ buy ejdehaAtashAndaz
 buy marSami
 buy gen
 buy palang
+exit
+enter collection
+create deck deck1
+create deck deck2

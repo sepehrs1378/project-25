@@ -7,6 +7,7 @@ class Spell extends Card {
     private int hpChange;
     private int coolDown;
     private Target target;
+    private List<Spell> addedSpells = new ArrayList<>();
     private List<Buff> addedBuffs = new ArrayList<>();
     private SpellActivationType activationType;
     private String description;
@@ -30,9 +31,9 @@ class Spell extends Card {
 
     public Spell(String id, String name, int price, int mana,
                  int apChange, int hpChange, int coolDown,
-                 Target target, List<Buff> addedBuffs
-            , SpellActivationType activationType
-            , String description, boolean isDispeller) {
+                 Target target, List<Buff> addedBuffs,
+                 SpellActivationType activationType,
+                 String description, boolean isDispeller) {
         super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
@@ -42,6 +43,24 @@ class Spell extends Card {
         this.description = description;
         this.isDispeller = isDispeller;
         this.addedBuffs = addedBuffs;
+    }
+
+    public Spell(String id, String name, int price, int mana,
+                 int apChange, int hpChange, int coolDown,
+                 Target target, Buff addedBuff,
+                 SpellActivationType activationType,
+                 String description, boolean isDispeller,
+                 Spell addedSpell) {
+        super(id, name, price, mana);
+        this.apChange = apChange;
+        this.hpChange = hpChange;
+        this.coolDown = coolDown;
+        this.target = target;
+        this.activationType = activationType;
+        this.description = description;
+        this.isDispeller = isDispeller;
+        this.addedBuffs.add(addedBuff);
+        this.addedSpells.add(addedSpell);
     }
 
     public void doSpell(Unit unit) {
@@ -81,6 +100,7 @@ class Spell extends Card {
                     isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
                 continue;
             addBuffsToUnit(unit);
+            addSpellsToUnit(unit);
             if (isDispeller)
                 dispellBuffsOfUnit(unit);
             unit.changeAp(getApChange());
@@ -88,8 +108,14 @@ class Spell extends Card {
         }
     }
 
+    private void addSpellsToUnit(Unit unit) {
+        for (Spell spell : addedSpells) {
+            unit.getSpecialPowers().add(spell);
+        }
+    }
+
     private void addBuffsToUnit(Unit unit) {
-        for (Buff buff : getAddedBuffs()) {
+        for (Buff buff : addedBuffs) {
             if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
                 continue;
             if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
