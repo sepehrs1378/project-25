@@ -33,8 +33,7 @@ public class ControllerAccount {
                     didExit = true;
                     break;
                 default:
-                    System.out.println("!!!!!! bad requestType in ControllerAccount.main");
-                    System.exit(-1);
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }

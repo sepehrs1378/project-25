@@ -25,6 +25,8 @@ public class ControllerMultiPlayerMenu {
                 case EXIT:
                     didExit = true;
                     break;
+                default:
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }

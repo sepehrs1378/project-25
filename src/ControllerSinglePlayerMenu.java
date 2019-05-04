@@ -22,6 +22,8 @@ public class ControllerSinglePlayerMenu {
                 case EXIT:
                     didExit = true;
                     break;
+                default:
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }

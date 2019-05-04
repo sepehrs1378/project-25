@@ -21,6 +21,8 @@ public class ControllerBattleMenu {
                 case ENTER:
                     enter();
                     break;
+                default:
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }
