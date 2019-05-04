@@ -1,0 +1,38 @@
+create account parham
+password 1111
+help
+logout
+create account parham
+create account ali
+password 2222
+logout
+create account sepehr
+password 3333
+logout
+show leaderboard
+login sepehr
+password 3333
+enter shop
+show
+show collection
+buy kamandarFars
+buy rostam
+buy totalDisarm
+buy areaDispel
+buy madness
+buy fireBall
+buy poisonLake
+buy allPower
+buy naneSarma
+buy kamandarFars
+buy shamshirZanFars
+buy divSiah
+buy piran
+buy bahman
+buy iraj
+buy shahGhool
+buy jadoogar
+buy ejdehaAtashAndaz
+buy marSami
+buy gen
+buy palang

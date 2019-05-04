@@ -55,6 +55,10 @@ public class ControllerAccount {
     }
 
     public void create() {
+        if (!request.getCommand().matches("^create account .+$")) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            return;
+        }
         String username = request.getCommand().split(" ")[2];
         if (dataBase.doesAccountExist(username)) {
             view.printOutputMessage(OutputMessageType.USERNAME_ALREADY_EXISTS);
