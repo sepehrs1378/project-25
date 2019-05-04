@@ -77,6 +77,7 @@ public class ControllerAccount {
                 view.printOutputMessage(OutputMessageType.BAD_PASSWORD);
         }
         Account account = new Account(username, password);
+        dataBase.setLoggedInAccount(account);
         dataBase.addAccount(account);
         controllerMainMenu.main();
     }
