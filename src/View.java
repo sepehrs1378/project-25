@@ -228,7 +228,7 @@ public class View {
                 counter++;
 
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
-                System.out.println(outPut + "Minion - Name : " + card.getName() + " - Class : "
+                System.out.println(outPut + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : "
                         + ((((Unit) card).getSpecialPower() == null) ? "" : ((Unit) card).getSpecialPower().getDescription())
@@ -261,6 +261,11 @@ public class View {
     }
 
     public void showDeck(Deck deck, String whiteSpace) {
+        if(deck == null)
+        {
+            System.out.println("this deck doesn't exist");
+            return;
+        }
         System.out.println(whiteSpace + "Heroes :");
         int counter = 1;
         if(deck.getHero() != null){
@@ -281,7 +286,7 @@ public class View {
                 counter++;
 
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
-                System.out.println(whiteSpace + "   " + counter + " : " + "Minion - Name : " + card.getName() + " - Class : "
+                System.out.println(whiteSpace + "   " + counter + " : " + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : " + ((Unit) card).getSpecialPower()
                         + " - Sell Cost : " + card.getPrice());
