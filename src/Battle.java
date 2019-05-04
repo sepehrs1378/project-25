@@ -99,10 +99,11 @@ public class Battle {
             player1.getGraveYard().addDeadCard(unit);
         if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
             player2.getGraveYard().addDeadCard(unit);
-        if (unit.getSpecialPowers().getActivationType()
-                .equals(SpellActivationType.ON_DEATH))
-            unit.getSpecialPowers().doSpell(battleGround.getCoordinationOfUnit(unit)[0]
-                    , battleGround.getCoordinationOfUnit(unit)[1]);
+        for (Spell specialPower : unit.getSpecialPowers()) {
+            if (specialPower.equals(SpellActivationType.ON_DEATH))
+                specialPower.doSpell(battleGround.getCoordinationOfUnit(unit)[0]
+                        , battleGround.getCoordinationOfUnit(unit)[1]);
+        }
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
     }
 
@@ -268,10 +269,11 @@ public class Battle {
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
-        if (hero.getSpecialPowers().getMana() <= player.getMana()
-                && hero.getSpecialPowers().getCoolDown() == 0
-                && hero.getSpecialPowers().getActivationType() == SpellActivationType.ON_CAST) {
-            hero.getSpecialPowers().doSpell(row, column);
+        Spell mainSpecialPower = hero.getMainSpecialPower();
+        if (hero.getMainSpecialPower().getMana() <= player.getMana()
+                && hero.getMainSpecialPower().getCoolDown() == 0
+                && hero.getMainSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
+            hero.getMainSpecialPower().doSpell(row, column);
         } else {
             return OutputMessageType.NO_HERO;
         }

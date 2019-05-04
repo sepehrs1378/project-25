@@ -38,7 +38,7 @@ public class View {
                     System.out.println("\t" + j++ + " : Type : Minion - Name : " + unit.getName() + " - Class : " +
                             unit.getClass() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
                             " - MP : " + unit.getMana() + " - Special power : " +
-                            ((unit.getSpecialPower() == null) ? "" : unit.getSpecialPower().getDescription()));
+                            ((unit.getMainSpecialPower() == null) ? "" : unit.getMainSpecialPower().getDescription()));
                 }
             }
         }
@@ -54,7 +54,7 @@ public class View {
                 } else if (unit.getHeroOrMinion().equals(Constants.HERO)) {
                     System.out.println("\t" + j++ + " : Name : " + unit.getName() + " - AP : " + unit.getAp() + " - HP : " +
                             unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
-                            ((unit.getSpecialPower() == null) ? "" : unit.getDescription()));
+                            ((unit.getMainSpecialPower() == null) ? "" : unit.getDescription()));
                 }
             }
         }
@@ -83,7 +83,7 @@ public class View {
     public void showHeroInfo(Unit hero) {
         System.out.println("Name: " + hero.getId().split("_")[1] + " - AP: " + hero.getAp() +
                 " - HP: " + hero.getHp() + " - Class: " + hero.getUnitClass() +
-                " - Special Power: " + hero.getSpecialPower().getDescription() +
+                " - Special Power: " + hero.getMainSpecialPower().getDescription() +
                 " - Sell Cost: " + hero.getPrice());
     }
 
@@ -206,7 +206,7 @@ public class View {
                 Unit unit = (Unit) card;
                 System.out.println("    " + counter + " : Name: " + unit.getName() + " - AP : " + unit.getAp()
                         + " - HP : " + unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special Power : " +
-                        ((unit.getSpecialPower() == null) ? "" : unit.getSpecialPower().getDescription())
+                        ((unit.getMainSpecialPower() == null) ? "" : unit.getMainSpecialPower().getDescription())
                         + " - Sell cost : " + unit.getPrice());
                 counter++;
             }
@@ -231,7 +231,7 @@ public class View {
                 System.out.println(outPut + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : "
-                        + ((((Unit) card).getSpecialPower() == null) ? "" : ((Unit) card).getSpecialPower().getDescription())
+                        + ((((Unit) card).getMainSpecialPower() == null) ? "" : ((Unit) card).getMainSpecialPower().getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }
