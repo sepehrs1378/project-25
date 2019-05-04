@@ -8,7 +8,11 @@ public enum HelpType {
             "\n\tsell [card id | item id]" +
             "\n\tshow" +
             "\n\thelp"),
-    CONTROLLER_ACCOUNT_HELP("HELP ACCOUNT MENU"),//todo write the message later
+    CONTROLLER_ACCOUNT_HELP("Account Commands:\n" +
+            "\tcreate account [username]\n" +
+            "\tlogin [username]\n" +
+            "\tshow leaderboard\n" +
+            "\thelp\n"),
     CONTROLLER_COLLECTION_HELP("Collection Commands:" +
             "\n\texit" +
             "\n\tshow" +
@@ -45,8 +49,13 @@ public enum HelpType {
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
     STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
     CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
-    CONTROLLER_MAIN_MENU_HELP("EMPTY MAIN MENU"),
-    MODES_HELP(Constants.FLAGS + "\n" + Constants.ONE_FLAG + "\n" + Constants.CLASSIC);//todo write the message later
+    CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
+            "\tenter collection\n" +
+            "\tenter shop\n" +
+            "\tenter battle\n" +
+            "\texit\n" +
+            "\thelp\n"),
+    MODES_HELP("flags\none-flag\nclassic");
 
     private String message;
 
