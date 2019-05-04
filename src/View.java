@@ -25,21 +25,20 @@ public class View {
 
     private void showInfoOfSpellsAndMinions(List<Card> cards) {
         System.out.println("Cards:");
-        for (int i = 0,j=1; i < cards.size(); i++) {
-            if (cards.get(i) == null){
+        for (int i = 0, j = 1; i < cards.size(); i++) {
+            if (cards.get(i) == null) {
                 System.out.println("null");
-            }
-            else if (cards.get(i) instanceof Spell) {
+            } else if (cards.get(i) instanceof Spell) {
                 Spell spell = (Spell) cards.get(i);
-                System.out.println("\t"+j++ + " : Type : Spell - Name : " + spell.getName() + " - MP : " + spell.getMana() +
+                System.out.println("\t" + j++ + " : Type : Spell - Name : " + spell.getName() + " - MP : " + spell.getMana() +
                         " - Desc : " + spell.getDescription());
             } else if (cards.get(i) instanceof Unit) {
                 Unit unit = (Unit) cards.get(i);
                 if (unit.getHeroOrMinion().equals(Constants.MINION)) {
-                    System.out.println("\t"+j++ + " : Type : Minion - Name : " + unit.getName() + " - Class : " +
+                    System.out.println("\t" + j++ + " : Type : Minion - Name : " + unit.getName() + " - Class : " +
                             unit.getClass() + " - AP : " + unit.getAp() + " - HP : " + unit.getHp() +
                             " - MP : " + unit.getMana() + " - Special power : " +
-                            ((unit.getSpecialPower() == null)?null:unit.getSpecialPower().getDescription()));
+                            ((unit.getSpecialPower() == null) ? null : unit.getSpecialPower().getDescription()));
                 }
             }
         }
@@ -47,16 +46,15 @@ public class View {
 
     private void showInfoOfHeroes(List<Card> cards) {
         System.out.println("Heroes:");
-        for (int i = 0,j=1; i < cards.size(); i++) {
+        for (int i = 0, j = 1; i < cards.size(); i++) {
             if (cards.get(i) instanceof Unit) {
                 Unit unit = (Unit) cards.get(i);
-                if(unit == null){
+                if (unit == null) {
                     System.out.println("null");
-                }
-                else if (unit.getHeroOrMinion().equals(Constants.HERO)) {
-                    System.out.println("\t"+ j++ + " : Name : " + unit.getName() + " - AP : " + unit.getAp() + " - HP : " +
+                } else if (unit.getHeroOrMinion().equals(Constants.HERO)) {
+                    System.out.println("\t" + j++ + " : Name : " + unit.getName() + " - AP : " + unit.getAp() + " - HP : " +
                             unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special power : " +
-                            ((unit.getSpecialPower()==null)?null:unit.getDescription()));
+                            ((unit.getSpecialPower() == null) ? null : unit.getDescription()));
                 }
             }
         }
@@ -107,7 +105,7 @@ public class View {
         System.out.println("Name: " + unit.getName());
         System.out.println("HP: " + unit.getHp() + " AP: " + unit.getAp() + " MP: " + unit.getMana());
         System.out.println("Range: " + unit.getMaxRange());
-        System.out.println("Combo-ability: "+unit.canUseComboAttack());
+        System.out.println("Combo-ability: " + unit.canUseComboAttack());
         System.out.println("Cost: " + unit.getPrice());
         System.out.println("Desc: " + unit.getDescription());
     }
@@ -120,18 +118,18 @@ public class View {
         System.out.println("Desc: " + spell.getDescription());
     }
 
-    public int showItemInfo(int counter,Item item) {
+    public int showItemInfo(int counter, Item item) {
         if (item instanceof Usable) {
             Usable usable = (Usable) item;
-            System.out.println("\t"+counter+" : Name: " + usable.getName() + " - Desc: " +
+            System.out.println("\t" + counter + " : Name: " + usable.getName() + " - Desc: " +
                     usable.getDescription() + " - Sell Cost: " + usable.getPrice());
-            return counter+1;
+            return counter + 1;
         }
         if (item instanceof Collectable) {
             Collectable collectable = (Collectable) item;
-            System.out.println("\t"+counter+" : Name: " + collectable.getName() + " - Desc: " +
+            System.out.println("\t" + counter + " : Name: " + collectable.getName() + " - Desc: " +
                     collectable.getDescription() + " - No Sell Cost: Collectable");
-            return counter+1;
+            return counter + 1;
         }
         return counter;
     }
@@ -208,7 +206,7 @@ public class View {
                 Unit unit = (Unit) card;
                 System.out.println("    " + counter + " : Name: " + unit.getName() + " - AP : " + unit.getAp()
                         + " - HP : " + unit.getHp() + " - Class : " + unit.getUnitClass() + " - Special Power : " +
-                        ((unit.getSpecialPower()==null)?null:unit.getSpecialPower().getDescription())
+                        ((unit.getSpecialPower() == null) ? null : unit.getSpecialPower().getDescription())
                         + " - Sell cost : " + unit.getPrice());
                 counter++;
             }
@@ -233,7 +231,7 @@ public class View {
                 System.out.println(outPut + "Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
                         + " - MP : " + card.getMana() + " - Special Power : "
-                        + ((((Unit)card).getSpecialPower()==null)?null:((Unit)card).getSpecialPower().getDescription())
+                        + ((((Unit) card).getSpecialPower() == null) ? null : ((Unit) card).getSpecialPower().getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }
@@ -244,12 +242,12 @@ public class View {
         List<Card> cardList = DataBase.getInstance().getCardList();
         showInfoOfHeroes(cardList);
         System.out.println("Items:");
-        int counter =1;
+        int counter = 1;
         for (Item item : DataBase.getInstance().getUsableList()) {
-            counter=showItemInfo(counter,item);
+            counter = showItemInfo(counter, item);
         }
         for (Item item : DataBase.getInstance().getCollectableList()) {
-            counter=showItemInfo(counter,item);
+            counter = showItemInfo(counter, item);
         }
         showInfoOfSpellsAndMinions(cardList);
     }

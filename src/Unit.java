@@ -32,7 +32,7 @@ public class Unit extends Card {
 
     public Unit clone() {
         return new Unit(getId(), getName(), getPrice(),
-                getMana(), hp, ap, minRange, maxRange, ((specialPower==null)?null:specialPower.clone()),
+                getMana(), hp, ap, minRange, maxRange, ((specialPower == null) ? null : specialPower.clone()),
                 heroOrMinion, description, canUseComboAttack);
     }
 

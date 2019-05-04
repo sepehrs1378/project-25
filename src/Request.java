@@ -78,14 +78,13 @@ public class Request {
         }
         if (command.toLowerCase().matches("^search .+$")) {
             String[] strings = command.split(" ");
-            String output="";
+            String output = "";
             int counter = 0;
-            for (String string:strings){
-                if(counter!=strings.length-1){
-                    output+=string.toLowerCase()+" ";
-                }
-                else {
-                    output+=string;
+            for (String string : strings) {
+                if (counter != strings.length - 1) {
+                    output += string.toLowerCase() + " ";
+                } else {
+                    output += string;
                 }
                 counter++;
             }

@@ -429,7 +429,7 @@ public class DataBase {
 
         //35
         Target ghoolDoSarTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell ghoolDoSarSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoolDoSarTarget, (Buff)null, SpellActivationType.ON_ATTACK, "", true);
+        Spell ghoolDoSarSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoolDoSarTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", true);
         Unit ghoolDoSar = new Unit("shop_ghoolDoSar_1", "ghoolDoSar", 550, 4, 10, 4, 1, 1, ghoolDoSarSpell, Constants.MINION, "", false);
         cardList.add(ghoolDoSar);
 
