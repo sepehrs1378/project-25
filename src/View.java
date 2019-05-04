@@ -1,3 +1,5 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.List;
 
 public class View {
@@ -261,6 +263,10 @@ public class View {
     }
 
     public void showDeck(Deck deck, String whiteSpace) {
+        if (deck == null){
+            System.out.println("this deck doesn't exist");
+            return;
+        }
         System.out.println(whiteSpace + "Heroes :");
         int counter = 1;
         if(deck.getHero() != null){
