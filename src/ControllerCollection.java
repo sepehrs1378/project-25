@@ -64,7 +64,7 @@ public class ControllerCollection {
     public void create() {
         Pattern pattern = Pattern.compile("^create deck (.+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()){
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
@@ -97,12 +97,12 @@ public class ControllerCollection {
     }
 
     public void select() {
-        if (!request.getCommand().matches("^select deck .+$")) {
+        Pattern pattern = Pattern.compile("^select deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^select deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection()
                 .selectDeckAsMain(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
@@ -146,12 +146,12 @@ public class ControllerCollection {
     }
 
     public void delete(Request request) {
-        if (request.getCommand().matches("^delete deck .+$")) {
+        Pattern pattern = Pattern.compile("^delete deck (.+)$");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^delete deck (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         switch (loggedInAccount.getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
