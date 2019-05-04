@@ -151,7 +151,7 @@ public class DataBase {
         //20
         Target shockTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff shockBuff = new StunBuff(2, true, false);
-        Spell shock = new Spell("shop_shock_1", "shok", 1200, 1, 0, 0, 0, shockTarget, shockBuff, SpellActivationType.ON_CAST, "", false);
+        Spell shock = new Spell("shop_shock_1", "shock", 1200, 1, 0, 0, 0, shockTarget, shockBuff, SpellActivationType.ON_CAST, "", false);
         cardList.add(shock);
 
     }

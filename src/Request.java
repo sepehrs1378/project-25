@@ -112,7 +112,7 @@ public class Request {
             return RequestType.DELETE;
         }
         if (command.toLowerCase().matches("^add .+$")) {
-            command = command.toLowerCase();
+            setCommandWithUnderLine();
             return RequestType.ADD;
         }
         if (command.toLowerCase().matches("^select .+$")) {
@@ -158,17 +158,21 @@ public class Request {
             return RequestType.PASSWORD;
         }
         if(command.toLowerCase().matches("^remove .+$")){
-            String[] strings = command.split("\\s+");
-            String output="";
-            for (String string:strings){
-                if(string.contains("_")){
-                    output+=string+" ";
-                }
-                else output+= string.toLowerCase()+" ";
-            }
-            command = output.trim();
+            setCommandWithUnderLine();
             return RequestType.REMOVE;
         }
         return RequestType.WRONG_REQUEST;
     }
+
+    private void setCommandWithUnderLine() {
+        String[] strings = command.split("\\s+");
+        String output = "";
+        for (String string : strings) {
+            if (string.contains("_")) {
+                output += string + " ";
+            } else output += string.toLowerCase() + " ";
+        }
+        command = output.trim();
+    }
+
 }

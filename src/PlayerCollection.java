@@ -36,13 +36,11 @@ public class PlayerCollection {
             return OutputMessageType.DECK_HAS_HERO;
         } else {
             if (card != null) {
-                if (card instanceof Unit) {
-                    if (((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+                    if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
                         destinationDeck.setHero((Unit) card);
                     } else {
                         destinationDeck.getCards().add(card);
                     }
-                }
             } else {
                 destinationDeck.setItem(item);
             }
