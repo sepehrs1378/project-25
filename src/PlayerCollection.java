@@ -30,7 +30,7 @@ public class PlayerCollection {
             return OutputMessageType.NOT_IN_COLLECTION;
         } else if ((item!= null && destinationDeck.getItem() == item) ||(card!= null && destinationDeck.hasCard(card))) {
             return OutputMessageType.CARD_ALREADY_IN_DECK;
-        } else if (destinationDeck.getCards().size() == 20) {
+        } else if ((card instanceof Spell || card instanceof Unit&&((Unit) card).getHeroOrMinion().equals(Constants.MINION))&&destinationDeck.getCards().size() == 20) {
             return OutputMessageType.DECK_IS_FULL;
         } else if (card instanceof Unit && ((Unit)card).getHeroOrMinion().equals(Constants.HERO)&&destinationDeck.getHero() != null) {
             return OutputMessageType.DECK_HAS_HERO;
