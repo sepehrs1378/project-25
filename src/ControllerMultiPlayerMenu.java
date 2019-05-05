@@ -37,7 +37,7 @@ public class ControllerMultiPlayerMenu {
             if (secondPlayer == null) {
                 request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
                 view.printOutputMessage(request.getOutputMessageType());
-            } else  {
+            } else {
                 request.setHelpType(HelpType.MODES_HELP);
                 view.printHelp(request.getHelpType());
                 request.getNewCommand();

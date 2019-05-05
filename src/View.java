@@ -261,7 +261,7 @@ public class View {
     }
 
     public void showDeck(Deck deck, String whiteSpace) {
-        if (deck == null){
+        if (deck == null) {
             System.out.println("this deck doesn't exist");
             return;
         }

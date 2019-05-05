@@ -22,7 +22,7 @@ public enum OutputMessageType {
     LOGGED_IN_SUCCESSFULLY("you have successfully logged into your account"),
     ENTER_PASSWORD("please enter your password"),
     DECK_DOESNT_EXIST("Deck doesn't exist"),
-    DECK_DELETED("Deck was deleted"),
+    DECK_DELETED("Deck deleted"),
     DECK_SELECTED("Deck was selected as main deck"),
     DECK_VALID("Deck is Valid"),
     DECK_NOT_VALID("Deck is NOT valid"),

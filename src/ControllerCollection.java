@@ -89,7 +89,7 @@ public class ControllerCollection {
         } else if (request.getCommand().equals("show all decks")) {
             Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
             view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
-        }else {
+        } else {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
         }
     }
@@ -120,7 +120,7 @@ public class ControllerCollection {
     public void validate(Request request) {
         Pattern pattern = Pattern.compile("^validate deck (\\w+)$");
         Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()){
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
             return;
         }
@@ -144,7 +144,7 @@ public class ControllerCollection {
             OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo()
                     .getCollection().addCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
-        }else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void delete(Request request) {
@@ -172,7 +172,7 @@ public class ControllerCollection {
             OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                     .removeCard(order[1], order[4]);
             view.printOutputMessage(outputMessageType);
-        }else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 
     public void search() {
@@ -180,7 +180,6 @@ public class ControllerCollection {
             List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                     .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
             view.printList(output);
-        }
-        else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
 }

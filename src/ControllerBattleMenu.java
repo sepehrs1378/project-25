@@ -30,7 +30,7 @@ public class ControllerBattleMenu {
         }
     }
 
-    private void help(){
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_BATTLEMENU_HELP);
     }
 

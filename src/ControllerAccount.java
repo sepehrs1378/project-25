@@ -47,7 +47,7 @@ public class ControllerAccount {
         view.printOutputMessage(OutputMessageType.PLEASE_ENTER_PASSWORD);
         request.getNewCommand();
         Account account = dataBase.getAccountWithUsername(username);
-        if (request.getCommand().split(" ").length < 2){
+        if (request.getCommand().split(" ").length < 2) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
@@ -61,7 +61,7 @@ public class ControllerAccount {
     }
 
     public void create() {
-        if (request.getCommand().split(" ").length < 3){
+        if (request.getCommand().split(" ").length < 3) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }

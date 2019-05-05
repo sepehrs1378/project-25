@@ -157,11 +157,11 @@ public class Request {
             command = command.split(" ")[0].toLowerCase() + " " + command.split(" ")[1];
             return RequestType.PASSWORD;
         }
-        if(command.toLowerCase().matches("^remove .+$")){
+        if (command.toLowerCase().matches("^remove .+$")) {
             setCommandWithUnderLine();
             return RequestType.REMOVE;
         }
-        if(command.toLowerCase().matches("^start .+$")){
+        if (command.toLowerCase().matches("^start .+$")) {
             command = command.toLowerCase();
             return RequestType.START;
         }
