@@ -92,7 +92,7 @@ public class Player {
 
     public void setNextCard(Deck deck) {
         int randomNumber = (int) (Math.random() * deck.getCards().size());
-        if (deck.getCards().size() != 0) {
+        if (!deck.getCards().isEmpty()) {
             nextCard = deck.getCards().get(randomNumber);
             deck.getCards().remove(randomNumber);
         }

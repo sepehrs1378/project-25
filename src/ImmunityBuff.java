@@ -1,7 +1,7 @@
 public class ImmunityBuff extends Buff {
     private String immunity;
 
-    public ImmunityBuff(int durationTurn, boolean isDispellable
+    ImmunityBuff(int durationTurn, boolean isDispellable
             , boolean isContinuous, String immunity) {
         super(durationTurn, isDispellable, isContinuous);
         setPositiveOrNegative(Constants.POSITIVE);
