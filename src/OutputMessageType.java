@@ -60,6 +60,7 @@ public enum OutputMessageType {
     BAD_PASSWORD("Please enter a correct password"),
     ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
     SPECIAL_POWER_USED("Special power has been used"),
+    TURN_CHANGED("Turn changed"),
     NO_ERROR("");
 
     private String message;
