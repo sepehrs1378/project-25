@@ -44,10 +44,11 @@ public enum HelpType {
             "\n\tselect [collectable id])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
+            "\n\tshow battleground" +
             "\n\thelp" +
             "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
-    STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
+    STORY_MODE_OPTIONS("level1\nlevel2\nlevel3"),
     CONTROLLER_BATTLEMENU_HELP("Battle menu commands:" +
             "\n\tenter singleplayer" +
             "\n\tenter multiplayer"),

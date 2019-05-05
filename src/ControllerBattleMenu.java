@@ -31,7 +31,7 @@ public class ControllerBattleMenu {
     }
 
     private void help() {
-        view.printHelp(HelpType.CONTROLLER_BATTLE_MENU_HELP);
+        view.printHelp(HelpType.CONTROLLER_BATTLEMENU_HELP);
     }
 
     private void enter() {

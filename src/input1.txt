@@ -118,3 +118,9 @@ add player1_tajDanayee_1 to deck deck1
 select deck deck1
 exit
 logout
+login player
+password 3333
+enter battle
+enter multiplayer
+select user player1
+start multiplayer game classic

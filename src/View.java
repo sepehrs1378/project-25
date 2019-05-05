@@ -95,27 +95,27 @@ public class View {
 
     public void showCardInfoHero(Unit hero) {
         System.out.println("Hero:");
-        System.out.println("Name: " + hero.getName());
-        System.out.println("Cost: " + hero.getPrice());
-        System.out.println("Desc: " + hero.getDescription());
+        System.out.println("\tName: " + hero.getName());
+        System.out.println("\tCost: " + hero.getPrice());
+        System.out.println("\tDesc: " + hero.getDescription());
     }
 
     public void showCardInfoMinion(Unit unit) {
         System.out.println("Minion:");
-        System.out.println("Name: " + unit.getName());
-        System.out.println("HP: " + unit.getHp() + " AP: " + unit.getAp() + " MP: " + unit.getMana());
-        System.out.println("Range: " + unit.getMaxRange());
-        System.out.println("Combo-ability: " + unit.canUseComboAttack());
-        System.out.println("Cost: " + unit.getPrice());
-        System.out.println("Desc: " + unit.getDescription());
+        System.out.println("\tName: " + unit.getName());
+        System.out.println("\tHP: " + unit.getHp() + " AP: " + unit.getAp() + " MP: " + unit.getMana());
+        System.out.println("\tRange: " + unit.getMaxRange());
+        System.out.println("\tCombo-ability: " + unit.canUseComboAttack());
+        System.out.println("\tCost: " + unit.getPrice());
+        System.out.println("\tDesc: " + unit.getDescription());
     }
 
     public void showCardInfoSpell(Spell spell) {
         System.out.println("Spell: ");
-        System.out.println("Name: " + spell.getName());
-        System.out.println("MP: " + spell.getMana());
-        System.out.println("Cost: " + spell.getPrice());
-        System.out.println("Desc: " + spell.getDescription());
+        System.out.println("\tName: " + spell.getName());
+        System.out.println("\tMP: " + spell.getMana());
+        System.out.println("\tCost: " + spell.getPrice());
+        System.out.println("\tDesc: " + spell.getDescription());
     }
 
     public int showItemInfo(int counter, Item item) {
@@ -196,6 +196,10 @@ public class View {
                 rowCounter++;
             }
         }
+    }
+
+    public void showCell(String toShow){
+        System.out.print(toShow+"|");
     }
 
     public void showCardsAndItemsOfCollection(PlayerCollection playerCollection) {
