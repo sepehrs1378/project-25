@@ -20,12 +20,4 @@ public class ManaBuff extends Buff {
         }
         //todo ممکنه تاثیرش به خاطر nextTurn اعمال نشه و بره زیر مقدار دهی معمولی مانا
     }
-
-    public int getManaAddedPerTurn() {
-        return manaAddedPerTurn;
-    }
-
-    public void setManaAddedPerTurn(int manaAddedPerTurn) {
-        this.manaAddedPerTurn = manaAddedPerTurn;
-    }
 }

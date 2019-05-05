@@ -250,6 +250,7 @@ public class ControllerBattleCommands {
                 request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
                 view.printOutputMessage(request.getOutputMessageType());
             } else {
+                database.getCurrentBattle().nextTurn();
                 //todo
             }
             return;

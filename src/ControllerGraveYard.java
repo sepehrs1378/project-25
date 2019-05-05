@@ -24,10 +24,16 @@ public class ControllerGraveYard {
                 case EXIT:
                     didExit = true;
                     break;
+                case HELP:
+                    help();
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
+    }
+
+    private void help(){
+        view.printHelp(HelpType.CONTROLLER_GRAVEYARD);
     }
 
     public void show() {

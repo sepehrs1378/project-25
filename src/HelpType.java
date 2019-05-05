@@ -59,7 +59,11 @@ public enum HelpType {
             "\tselect [username]\n" +
             "\texit\n"),
     CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
-            "\t...");
+            "\t..."),
+    CONTROLLER_GRAVEYARD("Commands:\n" +
+            "\tshow info [card id]\n" +
+            "\tshow cards");
+
     private String message;
 
     HelpType(String message) {

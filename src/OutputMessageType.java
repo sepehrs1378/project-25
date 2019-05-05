@@ -4,6 +4,7 @@ public enum OutputMessageType {
     COMBO_ATTACK_SUCCESSFUL("combo attack successful"),
     A_UNIT_CANT_USE_COMBO("A unit can't use combo attack"),
     BATTLE_NOT_FINISHED("Battle isn't finished yet..."),
+    BATTLE_FINISHED("Battle is already finished"),
     INVALID_PASSWORD("Invalid password"),
     INVALID_USERNAME("This user does not exist"),
     USERNAME_ALREADY_EXISTS("This username already exists"),
@@ -15,8 +16,7 @@ public enum OutputMessageType {
     NOT_IN_COLLECTION("You don't have the card or item"),
     SOLD_SUCCESSFULLY("Card or item was sold successfully"),
     DECK_ALREADY_EXISTS("A deck with the specified name already exists"),
-    INVALID_DECK_PLAYER1("player1's deck is invalid"),
-    INVALID_DECK_PLAYER2("player2's deck is invalid"),
+    INVALID_DECK_PLAYER("player's deck is invalid"),
     CANT_HAVE_MORE_ITEMS("You can't have more items"),
     DECK_CREATED("Deck has been successfully created"),
     LOGGED_IN_SUCCESSFULLY("you have successfully logged into your account"),
@@ -49,7 +49,7 @@ public enum OutputMessageType {
     FOUND_ITEM("found item with id: "),
     FOUND_CARD("found card with id: "),
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
-    NO_HERO("there is no hero in battleGround"),
+    NO_HERO("Hero can't use special power"),
     INVALID_NUMBER("the number was out of battleGround boundaries"),
     NO_SUCH_CARD_IN_HAND("no such card in hand"),
     THIS_CELL_IS_FULL("this cell is full"),
@@ -59,6 +59,7 @@ public enum OutputMessageType {
     CARD_INSERTED("Card Inserted"),
     BAD_PASSWORD("Please enter a correct password"),
     ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
+    SPECIAL_POWER_USED("Special power has been used"),
     NO_ERROR("");
 
     private String message;

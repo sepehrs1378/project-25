@@ -64,14 +64,13 @@ public class ControllerMultiPlayerMenu {
                         database.setCurrentBattle(battle);
                         ControllerBattleCommands.getInstance().main();
                     } else {
-                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER2);
+                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER);
                         view.printOutputMessage(request.getOutputMessageType());
                     }
                 } else {
                     request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
                     view.printOutputMessage(request.getOutputMessageType());
                 }
-
             }
         }
     }
