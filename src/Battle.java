@@ -23,6 +23,7 @@ public class Battle {
             temp.add(new Flag());
         }
         this.battleGround.addFlagsToBattleGround(temp);
+        startBattle();
     }
 
     public OutputMessageType nextTurn() {
@@ -329,5 +330,11 @@ public class Battle {
             output.add(temp);
         }
         return output;
+    }
+
+    public void startBattle(){
+        setManaBasedOnTurnNumber();
+        battleGround.getCells()[0][2].setUnit(player1.getDeck().getHero());
+        battleGround.getCells()[8][2].setUnit(player2.getDeck().getHero());
     }
 }
