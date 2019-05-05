@@ -59,7 +59,9 @@ public class ControllerMultiPlayerMenu {
                     } else if (mode.equals(Constants.ONE_FLAG)) {
                         numberOfFlags = 1;
                     }
-                    if (database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
+                    if (database.getLoggedInAccount().getMainDeck()!=null&&
+                            secondPlayer.getMainDeck()!=null&&database.getLoggedInAccount().getMainDeck()!=null
+                            &&database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
                         Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
                         database.setCurrentBattle(battle);
                         ControllerBattleCommands.getInstance().main();

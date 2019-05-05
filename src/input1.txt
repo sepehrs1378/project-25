@@ -124,5 +124,3 @@ enter battle
 enter multiplayer
 select user player1
 start multiplayer game classic
-game info
-show hand
