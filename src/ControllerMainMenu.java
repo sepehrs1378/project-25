@@ -3,6 +3,7 @@ public class ControllerMainMenu {
     private DataBase dataBase = DataBase.getInstance();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
+    private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -25,6 +26,9 @@ public class ControllerMainMenu {
                     break;
                 case HELP:
                     help();
+                    break;
+                case MATCH_HISTORY:
+                    controllerMatchInfo.showMatchHistory(dataBase.getLoggedInAccount());
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);

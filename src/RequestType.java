@@ -10,6 +10,7 @@ public enum RequestType {
     SAVE,
     SEARCH,
     HELP,
+    MATCH_HISTORY,
     BUY,
     SELL,
     CREATE,

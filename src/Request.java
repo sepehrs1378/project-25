@@ -165,6 +165,10 @@ public class Request {
             command = command.toLowerCase();
             return RequestType.START;
         }
+       if (command.toLowerCase().matches("^match history$")){
+            command = command.toLowerCase();
+            return RequestType.MATCH_HISTORY;
+        }
         return RequestType.WRONG_REQUEST;
     }
 
