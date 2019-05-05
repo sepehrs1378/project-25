@@ -3,7 +3,6 @@ import java.util.List;
 
 class GraveYard {
     private List<Card> deadCards = new ArrayList<>();
-    private static final ControllerGraveYard controllerGraveYard = ControllerGraveYard.getInstance();
 
     public List<Card> getDeadCards() {
         return deadCards;
