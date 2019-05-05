@@ -6,7 +6,6 @@ public class ControllerCollection {
     private static ControllerCollection ourInstance = new ControllerCollection();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
-    private Account loggedInAccount = dataBase.getLoggedInAccount();
     private View view = View.getInstance();
 
     private ControllerCollection() {
@@ -106,7 +105,7 @@ public class ControllerCollection {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection()
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
                 .selectDeckAsMain(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
@@ -125,7 +124,7 @@ public class ControllerCollection {
             view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
@@ -155,7 +154,7 @@ public class ControllerCollection {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
