@@ -178,68 +178,87 @@ public class DataBase {
 
     private void makeHeroes() {
         //1
+        String descSpell1 = "mana : 1 - cooldown : 2 - spell activation type : on cast - is not dispeller";
+        String descUnit1 = "price : 8000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target divSefidTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.ALL);
         PowerBuff divSefidBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 4);
-        Spell divSefidSpell = new Spell("", "", 0, 1, 0, 0, 2, divSefidTarget, divSefidBuff, SpellActivationType.ON_CAST, "", false);
-        Unit divSefid = new Unit("shop_divSefid_1", "divSefid", 8000, 0, 50, 4, 1, 1, divSefidSpell, Constants.HERO, "", false);
+        Spell divSefidSpell = new Spell("", "", 0, 1, 0, 0, 2, divSefidTarget, divSefidBuff, SpellActivationType.ON_CAST, descSpell1, false);
+        Unit divSefid = new Unit("shop_divSefid_1", "divSefid", 8000, 0, 50, 4, 1, 1, divSefidSpell, Constants.HERO, descUnit1, false);
         cardList.add(divSefid);
 
         //2
+        String descSpell2 = "mana : 5 - cooldown : 8 - spell activation type : on cast - is not dispeller";
+        String descUnit2 = "price : 9000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target simorghTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff simorghBuff = new StunBuff(1, true, false);
-        Spell simorghSpell = new Spell("", "", 0, 5, 0, 0, 8, simorghTarget, simorghBuff, SpellActivationType.ON_CAST, "", false);
-        Unit simorgh = new Unit("shop_simorgh_1", "simorgh", 9000, 0, 50, 4, 1, 1, simorghSpell, Constants.HERO, "", false);
+        Spell simorghSpell = new Spell("", "", 0, 5, 0, 0, 8, simorghTarget, simorghBuff, SpellActivationType.ON_CAST, descSpell2, false);
+        Unit simorgh = new Unit("shop_simorgh_1", "simorgh", 9000, 0, 50, 4, 1, 1, simorghSpell, Constants.HERO, descUnit2, false);
         cardList.add(simorgh);
 
         //3
+        String descSpell3 = "mana : 0 - cooldown : 1 - spell activation type : on cast - is not dispeller";
+        String descUnit3 = "price : 8000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target ejdehaHaftSarTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         DisarmBuff ejdehaHaftSarBuff = new DisarmBuff(Integer.MAX_VALUE, true, false);
-        Spell ejdehaHaftSarSpellSpell = new Spell("", "", 0, 0, 0, 0, 1, ejdehaHaftSarTarget, ejdehaHaftSarBuff, SpellActivationType.ON_CAST, "", false);
-        Unit ejdehaHaftSar = new Unit("shop_ejdehaHaftSar_1", "ejdehaHaftSar", 8000, 0, 50, 4, 1, 1, ejdehaHaftSarSpellSpell, Constants.HERO, "", false);
+        Spell ejdehaHaftSarSpellSpell = new Spell("", "", 0, 0, 0, 0, 1, ejdehaHaftSarTarget, ejdehaHaftSarBuff, SpellActivationType.ON_CAST, descSpell3, false);
+        Unit ejdehaHaftSar = new Unit("shop_ejdehaHaftSar_1", "ejdehaHaftSar", 8000, 0, 50, 4, 1, 1, ejdehaHaftSarSpellSpell, Constants.HERO, descUnit3, false);
         cardList.add(ejdehaHaftSar);
 
         //4
+        String descSpell4 = "mana : 1 - cooldown : 2 - spell activation type : on cast - is not dispeller";
+        String descUnit4 = "price : 8000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target rakhshTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff rakhshBuff = new StunBuff(1, true, false);
-        Spell rakhshSpell = new Spell("", "", 0, 1, 0, 0, 2, rakhshTarget, rakhshBuff, SpellActivationType.ON_CAST, "", false);
-        Unit rakhsh = new Unit("shop_rakhsh_1", "rakhsh", 8000, 0, 50, 4, 1, 1, rakhshSpell, Constants.HERO, "", false);
+        Spell rakhshSpell = new Spell("", "", 0, 1, 0, 0, 2, rakhshTarget, rakhshBuff, SpellActivationType.ON_CAST, descSpell4, false);
+        Unit rakhsh = new Unit("shop_rakhsh_1", "rakhsh", 8000, 0, 50, 4, 1, 1, rakhshSpell, Constants.HERO, descUnit4, false);
         cardList.add(rakhsh);
 
         //5
+        String descSpell5 = "mana : 0 - cooldown : 0 - spell activation type : on cast - is not dispeller";
+        String descUnit5 = "price : 10000 - mana : 0 - hp : 50 - ap : 2 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target zahakTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         PoisonBuff zhakBuff = new PoisonBuff(3, true, false, 1);
-        Spell zahakSpell = new Spell("", "", 0, 0, 0, 0, 0, zahakTarget, zhakBuff, SpellActivationType.ON_CAST, "", false);
-        Unit zahak = new Unit("shop_zahak_1", "zahak", 10000, 0, 50, 2, 1, 1, zahakSpell, Constants.HERO, "", false);
+        Spell zahakSpell = new Spell("", "", 0, 0, 0, 0, 0, zahakTarget, zhakBuff, SpellActivationType.ON_CAST, descSpell5, false);
+        Unit zahak = new Unit("shop_zahak_1", "zahak", 10000, 0, 50, 2, 1, 1, zahakSpell, Constants.HERO, descUnit5, false);
         cardList.add(zahak);
 
         //6
+        String descSpell6 = "mana : 1 - cooldown : 3 - spell activation type : on cast - is not dispeller";
+        String descUnit6 = "price : 8000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo";
         Target kavehTarget = new Target(Constants.CELL, 1, 1, Constants.NONE, false, false, 0, Constants.NONE);
         HolyBuff kavehBuff = new HolyBuff(3, true, false, 1);
-        Spell kavehSpell = new Spell("", "", 0, 1, 0, 0, 3, kavehTarget, kavehBuff, SpellActivationType.ON_CAST, "", false);
-        Unit kaveh = new Unit("shop_kaveh_1", "kaveh", 8000, 0, 50, 4, 1, 1, kavehSpell, Constants.HERO, "", false);
+        Spell kavehSpell = new Spell("", "", 0, 1, 0, 0, 3, kavehTarget, kavehBuff, SpellActivationType.ON_CAST, descSpell6, false);
+        Unit kaveh = new Unit("shop_kaveh_1", "kaveh", 8000, 0, 50, 4, 1, 1, kavehSpell, Constants.HERO, descUnit6, false);
         cardList.add(kaveh);
 
         //7
+        String descSpell7 = "mana : 2 - hpChange : -4 - cooldown : 2 - spell activation type : on cast - is not dispeller";
+        String descUnit7 = "price : 10000 - mana : 0 - hp : 30 - ap : 2 - minRange : 2 - maxRange : 6 - Unit Type : Hero - can't use combo";
         Target arashTarget = new Target(Constants.HERO_MINION, 1, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell arashSpell = new Spell("", "", 0, 2, 0, -4, 2, arashTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Unit arash = new Unit("shop_arash_1", "arash", 10000, 0, 30, 2, 2, 6, arashSpell, Constants.HERO, "", false);
+        Spell arashSpell = new Spell("", "", 0, 2, 0, -4, 2, arashTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell7, false);
+        Unit arash = new Unit("shop_arash_1", "arash", 10000, 0, 30, 2, 2, 6, arashSpell, Constants.HERO, descUnit7, false);
         cardList.add(arash);
 
         //8
+        String descSpell8 = "mana : 1 - apChange : 2 - cooldown : 3 - spell activation type : on cast - is dispeller";
+        String descUnit8 = "price : 11000 - mana : 0 - hp : 40 - ap : 3 - minRange : 2 - maxRange : 3 - Unit Type : Hero - can't use combo";
         Target afsanehTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, true, 0, Constants.ALL);
-        Spell afsanehSpell = new Spell("", "", 0, 1, 2, 0, 0, afsanehTarget, (Buff) null, SpellActivationType.ON_CAST, "", true);
-        Unit afsaneh = new Unit("shop_afsaneh_1", "afsaneh", 11000, 0, 40, 3, 2, 3, afsanehSpell, Constants.HERO, "", false);
+        Spell afsanehSpell = new Spell("", "", 0, 1, 2, 0, 0, afsanehTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell8, true);
+        Unit afsaneh = new Unit("shop_afsaneh_1", "afsaneh", 11000, 0, 40, 3, 2, 3, afsanehSpell, Constants.HERO, descUnit8, false);
         cardList.add(afsaneh);
 
         //9
+        String descSpell9 = "mana : 0 - cooldown : 0 - spell activation type : on spawn - is dispeller";
+        String descUnit9 = "price : 12000 - mana : 0 - hp : 35 - ap : 3 - minRange : 1 - maxRange : 3 - Unit Type : Hero - can't use combo";
         Target esfandiarTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         HolyBuff esfandiarBuff = new HolyBuff(Integer.MAX_VALUE, false, true, 3);
-        Spell esfandiarSpell = new Spell("", "", 0, 0, 0, 0, 0, esfandiarTarget, esfandiarBuff, SpellActivationType.ON_SPAWN, "", false);
-        Unit esfandiar = new Unit("shop_esfandiar_1", "esfandiar", 12000, 0, 35, 3, 1, 3, esfandiarSpell, Constants.HERO, "", false);
+        Spell esfandiarSpell = new Spell("", "", 0, 0, 0, 0, 0, esfandiarTarget, esfandiarBuff, SpellActivationType.ON_SPAWN, descSpell9, false);
+        Unit esfandiar = new Unit("shop_esfandiar_1", "esfandiar", 12000, 0, 35, 3, 1, 3, esfandiarSpell, Constants.HERO, descUnit9, false);
         cardList.add(esfandiar);
 
         //10
-        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, null, Constants.HERO, "", false);
+        String descUnit10 = "price : 8000 - mana : 0 - hp : 55 - ap : 7 - minRange : 1 - maxRange : 4 - Unit Type : Hero - can't use combo";
+        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, null, Constants.HERO, descUnit10, false);
         cardList.add(rostam);
     }
 
