@@ -1,15 +1,16 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
+
     {
-        for (int i=0;i<cells.length;i++){
-            for (int j=0;j<cells[i].length;j++){
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell();
             }
         }

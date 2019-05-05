@@ -32,7 +32,7 @@ public class ControllerGraveYard {
         }
     }
 
-    private void help(){
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_GRAVEYARD);
     }
 

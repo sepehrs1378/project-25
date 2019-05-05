@@ -196,8 +196,8 @@ public class View {
         }
     }
 
-    public void showCell(String toShow){
-        System.out.print(toShow+"|");
+    public void showCell(String toShow) {
+        System.out.print(toShow + "|");
     }
 
     public void showCardsAndItemsOfCollection(PlayerCollection playerCollection) {

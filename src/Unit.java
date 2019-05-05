@@ -143,9 +143,7 @@ public class Unit extends Card {
             return false;
         if (this.didAttackThisTurn)
             return false;
-        if (!isTargetUnitWithinRange(unit.getId()))
-            return false;
-        return true;
+        return isTargetUnitWithinRange(unit.getId());
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {

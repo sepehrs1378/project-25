@@ -9,7 +9,7 @@ public class ControllerAccount {
     }
 
 
-    public static ControllerAccount getInstance(){
+    public static ControllerAccount getInstance() {
         return controllerAccount;
     }
 

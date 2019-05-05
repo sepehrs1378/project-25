@@ -13,7 +13,7 @@ public class DataBase {
     private Account computerPlayerLevel1;
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
-    private Account computerPlayerCostume;
+    private Account computerPlayerCostum;
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -27,6 +27,7 @@ public class DataBase {
         makeHeroes();
         makeMinions();
         makeItems();
+        makeAccounts();
     }
 
     private void makeCardSpells() {
@@ -316,7 +317,7 @@ public class DataBase {
         //15
         Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
-        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, " ", false, oghabBuff);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, null, Constants.MINION, " ", false, oghabBuff);
         cardList.add(oghab);
 
         //16
@@ -484,7 +485,7 @@ public class DataBase {
     }
 
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
-    public void makeItems() {
+    private void makeItems() {
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
         //1             //1
@@ -579,7 +580,7 @@ public class DataBase {
         Target assassinationDaggerSpellTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
         Spell assassinationDaggerSpellSpell = new Spell("", "", 0, 0, 0, -1, 0, assassinationDaggerSpellTarget, (Buff) null, SpellActivationType.ON_SPAWN, "", false);
         Target assassinationDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
+        Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
         Usable assassinationDagger = new Usable("shop_assassinationDagger_1", "", 15000, assassinationDaggerSpell);
         usableList.add(assassinationDagger);
 
@@ -588,7 +589,7 @@ public class DataBase {
         PoisonBuff poisonousDaggerSpellBuff = new PoisonBuff(1, true, false, 1);
         Spell poisonousDaggerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerSpellTarget, poisonousDaggerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
         Target poisonousDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, poisonousDaggerSpellSpell);
+        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, null, SpellActivationType.ON_BATTLE_START, "", false, poisonousDaggerSpellSpell);
         Usable poisonousDagger = new Usable("shop_poisonousDagger_1", "", 7000, poisonousDaggerSpell);
         usableList.add(poisonousDagger);
 
@@ -597,7 +598,7 @@ public class DataBase {
         DisarmBuff shockHammerSpellBuff = new DisarmBuff(1, true, false);
         Spell shockHammerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerSpellTarget, shockHammerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
         Target shockHammerTarget = new Target(Constants.WHOLE_HEROES, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, shockHammerSpellSpell);
+        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, null, SpellActivationType.ON_BATTLE_START, "", false, shockHammerSpellSpell);
         Usable shockHammer = new Usable("shop_shockHammer_1", "", 15000, shockHammerSpell);
         usableList.add(shockHammer);
 
@@ -606,7 +607,7 @@ public class DataBase {
         PowerBuff soulEaterSpellBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 1);
         Spell soulEaterSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterSpellTarget, soulEaterSpellBuff, SpellActivationType.ON_BATTLE_START, "", false);
         Target soulEaterTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, soulEaterSpellSpell);
+        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, null, SpellActivationType.ON_BATTLE_START, "", false, soulEaterSpellSpell);
         Usable soulEater = new Usable("shop_soulEater_1", "", 25000, soulEaterSpell);
 
         //19            //11
@@ -621,6 +622,29 @@ public class DataBase {
         Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
         Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
         collectableList.add(shamshirChini);
+    }
+
+    private void makeAccounts() {
+        computerPlayerLevel1 = new Account("computer1", "1");
+        computerPlayerLevel2 = new Account("computer2", "2");
+        computerPlayerLevel3 = new Account("computer3", "3");
+        computerPlayerCostum = new Account("computerCostum", "costum");
+
+        Deck computerPlayer1Deck = new Deck("Deck");
+        computerPlayer1Deck.addToCards(cardList.get(0));
+        computerPlayer1Deck.addToCards(cardList.get(6));
+        computerPlayer1Deck.addToCards(cardList.get(9));
+        computerPlayer1Deck.addToCards(cardList.get());
+
+        Deck computerPlayer2Deck = new Deck("deck");
+
+
+        Deck computerPlayer3Deck = new Deck("deck");
+
+
+        Deck computerPlayerCostumDeck = new Deck("deck");
+
+
     }
 
     public List<Card> getCardList() {
@@ -647,8 +671,8 @@ public class DataBase {
         return computerPlayerLevel3;
     }
 
-    public Account getComputerPlayerCostume() {
-        return computerPlayerCostume;
+    public Account getComputerPlayerCostum() {
+        return computerPlayerCostum;
     }
 
     public Account getLoggedInAccount() {

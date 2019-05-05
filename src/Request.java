@@ -140,7 +140,7 @@ public class Request {
             return RequestType.USE;
         }
         if (command.toLowerCase().matches("^insert .+$")) {
-            command = command.toLowerCase();
+            setCommandWithUnderLine();
             return RequestType.INSERT;
         }
         if (command.toLowerCase().matches("^end .+$")) {
@@ -165,7 +165,7 @@ public class Request {
             command = command.toLowerCase();
             return RequestType.START;
         }
-       if (command.toLowerCase().matches("^match history$")){
+        if (command.toLowerCase().matches("^match history$")) {
             command = command.toLowerCase();
             return RequestType.MATCH_HISTORY;
         }
