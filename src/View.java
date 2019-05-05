@@ -165,11 +165,9 @@ public class View {
         } else if (battle.getMode().equals(Constants.ONE_FLAG)) {
             for (int i = 0; i < battle.getBattleGround().getCells().length; i++) {
                 for (int j = 0; j < battle.getBattleGround().getCells()[i].length; j++) {
-                    if (battle.getBattleGround().getCells()[i][j].getFlags().size() > 0) {
+                    if (!battle.getBattleGround().getCells()[i][j].getFlags().isEmpty()) {
                         if (battle.getBattleGround().getCells()[i][j].getUnit().getId().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())) {
                             System.out.println("flag is in row " + i + " column " + j + " in hand of player1");
-                        } else if (battle.getBattleGround().getCells()[i][j].getUnit().getId().equals(battle.getPlayer1().getPlayerInfo().getPlayerName())) {
-                            System.out.println("flag is in row " + i + " column " + j + " in hand of player2");
                         } else
                             System.out.println("flag is in row " + i + " column " + j);
                     }
@@ -288,7 +286,7 @@ public class View {
                 Spell specialPower = ((Unit) card).getMainSpecialPower();
                 System.out.println(whiteSpace + "   " + counter + " : " + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
-                        + " - MP : " + card.getMana() + " - Special Power : " + (specialPower == null?" " : specialPower.getDescription())
+                        + " - MP : " + card.getMana() + " - Special Power : " + (specialPower == null ? " " : specialPower.getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }
