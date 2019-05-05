@@ -38,6 +38,7 @@ public class ControllerAccount {
         }
     }
 
+
     public void login() {
         String username = request.getCommand().split(" ")[1];
         if (!dataBase.doesAccountExist(username)) {
@@ -58,6 +59,15 @@ public class ControllerAccount {
             controllerMainMenu.main();
         } else
             showError(OutputMessageType.INVALID_PASSWORD);
+    }
+
+
+    public void help() {
+        view.printHelp(HelpType.CONTROLLER_ACCOUNT_HELP);
+    }
+
+    public void showError(OutputMessageType error) {
+        view.printOutputMessage(error);
     }
 
     public void create() {
@@ -100,13 +110,5 @@ public class ControllerAccount {
             dataBase.sortAccountsByWins();
             view.showLeaderboard(dataBase.getAccounts());
         }
-    }
-
-    public void help() {
-        view.printHelp(HelpType.CONTROLLER_ACCOUNT_HELP);
-    }
-
-    public void showError(OutputMessageType error) {
-        view.printOutputMessage(error);
     }
 }

@@ -159,15 +159,6 @@ public class Unit extends Card {
                     + targetedUnit.getNegativeArmor();
     }
 
-    private boolean isTargetUnitWithinRange(String targetID) {
-        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetID);
-        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-        int distanceToTarget = getDistanceToTarget(
-                battleGround.getCoordinationOfUnit(targetUnit)[0],
-                battleGround.getCoordinationOfUnit(targetUnit)[1]);
-        return distanceToTarget <= maxRange && distanceToTarget >= minRange;
-    }
-
     public List<Flag> getFlags() {
         return flags;
     }
@@ -178,6 +169,15 @@ public class Unit extends Card {
         if (minRange == 1)
             return Constants.HYBRID;
         return Constants.RANGED;
+    }
+
+    private boolean isTargetUnitWithinRange(String targetID) {
+        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetID);
+        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+        int distanceToTarget = getDistanceToTarget(
+                battleGround.getCoordinationOfUnit(targetUnit)[0],
+                battleGround.getCoordinationOfUnit(targetUnit)[1]);
+        return distanceToTarget <= maxRange && distanceToTarget >= minRange;
     }
 
     public void changeHp(int hpChange) {
