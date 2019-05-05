@@ -571,72 +571,91 @@ public class DataBase {
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
         //1             //1
+        String descSpell1 = "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller";
         Target tajDanayeeTarget = new Target(Constants.PLAYER, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
         ManaBuff tajDanayeeBuff = new ManaBuff(3, false, false, 1);
-        Spell tajDanayeeSpell = new Spell("", "", 0, 0, 0, 0, 0, tajDanayeeTarget, tajDanayeeBuff, SpellActivationType.PASSIVE, "", false);
-        Usable tajDanayee = new Usable("shop_tajDanayee_1", "", 300, tajDanayeeSpell);
+        Spell tajDanayeeSpell = new Spell("", "", 0, 0, 0, 0, 0, tajDanayeeTarget, tajDanayeeBuff, SpellActivationType.PASSIVE, descSpell1, false);
+        String descUsable1 = "price : 300";
+        Usable tajDanayee = new Usable("shop_tajDanayee_1", descUsable1, 300, tajDanayeeSpell);
         usableList.add(tajDanayee);
 
         //2             //2
+        String descSpell2 = "Contains : HolyBuff - Spell Activation Type : passive - isn't dispeller";
         Target namoosSeparTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         HolyBuff namoosSeparBuff = new HolyBuff(Integer.MAX_VALUE, true, false, 12);
-        Spell namoosSeparSpell = new Spell("", "", 0, 0, 0, 0, 0, namoosSeparTarget, namoosSeparBuff, SpellActivationType.PASSIVE, "", false);
+        Spell namoosSeparSpell = new Spell("", "", 0, 0, 0, 0, 0, namoosSeparTarget, namoosSeparBuff, SpellActivationType.PASSIVE, descSpell2, false);
+        String descUsable2 = "price : 4000";
         Usable namoosSepar = new Usable("shop_namoosSepar_1", "", 4000, namoosSeparSpell);
         usableList.add(namoosSepar);
 
         //3             //3
+        //String descSpell3 = "Contains : DisarmBuff - Spell Activation Type : passive - isn't dispeller";
         //todo in item all spells are passive but this doesn't seem passive, i created the required parts but not Usable itself
         Target kamanDamolTarget = new Target(Constants.HERO, 1, 1, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
+        //String descUsable1 = "price : 300";
         //todo
         //usableList.add(null);
 
         //4             //1
+        String descSpell4 = "Contains : no Buffs - Spell Activation Type : passive - isn't dispeller";
         Target nooshadrooTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
-        Spell nooshdarooSpell = new Spell("", "", 0, 0, 0, 6, 0, nooshadrooTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Collectable nooshdaroo = new Collectable("battle_nooshdaroo_1", "", nooshdarooSpell);
+        Spell nooshdarooSpell = new Spell("", "", 0, 0, 0, 6, 0, nooshadrooTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell4, false);
+        String descCollectable4 = "collectable";
+        Collectable nooshdaroo = new Collectable("battle_nooshdaroo_1", descCollectable4, nooshdarooSpell);
         collectableList.add(nooshdaroo);
 
         //5             //2
+        String descSpell5 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";
         Target tirDoShakhTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.RANGED_HYBRID);
-        Spell tirDoShakhSpell = new Spell("", "", 0, 0, 2, 0, 0, tirDoShakhTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", "", tirDoShakhSpell);
+        Spell tirDoShakhSpell = new Spell("", "", 0, 0, 2, 0, 0, tirDoShakhTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell5, false);
+        String descCollectalbe5 = "collectable";
+        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", descCollectalbe5, tirDoShakhSpell);
         collectableList.add(tirDoShakh);
 
         //6             //4
+        String descSpell6 = "Contains : no Buffs - Spell Activation Type : at start of the battle - isn't dispeller";
         Target parSimorghTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
-        Spell parSimorghSpell = new Spell("", "", 0, 0, -2, 0, 0, parSimorghTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false);
-        Usable parSimorgh = new Usable("shop_parSimorgh_1", "", 3500, parSimorghSpell);
+        Spell parSimorghSpell = new Spell("", "", 0, 0, -2, 0, 0, parSimorghTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell6, false);
+        String descUsable6 = "price : 3500";
+        Usable parSimorgh = new Usable("shop_parSimorgh_1", descUsable6, 3500, parSimorghSpell);
         usableList.add(parSimorgh);
 
         //7             //3
+        String descSpell7 = "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller";
         Target exirTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
         PowerBuff exirBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 3);
-        Spell exirSpell = new Spell("", "", 0, 0, 0, 3, 0, exirTarget, exirBuff, SpellActivationType.ON_CAST, "", false);
-        Collectable exir = new Collectable("battle_exir_1", "exir", exirSpell);
+        Spell exirSpell = new Spell("", "", 0, 0, 0, 3, 0, exirTarget, exirBuff, SpellActivationType.ON_CAST, descSpell7, false);
+        String descCollectable7 = "collectable";
+        Collectable exir = new Collectable("battle_exir_1", descCollectable7, exirSpell);
         collectableList.add(exir);
 
         //8             //4
+        String descSpell8 = "Contains : ManaBuff - Spell Activation Type : on cast - isn't dispeller";
         Target majoonManaTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
         ManaBuff majoonManaBuff = new ManaBuff(1, false, false, 3);
-        Spell majoonManaSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonManaTarget, majoonManaBuff, SpellActivationType.ON_CAST, "", false);
-        Collectable majoonMana = new Collectable("battle_majoonMana_1", "", majoonManaSpell);
+        Spell majoonManaSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonManaTarget, majoonManaBuff, SpellActivationType.ON_CAST, descSpell8, false);
+        String descCollectable8 = "collectable";
+        Collectable majoonMana = new Collectable("battle_majoonMana_1", descCollectable8, majoonManaSpell);
         collectableList.add(majoonMana);
 
         //9             //5
+        String descSpell9 = "Contains : HolyBuff - Spell Activation Type : on cast - isn't dispeller";
         Target majoonRooinTaniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
         HolyBuff majoonRooinTaniBuff = new HolyBuff(2, true, false, 10);
-        Spell majoonRooinTaniSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonRooinTaniTarget, majoonRooinTaniBuff, SpellActivationType.ON_CAST, "", false);
+        Spell majoonRooinTaniSpell = new Spell("", "", 0, 0, 0, 0, 0, majoonRooinTaniTarget, majoonRooinTaniBuff, SpellActivationType.ON_CAST, descSpell9, false);
         Collectable majoonRooinTani = new Collectable("battle_majoonRooinTani_1", "majoonRooinTani", majoonRooinTaniSpell);
         collectableList.add(majoonRooinTani);
 
         //10            //6
+        //String descSpell10 = "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller";
         //collectableList.add(null);
         //todo
 
         //11            //7
+        String descSpell11 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";
         Target randomDamageTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
-        Spell randomDamageSpell = new Spell("", "", 0, 0, 2, 0, 0, randomDamageTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Spell randomDamageSpell = new Spell("", "", 0, 0, 2, 0, 0, randomDamageTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell11, false);
         Collectable randomDamage = new Collectable("battle_randomDamage_1", "randomDamage", randomDamageSpell);
         collectableList.add(randomDamage);
 
@@ -646,63 +665,75 @@ public class DataBase {
         //todo what does it mean?
 
         //13            //8
+        String descSpell12 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";
         Target bladesOfAgilityTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
-        Spell bladesOfAgilitySpell = new Spell("", "", 0, 0, 6, 0, 0, bladesOfAgilityTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Spell bladesOfAgilitySpell = new Spell("", "", 0, 0, 6, 0, 0, bladesOfAgilityTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell12, false);
         Collectable bladesOfAgility = new Collectable("battle_bladesOfAgility_1", "bladesOfAgility", bladesOfAgilitySpell);
         collectableList.add(bladesOfAgility);
 
         //14            //6
+        String descSpell14 = "Contains : ManaBuff - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target kingWisdomTarget = new Target(Constants.PLAYER, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.NONE);
         ManaBuff kingWisdomBuff = new ManaBuff(Integer.MAX_VALUE, false, false, 1);
-        Spell kingWisdomSpell = new Spell("", "", 0, 0, 0, 0, 0, kingWisdomTarget, kingWisdomBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Spell kingWisdomSpell = new Spell("", "", 0, 0, 0, 0, 0, kingWisdomTarget, kingWisdomBuff, SpellActivationType.ON_BATTLE_START, descSpell14, false);
         Usable kingWisdom = new Usable("shop_kingWisdom_1", "", 9000, kingWisdomSpell);
         usableList.add(kingWisdom);
 
         //15            //7
+        String descSpell15 = "Contains : no Buffs - Spell Activation Type : on spawn - isn't dispeller";
         Target assassinationDaggerSpellTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell assassinationDaggerSpellSpell = new Spell("", "", 0, 0, 0, -1, 0, assassinationDaggerSpellTarget, (Buff) null, SpellActivationType.ON_SPAWN, "", false);
+        Spell assassinationDaggerSpellSpell = new Spell("", "", 0, 0, 0, -1, 0, assassinationDaggerSpellTarget, (Buff) null, SpellActivationType.ON_SPAWN, descSpell15, false);
+        String descSpell151 = "Contains : ManaBuff - Spell Activation Type : on spawn - isn't dispeller";
         Target assassinationDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
         Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
-        Usable assassinationDagger = new Usable("shop_assassinationDagger_1", "", 15000, assassinationDaggerSpell);
+        Usable assassinationDagger = new Usable("shop_assassinationDagger_1", descSpell151, 15000, assassinationDaggerSpell);
         usableList.add(assassinationDagger);
 
         //16            //8
+        String descSpell16 = "Contains : PoisonBuff - Spell Activation Type : on spawn - isn't dispeller";
         Target poisonousDaggerSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
         PoisonBuff poisonousDaggerSpellBuff = new PoisonBuff(1, true, false, 1);
-        Spell poisonousDaggerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerSpellTarget, poisonousDaggerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
+        Spell poisonousDaggerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerSpellTarget, poisonousDaggerSpellBuff, SpellActivationType.ON_ATTACK, descSpell16, false);
+        String descSpell161 = "Contains : no Buffs - Spell Activation Type : at the start of the battle- isn't dispeller";
         Target poisonousDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, poisonousDaggerSpellSpell);
-        Usable poisonousDagger = new Usable("shop_poisonousDagger_1", "", 7000, poisonousDaggerSpell);
+        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell161, false, poisonousDaggerSpellSpell);
+        Usable poisonousDagger = new Usable("shop_poisonousDagger_1", "price : 7000", 7000, poisonousDaggerSpell);
         usableList.add(poisonousDagger);
 
         //17            //9
+        String descSpell17 = "Contains : DisarmBuff - Spell Activation Type : on attack - isn't dispeller";
         Target shockHammerSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, false, 0, Constants.ALL);
         DisarmBuff shockHammerSpellBuff = new DisarmBuff(1, true, false);
-        Spell shockHammerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerSpellTarget, shockHammerSpellBuff, SpellActivationType.ON_ATTACK, "", false);
+        Spell shockHammerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerSpellTarget, shockHammerSpellBuff, SpellActivationType.ON_ATTACK, descSpell17, false);
+        String descSpell171 = "Contains : no Buffs - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target shockHammerTarget = new Target(Constants.WHOLE_HEROES, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, shockHammerSpellSpell);
-        Usable shockHammer = new Usable("shop_shockHammer_1", "", 15000, shockHammerSpell);
+        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell171, false, shockHammerSpellSpell);
+        Usable shockHammer = new Usable("shop_shockHammer_1", "price : 15000", 15000, shockHammerSpell);
         usableList.add(shockHammer);
 
         //18            //10
+        String descSpell18 = "Contains : PowerBuff - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target soulEaterSpellTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
         PowerBuff soulEaterSpellBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 1);
-        Spell soulEaterSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterSpellTarget, soulEaterSpellBuff, SpellActivationType.ON_BATTLE_START, "", false);
+        Spell soulEaterSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterSpellTarget, soulEaterSpellBuff, SpellActivationType.ON_BATTLE_START, descSpell18, false);
+        String descSpell181 = "Contains : ManaBuff - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target soulEaterTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, soulEaterSpellSpell);
-        Usable soulEater = new Usable("shop_soulEater_1", "", 25000, soulEaterSpell);
-
+        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell181, false, soulEaterSpellSpell);
+        Usable soulEater = new Usable("shop_soulEater_1", "price : 25000", 25000, soulEaterSpell);
+        usableList.add(soulEater);
         //19            //11
+        String descSpell19 = "Contains : HolyBuff - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target ghoslTamidTarget = new Target(Constants.WHOLE_MINIONS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
         HolyBuff ghoslTamidBuff = new HolyBuff(2, true, false, 1);
-        Spell ghoslTamidSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoslTamidTarget, ghoslTamidBuff, SpellActivationType.ON_BATTLE_START, "", false);
-        Usable ghoslTamid = new Usable("shop_ghoslTamid_1", "", 20000, ghoslTamidSpell);
+        Spell ghoslTamidSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoslTamidTarget, ghoslTamidBuff, SpellActivationType.ON_BATTLE_START, descSpell19, false);
+        Usable ghoslTamid = new Usable("shop_ghoslTamid_1", "price 20000", 20000, ghoslTamidSpell);
         usableList.add(ghoslTamid);
 
         //20            //9
+        String descSpell20 = "Contains : no Buffs - Spell Activation Type : on spawn - isn't dispeller";
         Target shamshirChiniTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
-        Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, "", false);
-        Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "", shamshirChiniSpell);
+        Spell shamshirChiniSpell = new Spell("", "", 0, 0, 5, 0, 0, shamshirChiniTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell20, false);
+        Collectable shamshirChini = new Collectable("battle_shamshirChini_1", "collectable", shamshirChiniSpell);
         collectableList.add(shamshirChini);
     }
 
