@@ -287,7 +287,8 @@ public class View {
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
                 System.out.println(whiteSpace + "   " + counter + " : " + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
-                        + " - MP : " + card.getMana() + " - Special Power : " + ((Unit) card).getMainSpecialPower().getDescription()
+                        + " - MP : " + card.getMana() + " - Special Power : " +
+                        ((((Unit)card).getMainSpecialPower()==null)?"":((Unit) card).getMainSpecialPower().getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }
