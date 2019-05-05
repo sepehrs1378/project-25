@@ -1,5 +1,5 @@
 public class ControllerAccount {
-    private static ControllerAccount ourInstance = new ControllerAccount();
+    private static ControllerAccount controllerAccount = new ControllerAccount();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
@@ -8,8 +8,9 @@ public class ControllerAccount {
     private ControllerAccount() {
     }
 
-    public static ControllerAccount getInstance() {
-        return ourInstance;
+
+    public static ControllerAccount getInstance(){
+        return controllerAccount;
     }
 
     public void main() {
