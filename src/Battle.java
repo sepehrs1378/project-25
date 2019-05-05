@@ -286,8 +286,7 @@ public class Battle {
             if (dataBase.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
                 dataBase.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
                 dataBase.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
-                dataBase.getCurrentBattle().getPlayerInTurn().setNextCard(dataBase.getCurrentBattle()
-                        .getPlayerInTurn().getDeck());
+                dataBase.getCurrentBattle().getPlayerInTurn().setNextCard();
                 //todo is it complete
             } else return OutputMessageType.THIS_CELL_IS_FULL;
         } else if (card instanceof Spell) {
@@ -341,5 +340,7 @@ public class Battle {
                 .setUnit(player1.getDeck().getHero());
         battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][Constants.BATTLE_GROUND_LENGTH - 1]
                 .setUnit(player2.getDeck().getHero());
+        player2.setNextCard();
+        player1.setNextCard();
     }
 }
