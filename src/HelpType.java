@@ -6,13 +6,11 @@ public enum HelpType {
             "\n\tsearch collection [item name | card name]" +
             "\n\tbuy [item name | card name]" +
             "\n\tsell [card id | item id]" +
-            "\n\tshow" +
-            "\n\thelp"),
+            "\n\tshow"),
     CONTROLLER_ACCOUNT_HELP("Account Commands:\n" +
             "\tcreate account [username]\n" +
             "\tlogin [username]\n" +
-            "\tshow leaderboard\n" +
-            "\thelp\n"),
+            "\tshow leaderboard\n"),
     CONTROLLER_COLLECTION_HELP("Collection Commands:" +
             "\n\texit" +
             "\n\tshow" +
@@ -25,8 +23,7 @@ public enum HelpType {
             "\n\tvalidate deck [deck name]" +
             "\n\tselect deck [deck name]" +
             "\n\tshow all decks" +
-            "\n\tshow deck [deck name]" +
-            "\n\thelp"),
+            "\n\tshow deck [deck name]"),
     BATTLE_COMMANDS_HELP("BATTLE COMMAND HELP:" +
             "\n\tgame info" +
             "\n\tshow my minions" +
@@ -44,20 +41,25 @@ public enum HelpType {
             "\n\tselect [collectable id])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
-            "\n\thelp" +
             "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
-    STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
-    CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
+    STORY_MODE_OPTIONS("level1\nlevel2\nlevel3"),
+    CONTROLLER_BATTLE_MENU_HELP("Commands:\n" +
+            "\tenter singleplayer\n" +
+            "\tenter multiplayer"),
     CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
             "\tenter collection\n" +
             "\tenter shop\n" +
             "\tenter battle\n" +
             "\tlogout\n" +
-            "\thelp\n" +
             "\tmatch history"),
-    MODES_HELP("flags\none_flag\nclassic");
+    MODES_HELP("flags\none_flag\nclassic"),
 
+    CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
+            "\tselect [username]\n" +
+            "\texit\n"),
+    CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
+            "\t...");
     private String message;
 
     HelpType(String message) {

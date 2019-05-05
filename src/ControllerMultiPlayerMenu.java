@@ -20,15 +20,19 @@ public class ControllerMultiPlayerMenu {
                 case SELECT:
                     select();
                     break;
-                case ENTER:
-                    break;
                 case EXIT:
                     didExit = true;
                     break;
+                case HELP:
+                    help();
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
+    }
+
+    private void help(){
+        view.printHelp(HelpType.CONTROLLER_MULTI_PLAYER_MENU);
     }
 
     private void select() {
