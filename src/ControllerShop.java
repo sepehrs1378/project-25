@@ -17,27 +17,27 @@ class ControllerShop {
     }
 
     public void main() {
-        boolean didExit = false;
-        while (!didExit) {
+        boolean Exit = false;
+        while (!Exit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case EXIT:
-                    didExit = true;
-                    break;
                 case SHOW:
                     show();
                     break;
                 case SEARCH:
                     search();
                     break;
-                case BUY:
-                    buy();
+                case EXIT:
+                    Exit = true;
                     break;
                 case SELL:
                     sell();
                     break;
                 case HELP:
                     help();
+                    break;
+                case BUY:
+                    buy();
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -82,9 +82,6 @@ class ControllerShop {
             return;
         }
         switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(matcher.group(1))) {
-            case NOT_IN_SHOP:
-                view.printOutputMessage(OutputMessageType.NOT_IN_SHOP);
-                break;
             case INSUFFICIENT_MONEY:
                 view.printOutputMessage(OutputMessageType.INSUFFICIENT_MONEY);
                 break;
@@ -93,6 +90,9 @@ class ControllerShop {
                 break;
             case BOUGHT_SUCCESSFULLY:
                 view.printOutputMessage(OutputMessageType.BOUGHT_SUCCESSFULLY);
+                break;
+            case NOT_IN_SHOP:
+                view.printOutputMessage(OutputMessageType.NOT_IN_SHOP);
                 break;
             default:
         }

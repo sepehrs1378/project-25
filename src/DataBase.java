@@ -29,7 +29,7 @@ public class DataBase {
         makeItems();
     }
 
-    public void makeCardSpells() {
+    private void makeCardSpells() {
         //1
         String desc1 = "Target : Enemy Unit - disarms an enemy unit for the entirety of the current battle";
         Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
@@ -176,7 +176,7 @@ public class DataBase {
 
     }
 
-    public void makeHeroes() {
+    private void makeHeroes() {
         //1
         Target divSefidTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.ALL);
         PowerBuff divSefidBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 0, 4);
@@ -243,7 +243,7 @@ public class DataBase {
         cardList.add(rostam);
     }
 
-    public void makeMinions() {
+    private void makeMinions() {
         //1
         Unit kamandarFars = new Unit("shop_kamandarFars_1", "kamandarFars", 300, 2, 5, 4, 2, 7, null, Constants.MINION, "", false);
         cardList.add(kamandarFars);
@@ -316,7 +316,7 @@ public class DataBase {
         //15
         Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
-        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, "", false, oghabBuff);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, " ", false, oghabBuff);
         cardList.add(oghab);
 
         //16
@@ -715,7 +715,7 @@ public class DataBase {
         return getCollectableWithName(collectableName) != null;
     }
 
-    public Account getAccountWithUsername(String username) {
+    Account getAccountWithUsername(String username) {
         for (Account account : accountList) {
             if (account.getUsername().equals(username))
                 return account;
@@ -723,7 +723,7 @@ public class DataBase {
         return null;
     }
 
-    public Card findCardInShop(String cardName) {
+    Card findCardInShop(String cardName) {
         for (Card card : cardList) {
             if (card.getName().equals(cardName)) {
                 return card;
@@ -732,7 +732,7 @@ public class DataBase {
         return null;
     }
 
-    public Usable findUsableInShop(String usableName) {
+    Usable findUsableInShop(String usableName) {
         for (Usable usable : usableList) {
             if (usable.getName().equals(usableName)) {
                 return usable;
@@ -741,7 +741,7 @@ public class DataBase {
         return null;
     }
 
-    public void searchInShop(String command) {
+    void searchInShop(String command) {
         String[] strings = command.split("\\s+");
         Card card = findCardInShop(strings[1]);
         Usable usable = findUsableInShop(strings[1]);
@@ -749,7 +749,7 @@ public class DataBase {
         ControllerShop.getOurInstance().showIdInShop(card, usable, collectable);
     }
 
-    public static Collectable findCollectableInShop(String collectableName) {
+    private static Collectable findCollectableInShop(String collectableName) {
         for (Collectable collectable : DataBase.getInstance().getCollectableList()) {
             if (collectable.getName().equals(collectableName)) {
                 return collectable;
@@ -758,7 +758,7 @@ public class DataBase {
         return null;
     }
 
-    public boolean doesAccountExist(String username) {
+    boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;
     }
 }

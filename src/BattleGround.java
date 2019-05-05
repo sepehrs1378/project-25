@@ -211,7 +211,6 @@ class BattleGround {
                 if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
                     units.add(cell.getUnit());
                 }
-
             }
         }
         return units;
