@@ -264,241 +264,305 @@ public class DataBase {
 
     private void makeMinions() {
         //1
-        Unit kamandarFars = new Unit("shop_kamandarFars_1", "kamandarFars", 300, 2, 5, 4, 2, 7, null, Constants.MINION, "", false);
+        String descMinion1 = "price : 300 - mana : 2 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo";
+        Unit kamandarFars = new Unit("shop_kamandarFars_1", "kamandarFars", 300, 2, 5, 4, 2, 7, null, Constants.MINION, descMinion1, false);
         cardList.add(kamandarFars);
 
         //2
+        String descSpell2 = "Contains : StunBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion2 = "price : 400 - mana : 2 - hp : 6 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target shamshirZanFarsTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff shamshirZanFarsBuff = new StunBuff(1, true, false);
-        Spell shamshirZanFarsSpell = new Spell("", "", 0, 0, 0, 0, 0, shamshirZanFarsTarget, shamshirZanFarsBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit shamshirZanFars = new Unit("shop_shamshirZanFars_1", "shamshirZanFars", 400, 2, 6, 4, 1, 1, shamshirZanFarsSpell, Constants.MINION, "", false);
+        Spell shamshirZanFarsSpell = new Spell("", "", 0, 0, 0, 0, 0, shamshirZanFarsTarget, shamshirZanFarsBuff, SpellActivationType.ON_ATTACK, descSpell2, false);
+        Unit shamshirZanFars = new Unit("shop_shamshirZanFars_1", "shamshirZanFars", 400, 2, 6, 4, 1, 1, shamshirZanFarsSpell, Constants.MINION, descMinion2, false);
         cardList.add(shamshirZanFars);
 
         //3
-        Unit neizeDarFars = new Unit("shop_neizeDarFars_1", "neizeDarFars", 500, 1, 5, 3, 1, 3, null, Constants.MINION, "", false);
+        String descMinion3 = "price : 500 - mana : 1 - hp : 5 - ap : 3 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo";
+        Unit neizeDarFars = new Unit("shop_neizeDarFars_1", "neizeDarFars", 500, 1, 5, 3, 1, 3, null, Constants.MINION, descMinion3, false);
         cardList.add(neizeDarFars);
 
         //4
-        Unit asbSavarFars = new Unit("shop_asbSavarFars_1", "asbSavarFars", 200, 4, 10, 6, 1, 1, null, Constants.MINION, "", false);
+        String descMinion4 = "price : 200 - mana : 4 - hp : 10 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
+        Unit asbSavarFars = new Unit("shop_asbSavarFars_1", "asbSavarFars", 200, 4, 10, 6, 1, 1, null, Constants.MINION, descMinion4, false);
         cardList.add(asbSavarFars);
 
         //5
+        //String descSpell5 = "Contains : StunBuff - Spell Activation Type : on attack - isn't dispeller";
+        //String descMinion5 = "price : 600 - mana : 9 - hp : 24 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         //todo check if this is true? (i think it is good to add a powerBuff for each attack)
 //        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
-//        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
-//        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
+//        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, descSpell5, false);
+//        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, descMinion5, false);
 //        cardList.add(pahlevanFars);
 
         //6
-        Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1", "sepahSalarFars", 800, 7, 12, 4, 1, 1, null, Constants.MINION, "", true);
+        String descMinion6 = "price : 800 - mana : 7 - hp : 12 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo";
+        Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1", "sepahSalarFars", 800, 7, 12, 4, 1, 1, null, Constants.MINION, descMinion6, true);
         cardList.add(sepahSalarFars);
 
         //7
-        Unit kamandarToorani = new Unit("shop_kamandarToorani_1", "kamandarToorani", 500, 1, 3, 4, 2, 5, null, Constants.MINION, "", false);
+        String descMinion7 = "price : 500 - mana : 1 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo";
+        Unit kamandarToorani = new Unit("shop_kamandarToorani_1", "kamandarToorani", 500, 1, 3, 4, 2, 5, null, Constants.MINION, descMinion7, false);
         cardList.add(kamandarToorani);
 
         //8
-        Unit gholabSangDarToorani = new Unit("shop_gholabSangDarToorani_1", "gholabSangDarToorani", 600, 1, 4, 2, 2, 7, null, Constants.MINION, "", false);
+        String descMinion8 = "price : 600 - mana : 1 - hp : 4 - ap : 2 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo";
+        Unit gholabSangDarToorani = new Unit("shop_gholabSangDarToorani_1", "gholabSangDarToorani", 600, 1, 4, 2, 2, 7, null, Constants.MINION, descMinion8, false);
         cardList.add(gholabSangDarToorani);
 
         //9
-        Unit neizeDarToorani = new Unit("shop_neizeDarToorani_1", "neizeDarToorani", 600, 1, 4, 4, 1, 3, null, Constants.MINION, "", false);
+        String descMinion9 = "price : 600 - mana : 1 - hp : 4 - ap : 4 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo";
+        Unit neizeDarToorani = new Unit("shop_neizeDarToorani_1", "neizeDarToorani", 600, 1, 4, 4, 1, 3, null, Constants.MINION, descMinion9, false);
         cardList.add(neizeDarToorani);
 
         //10
+        String descSpell10 = "Contains : PoisonBuff and StunBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion10 = "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target jasoosTooraniTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         List<Buff> jasoosTooraniBuffs = new ArrayList<>();
         DisarmBuff jasoosTooraniBuff1 = new DisarmBuff(1, true, false);
         PoisonBuff jasoosTooraniBuff2 = new PoisonBuff(4, true, false, 1);
         jasoosTooraniBuffs.add(jasoosTooraniBuff1);
         jasoosTooraniBuffs.add(jasoosTooraniBuff2);
-        Spell jasoosTooraniSpell = new Spell("", "", 0, 0, 0, 0, 0, jasoosTooraniTarget, jasoosTooraniBuffs, SpellActivationType.ON_ATTACK, "", false);
-        Unit jasoosToorani = new Unit("shop_jasoosToorani_1", "jasoosToorani", 700, 4, 6, 6, 1, 1, jasoosTooraniSpell, Constants.MINION, "", false);
+        Spell jasoosTooraniSpell = new Spell("", "", 0, 0, 0, 0, 0, jasoosTooraniTarget, jasoosTooraniBuffs, SpellActivationType.ON_ATTACK, descSpell10, false);
+        Unit jasoosToorani = new Unit("shop_jasoosToorani_1", "jasoosToorani", 700, 4, 6, 6, 1, 1, jasoosTooraniSpell, Constants.MINION, descMinion10, false);
         cardList.add(jasoosToorani);
 
         //11
-        Unit gorzdarToorani = new Unit("shop_gorzdarToorani_1", "gorzdarToorani", 450, 2, 3, 10, 1, 1, null, Constants.MINION, "", false);
+        String descMinion11 = "price : 450 - mana : 2 - hp : 3 - ap : 10 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
+        Unit gorzdarToorani = new Unit("shop_gorzdarToorani_1", "gorzdarToorani", 450, 2, 3, 10, 1, 1, null, Constants.MINION, descMinion11, false);
         cardList.add(gorzdarToorani);
 
         //12
-        Unit shahzadehToorani = new Unit("shop_shahzadehToorani_1", "shahzadehToorani", 800, 6, 6, 10, 1, 1, null, Constants.MINION, "", true);
+        String descMinion12 = "price : 800 - mana : 6 - hp : 6 - ap : 10 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo";
+        Unit shahzadehToorani = new Unit("shop_shahzadehToorani_1", "shahzadehToorani", 800, 6, 6, 10, 1, 1, null, Constants.MINION, descMinion12, true);
         cardList.add(shahzadehToorani);
 
         //13
-        Unit divSiah = new Unit("shop_divSiah_1", "divSiah", 300, 9, 14, 10, 1, 7, null, Constants.MINION, "", false);
+        String descMinion13 = "price : 300 - mana : 9 - hp : 14 - ap : 10 - minRange : 1 - maxRange : 7 - Type : Minion - can't use combo";
+        Unit divSiah = new Unit("shop_divSiah_1", "divSiah", 300, 9, 14, 10, 1, 7, null, Constants.MINION, descMinion13, false);
         cardList.add(divSiah);
 
         //14
-        Unit ghoolSangAndaz = new Unit("shop_ghoolSangAndaz_1", "ghoolSangAndaz", 300, 9, 12, 12, 2, 7, null, Constants.MINION, "", false);
+        String descMinion14 = "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo";
+        Unit ghoolSangAndaz = new Unit("shop_ghoolSangAndaz_1", "ghoolSangAndaz", 300, 9, 12, 12, 2, 7, null, Constants.MINION, descMinion14, false);
         cardList.add(ghoolSangAndaz);
 
         //15
-        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
+        String descMinion15 = "price : 200 - mana : 2 - hp : 0 - ap : 2 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo";
+//        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
+        //todo remove if not needed
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
-        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, " ", false, oghabBuff);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, descMinion15, false, oghabBuff);
         cardList.add(oghab);
 
         //16
-        Unit divGorazSavar = new Unit("shop_divGorazSavar_1", "divGorazSavar", 300, 6, 16, 8, 1, 1, null, Constants.MINION, "", false);
+        String descMinion16 = "price : 300 - mana : 6 - hp : 16 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
+        Unit divGorazSavar = new Unit("shop_divGorazSavar_1", "divGorazSavar", 300, 6, 16, 8, 1, 1, null, Constants.MINION, descMinion16, false);
         cardList.add(divGorazSavar);
 
         //17
+        String descSpell17 = "Contains : no Buff - Spell Activation Type : on death - isn't dispeller";
+        String descMinion17 = "price : 500 - mana : 7 - hp : 12 - ap : 11 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo";
         Target ghoolTakCheshmTarget = new Target(Constants.MINION, 3, 3, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell ghoolTakCheshmSpell = new Spell("", "", 0, 0, 0, -2, 0, ghoolTakCheshmTarget, (Buff) null, SpellActivationType.ON_DEATH, "", false);
-        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1", "ghoolTakCheshm", 500, 7, 12, 11, 2, 4, ghoolTakCheshmSpell, Constants.MINION, "", false);
+        Spell ghoolTakCheshmSpell = new Spell("", "", 0, 0, 0, -2, 0, ghoolTakCheshmTarget, (Buff) null, SpellActivationType.ON_DEATH, descSpell17, false);
+        Unit ghoolTakCheshm = new Unit("shop_ghoolTakCheshm_1", "ghoolTakCheshm", 500, 7, 12, 11, 2, 4, ghoolTakCheshmSpell, Constants.MINION, descMinion17, false);
         cardList.add(ghoolTakCheshm);
 
         //18
+        String descSpell18 = "Contains : PoisonBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion18 = "price : 300 - mana : 4 - hp : 5 - ap : 6 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo";
         Target marSamiTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         PoisonBuff marSamiBuff = new PoisonBuff(3, true, false, 1);
-        Spell marSamiSpell = new Spell("", "", 0, 0, 0, 0, 0, marSamiTarget, marSamiBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit marSami = new Unit("shop_marSami_1", "marSami", 300, 4, 5, 6, 2, 4, marSamiSpell, Constants.MINION, "", false);
+        Spell marSamiSpell = new Spell("", "", 0, 0, 0, 0, 0, marSamiTarget, marSamiBuff, SpellActivationType.ON_ATTACK, descSpell18, false);
+        Unit marSami = new Unit("shop_marSami_1", "marSami", 300, 4, 5, 6, 2, 4, marSamiSpell, Constants.MINION, descMinion18, false);
         cardList.add(marSami);
 
         //19
-        Unit ejdehaAtashAndaz = new Unit("shop_ejdehaAtashAndaz_1", "ejdehaAtashAndaz", 250, 5, 9, 5, 2, 4, null, Constants.MINION, "", false);
+        String descMinion19 = "price : 250 - mana : 5 - hp : 9 - ap : 5 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo";
+        Unit ejdehaAtashAndaz = new Unit("shop_ejdehaAtashAndaz_1", "ejdehaAtashAndaz", 250, 5, 9, 5, 2, 4, null, Constants.MINION, descMinion19, false);
         cardList.add(ejdehaAtashAndaz);
 
         //20
+        String descSpell20 = "Contains : ImmunityBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion20 = "price : 600 - mana : 2 - hp : 1 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target shirDarandeTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.MELEE);
         ImmunityBuff shirDarandeBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.HOLY_BUFF);
-        Spell shirDarandeSpell = new Spell("", "", 0, 0, 0, 0, 0, shirDarandeTarget, shirDarandeBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit shirDarande = new Unit("shop_shirDarande_1", "shirDarande", 600, 2, 1, 8, 1, 1, shirDarandeSpell, Constants.MINION, "", false);
+        Spell shirDarandeSpell = new Spell("", "", 0, 0, 0, 0, 0, shirDarandeTarget, shirDarandeBuff, SpellActivationType.ON_ATTACK, descSpell20, false);
+        Unit shirDarande = new Unit("shop_shirDarande_1", "shirDarande", 600, 2, 1, 8, 1, 1, shirDarandeSpell, Constants.MINION, descMinion20, false);
         cardList.add(shirDarande);
 
         //21
+        String descSpell21 = "Contains : NegativeArmorBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion21 = "price : 500 - mana : 8 - hp : 14 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo";
         Target marGhoolPeikarTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 2, Constants.ALL);
         NegativeArmorBuff marGhoolPeikarBuff = new NegativeArmorBuff(Integer.MAX_VALUE, true, false, 1);
-        Spell marGhoolPeikarSpell = new Spell("", "", 0, 0, 0, 0, 0, marGhoolPeikarTarget, marGhoolPeikarBuff, SpellActivationType.ON_SPAWN, "", false);
-        Unit marGhoolPeikar = new Unit("shop_marGhoolPeikar_1", "marGhoolPeikar", 500, 8, 14, 7, 2, 5, marGhoolPeikarSpell, Constants.MINION, "", false);
+        Spell marGhoolPeikarSpell = new Spell("", "", 0, 0, 0, 0, 0, marGhoolPeikarTarget, marGhoolPeikarBuff, SpellActivationType.ON_SPAWN, descSpell21, false);
+        Unit marGhoolPeikar = new Unit("shop_marGhoolPeikar_1", "marGhoolPeikar", 500, 8, 14, 7, 2, 5, marGhoolPeikarSpell, Constants.MINION, descMinion21, false);
         cardList.add(marGhoolPeikar);
 
         //22
+        String descSpell22 = "Contains : SequentialDamgeBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion22 = "price : 400 - mana : 5 - hp : 8 - ap : 2 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target gorgSefidTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         SequentialDamageBuff gorgSefidBuff = new SequentialDamageBuff(2, false, true, 6, 4);
-        Spell gorgSefidSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgSefidTarget, gorgSefidBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit gorgSefid = new Unit("shop_gorgSefid_1", "gorgSefid", 400, 5, 8, 2, 1, 1, gorgSefidSpell, Constants.MINION, "", false);
+        Spell gorgSefidSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgSefidTarget, gorgSefidBuff, SpellActivationType.ON_ATTACK, descSpell22, false);
+        Unit gorgSefid = new Unit("shop_gorgSefid_1", "gorgSefid", 400, 5, 8, 2, 1, 1, gorgSefidSpell, Constants.MINION, descMinion22, false);
         cardList.add(gorgSefid);
 
         //23
+        String descSpell23 = "Contains : WeaknessBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion23 = "price : 400 - mana : 4 - hp : 6 - ap : 2 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target palangTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         WeaknessBuff palangBuff = new WeaknessBuff(1, true, false, 8, 0);
-        Spell palangSpell = new Spell("", "", 0, 0, 0, 0, 1, palangTarget, palangBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit palang = new Unit("shop_palang_1", "palang", 400, 4, 6, 2, 1, 1, palangSpell, Constants.MINION, "", false);
+        Spell palangSpell = new Spell("", "", 0, 0, 0, 0, 1, palangTarget, palangBuff, SpellActivationType.ON_ATTACK, descSpell23, false);
+        Unit palang = new Unit("shop_palang_1", "palang", 400, 4, 6, 2, 1, 1, palangSpell, Constants.MINION, descMinion23, false);
         cardList.add(palang);
 
         //24
+        String descSpell24 = "Contains : WeaknessBuff - Spell Activation Type : on attack - isn't dispeller";
+        String descMinion24 = "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target gorgTarget = new Target(Constants.MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         WeaknessBuff gorgBuff = new WeaknessBuff(1, true, false, 6, 0);
-        Spell gorgSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgTarget, gorgBuff, SpellActivationType.ON_ATTACK, "", false);
-        Unit gorg = new Unit("shop_gorg_1", "gorg", 400, 3, 6, 1, 1, 1, gorgSpell, Constants.MINION, "", false);
+        Spell gorgSpell = new Spell("", "", 0, 0, 0, 0, 1, gorgTarget, gorgBuff, SpellActivationType.ON_ATTACK, descSpell24, false);
+        Unit gorg = new Unit("shop_gorg_1", "gorg", 400, 3, 6, 1, 1, 1, gorgSpell, Constants.MINION, descMinion24, false);
         cardList.add(gorg);
+
         //25
+        String descSpell25 = "Contains : PowerBuff and WeaknessBuff - Spell Activation Type : passive - isn't dispeller";
+        String descMinion25 = "price : 550 - mana : 4 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo";
         Target jadoogarTarget = new Target(Constants.MINION, 3, 3, Constants.FRIEND, false, false, 0, Constants.ALL);
         List<Buff> jadoogarBuffs = new ArrayList<>();
         PowerBuff jadoogarBuff1 = new PowerBuff(1, true, false, 0, 2);
         WeaknessBuff jadoogarBuff2 = new WeaknessBuff(1, true, false, 1, 0);
         jadoogarBuffs.add(jadoogarBuff1);
         jadoogarBuffs.add(jadoogarBuff2);
-        Spell jadoogarSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarTarget, jadoogarBuffs, SpellActivationType.PASSIVE, "", false);
-        Unit jadoogar = new Unit("shop_jadoogar_1", "jadoogar", 550, 4, 5, 4, 2, 3, jadoogarSpell, Constants.MINION, "", false);
+        Spell jadoogarSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarTarget, jadoogarBuffs, SpellActivationType.PASSIVE, descSpell25, false);
+        Unit jadoogar = new Unit("shop_jadoogar_1", "jadoogar", 550, 4, 5, 4, 2, 3, jadoogarSpell, Constants.MINION, descMinion25, false);
         cardList.add(jadoogar);
 
         //26
+        String descSpell26 = "Contains : PowerBuf and HolyBuff - Spell Activation Type : passive - isn't dispeller";
+        String descMinion26 = "price : 550 - mana : 6 - hp : 6 - ap : 6 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo";
         Target jadoogarAzamTarget = new Target(Constants.MINION, 3, 3, Constants.FRIEND, false, false, 0, Constants.ALL);
         List<Buff> jadoogarAzamBuffs = new ArrayList<>();
         PowerBuff jadoogarAzamBuff1 = new PowerBuff(1, true, false, 0, 2);
         HolyBuff jadoogarAzamBuff2 = new HolyBuff(1, true, true, 1);
         jadoogarAzamBuffs.add(jadoogarAzamBuff1);
         jadoogarAzamBuffs.add(jadoogarAzamBuff2);
-        Spell jadoogarAzamSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarAzamTarget, jadoogarAzamBuffs, SpellActivationType.PASSIVE, "", false);
-        Unit jadoogarAzam = new Unit("shop_jadoogarAzam_1", "jadoogarAzam", 550, 6, 6, 6, 2, 5, jadoogarAzamSpell, Constants.MINION, "", false);
+        Spell jadoogarAzamSpell = new Spell("", "", 0, 0, 0, 0, 0, jadoogarAzamTarget, jadoogarAzamBuffs, SpellActivationType.PASSIVE, descSpell26, false);
+        Unit jadoogarAzam = new Unit("shop_jadoogarAzam_1", "jadoogarAzam", 550, 6, 6, 6, 2, 5, jadoogarAzamSpell, Constants.MINION, descMinion26, false);
         cardList.add(jadoogarAzam);
 
         //27
+        String descSpell27 = "Contains : PowerBuff - Spell Activation Type : passive - isn't dispeller";
+        String descMinion27 = "price : 500 - mana : 5 - hp : 10 - ap : 4 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo";
         //todo spell activation type ambiguous
         Target genTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
         PowerBuff genBuff = new PowerBuff(Integer.MAX_VALUE, true, true, 0, 1);
-        Spell genSpell = new Spell("", "", 0, 0, 0, 0, 0, genTarget, genBuff, SpellActivationType.PASSIVE, "", false);
-        Unit gen = new Unit("shop_gen_1", "gen", 500, 5, 10, 4, 2, 4, genSpell, Constants.MINION, "", false);
+        Spell genSpell = new Spell("", "", 0, 0, 0, 0, 0, genTarget, genBuff, SpellActivationType.PASSIVE, descSpell27, false);
+        Unit gen = new Unit("shop_gen_1", "gen", 500, 5, 10, 4, 2, 4, genSpell, Constants.MINION, descMinion27, false);
         cardList.add(gen);
 
         //28
+        String descSpell28 = "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller";
+        String descMinion28 = "price : 500 - mana : 6 - hp : 10 - ap : 14 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target gorazVahshiTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
         ImmunityBuff gorazVahshiBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.DISARM);
-        Spell gorazVahshiSpell = new Spell("", "", 0, 0, 0, 0, 0, gorazVahshiTarget, gorazVahshiBuff, SpellActivationType.ON_DEFEND, "", false);
-        Unit gorazVahshi = new Unit("shop_gorazVahshi_1", "gorazVahshi", 500, 6, 10, 14, 1, 1, gorazVahshiSpell, Constants.MINION, "", false);
+        Spell gorazVahshiSpell = new Spell("", "", 0, 0, 0, 0, 0, gorazVahshiTarget, gorazVahshiBuff, SpellActivationType.ON_DEFEND, descSpell28, false);
+        Unit gorazVahshi = new Unit("shop_gorazVahshi_1", "gorazVahshi", 500, 6, 10, 14, 1, 1, gorazVahshiSpell, Constants.MINION, descMinion28, false);
         cardList.add(gorazVahshi);
 
         //29
+        String descSpell29 = "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller";
+        String descMinion29 = "price : 400 - mana : 8 - hp : 20 - ap : 12 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target piranTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.MELEE);
         ImmunityBuff piranBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.POISON);
-        Spell piranSpell = new Spell("", "", 0, 0, 0, 0, 0, piranTarget, piranBuff, SpellActivationType.ON_DEFEND, "", false);
-        Unit piran = new Unit("shop_piran_1", "piran", 400, 8, 20, 12, 1, 1, piranSpell, Constants.MINION, "", false);
+        Spell piranSpell = new Spell("", "", 0, 0, 0, 0, 0, piranTarget, piranBuff, SpellActivationType.ON_DEFEND, descSpell29, false);
+        Unit piran = new Unit("shop_piran_1", "piran", 400, 8, 20, 12, 1, 1, piranSpell, Constants.MINION, descMinion29, false);
         cardList.add(piran);
 
         //30
+        String descSpell30 = "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller";
+        String descMinion30 = "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo";
         Target givTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.RANGED);
         ImmunityBuff givBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.ENEMY_CARD_SPELL);
-        Spell givSpell = new Spell("", "", 0, 0, 0, 0, 0, givTarget, givBuff, SpellActivationType.ON_DEFEND, "", false);
-        Unit giv = new Unit("shop_giv_1", "giv", 450, 4, 5, 7, 2, 5, givSpell, Constants.MINION, "", false);
+        Spell givSpell = new Spell("", "", 0, 0, 0, 0, 0, givTarget, givBuff, SpellActivationType.ON_DEFEND, descSpell30, false);
+        Unit giv = new Unit("shop_giv_1", "giv", 450, 4, 5, 7, 2, 5, givSpell, Constants.MINION, descMinion30, false);
         cardList.add(giv);
 
         //31
+        String descSpell31 = "Contains : WeaknessBuff - Spell Activation Type : on spawn - isn't dispeller";
+        String descMinion31 = "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target bahmanTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
         WeaknessBuff bahmanBuff = new WeaknessBuff(1, true, false, 16, 0);
-        Spell bahmanSpell = new Spell("", "", 0, 0, 0, 0, 0, bahmanTarget, bahmanBuff, SpellActivationType.ON_SPAWN, "", false);
-        Unit bahman = new Unit("shop_bahman_1", "bahman", 450, 8, 16, 9, 1, 1, bahmanSpell, Constants.MINION, "", false);
+        Spell bahmanSpell = new Spell("", "", 0, 0, 0, 0, 0, bahmanTarget, bahmanBuff, SpellActivationType.ON_SPAWN, descSpell31, false);
+        Unit bahman = new Unit("shop_bahman_1", "bahman", 450, 8, 16, 9, 1, 1, bahmanSpell, Constants.MINION, descMinion31, false);
         cardList.add(bahman);
 
         //32
+        String descSpell32 = "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller";
+        String descMinion32 = "price : 400 - mana : 7 - hp : 14 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target ashkboosTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.MELEE);
         ImmunityBuff ashkboosBuff = new ImmunityBuff(Integer.MAX_VALUE, true, false, Constants.WEAKER_AP);
-        Spell ashkboosSpell = new Spell("", "", 0, 0, 0, 0, 0, ashkboosTarget, ashkboosBuff, SpellActivationType.ON_DEFEND, "", false);
-        Unit ashkboos = new Unit("shop_ashkboos_1", "ashkboos", 400, 7, 14, 8, 1, 1, ashkboosSpell, Constants.MINION, "", false);
+        Spell ashkboosSpell = new Spell("", "", 0, 0, 0, 0, 0, ashkboosTarget, ashkboosBuff, SpellActivationType.ON_DEFEND, descSpell32, false);
+        Unit ashkboos = new Unit("shop_ashkboos_1", "ashkboos", 400, 7, 14, 8, 1, 1, ashkboosSpell, Constants.MINION, descMinion32, false);
         cardList.add(ashkboos);
 
         //33
-        Unit iraj = new Unit("shop_iraj_1", "iraj", 500, 4, 6, 20, 2, 3, null, Constants.MINION, "", false);
+        String descMinion33 = "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo";
+        Unit iraj = new Unit("shop_iraj_1", "iraj", 500, 4, 6, 20, 2, 3, null, Constants.MINION, descMinion33, false);
         cardList.add(iraj);
 
         //34
-        Unit ghoolBozorg = new Unit("shop_ghoolBozorg_1", "ghoolBozorg", 600, 9, 30, 8, 1, 2, null, Constants.MINION, "", false);
+        String descMinion34 = "price :600 - mana : 9 - hp : 30 - ap : 8 - minRange : 1 - maxRange : 2 - Type : Minion - can't use combo";
+        Unit ghoolBozorg = new Unit("shop_ghoolBozorg_1", "ghoolBozorg", 600, 9, 30, 8, 1, 2, null, Constants.MINION, descMinion34, false);
         cardList.add(ghoolBozorg);
 
         //35
+        String descSpell35 = "Contains : no Buffs - Spell Activation Type : on attack - is dispeller";
+        String descMinion35 = "price : 550 - mana : 4 - hp : 10 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target ghoolDoSarTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
-        Spell ghoolDoSarSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoolDoSarTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", true);
-        Unit ghoolDoSar = new Unit("shop_ghoolDoSar_1", "ghoolDoSar", 550, 4, 10, 4, 1, 1, ghoolDoSarSpell, Constants.MINION, "", false);
+        Spell ghoolDoSarSpell = new Spell("", "", 0, 0, 0, 0, 0, ghoolDoSarTarget, (Buff) null, SpellActivationType.ON_ATTACK, descSpell35, true);
+        Unit ghoolDoSar = new Unit("shop_ghoolDoSar_1", "ghoolDoSar", 550, 4, 10, 4, 1, 1, ghoolDoSarSpell, Constants.MINION, descMinion35, false);
         cardList.add(ghoolDoSar);
 
         //36
+        String descSpell36 = "Contains : StunBuff - Spell Activation Type : on spawn - isn't dispeller";
+        String descMinion36 = "price : 500 - mana : 3 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo";
         Target naneSarmaTarget = new Target(Constants.MINION, 3, 3, Constants.ENEMY, false, false, 0, Constants.ALL);
         StunBuff naneSarmaBuff = new StunBuff(1, true, false);
-        Spell naneSarmaSpell = new Spell("", "", 0, 0, 0, 0, 0, naneSarmaTarget, naneSarmaBuff, SpellActivationType.ON_SPAWN, "", false);
-        Unit naneSarma = new Unit("shop_naneSarma_1", "naneSarma", 500, 3, 3, 4, 2, 5, naneSarmaSpell, Constants.MINION, "", false);
+        Spell naneSarmaSpell = new Spell("", "", 0, 0, 0, 0, 0, naneSarmaTarget, naneSarmaBuff, SpellActivationType.ON_SPAWN, descSpell36, false);
+        Unit naneSarma = new Unit("shop_naneSarma_1", "naneSarma", 500, 3, 3, 4, 2, 5, naneSarmaSpell, Constants.MINION, descMinion36, false);
         cardList.add(naneSarma);
 
         //37
+        String descSpell37 = "Contains : HolyBuff - Spell Activation Type : passive - isn't dispeller";
+        String descMinion37 = "price : 650 - mana : 3 - hp : 1 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target fooladZerehTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, true, 0, Constants.MELEE);
         HolyBuff fooladZerehBuff = new HolyBuff(Integer.MAX_VALUE, true, true, 12);
-        Spell fooladZerehSpell = new Spell("", "", 0, 0, 0, 0, 0, fooladZerehTarget, fooladZerehBuff, SpellActivationType.PASSIVE, "", false);
-        Unit fooladZereh = new Unit("shop_fooladZereh_1", "fooladZereh", 650, 3, 1, 1, 1, 1, fooladZerehSpell, Constants.MINION, "", false);
+        Spell fooladZerehSpell = new Spell("", "", 0, 0, 0, 0, 0, fooladZerehTarget, fooladZerehBuff, SpellActivationType.PASSIVE, descSpell37, false);
+        Unit fooladZereh = new Unit("shop_fooladZereh_1", "fooladZereh", 650, 3, 1, 1, 1, 1, fooladZerehSpell, Constants.MINION, descMinion37, false);
         cardList.add(fooladZereh);
 
         //38
+        String descSpell38 = "Contains : WeaknessBuff - Spell Activation Type : on death - isn't dispeller";
+        String descMinion38 = "price : 350 - mana : 4 - hp : 8 - ap : 5 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target siavashTarget = new Target(Constants.HERO, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, false, true, 0, Constants.ALL);
         WeaknessBuff siavashBuff = new WeaknessBuff(1, false, false, 6, 0);
-        Spell siavashSpell = new Spell("", "", 0, 0, 0, 0, 0, siavashTarget, siavashBuff, SpellActivationType.ON_DEATH, "", false);
-        Unit siavash = new Unit("shop_siavash_1", "siavash", 350, 4, 8, 5, 1, 1, siavashSpell, Constants.MINION, "", false);
+        Spell siavashSpell = new Spell("", "", 0, 0, 0, 0, 0, siavashTarget, siavashBuff, SpellActivationType.ON_DEATH, descSpell38, false);
+        Unit siavash = new Unit("shop_siavash_1", "siavash", 350, 4, 8, 5, 1, 1, siavashSpell, Constants.MINION, descMinion38, false);
         cardList.add(siavash);
 
         //39
-        Unit shahGhool = new Unit("shop_shahGhool_1", "shahGhool", 600, 5, 10, 4, 1, 1, null, Constants.MINION, "", true);
+        String descMinion39 = "price : 600 - mana : 5 - hp : 10 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo";
+        Unit shahGhool = new Unit("shop_shahGhool_1", "shahGhool", 600, 5, 10, 4, 1, 1, null, Constants.MINION, descMinion39, true);
         cardList.add(shahGhool);
 
         //40
-        Unit arzhangDiv = new Unit("shop_arzhangDiv_1", "arzhangDiv", 600, 3, 6, 6, 1, 1, null, Constants.MINION, "", true);
+        String descMinion40 = "price : 600 - mana : 3 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo";
+        Unit arzhangDiv = new Unit("shop_arzhangDiv_1", "arzhangDiv", 600, 3, 6, 6, 1, 1, null, Constants.MINION, descMinion40, true);
         cardList.add(arzhangDiv);
     }
 
@@ -734,7 +798,7 @@ public class DataBase {
         return getCollectableWithName(collectableName) != null;
     }
 
-    Account getAccountWithUsername(String username) {
+    public Account getAccountWithUsername(String username) {
         for (Account account : accountList) {
             if (account.getUsername().equals(username))
                 return account;
@@ -742,7 +806,7 @@ public class DataBase {
         return null;
     }
 
-    Card findCardInShop(String cardName) {
+    public Card findCardInShop(String cardName) {
         for (Card card : cardList) {
             if (card.getName().equals(cardName)) {
                 return card;
@@ -751,7 +815,7 @@ public class DataBase {
         return null;
     }
 
-    Usable findUsableInShop(String usableName) {
+    public Usable findUsableInShop(String usableName) {
         for (Usable usable : usableList) {
             if (usable.getName().equals(usableName)) {
                 return usable;
@@ -760,7 +824,7 @@ public class DataBase {
         return null;
     }
 
-    void searchInShop(String command) {
+    public void searchInShop(String command) {
         String[] strings = command.split("\\s+");
         Card card = findCardInShop(strings[1]);
         Usable usable = findUsableInShop(strings[1]);
