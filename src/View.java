@@ -67,7 +67,7 @@ public class View {
         }
     }
 
-    public void showLeaderboard(List<Account> accounts) {
+    public void showLeaderBoard(List<Account> accounts) {
         int counter = 1;
         for (Account account : accounts) {
             System.out.println(counter + "- Username: " + account.getUsername() +
