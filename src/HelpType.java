@@ -27,7 +27,7 @@ public enum HelpType {
             "\n\tshow all decks" +
             "\n\tshow deck [deck name]" +
             "\n\thelp"),
-    BATTLE_COMMANDS_HELP("BATTLE COMMAND HELP:" +
+    BATTLE_COMMANDS_HELP("In battle commands:" +
             "\n\tgame info" +
             "\n\tshow my minions" +
             "\n\tshow opponent minions" +
@@ -48,7 +48,9 @@ public enum HelpType {
             "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
     STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
-    CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
+    CONTROLLER_BATTLEMENU_HELP("Battle menu commands:" +
+            "\n\tenter singleplayer" +
+            "\n\tenter multiplayer"),
     CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
             "\tenter collection\n" +
             "\tenter shop\n" +
