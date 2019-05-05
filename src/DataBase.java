@@ -232,7 +232,6 @@ public class DataBase {
         cardList.add(afsaneh);
 
         //9
-        //todo check this
         Target esfandiarTarget = new Target(Constants.HERO, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         HolyBuff esfandiarBuff = new HolyBuff(Integer.MAX_VALUE, false, true, 3);
         Spell esfandiarSpell = new Spell("", "", 0, 0, 0, 0, 0, esfandiarTarget, esfandiarBuff, SpellActivationType.ON_SPAWN, "", false);

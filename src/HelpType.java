@@ -58,8 +58,13 @@ public enum HelpType {
             "\tlogout\n" +
             "\thelp\n" +
             "\tmatch history"),
-    MODES_HELP("flags\none_flag\nclassic");
+    MODES_HELP("flags\none_flag\nclassic"),
 
+    CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
+            "\tselect [username]\n" +
+            "\texit\n"),
+    CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
+            "\t...");
     private String message;
 
     HelpType(String message) {

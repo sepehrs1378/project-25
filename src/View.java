@@ -281,14 +281,14 @@ public class View {
         for (Card card : deck.getCards()) {
             if (card instanceof Spell) {
                 System.out.println(whiteSpace + "   " + counter + " : " + "Type : Spell - Name : " + card.getName() + " - MP : " + card.getMana()
-                        + " - Desc : " + ((Spell) card).getDescription() + " Sell Cost : " + card.getPrice());
+                        + " - Desc : " + ((Spell) card).getDescription() + " - Sell Cost : " + card.getPrice());
                 counter++;
 
             } else if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
+                Spell specialPower = ((Unit) card).getMainSpecialPower();
                 System.out.println(whiteSpace + "   " + counter + " : " + "Type : Minion - Name : " + card.getName() + " - Class : "
                         + card.getClass() + " - AP : " + ((Unit) card).getAp() + " - HP : " + ((Unit) card).getHp()
-                        + " - MP : " + card.getMana() + " - Special Power : " +
-                        ((((Unit)card).getMainSpecialPower()==null)?"":((Unit) card).getMainSpecialPower().getDescription())
+                        + " - MP : " + card.getMana() + " - Special Power : " + (specialPower == null?" " : specialPower.getDescription())
                         + " - Sell Cost : " + card.getPrice());
                 counter++;
             }
