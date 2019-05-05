@@ -17,20 +17,20 @@ public class ControllerAccount {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case LOGIN:
-                    login();
-                    break;
                 case CREATE:
                     create();
+                    break;
+                case LOGIN:
+                    login();
                     break;
                 case SHOW:
                     show();
                     break;
-                case HELP:
-                    help();
-                    break;
                 case EXIT:
                     didExit = true;
+                    break;
+                case HELP:
+                    help();
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
