@@ -68,7 +68,7 @@ public class ControllerCollection {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        switch (loggedInAccount.getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
             case DECK_ALREADY_EXISTS:
                 view.printOutputMessage(OutputMessageType.DECK_ALREADY_EXISTS);
                 break;

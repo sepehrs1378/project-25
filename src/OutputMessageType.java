@@ -28,6 +28,7 @@ public enum OutputMessageType {
     DECK_NOT_VALID("Deck is NOT valid"),
     SELECTED("Card/unit selected"),
     INVALID_COLLECTABLE_CARD("Invalid card/collectable id"),
+    CREATED_ACCOUNT_SUCCESSFULLY("account created"),
     INVALID_COLLECTABLE("Invalid collectable id"),
     INVALID_CARD("Invalid card id"),
     UNIT_NOT_SELECTED("No unit is selected"),

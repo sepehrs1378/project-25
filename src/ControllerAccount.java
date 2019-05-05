@@ -88,7 +88,7 @@ public class ControllerAccount {
         Account account = new Account(username, password);
         dataBase.setLoggedInAccount(account);
         dataBase.addAccount(account);
-        view.printOutputMessage(OutputMessageType.LOGGED_IN_SUCCESSFULLY);
+        view.printOutputMessage(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY);
         controllerMainMenu.main();
     }
 
