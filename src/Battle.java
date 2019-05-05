@@ -335,9 +335,11 @@ public class Battle {
         return output;
     }
 
-    public void startBattle(){
+    public void startBattle() {
         setManaBasedOnTurnNumber();
-        battleGround.getCells()[0][2].setUnit(player1.getDeck().getHero());
-        battleGround.getCells()[8][2].setUnit(player2.getDeck().getHero());
+        battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][0]
+                .setUnit(player1.getDeck().getHero());
+        battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][Constants.BATTLE_GROUND_LENGTH - 1]
+                .setUnit(player2.getDeck().getHero());
     }
 }
