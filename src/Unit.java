@@ -287,11 +287,11 @@ public class Unit extends Card {
         this.canUseComboAttack = canUseComboAttack;
     }
 
-    public List<Spell> getSpecialPowers() {
-        return specialPowers;
-    }
-
     public Spell getMainSpecialPower() {
         return specialPowers.get(0);
+    }
+
+    public List<Spell> getSpecialPowers() {
+        return specialPowers;
     }
 }
