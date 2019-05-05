@@ -123,6 +123,24 @@ public class ControllerBattleCommands {
             view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
         } else if (request.getCommand().equals("show menu")) {
             view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
+        } else if(request.getCommand().equals("show battleground")){
+            BattleGround battleGround = database.getCurrentBattle().getBattleGround();
+            for (Cell[] cellRow:battleGround.getCells()){
+                for(Cell cell:cellRow){
+                    if (cell.getUnit()==null){
+                        view.showCell(" ");
+                    }else if(cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())){
+                        if(cell.getUnit().getHeroOrMinion().equals(Constants.HERO)){
+                            view.showCell("H");
+                        }else view.showCell("1");
+                    }else if(cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())){
+                        if(cell.getUnit().getHeroOrMinion().equals(Constants.HERO)){
+                            view.showCell("h");
+                        }else view.showCell("2");
+                    }
+                }
+                view.print("");
+            }
         }
     }
 
@@ -250,6 +268,7 @@ public class ControllerBattleCommands {
                 request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
                 view.printOutputMessage(request.getOutputMessageType());
             } else {
+                database.getCurrentBattle().nextTurn();
                 //todo
             }
             return;

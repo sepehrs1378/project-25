@@ -27,7 +27,7 @@ public enum HelpType {
             "\n\tshow all decks" +
             "\n\tshow deck [deck name]" +
             "\n\thelp"),
-    BATTLE_COMMANDS_HELP("BATTLE COMMAND HELP:" +
+    BATTLE_COMMANDS_HELP("In battle commands:" +
             "\n\tgame info" +
             "\n\tshow my minions" +
             "\n\tshow opponent minions" +
@@ -44,11 +44,14 @@ public enum HelpType {
             "\n\tselect [collectable id])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
+            "\n\tshow battleground" +
             "\n\thelp" +
             "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
-    STORY_MODE_OPTINS("level1\nlevel2\nlevel3"),
-    CONTROLLER_BATTLEMENU_HELP("Single Player\nMulti Player"),
+    STORY_MODE_OPTIONS("level1\nlevel2\nlevel3"),
+    CONTROLLER_BATTLEMENU_HELP("Battle menu commands:" +
+            "\n\tenter singleplayer" +
+            "\n\tenter multiplayer"),
     CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
             "\tenter collection\n" +
             "\tenter shop\n" +
@@ -56,7 +59,16 @@ public enum HelpType {
             "\tlogout\n" +
             "\thelp\n" +
             "\tmatch history"),
-    MODES_HELP("flags\none_flag\nclassic");
+    MODES_HELP("flags\none_flag\nclassic"),
+
+    CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
+            "\tselect [username]\n" +
+            "\texit\n"),
+    CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
+            "\t..."),
+    CONTROLLER_GRAVEYARD("Commands:\n" +
+            "\tshow info [card id]\n" +
+            "\tshow cards");
 
     private String message;
 

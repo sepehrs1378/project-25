@@ -20,15 +20,19 @@ public class ControllerMultiPlayerMenu {
                 case SELECT:
                     select();
                     break;
-                case ENTER:
-                    break;
                 case EXIT:
                     didExit = true;
                     break;
+                case HELP:
+                    help();
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
+    }
+
+    private void help(){
+        view.printHelp(HelpType.CONTROLLER_MULTI_PLAYER_MENU);
     }
 
     private void select() {
@@ -55,19 +59,20 @@ public class ControllerMultiPlayerMenu {
                     } else if (mode.equals(Constants.ONE_FLAG)) {
                         numberOfFlags = 1;
                     }
-                    if (database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
+                    if (database.getLoggedInAccount().getMainDeck()!=null&&
+                            secondPlayer.getMainDeck()!=null&&database.getLoggedInAccount().getMainDeck()!=null
+                            &&database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
                         Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
                         database.setCurrentBattle(battle);
                         ControllerBattleCommands.getInstance().main();
                     } else {
-                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER2);
+                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER);
                         view.printOutputMessage(request.getOutputMessageType());
                     }
                 } else {
                     request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
                     view.printOutputMessage(request.getOutputMessageType());
                 }
-
             }
         }
     }

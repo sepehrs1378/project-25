@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Battle {
-    public static final DataBase database = DataBase.getInstance();
+    public DataBase database = DataBase.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -25,46 +25,34 @@ public class Battle {
         this.battleGround.addFlagsToBattleGround(temp);
     }
 
-    public void nextTurn() {
+    public OutputMessageType nextTurn() {
+        if (isBattleFinished)
+            return OutputMessageType.BATTLE_FINISHED;
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
         doBuffsEffects();
+        checkForDeadUnits();
         //todo check turns of flag in hand??
         changeTurn();
         turnNumber++;
+        setManaBasedOnTurnNumber();
     }
 
     public Player getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
-    }
-
     public Player getPlayer2() {
         return player2;
-    }
-
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
     }
 
     public BattleGround getBattleGround() {
         return battleGround;
     }
 
-    public void setBattleGround(BattleGround battleGround) {
-        this.battleGround = battleGround;
-    }
-
     public String getMode() {
         return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
     }
 
     public int getTurnNumber() {
@@ -107,15 +95,35 @@ public class Battle {
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
     }
 
+    public void checkForDeadUnits() {
+        for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = battleGround.getCells()[i][j];
+                if (cell.isEmptyOfUnit())
+                    continue;
+                if (cell.getUnit().getHp() <= 0)
+                    killUnit(cell.getUnit());
+            }
+        }
+    }
+
     public void setManaBasedOnTurnNumber() {
         if (turnNumber % 2 == 1) {
             if (turnNumber < 14) {
                 player1.setMana((turnNumber + 1) / 2 + 1);
-            } else player1.setMana(9);
+                player2.setMana(0);
+            } else {
+                player1.setMana(9);
+                player2.setMana(0);
+            }
         } else if (turnNumber % 2 == 0) {
             if (turnNumber < 15) {
+                player1.setMana(0);
                 player2.setMana((turnNumber / 2 + 2));
-            } else player2.setMana(9);
+            } else {
+                player1.setMana(0);
+                player2.setMana(9);
+            }
         }
     }
 
@@ -127,29 +135,47 @@ public class Battle {
         this.numberOfFlags = numberOfFlags;
     }
 
+    public Player checkEndBattle() {
+        if (mode.equals(Constants.CLASSIC)) {
+            return checkEndBattleModeClassic();
+        }
+        if (mode.equals(Constants.ONE_FLAG)) {
+            return checkEndBattleModeOneFlag();
+        }
+        if (mode.equals(Constants.FLAGS)) {
+            return checkEndBattleModeFlags();
+        }
+    }
+
     public Player checkEndBattleModeClassic() {
-        if (this.getPlayer1().getDeck().getHero().getHp() <= 0)
+        if (player1.getDeck().getHero().getHp() <= 0) {
+            isBattleFinished = true;
             return player2;
-        else if (this.getPlayer2().getDeck().getHero().getHp() <= 0) {
+        } else if (player2.getDeck().getHero().getHp() <= 0) {
+            isBattleFinished = true;
             return player1;
         }
         return null;
     }
 
     public Player checkEndBattleModeOneFlag() {
-        int numberOfFlagsPlayer1 = this.battleGround.getNumberOfFlagsForPlayer(player1);
-        int numberOfFlagsPlayer2 = this.battleGround.getNumberOfFlagsForPlayer(player2);
-        if (numberOfFlagsPlayer1 >= this.getNumberOfFlags() / 2 + 1)
+        int numberOfFlagsPlayer1 = battleGround.getNumberOfFlagsForPlayer(player1);
+        int numberOfFlagsPlayer2 = battleGround.getNumberOfFlagsForPlayer(player2);
+        if (numberOfFlagsPlayer1 >= getNumberOfFlags() / 2 + 1) {
+            isBattleFinished = true;
             return player1;
-        else if (numberOfFlagsPlayer2 >= this.getNumberOfFlags() / 2 + 1)
+        } else if (numberOfFlagsPlayer2 >= getNumberOfFlags() / 2 + 1) {
+            isBattleFinished = true;
             return player2;
+        }
         return null;
     }
 
     public Player checkEndBattleModeFlags() {
-        Cell cell = this.getBattleGround().getCellWithFlag();
+        Cell cell = battleGround.getCellWithFlag();
         if (cell != null) {
             if (cell.getUnit().getFlags().get(0).getTurnsInUnitHand() >= 6) {
+                isBattleFinished = true;
                 if (cell.getUnit().getId().contains(player1.getPlayerInfo().getPlayerName()))
                     return player1;
                 return player2;
@@ -269,7 +295,6 @@ public class Battle {
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
-        Spell mainSpecialPower = hero.getMainSpecialPower();
         if (hero.getMainSpecialPower().getMana() <= player.getMana()
                 && hero.getMainSpecialPower().getCoolDown() == 0
                 && hero.getMainSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
@@ -277,7 +302,7 @@ public class Battle {
         } else {
             return OutputMessageType.NO_HERO;
         }
-        return OutputMessageType.NO_ERROR;
+        return OutputMessageType.SPECIAL_POWER_USED;
     }
 
     public List<String> getAvailableMoves() {

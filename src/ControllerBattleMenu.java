@@ -35,9 +35,9 @@ public class ControllerBattleMenu {
     }
 
     private void enter() {
-        if (request.getCommand().equals("enter single player")) {
+        if (request.getCommand().equals("enter singleplayer")) {
             ControllerSinglePlayerMenu.getInstance().main();
-        } else if (request.getCommand().equals("enter multi player")) {
+        } else if (request.getCommand().equals("enter multiplayer")) {
             ControllerMultiPlayerMenu.getInstance().main();
         } else {
             request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);

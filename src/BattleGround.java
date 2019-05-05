@@ -7,6 +7,13 @@ class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
+    {
+        for (int i=0;i<cells.length;i++){
+            for (int j=0;j<cells[i].length;j++){
+                cells[i][j] = new Cell();
+            }
+        }
+    }
 
     public Cell[][] getCells() {
         return cells;
