@@ -37,7 +37,7 @@ public class ControllerMultiPlayerMenu {
             if (secondPlayer == null) {
                 request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
                 view.printOutputMessage(request.getOutputMessageType());
-            } else {
+            } else  {
                 request.setHelpType(HelpType.MODES_HELP);
                 view.printHelp(request.getHelpType());
                 request.getNewCommand();
@@ -49,7 +49,7 @@ public class ControllerMultiPlayerMenu {
                         if (request.getCommand().split(" ").length == 5) {
                             numberOfFlags = Integer.parseInt(request.getCommand().split(" ")[4]);
                         } else {
-                            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                            request.setOutputMessageType(OutputMessageType.NO_FLAG_NUMBER);
                             view.printOutputMessage(request.getOutputMessageType());
                         }
                     } else if (mode.equals(Constants.ONE_FLAG)) {

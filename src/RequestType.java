@@ -21,6 +21,7 @@ public enum RequestType {
     SHOW_MINIONS,
     MOVE,
     ATTACK,
+    START,
     USE,
     INSERT,
     END,

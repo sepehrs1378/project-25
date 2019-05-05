@@ -57,7 +57,7 @@ public class ControllerAccount {
             view.printOutputMessage(OutputMessageType.LOGGED_IN_SUCCESSFULLY);
             controllerMainMenu.main();
         } else
-            showError(OutputMessageType.INVALID_USERNAME);
+            showError(OutputMessageType.INVALID_PASSWORD);
     }
 
     public void create() {
@@ -88,6 +88,7 @@ public class ControllerAccount {
         Account account = new Account(username, password);
         dataBase.setLoggedInAccount(account);
         dataBase.addAccount(account);
+        view.printOutputMessage(OutputMessageType.LOGGED_IN_SUCCESSFULLY);
         controllerMainMenu.main();
     }
 
