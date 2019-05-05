@@ -118,4 +118,3 @@ add player1_tajDanayee_1 to deck deck1
 select deck deck1
 exit
 logout
-//nemidoonam chera ino mogheye ghesmate dovom dochare moshke mishe
