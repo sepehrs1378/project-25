@@ -42,7 +42,9 @@ public enum RequestType {
     CREATE_DECK_NAME,
     SELECT_ID,
     VALIDATE_DECK_NAME,
-    USE_X_Y,
+    USE_COLLECTABLE_IN_X_Y,
     USE_SPECIAL_POWER_X_Y,
     END_TURN,
+    ATTACK_COMBO,
+    SHOW_BATTLEGROUND,
 }

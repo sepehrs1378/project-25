@@ -345,4 +345,8 @@ public class Battle {
         battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][Constants.BATTLE_GROUND_LENGTH - 1]
                 .setUnit(player2.getDeck().getHero());
     }
+
+    public OutputMessageType endBattle() {
+        //todo complete if
+    }
 }

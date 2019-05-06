@@ -25,37 +25,65 @@ public class ControllerBattleCommands {
                     showGameInfo();
                     break;
                 case SHOW_MY_MINIONS:
-                    showMinions();
+                    showMyMinions();
                     break;
-                case SHOW_LEADERBOARD:
-                    show();
+                case SHOW_OPPONENT_MINIONS:
+                    showOpponentMinions();
                     break;
-                case SELECT_DECK_NAME:
-                    select();
+                case SHOW_CARD_INFO_ID:
+                    showCardInfoId();
+                    break;
+                case SELECT_ID:
+                    selectId();
+                    //todo handles to situations
                     break;
                 case MOVE_TO_X_Y:
-                    move();
-                    break;
-                case HELP:
-                    help();
+                    moveTo();
                     break;
                 case ATTACK_ID:
-                    attack();
+                    attackId();
                     break;
-                case USE_X_Y:
-                    use();
+                case ATTACK_COMBO:
+                    attackCombo();
+                    break;
+                case USE_SPECIAL_POWER_X_Y:
+                    useSpecialPower();
+                    break;
+                case SHOW_HAND:
+                    showHand();
                     break;
                 case INSERT_NAME_IN_X_Y:
-                    insert();
+                    insertName();
                     break;
-                case END_GAME:
-                    end();
+                case END_TURN:
+                    endTurn();
+                    break;
+                case SHOW_COLLECTABLES:
+                    showCollectables();
+                    break;
+                case SHOW_INFO:
+                    showInfo();
+                    break;
+                case USE_COLLECTABLE_IN_X_Y:
+                    useCollectable();
+                    break;
+                case SHOW_NEXT_CARD:
+                    showNextCard();
                     break;
                 case ENTER:
                     enter();
                     break;
-                case EXIT:
-                    didExit = true;
+                case END_GAME:
+                    endGame();
+                    break;
+                case SHOW_MENU:
+                    showMenu();
+                    break;
+                case HELP:
+                    help();
+                    break;
+                case SHOW_BATTLEGROUND:
+                    showBattleground();
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -69,7 +97,7 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void showMinions() {
+    /*public void showMinions() {
         if (request.getCommand().equals("show my minions")) {
             List<Unit> minions = database.getCurrentBattle().getBattleGround()
                     .getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
@@ -87,76 +115,96 @@ public class ControllerBattleCommands {
             }
         }
     }
-
-    public void show() {
-        if (request.getCommand().matches("show card info .+")) {
-            String cardId = request.getCommand().split("\\s+")[3];
-            Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
-            if (card != null) {
-                if (card instanceof Spell) {
-                    view.showCardInfoSpell((Spell) card);
-                } else if (card instanceof Unit) {
-                    if (((Unit) card).getHeroOrMinion().equals("Minion")) {
-                        view.showCardInfoMinion((Unit) card);
-                    } else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
-                        view.showCardInfoHero((Unit) card);
-                    }
-                }
-            } else {
-                request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
-                view.printOutputMessage(request.getOutputMessageType());
-                //todo
-            }
-        } else if (request.getCommand().equals("show collectables")) {
-            view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
-        } else if (request.getCommand().equals("show info")) {
-            if (database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
-                view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
-            }
-        } else if (request.getCommand().equals("show next card")) {
-            Card card = database.getCurrentBattle().getPlayerInTurn().getNextCard();
-            if (card instanceof Spell) {
-                view.showCardInfoSpell((Spell) card);
-            } else if (card instanceof Unit) {
-                view.showCardInfoMinion((Unit) card);
-            }
-        } else if (request.getCommand().equals("show hand")) {
-            view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
-        } else if (request.getCommand().equals("show menu")) {
-            view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
-        } else if (request.getCommand().equals("show battleground")) {
-            BattleGround battleGround = database.getCurrentBattle().getBattleGround();
-            for (Cell[] cellRow : battleGround.getCells()) {
-                for (Cell cell : cellRow) {
-                    if (cell.getUnit() == null) {
-                        view.showCell(" ");
-                    } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
-                        if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
-                            view.showCell("H");
-                        } else view.showCell("1");
-                    } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
-                        if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
-                            view.showCell("h");
-                        } else view.showCell("2");
-                    }
-                }
-                view.print("");
-            }
+    */
+    private void showMyMinions() {
+        List<Unit> minions = database.getCurrentBattle().getBattleGround()
+                .getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
+        for (Unit minion : minions) {
+            view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
         }
     }
 
-    public void select() {
-        if (!request.getCommand().toLowerCase().matches("^select .+$")) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
+    private void showOpponentMinions() {
+        Player player;
+        if (database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer1())
+            player = database.getCurrentBattle().getPlayer2();
+        else player = database.getCurrentBattle().getPlayer1();
+        List<Unit> minions = database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
+        for (Unit minion : minions) {
+            view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
         }
-        Pattern pattern = Pattern.compile("^select (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.CARD_NOT_FOUND);
-            return;
+    }
+
+    private void showCardInfoId() {
+        String cardId = request.getCommand().split("\\s+")[3];
+        Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
+        if (card != null) {
+            if (card instanceof Spell) {
+                view.showCardInfoSpell((Spell) card);
+            } else if (card instanceof Unit) {
+                if (((Unit) card).getHeroOrMinion().equals("Minion")) {
+                    view.showCardInfoMinion((Unit) card);
+                } else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
+                    view.showCardInfoHero((Unit) card);
+                }
+            }
+        } else {
+            request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
+            view.printOutputMessage(request.getOutputMessageType());
+            //todo
         }
-        switch (database.getCurrentBattle().getPlayerInTurn().select(matcher.group(1))) {
+    }
+
+    private void showCollectables() {
+        view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
+    }
+
+    private void showInfo() {
+        if (database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
+            view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
+        }
+    }
+
+    private void showNextCard() {
+        Card card = database.getCurrentBattle().getPlayerInTurn().getNextCard();
+        if (card instanceof Spell) {
+            view.showCardInfoSpell((Spell) card);
+        } else if (card instanceof Unit) {
+            view.showCardInfoMinion((Unit) card);
+        }
+    }
+
+    private void showHand() {
+        view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
+    }
+
+    private void showMenu() {
+        view.printHelp(HelpType.BATTLE_COMMANDS_HELP);
+    }
+
+    private void showBattleground() {
+        BattleGround battleGround = database.getCurrentBattle().getBattleGround();
+        for (Cell[] cellRow : battleGround.getCells()) {
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() == null) {
+                    view.showCell(" ");
+                } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
+                    if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
+                        view.showCell("H");
+                    } else view.showCell("1");
+                } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
+                    if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
+                        view.showCell("h");
+                    } else view.showCell("2");
+                }
+            }
+            view.print("");
+        }
+    }
+
+    private void selectId() {
+        String id = request.getCommand().split(" ")[1];
+        switch (database.getCurrentBattle().getPlayerInTurn().select(id)) {
             case INVALID_COLLECTABLE_CARD:
                 view.printOutputMessage(OutputMessageType.INVALID_COLLECTABLE_CARD);
                 break;
@@ -170,13 +218,13 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void move() {
-        if (!request.getCommand().matches("^move to \\d+ \\d+$")) {
+    private void moveTo() {
+        Pattern pattern = Pattern.compile("^move to [(](\\d+),(\\d+)[)]$");
+        Matcher matcher = pattern.matcher(request.getCommand().toLowerCase());
+        if (!matcher.find()) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        Pattern pattern = Pattern.compile("^move to (\\d+) (\\d+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
         int destinationRow = Integer.parseInt(matcher.group(1));
         int destinationColumn = Integer.parseInt(matcher.group(2));
         switch (database.getCurrentBattle().getBattleGround().
@@ -193,101 +241,86 @@ public class ControllerBattleCommands {
         }
     }
 
-    public void attack() {
-        if (request.getCommand().matches("^attack .+$")) {
-            Pattern pattern = Pattern.compile("^attack (.+)$");
-            Matcher matcher = pattern.matcher(request.getCommand());
-            if (database.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null) {
-                view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
-                return;
-            }
-            switch (database.getCurrentBattle().getPlayerInTurn()
-                    .getSelectedUnit().attack(matcher.group(1))) {
-                case TARGET_NOT_IN_RANGE:
-                    view.printOutputMessage(OutputMessageType.TARGET_NOT_IN_RANGE);
-                    break;
-                case INVALID_CARD:
-                    view.printOutputMessage(OutputMessageType.INVALID_CARD);
-                    break;
-                case ALREADY_ATTACKED:
-                    view.printOutputMessage(OutputMessageType.ALREADY_ATTACKED);
-                    break;
-                default:
-            }
-            return;
-        }
-        if (request.getCommand().matches("^attack combo .+$")) {
-            String[] orderPieces = request.getCommand().split(" ");
-            String[] attackers = new String[orderPieces.length - 3];
-            if (orderPieces.length - 3 >= 0)
-                System.arraycopy(orderPieces, 3, attackers, 0
-                        , orderPieces.length - 3);
-            switch (Unit.attackCombo(orderPieces[2], attackers)) {
-                case A_UNIT_CANT_ATTACK_TARGET:
-                    view.printOutputMessage(OutputMessageType.A_UNIT_CANT_ATTACK_TARGET);
-                    break;
-                case A_UNIT_DOESNT_EXIST:
-                    view.printOutputMessage(OutputMessageType.A_UNIT_DOESNT_EXIST);
-                    break;
-                case COMBO_ATTACK_SUCCESSFUL:
-                    view.printOutputMessage(OutputMessageType.COMBO_ATTACK_SUCCESSFUL);
-                    break;
-                default:
-            }
-            //todo
-        }
-        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-    }
-
-    public void use() {
-        if (request.getCommand().toLowerCase().matches("use special power [(]\\d+,\\d+[)]")) {
-            Pattern pattern = Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
-            Matcher matcher = pattern.matcher(request.getCommand());
-            if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
-                    && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
-                int row = Integer.parseInt(matcher.group(1));
-                int column = Integer.parseInt(matcher.group(2));
-                Player player = database.getCurrentBattle().getPlayerInTurn();
-                Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-                view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero, player, row, column));
-            } else {
-                view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
-            }
-        } else view.printOutputMessage(OutputMessageType.INVALID_COMMAND);
-    }
-
-    public void insert() {
-        if (request.getCommand().toLowerCase().matches("^insert .+ in [(](\\d+),(\\d+)[)]$")) {
-            Pattern pattern = Pattern.compile("^insert (.+) in [(](\\d+),(\\d+)[)]$");
-            Matcher matcher = pattern.matcher(request.getCommand());
-            if (!matcher.find()) {
-                view.printOutputMessage(OutputMessageType.CARD_NOT_FOUND);
-                return;
-            }
-            Card card = database.getCurrentBattle().getPlayerInTurn()
-                    .getHand().getCardByName(matcher.group(1));
-            int row = Integer.parseInt(matcher.group(2));
-            int column = Integer.parseInt(matcher.group(3));
-            view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
+    private void attackId() {
+        String id = request.getCommand().split(" ")[1];
+        switch (database.getCurrentBattle().getPlayerInTurn()
+                .getSelectedUnit().attack(id)) {
+            case TARGET_NOT_IN_RANGE:
+                view.printOutputMessage(OutputMessageType.TARGET_NOT_IN_RANGE);
+                break;
+            case INVALID_CARD:
+                view.printOutputMessage(OutputMessageType.INVALID_CARD);
+                break;
+            case ALREADY_ATTACKED:
+                view.printOutputMessage(OutputMessageType.ALREADY_ATTACKED);
+                break;
+            default:
         }
     }
 
-    public void end() {
-        if (request.getCommand().toLowerCase().equals("end game")) {
-            if (!database.getCurrentBattle().isBattleFinished()) {
-                request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
-                view.printOutputMessage(request.getOutputMessageType());
-            } else {
-                //todo
-            }
+    private void attackCombo() {
+        String[] orderPieces = request.getCommand().split(" ");
+        String[] attackers = new String[orderPieces.length - 3];
+        if (orderPieces.length - 3 >= 0)
+            System.arraycopy(orderPieces, 3, attackers, 0
+                    , orderPieces.length - 3);
+        switch (Unit.attackCombo(orderPieces[2], attackers)) {
+            case A_UNIT_CANT_ATTACK_TARGET:
+                view.printOutputMessage(OutputMessageType.A_UNIT_CANT_ATTACK_TARGET);
+                break;
+            case A_UNIT_DOESNT_EXIST:
+                view.printOutputMessage(OutputMessageType.A_UNIT_DOESNT_EXIST);
+                break;
+            case COMBO_ATTACK_SUCCESSFUL:
+                view.printOutputMessage(OutputMessageType.COMBO_ATTACK_SUCCESSFUL);
+                break;
+            default:
+        }
+    }
+
+    private void useSpecialPower() {
+        Pattern pattern = Pattern.compile("use special power [(](\\d+),(\\d+)[)]");
+        Matcher matcher = pattern.matcher(request.getCommand());
+        if (!matcher.find()) {
+            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
         }
-        if (request.getCommand().toLowerCase().equals("end turn")) {
-            database.getCurrentBattle().nextTurn();
-            return;
+        if (Integer.parseInt(matcher.group(1)) < 5 && Integer.parseInt(matcher.group(1)) >= 0
+                && Integer.parseInt(matcher.group(2)) < 9 && Integer.parseInt(matcher.group(2)) >= 0) {
+            int row = Integer.parseInt(matcher.group(1));
+            int column = Integer.parseInt(matcher.group(2));
+            Player player = database.getCurrentBattle().getPlayerInTurn();
+            Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+            view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero, player, row, column));
+        } else {
+            view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
         }
-        request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
-        view.printOutputMessage(request.getOutputMessageType());
+    }
+
+    private void useCollectable() {
+        //todo complete it later
+    }
+
+    private void insertName() {
+        String id = request.getCommand().split("[ (),]")[1];//todo is it correct?
+        int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
+        int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
+        Card card = database.getCurrentBattle().getPlayerInTurn()
+                .getHand().getCardByName(id);
+        view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
+    }
+
+    private void endGame() {
+        if (!database.getCurrentBattle().isBattleFinished()) {
+            request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
+            view.printOutputMessage(request.getOutputMessageType());
+        } else {
+            //todo method is written : battle.endBattle
+        }
+    }
+
+    private void endTurn() {
+        database.getCurrentBattle().nextTurn();
     }
 
     public void enter() {

@@ -150,14 +150,17 @@ public class Request {
         }
         if (command.toLowerCase().matches("^show opponent minions$"))
             return RequestType.SHOW_OPPONENT_MINIONS;
+        if(command.toLowerCase().matches("^show battleground$"))
+            return RequestType.SHOW_BATTLEGROUND;
         if (command.toLowerCase().matches("^move to [(]\\d+,\\d+[)]$")) {
             return RequestType.MOVE_TO_X_Y;
         }
         if (command.toLowerCase().matches("^attack [^ ]+_[^ ]+_\\d+$"))
             return RequestType.ATTACK_ID;
         if (command.toLowerCase().matches("^attack combo( [^ ]+_[^ ]+_\\d+){2,}$"))
+            return RequestType.ATTACK_COMBO;
             if (command.toLowerCase().matches("^use [(]\\d+,\\d+[)]$"))
-                return RequestType.USE_X_Y;
+                return RequestType.USE_COLLECTABLE_IN_X_Y;
         if (command.toLowerCase().matches("^use special power [(]\\d+,\\d+[)]$"))
             return RequestType.USE_SPECIAL_POWER_X_Y;
         if (command.toLowerCase().matches("^insert [^ ]+ in [(]\\d+,\\d+[)]$"))

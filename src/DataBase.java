@@ -264,7 +264,7 @@ public class DataBase {
         cardList.add(asbSavarFars);
 
         //5
-        //todo check if this is true? (i think it is good to addIdToDeckName a powerBuff for each attack)
+        //todo check if this is true? (i think it is good to addIdToDeckName a powerBuff for each attackId)
 //        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
 //        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
 //        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
