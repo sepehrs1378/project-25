@@ -206,7 +206,7 @@ public class ControllerBattleCommands {
                         continue;
                     }
                 }
-                if (cell.getFlags().size() > 0) {
+                if (!cell.getFlags().isEmpty()) {
                     view.showCell("f");
                     continue;
                 }
@@ -264,7 +264,6 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
-                System.out.println("*");
         }
     }
 
@@ -343,11 +342,10 @@ public class ControllerBattleCommands {
         Account player2 = database.getAccountWithUsername(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
-        if (player1 == account){
+        if (player1 == account) {
             matchInfo1.setWinner(player2);
             matchInfo2.setWinner(player2);
-        }
-        else {
+        } else {
             matchInfo1.setWinner(player1);
             matchInfo2.setWinner(player1);
         }
