@@ -188,11 +188,11 @@ public class ControllerBattleCommands {
             for (Cell cell : cellRow) {
                 if (cell.getUnit() == null) {
                     view.showCell(" ");
-                } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
+                } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
                     if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                         view.showCell("H");
                     } else view.showCell("1");
-                } else if (cell.getUnit().getId().contains(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
+                } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
                     if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                         view.showCell("h");
                     } else view.showCell("2");

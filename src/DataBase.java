@@ -166,7 +166,9 @@ public class DataBase {
         //String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
         //Target kingsGuardTarget = new Target()
         //cardList.add(null);
-        //todo
+        //todo added this so that computer decks work correctly make a new one later
+        Spell kingsGuard = new Spell("shop_kingsGuard_1","kingsGuard",1750,9,0,0,0,null,(Buff)null,SpellActivationType.ON_CAST,"",false);
+        cardList.add(kingsGuard);
 
         //20
         String desc20 = "Target : Enemy Unit - stuns target for duration of 2 turns";
@@ -296,6 +298,9 @@ public class DataBase {
 //        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, descSpell5, false);
 //        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, descMinion5, false);
 //        cardList.add(pahlevanFars);
+        //todo added this so that computer decks work correctly make a new one later
+        Unit pahlevanFars = new Unit("shop_pahlevanFars_1","pahlevanFars",600,9,24,6,1,1,null,Constants.MINION,"",false);
+        cardList.add(pahlevanFars);
 
         //6
         String descMinion6 = "price : 800 - mana : 7 - hp : 12 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo";
@@ -745,16 +750,74 @@ public class DataBase {
         computerPlayerCostum = new Account("computerCostum", "costum");
 
         Deck computerPlayer1Deck = new Deck("Deck");
-        computerPlayer1Deck.addToCards(cardList.get(0));
-        computerPlayer1Deck.addToCards(cardList.get(6));
-        computerPlayer1Deck.addToCards(cardList.get(9));
-        computerPlayer1Deck.addToCards(cardList.get());
+        addToComputerDeck(computerPlayer1Deck,0,1);
+        addToComputerDeck(computerPlayer1Deck,6,1);
+        addToComputerDeck(computerPlayer1Deck,9,1);
+        addToComputerDeck(computerPlayer1Deck,10,1);
+        addToComputerDeck(computerPlayer1Deck,11,1);
+        addToComputerDeck(computerPlayer1Deck,17,1);
+        addToComputerDeck(computerPlayer1Deck,19,1);
+        addToComputerDeck(computerPlayer1Deck,20,1);
+        addToComputerDeck(computerPlayer1Deck,30,1);
+        addToComputerDeck(computerPlayer1Deck,38,1);
+        addToComputerDeck(computerPlayer1Deck,40,1);
+        addToComputerDeck(computerPlayer1Deck,40,2);
+        addToComputerDeck(computerPlayer1Deck,42,1);
+        addToComputerDeck(computerPlayer1Deck,46,1);
+        addToComputerDeck(computerPlayer1Deck,47,1);
+        addToComputerDeck(computerPlayer1Deck,50,1);
+        addToComputerDeck(computerPlayer1Deck,51,1);
+        addToComputerDeck(computerPlayer1Deck,55,1);
+        addToComputerDeck(computerPlayer1Deck,67,1);
+        addToComputerDeck(computerPlayer1Deck,65,1);
+        addToComputerDeck(computerPlayer1Deck,69,1);
 
         Deck computerPlayer2Deck = new Deck("deck");
-
+        addToComputerDeck(computerPlayer2Deck,1,1);
+        addToComputerDeck(computerPlayer2Deck,2,1);
+        addToComputerDeck(computerPlayer2Deck,4,1);
+        addToComputerDeck(computerPlayer2Deck,7,1);
+        addToComputerDeck(computerPlayer2Deck,8,1);
+        addToComputerDeck(computerPlayer2Deck,12,1);
+//        addToComputerDeck(computerPlayer2Deck,18,1);
+        addToComputerDeck(computerPlayer2Deck,24,1);
+        addToComputerDeck(computerPlayer2Deck,31,1);
+        addToComputerDeck(computerPlayer2Deck,32,1);
+        addToComputerDeck(computerPlayer2Deck,34,1);
+        addToComputerDeck(computerPlayer2Deck,37,1);
+        addToComputerDeck(computerPlayer2Deck,41,1);
+        addToComputerDeck(computerPlayer2Deck,44,1);
+        addToComputerDeck(computerPlayer2Deck,44,2);
+        addToComputerDeck(computerPlayer2Deck,48,1);
+        addToComputerDeck(computerPlayer2Deck,52,1);
+        addToComputerDeck(computerPlayer2Deck,56,1);
+        addToComputerDeck(computerPlayer2Deck,59,1);
+        addToComputerDeck(computerPlayer2Deck,62,1);
+        addToComputerDeck(computerPlayer2Deck,68,1);
 
         Deck computerPlayer3Deck = new Deck("deck");
-
+        addToComputerDeck(computerPlayer3Deck,0,1);
+        addToComputerDeck(computerPlayer3Deck,5,1);
+        addToComputerDeck(computerPlayer3Deck,6,1);
+        addToComputerDeck(computerPlayer3Deck,9,1);
+        addToComputerDeck(computerPlayer3Deck,11,1);
+        addToComputerDeck(computerPlayer3Deck,13,1);
+        addToComputerDeck(computerPlayer3Deck,14,1);
+        addToComputerDeck(computerPlayer3Deck,15,1);
+        addToComputerDeck(computerPlayer3Deck,26,1);
+        addToComputerDeck(computerPlayer3Deck,35,1);
+        addToComputerDeck(computerPlayer3Deck,36,1);
+        addToComputerDeck(computerPlayer3Deck,39,1);
+        addToComputerDeck(computerPlayer3Deck,43,1);
+        addToComputerDeck(computerPlayer3Deck,45,1);
+        addToComputerDeck(computerPlayer3Deck,45,2);
+        addToComputerDeck(computerPlayer3Deck,49,1);
+        addToComputerDeck(computerPlayer3Deck,53,1);
+        addToComputerDeck(computerPlayer3Deck,54,1);
+        addToComputerDeck(computerPlayer3Deck,57,1);
+        addToComputerDeck(computerPlayer3Deck,58,1);
+        addToComputerDeck(computerPlayer3Deck,60,1);
+        addToComputerDeck(computerPlayer3Deck,63,1);
 
         Deck computerPlayerCostumDeck = new Deck("deck");
 
@@ -895,6 +958,18 @@ public class DataBase {
         }
         return null;
     }
+
+    private void addToComputerDeck(Deck computerDeck,int index, int number){
+        Card card;
+        card = cardList.get(index).clone();
+        card.setId(computerPlayerLevel1.getUsername()+"_"+card.getName()+"_"+number);
+        if(card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)){
+            computerDeck.setHero((Unit)card);
+            return;
+        }
+        computerDeck.addToCards(card);
+    }
+
 
     boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;
