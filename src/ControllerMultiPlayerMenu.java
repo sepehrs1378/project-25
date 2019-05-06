@@ -17,8 +17,8 @@ public class ControllerMultiPlayerMenu {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SELECT_DECK_NAME:
-                    select();
+                case SELECT_USER_NAME:
+                    selectUser();
                     break;
                 case EXIT:
                     didExit = true;
@@ -31,48 +31,46 @@ public class ControllerMultiPlayerMenu {
         }
     }
 
-    private void help(){
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_MULTI_PLAYER_MENU);
     }
 
-    private void select() {
-        if (request.getCommand().matches("select user \\w+")) {
-            Account secondPlayer = database.getAccountWithUsername(request.getCommand().split(" ")[2]);
-            if (secondPlayer == null) {
-                request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
-                view.printOutputMessage(request.getOutputMessageType());
-            } else {
-                request.setHelpType(HelpType.MODES_HELP);
-                view.printHelp(request.getHelpType());
-                request.getNewCommand();
-                if (request.getCommand().matches("start multiplayer game \\w+\\s*\\w*")) {
-                    //todo refactor this method
-                    int numberOfFlags = 0;
-                    String mode = request.getCommand().split(" ")[3];
-                    if (mode.equals(Constants.FLAGS)) {
-                        if (request.getCommand().split(" ").length == 5) {
-                            numberOfFlags = Integer.parseInt(request.getCommand().split(" ")[4]);
-                        } else {
-                            request.setOutputMessageType(OutputMessageType.NO_FLAG_NUMBER);
-                            view.printOutputMessage(request.getOutputMessageType());
-                        }
-                    } else if (mode.equals(Constants.ONE_FLAG)) {
-                        numberOfFlags = 1;
-                    }
-                    if (database.getLoggedInAccount().getMainDeck()!=null&&
-                            secondPlayer.getMainDeck()!=null&&database.getLoggedInAccount().getMainDeck()!=null
-                            &&database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
-                        Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
-                        database.setCurrentBattle(battle);
-                        ControllerBattleCommands.getInstance().main();
+    private void selectUser() {
+        Account secondPlayer = database.getAccountWithUsername(request.getCommand().split(" ")[2]);
+        if (secondPlayer == null) {
+            request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);
+            view.printOutputMessage(request.getOutputMessageType());
+        } else {
+            request.setHelpType(HelpType.MODES_HELP);
+            view.printHelp(request.getHelpType());
+            request.getNewCommand();
+            if (request.getCommand().matches("start multiplayer game \\w+\\s*\\w*")) {
+                //todo refactor this method
+                int numberOfFlags = 0;
+                String mode = request.getCommand().split(" ")[3];
+                if (mode.equals(Constants.FLAGS)) {
+                    if (request.getCommand().split(" ").length == 5) {
+                        numberOfFlags = Integer.parseInt(request.getCommand().split(" ")[4]);
                     } else {
-                        request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER);
+                        request.setOutputMessageType(OutputMessageType.NO_FLAG_NUMBER);
                         view.printOutputMessage(request.getOutputMessageType());
                     }
+                } else if (mode.equals(Constants.ONE_FLAG)) {
+                    numberOfFlags = 1;
+                }
+                if (database.getLoggedInAccount().getMainDeck() != null &&
+                        secondPlayer.getMainDeck() != null && database.getLoggedInAccount().getMainDeck() != null
+                        && database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
+                    Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags);
+                    database.setCurrentBattle(battle);
+                    ControllerBattleCommands.getInstance().main();
                 } else {
-                    request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                    request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER);
                     view.printOutputMessage(request.getOutputMessageType());
                 }
+            } else {
+                request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
+                view.printOutputMessage(request.getOutputMessageType());
             }
         }
     }

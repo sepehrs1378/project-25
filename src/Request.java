@@ -54,21 +54,16 @@ public class Request {
     public RequestType getType() {
         if (command == null || command.equals(""))
             return RequestType.WRONG_REQUEST;
-        if (command.toLowerCase().matches("^logout$")) {
+        if (command.toLowerCase().matches("^logout$"))
             return RequestType.LOGOUT;
-        }
-        if (command.toLowerCase().matches("^login [^ ]+$")) {
+        if (command.toLowerCase().matches("^login [^ ]+$"))
             return RequestType.LOGIN_NAME;
-        }
-        if (command.toLowerCase().matches("^enter [^ ]+$")) {
+        if (command.toLowerCase().matches("^enter [^ ]+$"))
             return RequestType.ENTER;
-        }
-        if (command.toLowerCase().matches("^exit$")) {
+        if (command.toLowerCase().matches("^exit$"))
             return RequestType.EXIT;
-        }
-        if (command.toLowerCase().matches("^show leaderboard$")) {
+        if (command.toLowerCase().matches("^show leaderboard$"))
             return RequestType.SHOW_LEADERBOARD;
-        }
         if (command.toLowerCase().matches("^show collection$"))
             return RequestType.SHOW_COLLECTION;
         if (command.toLowerCase().matches("^show all decks$"))
@@ -93,10 +88,9 @@ public class Request {
             return RequestType.SHOW_CARD_INFO_ID;
         if (command.toLowerCase().matches("^show info [^ ]+_[^ ]+_[^ ]+"))
             return RequestType.SHOW_INFO_ID;
-        if (command.toLowerCase().matches("^save$")) {
+        if (command.toLowerCase().matches("^save$"))
             return RequestType.SAVE;
-        }
-        if (command.toLowerCase().matches("^search [^ ]+$")) {
+        if (command.toLowerCase().matches("^search [^ ]+$"))
 /*
             String[] strings = command.split(" ");
             String output = "";
@@ -112,55 +106,44 @@ public class Request {
             command = output;
 */
             return RequestType.SEARCH_NAME;
-        }
-        if (command.toLowerCase().matches("^search collection [^ ]+$")) {
+        if (command.toLowerCase().matches("^search collection [^ ]+$"))
             return RequestType.SEARCH_COLLECTION_NAME;
-        }
-        if (command.toLowerCase().matches("^help$")) {
+        if (command.toLowerCase().matches("^help$"))
             return RequestType.HELP;
-        }
-        if (command.toLowerCase().matches("^buy [^ ]+$")) {
+        if (command.toLowerCase().matches("^buy [^ ]+$"))
             return RequestType.BUY_NAME;
-        }
-        if (command.toLowerCase().matches("^sell [^ ]+_[^ ]+_\\d+$")) {
+        if (command.toLowerCase().matches("^sell [^ ]+_[^ ]+_\\d+$"))
             return RequestType.SELL_ID;
-        }
-        if (command.toLowerCase().matches("^create account [^ ]+$")) {
+        if (command.toLowerCase().matches("^create account [^ ]+$"))
             return RequestType.CREATE_ACCOUNT_NAME;
-        }
-        if (command.toLowerCase().matches("^create deck [^ ]+$")) {
+        if (command.toLowerCase().matches("^create deck [^ ]+$"))
             return RequestType.CREATE_DECK_NAME;
-        }
-        if (command.toLowerCase().matches("^delete deck [^ ]+$")) {
+        if (command.toLowerCase().matches("^delete deck [^ ]+$"))
             return RequestType.DELETE_DECK_NAME;
-        }
-        if (command.toLowerCase().matches("^add [^ ]+_[^ ]+_\\d+ to deck [^ ]+$")) {
+        if (command.toLowerCase().matches("^add [^ ]+_[^ ]+_\\d+ to deck [^ ]+$"))
             return RequestType.ADD_ID_TO_DECK_NAME;
-        }
-        if (command.toLowerCase().matches("^select deck [^ ]+$")) {
+        if (command.toLowerCase().matches("^select deck [^ ]+$"))
             return RequestType.SELECT_DECK_NAME;
-        }
         if (command.toLowerCase().matches("^select [^ ]+_[^ ]+_\\d+"))
             return RequestType.SELECT_ID;
-        if (command.toLowerCase().matches("^validate deck [^ ]+$")) {
+        if(command.toLowerCase().matches("^select user [^ ]+$"))
+            return RequestType.SELECT_USER_NAME;
+        if (command.toLowerCase().matches("^validate deck [^ ]+$"))
             return RequestType.VALIDATE_DECK_NAME;
-        }
-        if (command.toLowerCase().matches("^show my minions$")) {
+        if (command.toLowerCase().matches("^show my minions$"))
             return RequestType.SHOW_MY_MINIONS;
-        }
         if (command.toLowerCase().matches("^show opponent minions$"))
             return RequestType.SHOW_OPPONENT_MINIONS;
-        if(command.toLowerCase().matches("^show battleground$"))
+        if (command.toLowerCase().matches("^show battleground$"))
             return RequestType.SHOW_BATTLEGROUND;
-        if (command.toLowerCase().matches("^move to [(]\\d+,\\d+[)]$")) {
+        if (command.toLowerCase().matches("^move to [(]\\d+,\\d+[)]$"))
             return RequestType.MOVE_TO_X_Y;
-        }
         if (command.toLowerCase().matches("^attack [^ ]+_[^ ]+_\\d+$"))
             return RequestType.ATTACK_ID;
         if (command.toLowerCase().matches("^attack combo( [^ ]+_[^ ]+_\\d+){2,}$"))
             return RequestType.ATTACK_COMBO;
-            if (command.toLowerCase().matches("^use [(]\\d+,\\d+[)]$"))
-                return RequestType.USE_COLLECTABLE_IN_X_Y;
+        if (command.toLowerCase().matches("^use [(]\\d+,\\d+[)]$"))
+            return RequestType.USE_COLLECTABLE_IN_X_Y;
         if (command.toLowerCase().matches("^use special power [(]\\d+,\\d+[)]$"))
             return RequestType.USE_SPECIAL_POWER_X_Y;
         if (command.toLowerCase().matches("^insert [^ ]+ in [(]\\d+,\\d+[)]$"))
@@ -169,18 +152,16 @@ public class Request {
             return RequestType.END_GAME;
         if (command.toLowerCase().matches("^end turn$"))
             return RequestType.END_TURN;
-        if (command.toLowerCase().matches("^game info$")) {
+        if (command.toLowerCase().matches("^game info$"))
             return RequestType.GAME_INFO;
-        }
         if (command.toLowerCase().matches("^/.+$"))
             return RequestType.CHEATS;
         if (command.toLowerCase().matches("^password [^ ]+$"))
             return RequestType.PASSWORD;
         if (command.toLowerCase().matches("^remove [^ ]+_[^ ]+_\\d+ from deck [^ ]+$"))
             return RequestType.REMOVE_ID_FROM_DECK_NAME;
-        if (command.toLowerCase().matches("^start .+$")) {//todo correct it later
+        if (command.toLowerCase().matches("^start .+$")) //todo correct it later
             return RequestType.START;
-        }
         if (command.toLowerCase().matches("^match history$"))
             return RequestType.MATCH_HISTORY;
         return RequestType.WRONG_REQUEST;

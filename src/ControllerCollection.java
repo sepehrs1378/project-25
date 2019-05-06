@@ -21,46 +21,44 @@ public class ControllerCollection {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                switch (request.getType()) {
-                    case EXIT:
-                        didExit = true;
-                        break;
-                    case SHOW:
-                        show();
-                        break;
-                    case SEARCH_NAME:
-                        searchName();
-                        break;
-                    case SAVE:
-                        save();
-                        break;
-                    case CREATE_DECK_NAME:
-                        createDeckName();
-                        break;
-                    case DELETE_DECK_NAME:
-                        deleteDeckName();
-                        break;
-                    case ADD_ID_TO_DECK_NAME:
-                        addIdToDeckName();
-                        break;
-                    case REMOVE_ID_FROM_DECK_NAME:
-                        removeIdFromDeckName();
-                        break;
-                    case VALIDATE_DECK_NAME:
-                        validateDeckName();
-                        break;
-                    case SELECT_DECK_NAME:
-                        selectDeckName();
-                        break;
-                    case SHOW_ALL_DECKS:
-                        showAllDecks();
-                        break;
-                    case SHOW_DECK_NAME:
-                        showDeckName();
-                        break;
-                    default:
-                        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-                }
+                case EXIT:
+                    didExit = true;
+                    break;
+                case SHOW:
+                    show();
+                    break;
+                case SEARCH_NAME:
+                    searchName();
+                    break;
+                case SAVE:
+                    save();
+                    break;
+                case CREATE_DECK_NAME:
+                    createDeckName();
+                    break;
+                case DELETE_DECK_NAME:
+                    deleteDeckName();
+                    break;
+                case ADD_ID_TO_DECK_NAME:
+                    addIdToDeckName();
+                    break;
+                case REMOVE_ID_FROM_DECK_NAME:
+                    removeIdFromDeckName();
+                    break;
+                case VALIDATE_DECK_NAME:
+                    validateDeckName();
+                    break;
+                case SELECT_DECK_NAME:
+                    selectDeckName();
+                    break;
+                case SHOW_ALL_DECKS:
+                    showAllDecks();
+                    break;
+                case SHOW_DECK_NAME:
+                    showDeckName();
+                    break;
+                default:
+                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }
@@ -123,11 +121,11 @@ public class ControllerCollection {
         }
     }
 
-    private void save(){
+    private void save() {
         //todo plz complete it
     }
 
-    public void validateDeckName(Request request) {
+    public void validateDeckName() {
         String deckName = request.getCommand().split(" ")[2];
         switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().validateDeck(deckName)) {
             case DECK_DOESNT_EXIST:
@@ -150,7 +148,7 @@ public class ControllerCollection {
         view.printOutputMessage(outputMessageType);
     }
 
-    public void deleteDeckName(Request request) {
+    public void deleteDeckName() {
         String deckName = request.getCommand().split(" ")[2];
         switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().deleteDeck(deckName)) {
             case DECK_DOESNT_EXIST:

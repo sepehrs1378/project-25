@@ -348,5 +348,6 @@ public class Battle {
 
     public OutputMessageType endBattle() {
         //todo complete if
+        return OutputMessageType.WRONG_COMMAND;
     }
 }

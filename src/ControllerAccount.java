@@ -19,13 +19,13 @@ public class ControllerAccount {
             request.getNewCommand();
             switch (request.getType()) {
                 case CREATE_ACCOUNT_NAME:
-                    create();
+                    createAccountName();
                     break;
                 case LOGIN_NAME:
-                    login();
+                    loginName();
                     break;
                 case SHOW_LEADERBOARD:
-                    show();
+                    showLeaderboard();
                     break;
                 case EXIT:
                     didExit = true;
@@ -40,7 +40,7 @@ public class ControllerAccount {
     }
 
 
-    private void login() {
+    private void loginName() {
         String username = request.getCommand().split(" ")[1];
         if (!dataBase.doesAccountExist(username)) {
             view.printOutputMessage(OutputMessageType.ACCOUNT_DOESNT_EXIST);
@@ -70,7 +70,7 @@ public class ControllerAccount {
         view.printOutputMessage(error);
     }
 
-    private void create() {
+    private void createAccountName() {
         if (request.getCommand().split(" ").length < 3) {
             view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             return;
@@ -89,10 +89,9 @@ public class ControllerAccount {
                 continue;
             }
             password = request.getCommand().split(" ")[1];
-            if (!password.equals("")) {
-                view.printOutputMessage(OutputMessageType.INVALID_PASSWORD);
+            if (!password.equals(""))
                 break;
-            } else
+            else
                 view.printOutputMessage(OutputMessageType.BAD_PASSWORD);
         }
         Account account = new Account(username, password);
@@ -102,7 +101,7 @@ public class ControllerAccount {
         controllerMainMenu.main();
     }
 
-    private void show() {
+    private void showLeaderboard() {
         dataBase.sortAccountsByWins();
         view.showLeaderBoard(dataBase.getAccounts());
     }
