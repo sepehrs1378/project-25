@@ -152,8 +152,28 @@ class BattleGround {
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
+        gatherCollectable(destinationRow, destinationColumn);
+        gatherFlags(selectedUnit, destinationRow, destinationColumn);
         selectedUnit.setDidMoveThisTurn(true);
         return OutputMessageType.UNIT_MOVED;
+    }
+
+    private void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
+        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
+        List<Flag> flags = cell.getFlags();
+        for (Flag flag : flags){
+            unit.addFlag(flag);
+        }
+        cell.setFlags(new ArrayList<>());
+    }
+
+    private void gatherCollectable(int destinationRow, int destinationColumn){
+        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
+        Collectable collectable = cell.getCollectable();
+        if (collectable != null){
+            dataBase.getCurrentBattle().getPlayerInTurn().getCollectables().add(collectable);
+            cell.setCollectable(null);
+        }
     }
 
     public int getDistance(int row1, int column1, int row2, int column2) {

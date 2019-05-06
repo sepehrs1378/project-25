@@ -5,7 +5,7 @@ public class Cell {
     private Unit unit;
     private Collectable collectable;
     private List<Buff> buffs = new ArrayList<>();
-    private ArrayList<Flag> flags = new ArrayList<>();
+    private List<Flag> flags = new ArrayList<>();
 
     public Cell() {
     }
@@ -34,8 +34,12 @@ public class Cell {
         buffs.remove(buff);
     }
 
-    public ArrayList<Flag> getFlags() {
+    public List<Flag> getFlags() {
         return this.flags;
+    }
+
+    public void setFlags(List<Flag> flags){
+        this.flags = flags;
     }
 
     public void addFlag(Flag flag) {

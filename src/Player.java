@@ -132,7 +132,6 @@ public class Player {
             selectedUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id);
             if (selectedUnit.getId().split("_")[0].matches(dataBase.getCurrentBattle().
                     getPlayerInTurn().getPlayerInfo().getPlayerName())){
-                selectedCollectable = null;
                 return OutputMessageType.SELECTED;
             }
         }

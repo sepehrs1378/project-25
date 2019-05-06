@@ -47,6 +47,10 @@ public class Battle {
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
+        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
         doBuffsEffects();
         checkForDeadUnits();
         //todo check turns of flag in hand??
