@@ -130,8 +130,11 @@ public class Player {
         }
         if (dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(id)) {
             selectedUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id);
-            selectedCollectable = null;
-            return OutputMessageType.SELECTED;
+            if (selectedUnit.getId().split("_")[0].matches(dataBase.getCurrentBattle().
+                    getPlayerInTurn().getPlayerInfo().getPlayerName())){
+                selectedCollectable = null;
+                return OutputMessageType.SELECTED;
+            }
         }
         return OutputMessageType.INVALID_COLLECTABLE_CARD;
     }

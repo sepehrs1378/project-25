@@ -256,6 +256,9 @@ public class ControllerBattleCommands {
             case CELL_OUT_OF_RANGE:
                 view.printOutputMessage(OutputMessageType.CELL_OUT_OF_RANGE);
                 break;
+            case UNIT_ALREADY_MOVED:
+                view.printOutputMessage(OutputMessageType.UNIT_ALREADY_MOVED);
+                break;
             case UNIT_MOVED:
                 view.showUnitMove(database.getCurrentBattle().
                                 getPlayerInTurn().getSelectedUnit().getId()

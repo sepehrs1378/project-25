@@ -140,6 +140,8 @@ class BattleGround {
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
+        if(selectedUnit.didMoveThisTurn())
+            return OutputMessageType.UNIT_ALREADY_MOVED;
         //todo check obstacles ...
         if (cells[destinationRow][destinationColumn].getUnit() != null)
             return OutputMessageType.CELL_IS_FULL;

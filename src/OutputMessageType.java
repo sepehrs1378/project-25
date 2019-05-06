@@ -1,4 +1,5 @@
 public enum OutputMessageType {
+    UNIT_ALREADY_MOVED("this unit has already moved once"),
     WRONG_COMMAND("Wrong command"),
     A_UNIT_CANT_ATTACK_TARGET("A unit can't attackId target"),
     COMBO_ATTACK_SUCCESSFUL("combo attackId successful"),
