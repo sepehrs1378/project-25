@@ -12,10 +12,6 @@ public class ControllerMatchInfo {
         return ourInstance;
     }
 
-    public void setMatchDate(){
-
-    }
-
     public void showMatchHistory(Account account) {
         List<MatchInfo> matchList = new ArrayList<>(account.getMatchList());
         for (MatchInfo matchInfo : matchList) {

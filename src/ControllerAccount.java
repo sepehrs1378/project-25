@@ -39,7 +39,6 @@ public class ControllerAccount {
         }
     }
 
-
     private void loginName() {
         String username = request.getCommand().split(" ")[1];
         if (!dataBase.doesAccountExist(username)) {
