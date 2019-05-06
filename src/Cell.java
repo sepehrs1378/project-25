@@ -3,19 +3,23 @@ import java.util.List;
 
 public class Cell {
     private Unit unit;
-    private Item item;
+    private Collectable collectable;
     private List<Buff> buffs = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
 
     public Cell() {
     }
 
-    public Unit getUnit() {
-        return unit;
+    public Collectable getCollectable() {
+        return collectable;
     }
 
-    public Item getItem() {
-        return item;
+    public void setCollectable(Collectable collectable) {
+        this.collectable = collectable;
+    }
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public List<Buff> getBuffs() {
@@ -24,10 +28,6 @@ public class Cell {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
     }
 
     public void deleteBuff(Buff buff) {

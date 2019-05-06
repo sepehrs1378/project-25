@@ -40,13 +40,13 @@ public class ControllerSinglePlayerMenu {
             view.print("please enter your level:");
             request.getNewCommand();
             if (request.getCommand().equals("level1")) {
-                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(), Constants.CLASSIC
-                        , 0);
+                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1()
+                        , Constants.CLASSIC, 0, null);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
             } else if (request.getCommand().equals("level2")) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
-                        , Constants.ONE_FLAG, 1);
+                        , Constants.ONE_FLAG, 1, null);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
             } else if (request.getCommand().equals("level3")) {
@@ -65,7 +65,7 @@ public class ControllerSinglePlayerMenu {
 
                 }
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
-                        , Constants.FLAGS, numberOfFlags);
+                        , Constants.FLAGS, numberOfFlags, null);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
             }
