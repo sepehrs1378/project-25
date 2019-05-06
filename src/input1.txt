@@ -124,6 +124,4 @@ enter battle
 enter multiplayer
 select user player1
 start multiplayer game classic
-//spells : 0 - 19
-//heroes : 20 - 29
-//minions : 30 - 69
+
