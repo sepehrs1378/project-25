@@ -60,7 +60,7 @@ public class ControllerMultiPlayerMenu {
                     numberOfFlags = 1;
                 }
                 if (database.getLoggedInAccount().getMainDeck() != null &&
-                        secondPlayer.getMainDeck() != null && database.getLoggedInAccount().getMainDeck() != null
+                        secondPlayer.getMainDeck() != null
                         && database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
                     Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags, null);
                     database.setCurrentBattle(battle);
