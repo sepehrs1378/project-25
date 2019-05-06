@@ -210,6 +210,16 @@ class BattleGround {
         }
     }
 
+    public void setCollectableOnGround(Collectable collectable) {
+        if (collectable == null) {
+            int random = (int) (Math.random() * dataBase.getCollectableList().size());
+            collectable = dataBase.getCollectableList().get(random);
+        }
+        int rowRandom = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
+        int columnRandom = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+        cells[rowRandom][columnRandom].setCollectable(collectable);
+    }
+
     public Unit getHeroOfPlayer(Player player) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
