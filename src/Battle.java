@@ -20,24 +20,14 @@ public class Battle {
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;
         this.mode = mode;
-        this.setNumberOfFlags(numberOfFlags);
-        List<Flag> temp = new ArrayList<>();
+        this.numberOfFlags = numberOfFlags;
+        List<Flag> flags = new ArrayList<>();
         for (int i = 0; i < numberOfFlags; i++)
-            temp.add(new Flag());
-        this.battleGround.addFlagsToBattleGround(temp);
+            flags.add(new Flag());
+        battleGround.addFlagsToBattleGround(flags);
+        battleGround.setCollectableOnGround(collectable);
         this.collectable = collectable;
         startBattle();
-    }
-
-    public void setCollectableOnGround() {
-        if (collectable == null) {
-            int random = (int) (Math.random() * dataBase.getCollectableList().size());
-            collectable = dataBase.getCollectableList().get(random);
-        }
-        int rowRandom = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-        int columnRandom = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
-        dataBase.getCurrentBattle().getBattleGround()
-                .getCells()[rowRandom][columnRandom].setCollectable(collectable);
     }
 
     public OutputMessageType nextTurn() {
@@ -381,7 +371,6 @@ public class Battle {
     }
 
     public void startBattle() {
-        setCollectableOnGround();
         setManaBasedOnTurnNumber();
         battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][0]
                 .setUnit(player1.getDeck().getHero());
