@@ -73,7 +73,7 @@ public class ControllerBattleCommands {
                     enter();
                     break;
                 case END_GAME:
-                    endGame();
+                    didExit = endGame();
                     break;
                 case SHOW_MENU:
                     showMenu();
@@ -314,13 +314,9 @@ public class ControllerBattleCommands {
         view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
     }
 
-    private void endGame() {
-        if (!database.getCurrentBattle().isBattleFinished()) {
-            request.setOutputMessageType(OutputMessageType.BATTLE_NOT_FINISHED);
-            view.printOutputMessage(request.getOutputMessageType());
-        } else {
-            //todo method is written : battle.endBattle
-        }
+    private boolean endGame() {
+        database.setCurrentBattle(null);
+        return true;
     }
 
     private void endTurn() {
