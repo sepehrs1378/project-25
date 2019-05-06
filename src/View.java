@@ -299,6 +299,55 @@ public class View {
         }
     }
 
-    
+    public void showAllDecks(PlayerCollection playerCollection, Deck mainDeck) {
+        int counter = 1;
+        String mainDeckName = "";
+        if (mainDeck != null) {
+            mainDeckName = mainDeck.getName();
+            System.out.println(counter + " : " + mainDeckName + " :");
+            showDeck(mainDeck, "    ");
+            counter++;
+        }
+        for (Deck deck : playerCollection.getDecks()) {
+            if (!deck.getName().equals(mainDeckName)) {
+                System.out.println(counter + " : " + deck.getName() + " :");
+                showDeck(deck, "    ");
+            }
+            counter++;
+        }
+    }
+
+    public void printList(List<String> output) {
+        for (String string : output) {
+            System.out.println(string);
+        }
+    }
+
+    public void showCollectables(List<Collectable> collectables) {
+        int counter = 1;
+        for (Collectable collectable : collectables) {
+            System.out.println(counter + " : Name : " + collectable.getName() + " - Desc : " + collectable.getDescription());
+            counter++;
+        }
+    }
+
+    public void showCollectable(Collectable collectable) {
+        System.out.println("Name : " + collectable.getName() + " - Desc : " + collectable.getDescription());
+    }
+
+    public void showHand(Hand hand) {
+        for (Card card : hand.getCards()) {
+            if (card instanceof Unit) {
+                showCardInfoMinion((Unit) card);
+            } else if (card instanceof Spell) {
+                showCardInfoSpell((Spell) card);
+            }
+
+        }
+    }
+
+    public void print(String message) {
+        System.out.println(message);
+    }
 }
 
