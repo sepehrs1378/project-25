@@ -129,4 +129,4 @@ insert naneSarma in (1,2)
 move to (1,1)
 insert shamshirZanFars in (0,1)
 help
-enter graveyard
+//enter graveyard

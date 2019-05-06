@@ -10,6 +10,7 @@ public enum RequestType {
     SAVE,
     SEARCH_NAME,
     HELP,
+    FORFEIT,
     MATCH_HISTORY,
     BUY_NAME,
     SELL_ID,
