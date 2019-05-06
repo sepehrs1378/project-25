@@ -33,6 +33,9 @@ public class Battle {
     public OutputMessageType nextTurn() {
         if (isBattleFinished)
             return OutputMessageType.BATTLE_FINISHED;
+        if(checkEndBattle() != null){
+
+        }
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
