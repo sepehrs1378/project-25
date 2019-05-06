@@ -18,43 +18,39 @@ public class ControllerGraveYard {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SHOW_LEADERBOARD:
-                    show();
+                case SHOW_INFO_ID:
+                    break;
+                case SHOW_CARDS:
+                    break;
+                case HELP:
+                    help();
                     break;
                 case EXIT:
                     didExit = true;
                     break;
-                case HELP:
-                    help();
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
         }
     }
 
-    private void help(){
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_GRAVEYARD);
     }
 
-    public void show() {
-        if (!request.getCommand().matches("^show cards$") &&
-                !request.getCommand().matches("^show info .+$")) {
-            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
-            view.printOutputMessage(request.getOutputMessageType());
-            return;
-        }
-        if (request.getCommand().matches("^show cards$")) {
-            view.showInfoOfDeadCards(dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().getDeadCards());
-        }
-        if (request.getCommand().matches("^show info .+$")) {
-            String[] strings = request.getCommand().split("\\s+");
-            String cardId = strings[2];
-            Card card = dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().findCard(cardId);
-            if (card instanceof Unit) {
-                Unit unit = (Unit) card;
-                if (unit.getHeroOrMinion().equals("hero")) {
-                    view.showCardInfoHero(unit);
-                }
+    private void showCards() {
+        view.showInfoOfDeadCards(dataBase.getCurrentBattle()
+                .getPlayerInTurn().getGraveYard().getDeadCards());
+    }
+
+    private void showInfoId() {
+        String[] strings = request.getCommand().split("\\s+");
+        String cardId = strings[2];
+        Card card = dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().findCard(cardId);
+        if (card instanceof Unit) {
+            Unit unit = (Unit) card;
+            if (unit.getHeroOrMinion().equals("hero")) {
+                view.showCardInfoHero(unit);
             }
         }
     }
@@ -62,5 +58,4 @@ public class ControllerGraveYard {
     public void showInfoOfCards(List<Card> cards) {
         view.showInfoOfDeadCards(cards);
     }
-
 }
