@@ -162,8 +162,11 @@ public class Request {
             return RequestType.REMOVE_ID_FROM_DECK_NAME;
         if (command.toLowerCase().matches("^start .+$")) //todo correct it later
             return RequestType.START;
-        if (command.toLowerCase().matches("^match history$"))
+        if (command.toLowerCase().matches("^show match history$"))
             return RequestType.MATCH_HISTORY;
+        if (command.toLowerCase().matches("^forfeit$")){
+            return RequestType.FORFEIT;
+        }
         return RequestType.WRONG_REQUEST;
     }
 

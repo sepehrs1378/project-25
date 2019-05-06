@@ -1,8 +1,11 @@
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Battle {
-    public DataBase dataBase = DataBase.getInstance();
+    private static final DataBase dataBase = DataBase.getInstance();
+    private static final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -27,12 +30,21 @@ public class Battle {
         battleGround.addFlagsToBattleGround(flags);
         battleGround.setCollectableOnGround(collectable);
         this.collectable = collectable;
+        MatchInfo matchInfo1 = new MatchInfo();
+        MatchInfo matchInfo2 = new MatchInfo();
+        Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        playerAccount1.addMatchToMatchList(matchInfo1);
+        playerAccount2.addMatchToMatchList(matchInfo2);
         startBattle();
     }
 
     public OutputMessageType nextTurn() {
         if (isBattleFinished)
             return OutputMessageType.BATTLE_FINISHED;
+        if(checkEndBattle() != null){
+
+        }
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
