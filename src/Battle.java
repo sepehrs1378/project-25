@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Battle {
     private static final DataBase dataBase = DataBase.getInstance();
-    private static final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -42,7 +41,7 @@ public class Battle {
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if(player != null){
+        if (player != null) {
             endBattle(player);
         }
         reviveContinuousBuffs();
@@ -396,7 +395,7 @@ public class Battle {
         player1.setNextCard();
     }
 
-    private void resetDeck(Deck deck){
+    private void resetDeck(Deck deck) {
 
     }
 
@@ -404,22 +403,18 @@ public class Battle {
         Account player1Account = dataBase.getAccountWithUsername(player1.getPlayerInfo().getPlayerName());
         Account player2Account = dataBase.getAccountWithUsername(player2.getPlayerInfo().getPlayerName());
         int sizeMatchList1 = player1Account.getMatchList().size();
-        int sizeMatchList2=player2Account.getMatchList().size();
-        if(winner == player1){
-            player1Account.getMatchList().get(sizeMatchList1-1).setWinner(player1Account);
-            player2Account.getMatchList().get(sizeMatchList2-1).setWinner(player1Account);
+        int sizeMatchList2 = player2Account.getMatchList().size();
+        if (winner == player1) {
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account);
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account);
 
             return OutputMessageType.WINNER_PLAYER1;
-        }else if(winner == player2){
-            player1Account.getMatchList().get(sizeMatchList1-1).setWinner(player2Account);
-            player2Account.getMatchList().get(sizeMatchList2-1).setWinner(player2Account);
+        } else if (winner == player2) {
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account);
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account);
             return OutputMessageType.WINNER_PLAYER2;
         }
         return OutputMessageType.INVALID_PLAYER;
-    }
-
-    public Collectable getCollectable() {
-        return collectable;
     }
 
     public Collectable getCollectable() {
