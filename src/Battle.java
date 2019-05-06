@@ -35,6 +35,8 @@ public class Battle {
         Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         playerAccount1.addMatchToMatchList(matchInfo1);
         playerAccount2.addMatchToMatchList(matchInfo2);
+        matchInfo1.setOpponent(playerAccount2);
+        matchInfo2.setOpponent(playerAccount1);
         startBattle();
     }
 
@@ -100,6 +102,8 @@ public class Battle {
         if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
             player2.getGraveYard().addDeadCard(unit);
         for (Spell specialPower : unit.getSpecialPowers()) {
+            if (specialPower == null)
+                continue;
             if (specialPower.equals(SpellActivationType.ON_DEATH))
                 specialPower.doSpell(battleGround.getCoordinationOfUnit(unit)[0]
                         , battleGround.getCoordinationOfUnit(unit)[1]);
@@ -217,13 +221,13 @@ public class Battle {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
-                    if (buff.isContinuous())
+                    if (buff != null && buff.isContinuous())
                         buff.revive();
                 }
                 if (cell.getUnit() == null)
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
-                    if (buff.isContinuous())
+                    if (buff != null && buff.isContinuous())
                         buff.revive();
                 }
             }
@@ -302,10 +306,14 @@ public class Battle {
             if (!isCellNearbyFriendlyUnits(row, column))
                 return OutputMessageType.NOT_NEARBY_FRIENDLY_UNITS;
             if (battleGround.getCells()[row][column].getUnit() == null) {
+                for (Spell specialPower : unit.getSpecialPowers()) {
+                    if (specialPower != null
+                            && specialPower.getActivationType() == SpellActivationType.ON_SPAWN)
+                        specialPower.doSpell(row, column);
+                }
                 battleGround.getCells()[row][column].setUnit(unit);
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
-                //todo is it complete?
                 playerInTurn.reduceMana(unit.getMana());
             } else return OutputMessageType.THIS_CELL_IS_FULL;
         }
@@ -408,6 +416,10 @@ public class Battle {
             return OutputMessageType.WINNER_PLAYER2;
         }
         return OutputMessageType.INVALID_PLAYER;
+    }
+
+    public Collectable getCollectable() {
+        return collectable;
     }
 
     public Collectable getCollectable() {

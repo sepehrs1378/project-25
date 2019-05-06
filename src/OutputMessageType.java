@@ -35,7 +35,7 @@ public enum OutputMessageType {
     UNIT_MOVED("Selected unit moved"),
     TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
     CELL_IS_FULL("selected cell is full"),
-    OUT_OF_RANGE("unit is out of range"),
+    CELL_OUT_OF_RANGE("Cell unit is out of range"),
     NO_FLAG_NUMBER("please enter number of flags in flags mode!"),
     ATTACKED_SUCCESSFULLY(""),
     ALREADY_ATTACKED("Unit has already attacked"),

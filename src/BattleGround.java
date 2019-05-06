@@ -131,17 +131,19 @@ class BattleGround {
     }
 
     public OutputMessageType moveUnit(int destinationRow, int destinationColumn) {
+        if (destinationRow >= Constants.BATTLE_GROUND_WIDTH
+                || destinationColumn >= Constants.BATTLE_GROUND_LENGTH)
+            return OutputMessageType.OUT_OF_BOUNDARIES;
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
         //todo check obstacles ...
-        if (cells[destinationRow][destinationColumn] != null)
+        if (cells[destinationRow][destinationColumn].getUnit() != null)
             return OutputMessageType.CELL_IS_FULL;
         int[] coordination = getCoordinationOfUnit(selectedUnit);
         if (Math.abs(destinationRow - coordination[0]) + Math.abs(destinationColumn - coordination[1]) > 2) {
-            return OutputMessageType.OUT_OF_RANGE;
+            return OutputMessageType.CELL_OUT_OF_RANGE;
         }
-
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
