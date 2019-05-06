@@ -140,4 +140,5 @@ public class Player {
     public void setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
     }
+
 }

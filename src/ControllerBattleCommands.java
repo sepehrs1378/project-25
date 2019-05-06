@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,6 +75,10 @@ public class ControllerBattleCommands {
                     enter();
                     break;
                 case END_GAME:
+                    didExit = endGame();
+                    break;
+                case FORFEIT:
+                    forfeitGame();
                     didExit = endGame();
                     break;
                 case SHOW_MENU:
@@ -315,6 +321,22 @@ public class ControllerBattleCommands {
         Card card = database.getCurrentBattle().getPlayerInTurn()
                 .getHand().getCardByName(id);
         view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
+    }
+
+    private void forfeitGame() {
+        Account account = database.getAccountWithUsername(database.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = database.getAccountWithUsername(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = database.getAccountWithUsername(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
+        MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
+        if (player1 == account){
+            matchInfo1.setWinner(player2);
+            matchInfo2.setWinner(player2);
+        }
+        else {
+            matchInfo1.setWinner(player1);
+            matchInfo2.setWinner(player1);
+        }
     }
 
     private boolean endGame() {
