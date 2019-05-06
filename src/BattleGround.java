@@ -47,7 +47,10 @@ class BattleGround {
     public Card getCardByID(String cardId) {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit().getId().equals(cardId)) {
+                Unit unit = cell.getUnit();
+                if (unit == null)
+                    continue;
+                if (unit.getId().equals(cardId)) {
                     return cell.getUnit();
                 }
             }

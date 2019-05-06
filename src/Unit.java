@@ -103,6 +103,8 @@ public class Unit extends Card {
         if (!isTargetUnitWithinRange(targetId))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         this.attackUnit(targetId);
+        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetId);
+        targetUnit.counterAttackUnit(this);
         return OutputMessageType.ATTACKED_SUCCESSFULLY;
     }
 

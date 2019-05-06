@@ -70,11 +70,12 @@ class Target {
     }
 
     private List<Unit> getRandomUnit(List<Unit> units) {
+        if (units.isEmpty())
+            return new ArrayList<>();
         int randomNumber = (int) (Math.random() * units.size());
         List<Unit> tempUnits = new ArrayList<>();
         tempUnits.add(units.get(randomNumber));
         units = tempUnits;
-        //todo is previous line correct?
         return units;
     }
 

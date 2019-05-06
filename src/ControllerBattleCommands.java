@@ -146,18 +146,17 @@ public class ControllerBattleCommands {
         if (card != null) {
             if (card instanceof Spell) {
                 view.showCardInfoSpell((Spell) card);
-            } else if (card instanceof Unit) {
-                if (((Unit) card).getHeroOrMinion().equals("Minion")) {
+                return;
+            }
+            if (card instanceof Unit) {
+                if (((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
                     view.showCardInfoMinion((Unit) card);
-                } else if (((Unit) card).getHeroOrMinion().equals("Hero")) {
+                } else if (((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
                     view.showCardInfoHero((Unit) card);
                 }
             }
-        } else {
-            request.setOutputMessageType(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
-            view.printOutputMessage(request.getOutputMessageType());
-            //todo
-        }
+        } else
+            view.printOutputMessage(OutputMessageType.NO_CARD_IN_BATTLEGROUND);
     }
 
     private void showCollectables() {
@@ -188,7 +187,6 @@ public class ControllerBattleCommands {
     }
 
     private void showBattleground() {
-        BattleGround battleGround = database.getCurrentBattle().getBattleGround();
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
