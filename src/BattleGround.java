@@ -160,6 +160,8 @@ class BattleGround {
         if (playerName.equals(username))
             return Constants.FRIEND;
         return Constants.ENEMY;
+
+
     }
 
     public List<Unit> getUnitsHavingBuff(Buff buff) {

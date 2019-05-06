@@ -126,7 +126,7 @@ public class Request {
             return RequestType.SELECT_DECK_NAME;
         if (command.toLowerCase().matches("^select [^ ]+_[^ ]+_\\d+"))
             return RequestType.SELECT_ID;
-        if(command.toLowerCase().matches("^select user [^ ]+$"))
+        if (command.toLowerCase().matches("^select user [^ ]+$"))
             return RequestType.SELECT_USER_NAME;
         if (command.toLowerCase().matches("^validate deck [^ ]+$"))
             return RequestType.VALIDATE_DECK_NAME;
