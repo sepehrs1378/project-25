@@ -1,3 +1,4 @@
+import javax.management.BadAttributeValueExpException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +63,7 @@ public class Battle {
         return turnNumber;
     }
 
-    public void addTurnNumber() {
-        this.turnNumber++;
-    }
-
     public void changeTurn() {
-        this.addTurnNumber();
         if (playerInTurn == player1)
             playerInTurn = player2;
         else playerInTurn = player1;
@@ -119,7 +115,7 @@ public class Battle {
                 player1.setMana(9);
                 player2.setMana(0);
             }
-        } else if (turnNumber % 2 == 0) {
+        } else {
             if (turnNumber < 15) {
                 player1.setMana(0);
                 player2.setMana((turnNumber / 2 + 2));
@@ -204,15 +200,15 @@ public class Battle {
     }
 
     public void reviveContinuousBuffs() {
-        int i;
-        int j;
-        for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
-            for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+        for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     if (buff.isContinuous())
                         buff.revive();
                 }
+                if (cell.getUnit() == null)
+                    continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
                     if (buff.isContinuous())
                         buff.revive();
@@ -248,8 +244,10 @@ public class Battle {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Unit unit = dataBase.getCurrentBattle().getBattleGround()
-                        .getCells()[i][j].getUnit();
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                if (cell.isEmptyOfUnit())
+                    continue;
+                Unit unit = cell.getUnit();
                 unit.setDidAttackThisTurn(false);
                 unit.setDidMoveThisTurn(false);
             }
@@ -265,6 +263,8 @@ public class Battle {
                 for (Buff buff : cell.getBuffs()) {
                     buff.doEffect();
                 }
+                if (cell.isEmptyOfUnit())
+                    continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
                     buff.doEffect();
                 }
@@ -280,22 +280,25 @@ public class Battle {
         if (card == null)
             return OutputMessageType.NO_SUCH_CARD_IN_HAND;
         if (card instanceof Unit) {
+            Unit unit = (Unit) card;
             if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0
                     || column >= Constants.BATTLE_GROUND_LENGTH || column < 0)
                 return OutputMessageType.INVALID_NUMBER;
-            if (dataBase.getCurrentBattle().getBattleGround().getCells()[row][column].getUnit() == null) {
-                dataBase.getCurrentBattle().getBattleGround().getCells()[row][column].setUnit((Unit) card);
-                dataBase.getCurrentBattle().getPlayerInTurn().getHand().getCards().remove(card);
-                dataBase.getCurrentBattle().getPlayerInTurn().setNextCard(dataBase.getCurrentBattle()
-                        .getPlayerInTurn().getDeck());
-                //todo is it complete
+            if (battleGround.getCells()[row][column].getUnit() == null) {
+                battleGround.getCells()[row][column].setUnit(unit);
+                playerInTurn.getHand().getCards().remove(unit);
+                playerInTurn.setNextCard(playerInTurn.getDeck());
+                //todo is it complete?
+                playerInTurn.reduceMana(unit.getMana());
             } else return OutputMessageType.THIS_CELL_IS_FULL;
         } else if (card instanceof Spell) {
-            ((Spell) card).doSpell(row, column);
-            dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().addDeadCard(card);
-            dataBase.getCurrentBattle().getPlayerInTurn().getHand().deleteCard(card);
+            Spell spell = (Spell) card;
+            spell.doSpell(row, column);
+            playerInTurn.getGraveYard().addDeadCard(spell);
+            playerInTurn.getHand().deleteCard(spell);
+            playerInTurn.reduceMana(spell.getMana());
         }
-        return OutputMessageType.NO_ERROR;
+        return OutputMessageType.CARD_INSERTED;
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {

@@ -18,7 +18,7 @@ public class ControllerGraveYard {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SHOW:
+                case SHOW_LEADERBOARD:
                     show();
                     break;
                 case EXIT:

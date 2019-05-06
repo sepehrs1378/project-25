@@ -9,7 +9,7 @@ public class ControllerAccount {
     }
 
 
-    public static ControllerAccount getInstance(){
+    public static ControllerAccount getInstance() {
         return controllerAccount;
     }
 
@@ -18,13 +18,13 @@ public class ControllerAccount {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case CREATE:
+                case CREATE_ACCOUNT_NAME:
                     create();
                     break;
-                case LOGIN:
+                case LOGIN_NAME:
                     login();
                     break;
-                case SHOW:
+                case SHOW_LEADERBOARD:
                     show();
                     break;
                 case EXIT:
@@ -103,12 +103,7 @@ public class ControllerAccount {
     }
 
     private void show() {
-        if (!request.getCommand().matches("^show leaderboard$")) {
-            request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
-            view.printOutputMessage(request.getOutputMessageType());
-        } else {
-            dataBase.sortAccountsByWins();
-            view.showLeaderBoard(dataBase.getAccounts());
-        }
+        dataBase.sortAccountsByWins();
+        view.showLeaderBoard(dataBase.getAccounts());
     }
 }

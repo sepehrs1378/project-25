@@ -7,9 +7,10 @@ class BattleGround {
     private static final DataBase dataBase = DataBase.getInstance();
     private Cell[][] cells = new
             Cell[Constants.BATTLE_GROUND_WIDTH][Constants.BATTLE_GROUND_LENGTH];
+
     {
-        for (int i=0;i<cells.length;i++){
-            for (int j=0;j<cells[i].length;j++){
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell();
             }
         }
@@ -120,9 +121,10 @@ class BattleGround {
         List<Unit> minions = new ArrayList<>();
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())
-                        && cell.getUnit().getHeroOrMinion().equals("Minion")) {
-                    minions.add(cell.getUnit());
+                Unit unit = cell.getUnit();
+                if (unit != null && unit.getId().contains(player.getPlayerInfo().getPlayerName())
+                        && unit.getHeroOrMinion().equals("Minion")) {
+                    minions.add(unit);
                 }
             }
         }

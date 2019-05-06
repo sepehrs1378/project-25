@@ -36,10 +36,6 @@ public class Player {
         return mana;
     }
 
-    public void setPlayerInfo(PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
-    }
-
     public void setHand(Deck deck) {
         for (int i = 0; i < Constants.NUMBER_OF_HAND_CARDS; i++) {
             int randomNumber = (int) (Math.random() * deck.getCards().size());
@@ -49,12 +45,16 @@ public class Player {
 
     }
 
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public void addMana(int addedMana) {
+        mana += addedMana;
+    }
+
+    public void reduceMana(int reducedMana) {
+        mana -= reducedMana;
     }
 
     public void changeMana(int mana) {

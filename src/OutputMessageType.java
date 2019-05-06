@@ -48,6 +48,7 @@ public enum OutputMessageType {
     HERO_IS_EMPTY("hero slot is empty in the deck"),
     FOUND_ITEM("found item with id: "),
     FOUND_CARD("found card with id: "),
+    CARD_NOT_FOUND("Card wasn't found"),
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
     NO_HERO("Hero can't use special power"),
     INVALID_NUMBER("the number was out of battleGround boundaries"),

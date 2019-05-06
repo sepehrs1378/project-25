@@ -21,53 +21,53 @@ public class ControllerCollection {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case CREATE:
-                    create();
-                    break;
-                case EXIT:
-                    didExit = true;
-                    break;
-                case SHOW:
-                    show();
-                    break;
-                case SEARCH:
-                    search();
-                    break;
-                case SAVE:
-                    //todo is it needed?
-                    break;
-                case DELETE:
-                    delete(request);
-                    break;
-                case ADD:
-                    add();
-                    break;
-                case REMOVE:
-                    remove();
-                    break;
-                case VALIDATE:
-                    validate(request);
-                    break;
-                case SELECT:
-                    select();
-                    break;
-                case HELP:
-                    help();
-                    break;
-                default:
-                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+                switch (request.getType()) {
+                    case EXIT:
+                        didExit = true;
+                        break;
+                    case SHOW:
+                        show();
+                        break;
+                    case SEARCH_NAME:
+                        searchName();
+                        break;
+                    case SAVE:
+                        save();
+                        break;
+                    case CREATE_DECK_NAME:
+                        createDeckName();
+                        break;
+                    case DELETE_DECK_NAME:
+                        deleteDeckName();
+                        break;
+                    case ADD_ID_TO_DECK_NAME:
+                        addIdToDeckName();
+                        break;
+                    case REMOVE_ID_FROM_DECK_NAME:
+                        removeIdFromDeckName();
+                        break;
+                    case VALIDATE_DECK_NAME:
+                        validateDeckName();
+                        break;
+                    case SELECT_DECK_NAME:
+                        selectDeckName();
+                        break;
+                    case SHOW_ALL_DECKS:
+                        showAllDecks();
+                        break;
+                    case SHOW_DECK_NAME:
+                        showDeckName();
+                        break;
+                    default:
+                        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+                }
             }
         }
     }
 
     public void create() {
-        Pattern pattern = Pattern.compile("^create deck (\\w+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
-        }
-        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(matcher.group(1))) {
+        String deckName = request.getCommand().split(" ")[2];
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(deckName)) {
             case DECK_ALREADY_EXISTS:
                 view.printOutputMessage(OutputMessageType.DECK_ALREADY_EXISTS);
                 break;
@@ -80,13 +80,13 @@ public class ControllerCollection {
     }
 
     private void show() {
-        if (request.getCommand().equals("show")) {
-            view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
-        } else if (request.getCommand().matches("show deck \\w+")) {
+        if (request.getCommand().matches("show deck \\w+")) {
             PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
             Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
             view.showDeck(deck, "");
-        } else if (request.getCommand().equals("show all decks")) {
+        } else if (request.getCommand().
+
+                equals("show all decks")) {
             Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
             view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
         } else {

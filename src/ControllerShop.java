@@ -21,22 +21,22 @@ class ControllerShop {
         while (!Exit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SHOW:
+                case SHOW_LEADERBOARD:
                     show();
                     break;
-                case SEARCH:
+                case SEARCH_NAME:
                     search();
                     break;
                 case EXIT:
                     Exit = true;
                     break;
-                case SELL:
+                case SELL_ID:
                     sell();
                     break;
                 case HELP:
                     help();
                     break;
-                case BUY:
+                case BUY_NAME:
                     buy();
                     break;
                 default:

@@ -17,7 +17,7 @@ public class ControllerMultiPlayerMenu {
         while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SELECT:
+                case SELECT_DECK_NAME:
                     select();
                     break;
                 case EXIT:
