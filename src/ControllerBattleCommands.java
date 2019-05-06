@@ -1,7 +1,6 @@
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java.util.List;
 
 public class ControllerBattleCommands {
     private static ControllerBattleCommands instance = new ControllerBattleCommands();

@@ -167,7 +167,7 @@ public class DataBase {
         //Target kingsGuardTarget = new Target()
         //cardList.add(null);
         //todo added this so that computer decks work correctly make a new one later
-        Spell kingsGuard = new Spell("shop_kingsGuard_1","kingsGuard",1750,9,0,0,0,null,(Buff)null,SpellActivationType.ON_CAST,"",false);
+        Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, "", false);
         cardList.add(kingsGuard);
 
         //20
@@ -299,7 +299,7 @@ public class DataBase {
 //        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, descMinion5, false);
 //        cardList.add(pahlevanFars);
         //todo added this so that computer decks work correctly make a new one later
-        Unit pahlevanFars = new Unit("shop_pahlevanFars_1","pahlevanFars",600,9,24,6,1,1,null,Constants.MINION,"",false);
+        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, null, Constants.MINION, "", false);
         cardList.add(pahlevanFars);
 
         //6
@@ -360,7 +360,7 @@ public class DataBase {
 //        Target oghabTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, false, 0, Constants.ALL);
         //todo remove if not needed
         PowerBuff oghabBuff = new PowerBuff(Integer.MAX_VALUE, true, false, 10, 0);
-        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, (Spell) null, Constants.MINION, descMinion15, false, oghabBuff);
+        Unit oghab = new Unit("shop_oghab_1", "oghab", 200, 2, 0, 2, 1, 3, null, Constants.MINION, descMinion15, false, oghabBuff);
         cardList.add(oghab);
 
         //16
@@ -691,7 +691,7 @@ public class DataBase {
         Spell assassinationDaggerSpellSpell = new Spell("", "", 0, 0, 0, -1, 0, assassinationDaggerSpellTarget, (Buff) null, SpellActivationType.ON_SPAWN, descSpell15, false);
         String descSpell151 = "Contains : ManaBuff - Spell Activation Type : on spawn - isn't dispeller";
         Target assassinationDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
+        Spell assassinationDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, assassinationDaggerTarget, null, SpellActivationType.ON_BATTLE_START, "", false, assassinationDaggerSpellSpell);
         Usable assassinationDagger = new Usable("shop_assassinationDagger_1", descSpell151, 15000, assassinationDaggerSpell);
         usableList.add(assassinationDagger);
 
@@ -702,7 +702,7 @@ public class DataBase {
         Spell poisonousDaggerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerSpellTarget, poisonousDaggerSpellBuff, SpellActivationType.ON_ATTACK, descSpell16, false);
         String descSpell161 = "Contains : no Buffs - Spell Activation Type : at the start of the battle- isn't dispeller";
         Target poisonousDaggerTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell161, false, poisonousDaggerSpellSpell);
+        Spell poisonousDaggerSpell = new Spell("", "", 0, 0, 0, 0, 0, poisonousDaggerTarget, null, SpellActivationType.ON_BATTLE_START, descSpell161, false, poisonousDaggerSpellSpell);
         Usable poisonousDagger = new Usable("shop_poisonousDagger_1", "price : 7000", 7000, poisonousDaggerSpell);
         usableList.add(poisonousDagger);
 
@@ -713,7 +713,7 @@ public class DataBase {
         Spell shockHammerSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerSpellTarget, shockHammerSpellBuff, SpellActivationType.ON_ATTACK, descSpell17, false);
         String descSpell171 = "Contains : no Buffs - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target shockHammerTarget = new Target(Constants.WHOLE_HEROES, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell171, false, shockHammerSpellSpell);
+        Spell shockHammerSpell = new Spell("", "", 0, 0, 0, 0, 0, shockHammerTarget, null, SpellActivationType.ON_BATTLE_START, descSpell171, false, shockHammerSpellSpell);
         Usable shockHammer = new Usable("shop_shockHammer_1", "price : 15000", 15000, shockHammerSpell);
         usableList.add(shockHammer);
 
@@ -724,7 +724,7 @@ public class DataBase {
         Spell soulEaterSpellSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterSpellTarget, soulEaterSpellBuff, SpellActivationType.ON_BATTLE_START, descSpell18, false);
         String descSpell181 = "Contains : ManaBuff - Spell Activation Type : at the start of the battle - isn't dispeller";
         Target soulEaterTarget = new Target(Constants.WHOLE_UNITS, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, false, false, 0, Constants.ALL);
-        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, (Buff) null, SpellActivationType.ON_BATTLE_START, descSpell181, false, soulEaterSpellSpell);
+        Spell soulEaterSpell = new Spell("", "", 0, 0, 0, 0, 0, soulEaterTarget, null, SpellActivationType.ON_BATTLE_START, descSpell181, false, soulEaterSpellSpell);
         Usable soulEater = new Usable("shop_soulEater_1", "price : 25000", 25000, soulEaterSpell);
         usableList.add(soulEater);
         //19            //11
@@ -750,74 +750,74 @@ public class DataBase {
         computerPlayerCostum = new Account("computerCostum", "costum");
 
         Deck computerPlayer1Deck = new Deck("Deck");
-        addToComputerDeck(computerPlayer1Deck,0,1);
-        addToComputerDeck(computerPlayer1Deck,6,1);
-        addToComputerDeck(computerPlayer1Deck,9,1);
-        addToComputerDeck(computerPlayer1Deck,10,1);
-        addToComputerDeck(computerPlayer1Deck,11,1);
-        addToComputerDeck(computerPlayer1Deck,17,1);
-        addToComputerDeck(computerPlayer1Deck,19,1);
-        addToComputerDeck(computerPlayer1Deck,20,1);
-        addToComputerDeck(computerPlayer1Deck,30,1);
-        addToComputerDeck(computerPlayer1Deck,38,1);
-        addToComputerDeck(computerPlayer1Deck,40,1);
-        addToComputerDeck(computerPlayer1Deck,40,2);
-        addToComputerDeck(computerPlayer1Deck,42,1);
-        addToComputerDeck(computerPlayer1Deck,46,1);
-        addToComputerDeck(computerPlayer1Deck,47,1);
-        addToComputerDeck(computerPlayer1Deck,50,1);
-        addToComputerDeck(computerPlayer1Deck,51,1);
-        addToComputerDeck(computerPlayer1Deck,55,1);
-        addToComputerDeck(computerPlayer1Deck,67,1);
-        addToComputerDeck(computerPlayer1Deck,65,1);
-        addToComputerDeck(computerPlayer1Deck,69,1);
+        addToComputerDeck(computerPlayer1Deck, 0, 1);
+        addToComputerDeck(computerPlayer1Deck, 6, 1);
+        addToComputerDeck(computerPlayer1Deck, 9, 1);
+        addToComputerDeck(computerPlayer1Deck, 10, 1);
+        addToComputerDeck(computerPlayer1Deck, 11, 1);
+        addToComputerDeck(computerPlayer1Deck, 17, 1);
+        addToComputerDeck(computerPlayer1Deck, 19, 1);
+        addToComputerDeck(computerPlayer1Deck, 20, 1);
+        addToComputerDeck(computerPlayer1Deck, 30, 1);
+        addToComputerDeck(computerPlayer1Deck, 38, 1);
+        addToComputerDeck(computerPlayer1Deck, 40, 1);
+        addToComputerDeck(computerPlayer1Deck, 40, 2);
+        addToComputerDeck(computerPlayer1Deck, 42, 1);
+        addToComputerDeck(computerPlayer1Deck, 46, 1);
+        addToComputerDeck(computerPlayer1Deck, 47, 1);
+        addToComputerDeck(computerPlayer1Deck, 50, 1);
+        addToComputerDeck(computerPlayer1Deck, 51, 1);
+        addToComputerDeck(computerPlayer1Deck, 55, 1);
+        addToComputerDeck(computerPlayer1Deck, 67, 1);
+        addToComputerDeck(computerPlayer1Deck, 65, 1);
+        addToComputerDeck(computerPlayer1Deck, 69, 1);
 
         Deck computerPlayer2Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer2Deck,1,1);
-        addToComputerDeck(computerPlayer2Deck,2,1);
-        addToComputerDeck(computerPlayer2Deck,4,1);
-        addToComputerDeck(computerPlayer2Deck,7,1);
-        addToComputerDeck(computerPlayer2Deck,8,1);
-        addToComputerDeck(computerPlayer2Deck,12,1);
+        addToComputerDeck(computerPlayer2Deck, 1, 1);
+        addToComputerDeck(computerPlayer2Deck, 2, 1);
+        addToComputerDeck(computerPlayer2Deck, 4, 1);
+        addToComputerDeck(computerPlayer2Deck, 7, 1);
+        addToComputerDeck(computerPlayer2Deck, 8, 1);
+        addToComputerDeck(computerPlayer2Deck, 12, 1);
 //        addToComputerDeck(computerPlayer2Deck,18,1);
-        addToComputerDeck(computerPlayer2Deck,24,1);
-        addToComputerDeck(computerPlayer2Deck,31,1);
-        addToComputerDeck(computerPlayer2Deck,32,1);
-        addToComputerDeck(computerPlayer2Deck,34,1);
-        addToComputerDeck(computerPlayer2Deck,37,1);
-        addToComputerDeck(computerPlayer2Deck,41,1);
-        addToComputerDeck(computerPlayer2Deck,44,1);
-        addToComputerDeck(computerPlayer2Deck,44,2);
-        addToComputerDeck(computerPlayer2Deck,48,1);
-        addToComputerDeck(computerPlayer2Deck,52,1);
-        addToComputerDeck(computerPlayer2Deck,56,1);
-        addToComputerDeck(computerPlayer2Deck,59,1);
-        addToComputerDeck(computerPlayer2Deck,62,1);
-        addToComputerDeck(computerPlayer2Deck,68,1);
+        addToComputerDeck(computerPlayer2Deck, 24, 1);
+        addToComputerDeck(computerPlayer2Deck, 31, 1);
+        addToComputerDeck(computerPlayer2Deck, 32, 1);
+        addToComputerDeck(computerPlayer2Deck, 34, 1);
+        addToComputerDeck(computerPlayer2Deck, 37, 1);
+        addToComputerDeck(computerPlayer2Deck, 41, 1);
+        addToComputerDeck(computerPlayer2Deck, 44, 1);
+        addToComputerDeck(computerPlayer2Deck, 44, 2);
+        addToComputerDeck(computerPlayer2Deck, 48, 1);
+        addToComputerDeck(computerPlayer2Deck, 52, 1);
+        addToComputerDeck(computerPlayer2Deck, 56, 1);
+        addToComputerDeck(computerPlayer2Deck, 59, 1);
+        addToComputerDeck(computerPlayer2Deck, 62, 1);
+        addToComputerDeck(computerPlayer2Deck, 68, 1);
 
         Deck computerPlayer3Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer3Deck,0,1);
-        addToComputerDeck(computerPlayer3Deck,5,1);
-        addToComputerDeck(computerPlayer3Deck,6,1);
-        addToComputerDeck(computerPlayer3Deck,9,1);
-        addToComputerDeck(computerPlayer3Deck,11,1);
-        addToComputerDeck(computerPlayer3Deck,13,1);
-        addToComputerDeck(computerPlayer3Deck,14,1);
-        addToComputerDeck(computerPlayer3Deck,15,1);
-        addToComputerDeck(computerPlayer3Deck,26,1);
-        addToComputerDeck(computerPlayer3Deck,35,1);
-        addToComputerDeck(computerPlayer3Deck,36,1);
-        addToComputerDeck(computerPlayer3Deck,39,1);
-        addToComputerDeck(computerPlayer3Deck,43,1);
-        addToComputerDeck(computerPlayer3Deck,45,1);
-        addToComputerDeck(computerPlayer3Deck,45,2);
-        addToComputerDeck(computerPlayer3Deck,49,1);
-        addToComputerDeck(computerPlayer3Deck,53,1);
-        addToComputerDeck(computerPlayer3Deck,54,1);
-        addToComputerDeck(computerPlayer3Deck,57,1);
-        addToComputerDeck(computerPlayer3Deck,58,1);
-        addToComputerDeck(computerPlayer3Deck,60,1);
-        addToComputerDeck(computerPlayer3Deck,63,1);
+        addToComputerDeck(computerPlayer3Deck, 0, 1);
+        addToComputerDeck(computerPlayer3Deck, 5, 1);
+        addToComputerDeck(computerPlayer3Deck, 6, 1);
+        addToComputerDeck(computerPlayer3Deck, 9, 1);
+        addToComputerDeck(computerPlayer3Deck, 11, 1);
+        addToComputerDeck(computerPlayer3Deck, 13, 1);
+        addToComputerDeck(computerPlayer3Deck, 14, 1);
+        addToComputerDeck(computerPlayer3Deck, 15, 1);
+        addToComputerDeck(computerPlayer3Deck, 26, 1);
+        addToComputerDeck(computerPlayer3Deck, 35, 1);
+        addToComputerDeck(computerPlayer3Deck, 36, 1);
+        addToComputerDeck(computerPlayer3Deck, 39, 1);
+        addToComputerDeck(computerPlayer3Deck, 43, 1);
+        addToComputerDeck(computerPlayer3Deck, 45, 1);
+        addToComputerDeck(computerPlayer3Deck, 45, 2);
+        addToComputerDeck(computerPlayer3Deck, 49, 1);
+        addToComputerDeck(computerPlayer3Deck, 53, 1);
+        addToComputerDeck(computerPlayer3Deck, 54, 1);
+        addToComputerDeck(computerPlayer3Deck, 57, 1);
+        addToComputerDeck(computerPlayer3Deck, 58, 1);
+        addToComputerDeck(computerPlayer3Deck, 60, 1);
+        addToComputerDeck(computerPlayer3Deck, 63, 1);
 
         Deck computerPlayerCostumDeck = new Deck("deck");
 
@@ -959,12 +959,12 @@ public class DataBase {
         return null;
     }
 
-    private void addToComputerDeck(Deck computerDeck,int index, int number){
+    private void addToComputerDeck(Deck computerDeck, int index, int number) {
         Card card;
         card = cardList.get(index).clone();
-        card.setId(computerPlayerLevel1.getUsername()+"_"+card.getName()+"_"+number);
-        if(card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)){
-            computerDeck.setHero((Unit)card);
+        card.setId(computerPlayerLevel1.getUsername() + "_" + card.getName() + "_" + number);
+        if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+            computerDeck.setHero((Unit) card);
             return;
         }
         computerDeck.addToCards(card);
