@@ -219,7 +219,7 @@ class BattleGround {
         List<Unit> units = new ArrayList<>();
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
+                if (cell.getUnit() != null && cell.getUnit().getId().split("_")[0].equals(player.getPlayerInfo().getPlayerName())) {
                     units.add(cell.getUnit());
                 }
             }

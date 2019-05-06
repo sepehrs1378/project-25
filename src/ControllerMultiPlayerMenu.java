@@ -25,6 +25,7 @@ public class ControllerMultiPlayerMenu {
                     break;
                 case HELP:
                     help();
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
