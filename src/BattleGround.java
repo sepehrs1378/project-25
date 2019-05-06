@@ -122,8 +122,7 @@ class BattleGround {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
                 Unit unit = cell.getUnit();
-                if (unit != null && unit.getId().contains(player.getPlayerInfo().getPlayerName())
-                        && unit.getHeroOrMinion().equals("Minion")) {
+                if (unit != null && unit.getId().split("_")[0].equals(player.getPlayerInfo().getPlayerName())) {
                     minions.add(unit);
                 }
             }
@@ -135,10 +134,18 @@ class BattleGround {
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
-        //todo checking the manhattan destination and ...
+        //todo check obstacles ...
+        if(cells[destinationRow][destinationColumn]!=null)
+            return OutputMessageType.CELL_IS_FULL;
+        int[] coordination = getCoordinationOfUnit(selectedUnit);
+        if(Math.abs(destinationRow - coordination[0])+ Math.abs(destinationColumn - coordination[1])>2){
+            return OutputMessageType.OUT_OF_RANGE;
+        }
+
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
+        selectedUnit.setDidMoveThisTurn(true);
         return OutputMessageType.UNIT_MOVED;
     }
 

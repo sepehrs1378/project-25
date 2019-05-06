@@ -33,7 +33,7 @@ public enum HelpType {
             "\n\tshow opponent minions" +
             "\n\tshow card info [card id]" +
             "\n\tselect [card id]" +
-            "\n\tmoveTo to ([row],[column])" +
+            "\n\tmove to ([row],[column])" +
             "\n\tattack [opponent card id]" +
             "\n\tattack combo [opponent card id] [my card id] [my card id]..." +
             "\n\tuse special power ([row],[column])" +
