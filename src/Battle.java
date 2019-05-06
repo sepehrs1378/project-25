@@ -396,4 +396,8 @@ public class Battle {
         //todo complete if
         return OutputMessageType.WRONG_COMMAND;
     }
+
+    public Collectable getCollectable() {
+        return collectable;
+    }
 }

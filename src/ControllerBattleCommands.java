@@ -191,8 +191,11 @@ public class ControllerBattleCommands {
         BattleGround battleGround = database.getCurrentBattle().getBattleGround();
         for (Cell[] cellRow : battleGround.getCells()) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() == null && cell.getFlags().size()==0 && cell.getCollectable() == null) {
-                    view.showCell(" ");
+                if (cell.getUnit() == null) {
+                    if (cell.getFlags().isEmpty() && cell.getCollectable() == null){
+                            view.showCell(" ");
+                            continue;
+                    }
                 } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
                     if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                         view.showCell("H");
@@ -201,9 +204,10 @@ public class ControllerBattleCommands {
                     if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                         view.showCell("h");
                     } else view.showCell("2");
-                }else if(cell.getFlags().size()>0){
+                }else if(!cell.getFlags().isEmpty()){
                     view.showCell("f");
-                }else if(cell.getCollectable() != null){
+                }
+                if(cell.getCollectable() != null){
                     view.showCell("c");
                 }
             }
