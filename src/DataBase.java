@@ -502,8 +502,7 @@ public class DataBase {
         String descSpell31 = "Contains : WeaknessBuff - Spell Activation Type : on spawn - isn't dispeller";
         String descMinion31 = "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo";
         Target bahmanTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
-        WeaknessBuff bahmanBuff = new WeaknessBuff(1, true, false, 16, 0);
-        Spell bahmanSpell = new Spell("", "", 0, 0, 0, 0, 0, bahmanTarget, bahmanBuff, SpellActivationType.ON_SPAWN, descSpell31, false);
+        Spell bahmanSpell = new Spell("", "", 0, 0, 0, -16, 0, bahmanTarget, (Buff) null, SpellActivationType.ON_SPAWN, descSpell31, false);
         Unit bahman = new Unit("shop_bahman_1", "bahman", 450, 8, 16, 9, 1, 1, bahmanSpell, Constants.MINION, descMinion31, false);
         cardList.add(bahman);
 

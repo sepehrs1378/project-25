@@ -183,26 +183,36 @@ public class ControllerBattleCommands {
 
     private void showBattleground() {
         BattleGround battleGround = database.getCurrentBattle().getBattleGround();
-        for (Cell[] cellRow : battleGround.getCells()) {
-            for (Cell cell : cellRow) {
-                if (cell.getUnit() == null && cell.getFlags().size()==0 && cell.getCollectable() == null) {
+        for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
+            for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
+                Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
+                if (cell.getUnit() == null && cell.getFlags().isEmpty() && cell.getCollectable() == null) {
                     view.showCell(" ");
-                } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
-                    if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
-                        view.showCell("H");
-                    } else view.showCell("1");
-                } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
-                    if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
-                        view.showCell("h");
-                    } else view.showCell("2");
-                }else if(cell.getFlags().size()>0){
+                    continue;
+                }
+                if (cell.getUnit() != null) {
+                    if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
+                        if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
+                            view.showCell("H");
+                        } else view.showCell("1");
+                    } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
+                        if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
+                            view.showCell("h");
+                        } else view.showCell("2");
+                        continue;
+                    }
+                }
+                if (cell.getFlags().size() > 0) {
                     view.showCell("f");
-                }else if(cell.getCollectable() != null){
+                    continue;
+                }
+                if (cell.getCollectable() != null) {
                     view.showCell("c");
                 }
             }
             view.print("");
         }
+
     }
 
     private void selectId() {
@@ -230,14 +240,19 @@ public class ControllerBattleCommands {
         }
         int destinationRow = Integer.parseInt(matcher.group(1));
         int destinationColumn = Integer.parseInt(matcher.group(2));
-        if (destinationRow >= Constants.BATTLE_GROUND_WIDTH || destinationColumn >= Constants.BATTLE_GROUND_LENGTH) {
-            view.printOutputMessage(OutputMessageType.OUT_OF_BOUNDARIES);
-            return;
-        }
         switch (database.getCurrentBattle().getBattleGround().
                 moveUnit(destinationRow, destinationColumn)) {
             case UNIT_NOT_SELECTED:
                 view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
+                break;
+            case OUT_OF_BOUNDARIES:
+                view.printOutputMessage(OutputMessageType.OUT_OF_BOUNDARIES);
+                break;
+            case CELL_IS_FULL:
+                view.printOutputMessage(OutputMessageType.CELL_IS_FULL);
+                break;
+            case CELL_OUT_OF_RANGE:
+                view.printOutputMessage(OutputMessageType.CELL_OUT_OF_RANGE);
                 break;
             case UNIT_MOVED:
                 view.showUnitMove(database.getCurrentBattle().
@@ -245,6 +260,7 @@ public class ControllerBattleCommands {
                         , destinationRow, destinationColumn);
                 break;
             default:
+                System.out.println("*");
         }
     }
 
@@ -323,7 +339,7 @@ public class ControllerBattleCommands {
     }
 
     private void endTurn() {
-        database.getCurrentBattle().nextTurn();
+        view.printOutputMessage(database.getCurrentBattle().nextTurn());
     }
 
     public void enter() {

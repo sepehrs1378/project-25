@@ -68,6 +68,13 @@ logout
 login player1
 password 1111
 enter shop
+buy areaDispel
+buy empower
+buy godStrength
+buy hellFire
+buy lightingBolt
+buy allAttack
+buy sacrifice
 buy kamandarFars
 buy rostam
 buy totalDisarm
@@ -195,4 +202,3 @@ end turn
 end turn
 end turn
 select player_rostam_1
-move to (2,7)
