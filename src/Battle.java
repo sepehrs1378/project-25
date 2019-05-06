@@ -36,6 +36,8 @@ public class Battle {
         Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         playerAccount1.addMatchToMatchList(matchInfo1);
         playerAccount2.addMatchToMatchList(matchInfo2);
+        matchInfo1.setOpponent(playerAccount2);
+        matchInfo2.setOpponent(playerAccount1);
         startBattle();
     }
 
