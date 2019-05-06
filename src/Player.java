@@ -118,6 +118,9 @@ public class Player {
     }
 
     public OutputMessageType select(String id) {
+        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id) == null
+                && !doesHaveCollectable(id))
+            return OutputMessageType.INVALID_COLLECTABLE_CARD;
         if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStunned())
             return OutputMessageType.UNIT_IS_STUNNED;
         if (doesHaveCollectable(id)) {

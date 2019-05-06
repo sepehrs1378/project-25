@@ -153,7 +153,7 @@ public class View {
     }
 
     public void showUnitMove(String unitID, int destinationRow, int destinationColumn) {
-        System.out.println(unitID + " move to (" + destinationRow + "," + destinationColumn + ")");
+        System.out.println(unitID + " moved to (" + destinationRow + "," + destinationColumn + ")");
     }
 
     public void showGameInfo(Battle battle) {
