@@ -204,8 +204,10 @@ public class ControllerBattleCommands {
                     if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                         view.showCell("h");
                     } else view.showCell("2");
-                }else if(!cell.getFlags().isEmpty()){
+                }
+                if(!cell.getFlags().isEmpty()){
                     view.showCell("f");
+                    continue;
                 }
                 if(cell.getCollectable() != null){
                     view.showCell("c");

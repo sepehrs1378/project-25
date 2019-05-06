@@ -6,5 +6,5 @@ public enum SpellActivationType {
     ON_DEFEND,//todo looks it is handled despite of it isn't used
     ON_DEATH,
     ON_SPAWN,
-    PASSIVE
+    PASSIVE,
 }

@@ -3,7 +3,6 @@ import java.util.List;
 
 class Target {
     private DataBase dataBase = DataBase.getInstance();
-    private Battle currentBattle = dataBase.getCurrentBattle();
     private String typeOfTarget;
     private String friendlyOrEnemy;
     private String targetUnitClass;
@@ -41,7 +40,7 @@ class Target {
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (isCoordinationValid(i, j, insertionRow, insertionColumn))
-                    targetCells.add(currentBattle.getBattleGround().getCells()[i][j]);
+                    targetCells.add(dataBase.getCurrentBattle().getBattleGround().getCells()[i][j]);
             }
         }
         return targetCells;
@@ -56,11 +55,13 @@ class Target {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                unit = currentBattle.getBattleGround().getCells()[i][j].getUnit();
-                if (unit.getHeroOrMinion().equals(typeOfTarget)
-                        && currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(friendlyOrEnemy)
-                        && isCoordinationValid(i, j, insertionRow, insertionColumn))
-                    targetUnits.add(unit);
+                unit = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j].getUnit();
+                if (unit != null) {
+                    if (unit.getHeroOrMinion().equals(typeOfTarget)
+                            && dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit).equals(friendlyOrEnemy)
+                            && isCoordinationValid(i, j, insertionRow, insertionColumn))
+                        targetUnits.add(unit);
+                }
             }
         }
         if (isRandomSelecting)
@@ -70,7 +71,9 @@ class Target {
 
     private List<Unit> getRandomUnit(List<Unit> units) {
         int randomNumber = (int) (Math.random() * units.size());
-        units = units.subList(randomNumber, randomNumber + 1);
+        List<Unit> tempUnits = new ArrayList<>();
+        tempUnits.add(units.get(randomNumber));
+        units = tempUnits;
         //todo is previous line correct?
         return units;
     }
@@ -80,13 +83,13 @@ class Target {
             return false;
         if (column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
             return false;
-        if (insertionRow - row > (length - 1) / 2 && insertionColumn - column > (width - 1) / 2)
+        if (insertionRow - row <= (length - 1) / 2 && insertionColumn - column <= (width - 1) / 2)
             return true;
-        if (row - insertionRow > length / 2 && insertionColumn - column > (width - 1) / 2)
+        if (row - insertionRow <= length / 2 && insertionColumn - column <= (width - 1) / 2)
             return true;
-        if (insertionRow - row > (length - 1) / 2 && column - insertionColumn > width / 2)
+        if (insertionRow - row <= (length - 1) / 2 && column - insertionColumn <= width / 2)
             return true;
-        if (row - insertionRow > length / 2 && column - insertionColumn > width / 2)
+        if (row - insertionRow <= length / 2 && column - insertionColumn <= width / 2)
             return true;
         if (!typeOfTarget.equals(Constants.CELL)) {
             return getManhattanDistance(row, column, insertionRow, insertionColumn) <= manhattanDistance;
