@@ -88,7 +88,8 @@ public class Unit extends Card {
         int damageDealt = calculateDamageDealt(this, targetedUnit);
         targetedUnit.changeHp(-damageDealt);
         for (Spell specialPower : specialPowers) {
-            if (specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
+            if (specialPower != null
+                    && specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
                 specialPower.doSpell(targetedUnit);
         }
     }
