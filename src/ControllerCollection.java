@@ -55,6 +55,9 @@ public class ControllerCollection {
                 case SHOW_DECK_NAME:
                     showDeckName();
                     break;
+                case HELP:
+                    help();
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
@@ -89,17 +92,6 @@ public class ControllerCollection {
         Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
         view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
     }
-
-//    if (request.getCommand().matches("show deck \\w+")) {
-//        PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-//        Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
-//        view.showDeck(deck, "");
-//} else if(request.getCommand().equals("show all decks")){
-//        Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
-//        view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
-//        }else{
-//        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-//        }
 
     private void help() {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);

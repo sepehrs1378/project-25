@@ -61,6 +61,8 @@ public enum OutputMessageType {
     ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
     SPECIAL_POWER_USED("Special power has been used"),
     TURN_CHANGED("Turn changed"),
+    NOT_ENOUGH_MANA("Not enough mana"),
+    NOT_NEARBY_FRIENDLY_UNITS("Selected cell is not nearby friendly units")
     NO_ERROR("");
 
     private String message;

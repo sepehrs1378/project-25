@@ -64,8 +64,6 @@ public enum HelpType {
     CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
             "\tselect [username]\n" +
             "\texit\n"),
-    CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
-            "\t..."),
     CONTROLLER_GRAVEYARD("Commands:\n" +
             "\tshow info [card id]\n" +
             "\tshow cards");
