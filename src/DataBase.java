@@ -164,7 +164,7 @@ public class DataBase {
         //19
         //String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
         //Target kingsGuardTarget = new Target()
-        //cardList.add(null);
+        //cardList.addIdToDeckName(null);
         //todo
 
         //20
@@ -264,11 +264,11 @@ public class DataBase {
         cardList.add(asbSavarFars);
 
         //5
-        //todo check if this is true? (i think it is good to add a powerBuff for each attack)
+        //todo check if this is true? (i think it is good to addIdToDeckName a powerBuff for each attack)
 //        Target pahlevanFarsTarget = new Target(Constants.MINION, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
 //        Spell pahlevanFarsSpell = new Spell("", "", 0, 0, 5, 0, 0, pahlevanFarsTarget, (Buff) null, SpellActivationType.ON_ATTACK, "", false);
 //        Unit pahlevanFars = new Unit("shop_pahlevanFars_1", "pahlevanFars", 600, 9, 24, 6, 1, 1, pahlevanFarsSpell, Constants.MINION, "", false);
-//        cardList.add(pahlevanFars);
+//        cardList.addIdToDeckName(pahlevanFars);
 
         //6
         Unit sepahSalarFars = new Unit("shop_sepahSalarFars_1", "sepahSalarFars", 800, 7, 12, 4, 1, 1, null, Constants.MINION, "", true);
@@ -485,7 +485,7 @@ public class DataBase {
 
     //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
     public void makeItems() {
-        //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
+        //for items we will also addIdToDeckName the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
         //1             //1
         Target tajDanayeeTarget = new Target(Constants.PLAYER, 1, 1, Constants.FRIEND, false, true, 0, Constants.ALL);
@@ -506,7 +506,7 @@ public class DataBase {
         Target kamanDamolTarget = new Target(Constants.HERO, 1, 1, Constants.ENEMY, false, false, 0, Constants.RANGED_HYBRID);
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //todo
-        //usableList.add(null);
+        //usableList.addIdToDeckName(null);
 
         //4             //1
         Target nooshadrooTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.ALL);
@@ -548,7 +548,7 @@ public class DataBase {
         collectableList.add(majoonRooinTani);
 
         //10            //6
-        //collectableList.add(null);
+        //collectableList.addIdToDeckName(null);
         //todo
 
         //11            //7
@@ -558,7 +558,7 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
-        //usableList.add(null);
+        //usableList.addIdToDeckName(null);
         //todo
         //todo what does it mean?
 

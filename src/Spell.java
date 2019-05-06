@@ -126,7 +126,7 @@ class Spell extends Card {
 
     private void dispelBuffsOfUnit(Unit unit) {
         int i = 0;
-        //if unit is friendly we remove negative buffs
+        //if unit is friendly we removeIdFromDeckName negative buffs
         if (dataBase.getCurrentBattle().getBattleGround()
                 .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
             while (i < unit.getBuffs().size()) {
@@ -139,7 +139,7 @@ class Spell extends Card {
                 i++;
             }
         }
-        //if unit is enemy we remove positive buffs
+        //if unit is enemy we removeIdFromDeckName positive buffs
         else {
             while (i < unit.getBuffs().size()) {
                 Buff buff = unit.getBuffs().get(i);

@@ -65,7 +65,7 @@ public class ControllerCollection {
         }
     }
 
-    public void create() {
+    public void createDeckName() {
         String deckName = request.getCommand().split(" ")[2];
         switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(deckName)) {
             case DECK_ALREADY_EXISTS:
@@ -80,33 +80,39 @@ public class ControllerCollection {
     }
 
     private void show() {
-        if (request.getCommand().matches("show deck \\w+")) {
-            PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-            Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
-            view.showDeck(deck, "");
-        } else if (request.getCommand().
-
-                equals("show all decks")) {
-            Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
-            view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
-        } else {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-        }
+        //todo plz complete it
     }
+
+    private void showDeckName() {
+        PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+        Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
+        view.showDeck(deck, "");
+    }
+
+    private void showAllDecks() {
+        Deck mainDeck = dataBase.getLoggedInAccount().getMainDeck();
+        view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(), mainDeck);
+    }
+
+//    if (request.getCommand().matches("show deck \\w+")) {
+//        PlayerCollection temp = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+//        Deck deck = temp.getDeckByName(request.getCommand().split("\\s+")[2]);
+//        view.showDeck(deck, "");
+//} else if(request.getCommand().equals("show all decks")){
+//        Deck mainDeck=dataBase.getLoggedInAccount().getMainDeck();
+//        view.showAllDecks(dataBase.getLoggedInAccount().getPlayerInfo().getCollection(),mainDeck);
+//        }else{
+//        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+//        }
 
     private void help() {
         view.printHelp(HelpType.CONTROLLER_COLLECTION_HELP);
     }
 
-    public void select() {
-        Pattern pattern = Pattern.compile("^select deck (\\w+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
-        }
+    public void selectDeckName() {
+        String deckName = request.getCommand().split(" ")[2];
         switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                .selectDeckAsMain(matcher.group(1))) {
+                .selectDeckAsMain(deckName)) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
@@ -117,14 +123,13 @@ public class ControllerCollection {
         }
     }
 
-    public void validate(Request request) {
-        Pattern pattern = Pattern.compile("^validate deck (\\w+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
-            return;
-        }
-        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().validateDeck(matcher.group(1))) {
+    private void save(){
+        //todo plz complete it
+    }
+
+    public void validateDeckName(Request request) {
+        String deckName = request.getCommand().split(" ")[2];
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().validateDeck(deckName)) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
@@ -138,23 +143,16 @@ public class ControllerCollection {
         }
     }
 
-    public void add() {
-        if (request.getCommand().matches("add \\w+ to deck \\w+")) {
-            String[] order = request.getCommand().split(" ");
-            OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo()
-                    .getCollection().addCard(order[1], order[4]);
-            view.printOutputMessage(outputMessageType);
-        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+    public void addIdToDeckName() {
+        String[] order = request.getCommand().split(" ");
+        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo()
+                .getCollection().addCard(order[1], order[4]);
+        view.printOutputMessage(outputMessageType);
     }
 
-    public void delete(Request request) {
-        Pattern pattern = Pattern.compile("^delete deck (\\w+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
-        }
-        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().deleteDeck(matcher.group(1))) {
+    public void deleteDeckName(Request request) {
+        String deckName = request.getCommand().split(" ")[2];
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().deleteDeck(deckName)) {
             case DECK_DOESNT_EXIST:
                 view.printOutputMessage(OutputMessageType.DECK_DOESNT_EXIST);
                 break;
@@ -166,20 +164,16 @@ public class ControllerCollection {
         }
     }
 
-    public void remove() {
-        if (request.getCommand().matches("remove \\w+ from deck \\w+")) {
-            String[] order = request.getCommand().split("\\s+");
-            OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                    .removeCard(order[1], order[4]);
-            view.printOutputMessage(outputMessageType);
-        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+    public void removeIdFromDeckName() {
+        String[] order = request.getCommand().split("\\s+");
+        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                .removeCard(order[1], order[4]);
+        view.printOutputMessage(outputMessageType);
     }
 
-    public void search() {
-        if (request.getCommand().matches("search\\s+\\w+")) {
-            List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
-                    .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
-            view.printList(output);
-        } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+    private void searchName() {
+        List<String> output = dataBase.getLoggedInAccount().getPlayerInfo().getCollection()
+                .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
+        view.printList(output);
     }
 }

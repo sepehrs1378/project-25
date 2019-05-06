@@ -32,7 +32,7 @@ public enum HelpType {
             "\n\tshow my minions" +
             "\n\tshow opponent minions" +
             "\n\tshow card info [card id]" +
-            "\n\tselect [card id]" +
+            "\n\tselectDeckName [card id]" +
             "\n\tmove to ([row],[column])" +
             "\n\tattack [opponent card id]" +
             "\n\tattack combo [opponent card id] [my card id] [my card id]..." +
@@ -41,7 +41,7 @@ public enum HelpType {
             "\n\tinsert [card name] in ([row],[column])" +
             "\n\tend turn" +
             "\n\tshow collectables" +
-            "\n\tselect [collectable id])" +
+            "\n\tselectDeckName [collectable id])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
             "\n\tshow battleground" +
@@ -62,7 +62,7 @@ public enum HelpType {
     MODES_HELP("flags\none_flag\nclassic"),
 
     CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
-            "\tselect [username]\n" +
+            "\tselectDeckName [username]\n" +
             "\texit\n"),
     CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
             "\t..."),
