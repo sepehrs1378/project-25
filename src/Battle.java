@@ -1,6 +1,5 @@
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Battle {
@@ -40,10 +39,9 @@ public class Battle {
     }
 
     public OutputMessageType nextTurn() {
-        if (isBattleFinished)
-            return OutputMessageType.BATTLE_FINISHED;
-        if(checkEndBattle() != null){
-
+        Player player = checkEndBattle();
+        if(player != null){
+            endBattle(player);
         }
         reviveContinuousBuffs();
         removeExpiredBuffs();
@@ -54,7 +52,7 @@ public class Battle {
         changeTurn();
         turnNumber++;
         setManaBasedOnTurnNumber();
-        checkEndBattle();
+        playerInTurn.moveNextCardToHand();
         return OutputMessageType.TURN_CHANGED;
     }
 
@@ -390,8 +388,29 @@ public class Battle {
         player1.setNextCard();
     }
 
-    public OutputMessageType endBattle() {
-        //todo complete if
-        return OutputMessageType.WRONG_COMMAND;
+    private void resetDeck(Deck deck){
+
+    }
+
+    private OutputMessageType endBattle(Player winner) {
+        Account player1Account = dataBase.getAccountWithUsername(player1.getPlayerInfo().getPlayerName());
+        Account player2Account = dataBase.getAccountWithUsername(player2.getPlayerInfo().getPlayerName());
+        int sizeMatchList1 = player1Account.getMatchList().size();
+        int sizeMatchList2=player2Account.getMatchList().size();
+        if(winner == player1){
+            player1Account.getMatchList().get(sizeMatchList1-1).setWinner(player1Account);
+            player2Account.getMatchList().get(sizeMatchList2-1).setWinner(player1Account);
+
+            return OutputMessageType.WINNER_PLAYER1;
+        }else if(winner == player2){
+            player1Account.getMatchList().get(sizeMatchList1-1).setWinner(player2Account);
+            player2Account.getMatchList().get(sizeMatchList2-1).setWinner(player2Account);
+            return OutputMessageType.WINNER_PLAYER2;
+        }
+        return OutputMessageType.INVALID_PLAYER;
+    }
+
+    public Collectable getCollectable() {
+        return collectable;
     }
 }
