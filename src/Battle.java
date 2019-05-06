@@ -8,22 +8,36 @@ public class Battle {
     private BattleGround battleGround = new BattleGround();
     private Player playerInTurn;
     private String mode;
+    private Collectable collectable;
     private int turnNumber = 1;
     private boolean isBattleFinished = false;
     private int numberOfFlags;
 
-    public Battle(Account firstPlayerAccount, Account secondPlayerAccount, String mode, int numberOfFlags) {
+    public Battle(Account firstPlayerAccount, Account secondPlayerAccount
+            , String mode, int numberOfFlags, Collectable collectable) {
+        dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;
         this.mode = mode;
         this.setNumberOfFlags(numberOfFlags);
         List<Flag> temp = new ArrayList<>();
-        for (int i = 0; i < numberOfFlags; i++) {
+        for (int i = 0; i < numberOfFlags; i++)
             temp.add(new Flag());
-        }
         this.battleGround.addFlagsToBattleGround(temp);
+        this.collectable = collectable;
         startBattle();
+    }
+
+    public void setCollectableOnGround() {
+        if (collectable == null) {
+            int random = (int) (Math.random() * dataBase.getCollectableList().size());
+            collectable = dataBase.getCollectableList().get(random);
+        }
+        int rowRandom = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
+        int columnRandom = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+        dataBase.getCurrentBattle().getBattleGround()
+                .getCells()[rowRandom][columnRandom].setCollectable(collectable);
     }
 
     public OutputMessageType nextTurn() {
@@ -278,11 +292,15 @@ public class Battle {
     public OutputMessageType insert(Card card, int row, int column) {
         if (card == null)
             return OutputMessageType.NO_SUCH_CARD_IN_HAND;
+        if (card.getMana() > playerInTurn.getMana())
+            return OutputMessageType.NOT_ENOUGH_MANA;
         if (card instanceof Unit) {
             Unit unit = (Unit) card;
             if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0
                     || column >= Constants.BATTLE_GROUND_LENGTH || column < 0)
                 return OutputMessageType.INVALID_NUMBER;
+            if (!isCellNearbyFriendlyUnits(row, column))
+                return OutputMessageType.NOT_NEARBY_FRIENDLY_UNITS;
             if (battleGround.getCells()[row][column].getUnit() == null) {
                 battleGround.getCells()[row][column].setUnit(unit);
                 playerInTurn.getHand().getCards().remove(unit);
@@ -290,7 +308,8 @@ public class Battle {
                 //todo is it complete?
                 playerInTurn.reduceMana(unit.getMana());
             } else return OutputMessageType.THIS_CELL_IS_FULL;
-        } else if (card instanceof Spell) {
+        }
+        if (card instanceof Spell) {
             Spell spell = (Spell) card;
             spell.doSpell(row, column);
             playerInTurn.getGraveYard().addDeadCard(spell);
@@ -298,6 +317,28 @@ public class Battle {
             playerInTurn.reduceMana(spell.getMana());
         }
         return OutputMessageType.CARD_INSERTED;
+    }
+
+    public boolean isCellNearbyFriendlyUnits(int row, int column) {
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = column - 1; j <= column + 1; j++) {
+                if (!isCoordinationValid(i, j) || i == j)
+                    continue;
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                if (cell.isEmptyOfUnit())
+                    continue;
+                if (dataBase.getCurrentBattle().getBattleGround()
+                        .isUnitFriendlyOrEnemy(cell.getUnit()).equals(Constants.FRIEND))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCoordinationValid(int row, int column) {
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH)
+            return false;
+        return column >= 0 && column < Constants.BATTLE_GROUND_LENGTH;
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
@@ -338,6 +379,7 @@ public class Battle {
     }
 
     public void startBattle() {
+        setCollectableOnGround();
         setManaBasedOnTurnNumber();
         battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][0]
                 .setUnit(player1.getDeck().getHero());

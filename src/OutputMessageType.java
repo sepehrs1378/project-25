@@ -34,6 +34,8 @@ public enum OutputMessageType {
     UNIT_NOT_SELECTED("No unit is selected"),
     UNIT_MOVED("Selected unit moved"),
     TARGET_NOT_IN_RANGE("Opponent unit is NOT in range"),
+    CELL_IS_FULL("selected cell is full"),
+    OUT_OF_RANGE("unit is out of range"),
     NO_FLAG_NUMBER("please enter number of flags in flags mode!"),
     ATTACKED_SUCCESSFULLY(""),
     ALREADY_ATTACKED("Unit has already attacked"),
@@ -49,6 +51,7 @@ public enum OutputMessageType {
     FOUND_ITEM("found item with id: "),
     FOUND_CARD("found card with id: "),
     CARD_NOT_FOUND("Card wasn't found"),
+    OUT_OF_BOUNDARIES("Out of boundaries"),
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
     NO_HERO("Hero can't use special power"),
     INVALID_NUMBER("the number was out of battleGround boundaries"),
@@ -61,6 +64,8 @@ public enum OutputMessageType {
     ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
     SPECIAL_POWER_USED("Special power has been used"),
     TURN_CHANGED("Turn changed"),
+    NOT_ENOUGH_MANA("Not enough mana"),
+    NOT_NEARBY_FRIENDLY_UNITS("Selected cell is not nearby friendly units"),
     NO_ERROR("");
 
     private String message;

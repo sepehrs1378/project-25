@@ -194,3 +194,5 @@ end turn
 end turn
 end turn
 end turn
+select player_rostam_1
+move to (2,7)

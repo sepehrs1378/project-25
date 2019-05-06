@@ -157,6 +157,8 @@ public class View {
     }
 
     public void showGameInfo(Battle battle) {
+        System.out.println("Turn number : " + battle.getTurnNumber());
+        System.out.println("Player in turn : " + battle.getPlayerInTurn().getPlayerInfo().getPlayerName());
         System.out.println("Mana points of player1 is: " + battle.getPlayer1().getMana());
         System.out.println("Mana points of player2 is: " + battle.getPlayer2().getMana());
         if (battle.getMode().equals(Constants.CLASSIC)) {

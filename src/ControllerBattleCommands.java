@@ -226,6 +226,10 @@ public class ControllerBattleCommands {
         }
         int destinationRow = Integer.parseInt(matcher.group(1));
         int destinationColumn = Integer.parseInt(matcher.group(2));
+        if (destinationRow >= Constants.BATTLE_GROUND_WIDTH || destinationColumn >= Constants.BATTLE_GROUND_LENGTH) {
+            view.printOutputMessage(OutputMessageType.OUT_OF_BOUNDARIES);
+            return;
+        }
         switch (database.getCurrentBattle().getBattleGround().
                 moveUnit(destinationRow, destinationColumn)) {
             case UNIT_NOT_SELECTED:
