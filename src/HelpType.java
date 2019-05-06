@@ -4,8 +4,8 @@ public enum HelpType {
             "\n\tshow collection" +
             "\n\tsearch [item name | card name]" +
             "\n\tsearch collection [item name | card name]" +
-            "\n\tbuy [item name | card name]" +
-            "\n\tsell [card id | item id]" +
+            "\n\tbuyName [item name | card name]" +
+            "\n\tsellId [card id | item id]" +
             "\n\tshow" +
             "\n\thelp"),
     CONTROLLER_ACCOUNT_HELP("Account Commands:\n" +

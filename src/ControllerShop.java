@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
@@ -17,27 +15,30 @@ class ControllerShop {
     }
 
     public void main() {
-        boolean Exit = false;
-        while (!Exit) {
+        boolean didExit = false;
+        while (!didExit) {
             request.getNewCommand();
             switch (request.getType()) {
-                case SHOW_LEADERBOARD:
-                    show();
+                case SHOW_COLLECTION:
+                    showCollection();
                     break;
                 case SEARCH_NAME:
-                    search();
+                    searchName();
                     break;
-                case EXIT:
-                    Exit = true;
-                    break;
-                case SELL_ID:
-                    sell();
-                    break;
-                case HELP:
-                    help();
+                case SEARCH_COLLECTION_NAME:
+                    searchCollectionName();
                     break;
                 case BUY_NAME:
-                    buy();
+                    buyName();
+                    break;
+                case SELL_ID:
+                    sellId();
+                    break;
+                case SHOW:
+                    show();
+                    break;
+                case EXIT:
+                    didExit = true;
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
@@ -46,42 +47,30 @@ class ControllerShop {
     }
 
     public void show() {
-        if (request.getCommand().matches("show")) {
-            view.showCardsAndItemsInShop();
-        } else if (request.getCommand().matches("^show collection$")) {
-            view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
-        } else {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-        }
+        view.showCardsAndItemsInShop();
     }
 
-    public void sell() {
-        Pattern pattern = Pattern.compile("^sell (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
-        }
-        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(matcher.group(1))) {
+    private void showCollection() {
+        view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
+    }
+
+    public void sellId() {
+        String id = request.getCommand().split(" ")[1];
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(id)) {
             case NOT_IN_COLLECTION:
                 view.printOutputMessage(OutputMessageType.NOT_IN_COLLECTION);
                 break;
             case SOLD_SUCCESSFULLY:
-                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(matcher.group(1));
+                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(id);
                 view.printOutputMessage(OutputMessageType.SOLD_SUCCESSFULLY);
                 break;
             default:
         }
     }
 
-    public void buy() {
-        Pattern pattern = Pattern.compile("^buy (.+)$");
-        Matcher matcher = pattern.matcher(request.getCommand());
-        if (!matcher.find()) {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-            return;
-        }
-        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(matcher.group(1))) {
+    private void buyName() {
+        String name = request.getCommand().split(" ")[1];
+        switch (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(name)) {
             case INSUFFICIENT_MONEY:
                 view.printOutputMessage(OutputMessageType.INSUFFICIENT_MONEY);
                 break;
@@ -98,18 +87,15 @@ class ControllerShop {
         }
     }
 
-    public void search() {
-        String command = request.getCommand();
-        if (command.matches("^search collection (.+)$")) {
-            String[] strings = command.split("\\s+");
-            ArrayList<String> cardsAndItems =
-                    new ArrayList<>(dataBase.getLoggedInAccount().getPlayerInfo().getCollection().searchCardOrItemWithName(strings[2]));
-            view.printList(cardsAndItems);
-        } else if (command.matches("^search (.+)$")) {
-            dataBase.searchInShop(command);
-        } else {
-            view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
-        }
+    private void searchName() {
+        dataBase.searchInShop(request.getCommand());
+    }
+
+    private void searchCollectionName() {
+        String[] strings = request.getCommand().split("\\s+");
+        ArrayList<String> cardsAndItems =
+                new ArrayList<>(dataBase.getLoggedInAccount().getPlayerInfo().getCollection().searchCardOrItemWithName(strings[2]));
+        view.printList(cardsAndItems);
     }
 
     public void help() {
