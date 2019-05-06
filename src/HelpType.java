@@ -4,8 +4,8 @@ public enum HelpType {
             "\n\tshow collection" +
             "\n\tsearch [item name | card name]" +
             "\n\tsearch collection [item name | card name]" +
-            "\n\tbuyName [item name | card name]" +
-            "\n\tsellId [card id | item id]" +
+            "\n\tbuy [item name | card name]" +
+            "\n\tsell [card id | item id]" +
             "\n\tshow" +
             "\n\thelp"),
     CONTROLLER_ACCOUNT_HELP("Account Commands:\n" +
@@ -32,16 +32,16 @@ public enum HelpType {
             "\n\tshow my minions" +
             "\n\tshow opponent minions" +
             "\n\tshow card info [card id]" +
-            "\n\tselectDeckName [card id]" +
+            "\n\tselect [card id]" +
             "\n\tmoveTo to ([row],[column])" +
-            "\n\tattackId [opponent card id]" +
-            "\n\tattackId combo [opponent card id] [my card id] [my card id]..." +
+            "\n\tattack [opponent card id]" +
+            "\n\tattack combo [opponent card id] [my card id] [my card id]..." +
             "\n\tuse special power ([row],[column])" +
             "\n\tshow hand" +
             "\n\tinsert [card name] in ([row],[column])" +
             "\n\tend turn" +
             "\n\tshow collectables" +
-            "\n\tselectDeckName [collectable id])" +
+            "\n\tselect [collectable id])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
             "\n\tshow battleground" +
@@ -62,7 +62,7 @@ public enum HelpType {
     MODES_HELP("flags\none_flag\nclassic"),
 
     CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
-            "\tselectDeckName [username]\n" +
+            "\tselect [username]\n" +
             "\texit\n"),
     CONTOROLLER_SINGLE_PLAYER_MENU("Commands:\n" +
             "\t..."),
