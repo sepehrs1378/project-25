@@ -747,7 +747,7 @@ public class DataBase {
         computerPlayerLevel1 = new Account("computer1", "1");
         computerPlayerLevel2 = new Account("computer2", "2");
         computerPlayerLevel3 = new Account("computer3", "3");
-        computerPlayerCostum = new Account("computerCostum", "costum");
+        computerPlayerCostum = new Account("computerCustom", "custom");
 
         Deck computerPlayer1Deck = new Deck("Deck");
         addToComputerDeck(computerPlayer1Deck, 0, 1);

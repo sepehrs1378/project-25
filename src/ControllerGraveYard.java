@@ -19,8 +19,10 @@ public class ControllerGraveYard {
             request.getNewCommand();
             switch (request.getType()) {
                 case SHOW_INFO_ID:
+                    showInfoId();
                     break;
                 case SHOW_CARDS:
+                    showCards();
                     break;
                 case HELP:
                     help();
