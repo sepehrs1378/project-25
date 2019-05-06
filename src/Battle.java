@@ -18,12 +18,6 @@ public class Battle {
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
             , String mode, int numberOfFlags, Collectable collectable) {
-        MatchInfo matchInfo1 = new MatchInfo();
-        MatchInfo matchInfo2 = new MatchInfo();
-        Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
-        playerAccount1.addMatchToMatchList(matchInfo1);
-        playerAccount2.addMatchToMatchList(matchInfo2);
         dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
@@ -36,6 +30,12 @@ public class Battle {
         battleGround.addFlagsToBattleGround(flags);
         battleGround.setCollectableOnGround(collectable);
         this.collectable = collectable;
+        MatchInfo matchInfo1 = new MatchInfo();
+        MatchInfo matchInfo2 = new MatchInfo();
+        Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        playerAccount1.addMatchToMatchList(matchInfo1);
+        playerAccount2.addMatchToMatchList(matchInfo2);
         startBattle();
     }
 
