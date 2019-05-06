@@ -286,7 +286,7 @@ public class Battle {
             if (battleGround.getCells()[row][column].getUnit() == null) {
                 battleGround.getCells()[row][column].setUnit(unit);
                 playerInTurn.getHand().getCards().remove(unit);
-                playerInTurn.setNextCard(playerInTurn.getDeck());
+//                playerInTurn.setNextCard(playerInTurn.getDeck());
                 //todo is it complete?
                 playerInTurn.reduceMana(unit.getMana());
             } else return OutputMessageType.THIS_CELL_IS_FULL;

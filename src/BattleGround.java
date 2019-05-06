@@ -149,8 +149,15 @@ class BattleGround {
     public String isUnitFriendlyOrEnemy(Unit unit) {
         Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
         Matcher matcher = pattern.matcher(unit.getId());
-        String username = matcher.group(1);
-        if (dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(username))
+        String username = "";
+        if (matcher.find()) {
+            username = matcher.group(1);
+        }
+        if (username.isEmpty()) {
+            return "";
+        }
+        String playerName = dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName();
+        if (playerName.equals(username))
             return Constants.FRIEND;
         return Constants.ENEMY;
     }
