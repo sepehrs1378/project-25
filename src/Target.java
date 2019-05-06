@@ -89,8 +89,7 @@ class Target {
         if (row - insertionRow > length / 2 && column - insertionColumn > width / 2)
             return true;
         if (!typeOfTarget.equals(Constants.CELL)) {
-            if (getManhattanDistance(row, column, insertionRow, insertionColumn) <= manhattanDistance)
-                return true;
+            return getManhattanDistance(row, column, insertionRow, insertionColumn) <= manhattanDistance;
         }
         return false;
     }

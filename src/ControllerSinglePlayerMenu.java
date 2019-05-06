@@ -30,7 +30,7 @@ public class ControllerSinglePlayerMenu {
         }
     }
 
-    private void help(){
+    private void help() {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
     }
 

@@ -1,4 +1,3 @@
-import javax.management.BadAttributeValueExpException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -344,6 +343,8 @@ public class Battle {
                 .setUnit(player1.getDeck().getHero());
         battleGround.getCells()[Constants.BATTLE_GROUND_WIDTH / 2][Constants.BATTLE_GROUND_LENGTH - 1]
                 .setUnit(player2.getDeck().getHero());
+        player2.setNextCard();
+        player1.setNextCard();
     }
 
     public OutputMessageType endBattle() {
