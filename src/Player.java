@@ -121,17 +121,18 @@ public class Player {
         if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id) == null
                 && !doesHaveCollectable(id))
             return OutputMessageType.INVALID_COLLECTABLE_CARD;
-        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStunned())
-            return OutputMessageType.UNIT_IS_STUNNED;
         if (doesHaveCollectable(id)) {
             selectedUnit = null;
             selectedCollectable = getCollectableWithID(id);
             return OutputMessageType.SELECTED;
         }
+        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStunned()) {
+            return OutputMessageType.UNIT_IS_STUNNED;
+        }
         if (dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(id)) {
             selectedUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id);
             if (selectedUnit.getId().split("_")[0].matches(dataBase.getCurrentBattle().
-                    getPlayerInTurn().getPlayerInfo().getPlayerName())){
+                    getPlayerInTurn().getPlayerInfo().getPlayerName())) {
                 return OutputMessageType.SELECTED;
             }
         }

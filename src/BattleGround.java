@@ -140,7 +140,7 @@ class BattleGround {
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
-        if(selectedUnit.didMoveThisTurn())
+        if (selectedUnit.didMoveThisTurn())
             return OutputMessageType.UNIT_ALREADY_MOVED;
         //todo check obstacles ...
         if (cells[destinationRow][destinationColumn].getUnit() != null)
@@ -158,19 +158,20 @@ class BattleGround {
         return OutputMessageType.UNIT_MOVED;
     }
 
-    private void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
+    private void gatherFlags(Unit unit, int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
-        for (Flag flag : flags){
+        for (Flag flag : flags) {
             unit.addFlag(flag);
         }
         cell.setFlags(new ArrayList<>());
     }
 
-    private void gatherCollectable(int destinationRow, int destinationColumn){
+    private void gatherCollectable(int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
-        if (collectable != null){
+        if (collectable != null) {
+            dataBase.changePlayerNameInId(collectable, dataBase.getCurrentBattle().getPlayerInTurn());
             dataBase.getCurrentBattle().getPlayerInTurn().getCollectables().add(collectable);
             cell.setCollectable(null);
         }
@@ -224,7 +225,10 @@ class BattleGround {
         return cellsHavingBuff;
     }
 
-    public void addFlagsToBattleGround(List<Flag> flags) {
+    public void setFlagsOnGround(int numberOfFlags) {
+        List<Flag> flags = new ArrayList<>();
+        for (int i = 0; i < numberOfFlags; i++)
+            flags.add(new Flag());
         int counter = flags.size();
         while (counter > 0) {
             int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);

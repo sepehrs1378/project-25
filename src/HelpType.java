@@ -42,6 +42,7 @@ public enum HelpType {
             "\n\tend turn" +
             "\n\tshow collectables" +
             "\n\tselect [collectable id])" +
+            "\n\tuse ([row],[column])" +
             "\n\tshow next card" +
             "\n\tenter graveyard" +
             "\n\tshow battleground" +

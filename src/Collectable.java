@@ -7,7 +7,7 @@ public class Collectable extends Item {
     }
 
     public Collectable clone() {
-        return new Collectable(getId(), getDescription(), spell.clone());
+        return new Collectable(getId(), getDescription(), spell == null ? null : spell.clone());
     }
 
     public Spell getSpell() {

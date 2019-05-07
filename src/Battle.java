@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Battle {
@@ -23,11 +22,9 @@ public class Battle {
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
         List<Flag> flags = new ArrayList<>();
-        for (int i = 0; i < numberOfFlags; i++)
-            flags.add(new Flag());
-        battleGround.addFlagsToBattleGround(flags);
-        battleGround.setCollectableOnGround(collectable);
-        this.collectable = collectable;
+        this.collectable = collectable == null ? null : collectable.clone();
+        battleGround.setCollectableOnGround(this.collectable);
+        battleGround.setFlagsOnGround(numberOfFlags);
         MatchInfo matchInfo1 = new MatchInfo();
         MatchInfo matchInfo2 = new MatchInfo();
         Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -47,18 +44,23 @@ public class Battle {
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
-        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
+        resetSelectedForPlayers();
         doBuffsEffects();
         checkForDeadUnits();
+        checkSpecialPowersCooldown();
         //todo check turns of flag in hand??
         changeTurn();
         turnNumber++;
         setManaBasedOnTurnNumber();
         playerInTurn.moveNextCardToHand();
         return OutputMessageType.TURN_CHANGED;
+    }
+
+    private void resetSelectedForPlayers() {
+        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
     }
 
     public Player getPlayer1() {
@@ -274,6 +276,15 @@ public class Battle {
         }
     }
 
+    public void checkSpecialPowersCooldown() {
+        Spell specialPower = battleGround.getHeroOfPlayer(player1).getMainSpecialPower();
+        if (specialPower != null)
+            specialPower.changeTurnsToGetReady(-1);
+        specialPower = battleGround.getHeroOfPlayer(player2).getMainSpecialPower();
+        if (specialPower != null)
+            specialPower.changeTurnsToGetReady(-1);
+    }
+
     public void doBuffsEffects() {
         int i;
         int j;
@@ -353,14 +364,32 @@ public class Battle {
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
-        if (hero.getMainSpecialPower().getMana() <= player.getMana()
-                && hero.getMainSpecialPower().getCoolDown() == 0
+        if (hero == null)
+            return OutputMessageType.NO_HERO;
+        if (hero.getMainSpecialPower() == null)
+            return OutputMessageType.HERO_HAS_NO_SPELL;
+        if (hero.getMainSpecialPower().getTurnsToGetReady() > 0)
+            return OutputMessageType.SPECIAL_POWER_IN_COOLDOWN;
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH
+                || column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
+            return OutputMessageType.OUT_OF_BOUNDARIES;
+        if (hero.getMainSpecialPower().getMana() >= player.getMana())
+            return OutputMessageType.NOT_ENOUGH_MANA;
+        if (hero.getMainSpecialPower().getCoolDown() == 0
                 && hero.getMainSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
             hero.getMainSpecialPower().doSpell(row, column);
-        } else {
-            return OutputMessageType.NO_HERO;
+            hero.getMainSpecialPower().setTurnsToGetReady(hero.getMainSpecialPower().getCoolDown());
         }
         return OutputMessageType.SPECIAL_POWER_USED;
+    }
+
+    public OutputMessageType useCollectable(Collectable collectable, int row, int column) {
+        if (collectable == null)
+            return OutputMessageType.COLLECTABLE_NOT_SELECTED;
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH
+                || column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
+            return OutputMessageType.OUT_OF_BOUNDARIES;
+        return OutputMessageType.COLLECTABLE_USED;
     }
 
     public List<String> getAvailableMoves() {

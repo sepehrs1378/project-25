@@ -1,3 +1,4 @@
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -614,8 +615,8 @@ public class DataBase {
         String descSpell5 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";
         Target tirDoShakhTarget = new Target(Constants.HERO_MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.FRIEND, true, false, 0, Constants.RANGED_HYBRID);
         Spell tirDoShakhSpell = new Spell("", "", 0, 0, 2, 0, 0, tirDoShakhTarget, (Buff) null, SpellActivationType.ON_CAST, descSpell5, false);
-        String descCollectalbe5 = "collectable";
-        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", descCollectalbe5, tirDoShakhSpell);
+        String descCollectable5 = "collectable";
+        Collectable tirDoShakh = new Collectable("battle_tirDoShakh_1", descCollectable5, tirDoShakhSpell);
         collectableList.add(tirDoShakh);
 
         //6             //4
@@ -967,6 +968,19 @@ public class DataBase {
             return;
         }
         computerDeck.addToCards(card);
+    }
+
+    public void changePlayerNameInId(Object object, Player player) {
+        if (object instanceof Card) {
+            Card card = (Card) object;
+            String[] idPieces = card.getId().split("_");
+            card.setId(player.getPlayerInfo().getPlayerName() + "_" + idPieces[1] + "_" + idPieces[2]);
+        }
+        if (object instanceof Item) {
+            Item item = (Item) object;
+            String[] idPieces = item.getId().split("_");
+            item.setId(player.getPlayerInfo().getPlayerName() + "_" + idPieces[1] + "_" + idPieces[2]);
+        }
     }
 
 
