@@ -5,7 +5,17 @@ public class StunBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    public void doEffect(Unit unit) {
         //todo looks like it's gonna' be empty
+    }
+
+    @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
+    public StunBuff clone(){
+        return new StunBuff(getDurationTurn(),isDispellable(),isContinuous());
     }
 }

@@ -7,7 +7,7 @@ abstract public class Buff {
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
-    private boolean isActive;
+    private boolean isDead;
 
     public Buff(int durationTurn, boolean isDispellable
             , boolean isContinuous) {
@@ -16,11 +16,13 @@ abstract public class Buff {
         this.isContinuous = isContinuous;
     }
 
-    public abstract void doEffect();
+    public abstract void doEffect(Unit unit);
+
+    public abstract void doEndingEffect();
 
     public void revive() {
         this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
-        this.setActive(true);
+        this.setDead(false);
         //todo maybe not completed
     }
 
@@ -36,10 +38,10 @@ abstract public class Buff {
 
     public boolean isExpired() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn <= startTurn + durationTurn;//todo condition may be wrong
+        return currentTurn > startTurn + durationTurn;
     }
 
-    public void remove() {
+    /*public void remove() {
         List<Cell> cells = dataBase.getCurrentBattle().getBattleGround().getCellsHavingBuff(this);
         List<Unit> units = dataBase.getCurrentBattle().getBattleGround().getUnitsHavingBuff(this);
         List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
@@ -50,6 +52,8 @@ abstract public class Buff {
         for (Player player : players)
             player.getBuffs().remove(this);
     }
+*/
+    public abstract Buff clone();
 
     public String getPositiveOrNegative() {
         return positiveOrNegative;
@@ -63,6 +67,10 @@ abstract public class Buff {
         return startTurn;
     }
 
+    public void setStartTurn(int startTurn) {
+        this.startTurn = startTurn;
+    }
+
     public boolean isContinuous() {
         return isContinuous;
     }
@@ -71,11 +79,15 @@ abstract public class Buff {
         return isDispellable;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 
-    public boolean isActive(boolean active) {
-        return isActive;
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public int getDurationTurn() {
+        return durationTurn;
     }
 }

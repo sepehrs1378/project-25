@@ -9,8 +9,18 @@ public class ImmunityBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    public void doEffect(Unit unit) {
         //todo looks gonna be empty
+    }
+
+    @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
+    public ImmunityBuff clone() {
+        return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(), immunity);
     }
 
     public String getImmunity() {

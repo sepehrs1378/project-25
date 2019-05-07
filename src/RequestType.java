@@ -12,6 +12,7 @@ public enum RequestType {
     HELP,
     FORFEIT,
     MATCH_HISTORY,
+    SHOW_USERS,
     BUY_NAME,
     SELL_ID,
     CREATE_ACCOUNT_NAME,

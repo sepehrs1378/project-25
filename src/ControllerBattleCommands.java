@@ -15,7 +15,7 @@ public class ControllerBattleCommands {
     private ControllerBattleCommands() {
     }
 
-    public void main() {
+    public void main() throws GoToMainMenuException{
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -76,8 +76,8 @@ public class ControllerBattleCommands {
                     break;
                 case FORFEIT:
                     forfeitGame();
-                    didExit = endGame();
-                    break;
+                    endGame();
+                    throw new GoToMainMenuException("go to main menu");
                 case SHOW_MENU:
                     showMenu();
                     break;
@@ -283,11 +283,11 @@ public class ControllerBattleCommands {
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
-            matchInfo1.setWinner(player2);
-            matchInfo2.setWinner(player2);
+            matchInfo1.setWinner(player2.getUsername());
+            matchInfo2.setWinner(player2.getUsername());
         } else {
-            matchInfo1.setWinner(player1);
-            matchInfo2.setWinner(player1);
+            matchInfo1.setWinner(player1.getUsername());
+            matchInfo2.setWinner(player1.getUsername());
         }
     }
 
@@ -296,15 +296,15 @@ public class ControllerBattleCommands {
         return true;
     }
 
-    private boolean endTurn() {
+    private boolean endTurn() throws GoToMainMenuException {
         OutputMessageType outputMessageType = database.getCurrentBattle().nextTurn();
         view.printOutputMessage(outputMessageType);
-        if (outputMessageType == OutputMessageType.WINNER_PLAYER1 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
+        if (outputMessageType == OutputMessageType.WINNER_PLAYER1
+                || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             endGame();
-            return true;
+            throw new GoToMainMenuException("go to main menu");
         }
         return false;
-
     }
 
     public void enter() {

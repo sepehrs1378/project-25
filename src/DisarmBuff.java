@@ -5,7 +5,17 @@ public class DisarmBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    public void doEffect(Unit unit) {
         //todo looks gonna be empty
+    }
+
+    @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
+    public DisarmBuff clone() {
+        return new DisarmBuff(getDurationTurn(), isDispellable(), isContinuous());
     }
 }

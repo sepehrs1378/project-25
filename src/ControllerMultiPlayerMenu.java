@@ -11,7 +11,7 @@ public class ControllerMultiPlayerMenu {
     private ControllerMultiPlayerMenu() {
     }
 
-    public void main() {
+    public void main() throws GoToMainMenuException{
         view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
         boolean didExit = false;
         while (!didExit) {
@@ -26,6 +26,9 @@ public class ControllerMultiPlayerMenu {
                 case HELP:
                     help();
                     break;
+                case SHOW_USERS:
+                    view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
@@ -36,7 +39,7 @@ public class ControllerMultiPlayerMenu {
         view.printHelp(HelpType.CONTROLLER_MULTI_PLAYER_MENU);
     }
 
-    private void selectUser() {
+    private void selectUser() throws GoToMainMenuException {
         Account secondPlayer = database.getAccountWithUsername(request.getCommand().split(" ")[2]);
         if (secondPlayer == null) {
             request.setOutputMessageType(OutputMessageType.INVALID_USERNAME);

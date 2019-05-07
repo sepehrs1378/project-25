@@ -60,7 +60,7 @@ public class Account implements Comparable<Account> {
     public int getNumberOfWins() {
         int numberOfWins = 0;
         for (MatchInfo matchInfo : matchList) {
-            if (matchInfo.getWinner() == this)
+            if (matchInfo.getWinner().equals(this.getUsername()))
                 numberOfWins++;
         }
         return numberOfWins;

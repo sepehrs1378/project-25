@@ -257,7 +257,7 @@ class BattleGround {
             collectable = dataBase.getCollectableList().get(random);
         }
         int rowRandom = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-        int columnRandom = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+        int columnRandom = (int) ((Math.random() * (Constants.BATTLE_GROUND_LENGTH - 2)) + 1);
         cells[rowRandom][columnRandom].setCollectable(collectable);
     }
 

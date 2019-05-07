@@ -123,4 +123,4 @@ password 3333
 enter battle
 enter multiplayer
 select user player1
-start multiplayer game classic
+start multiplayer game classict
