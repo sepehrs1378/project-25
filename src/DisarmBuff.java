@@ -6,12 +6,12 @@ public class DisarmBuff extends Buff {
 
     @Override
     public void doEffect(Unit unit) {
-        //todo looks gonna be empty
+        //empty
     }
 
     @Override
     public void doEndingEffect(Unit unit) {
-        //todo looks gonna be empty
+        //empty
     }
 
     @Override

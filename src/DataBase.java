@@ -163,10 +163,9 @@ public class DataBase {
         cardList.add(sacrifice);
 
         //19
-        //String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
-        //Target kingsGuardTarget = new Target()
-        //cardList.add(null);
-        //todo added this so that computer decks work correctly make a new one later
+        //todo correct it later
+        String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
+        Target kingsGuardTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
         Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, "", false);
         cardList.add(kingsGuard);
 
@@ -261,7 +260,7 @@ public class DataBase {
 
         //10
         String descUnit10 = "price : 8000 - mana : 0 - hp : 55 - ap : 7 - minRange : 1 - maxRange : 4 - Unit Type : Hero - can't use combo";
-        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, null, Constants.HERO, descUnit10, false);
+        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, (Spell) null, Constants.HERO, descUnit10, false);
         cardList.add(rostam);
     }
 
@@ -748,6 +747,7 @@ public class DataBase {
         computerPlayerLevel3 = new Account("computer3", "3");
         computerPlayerCostum = new Account("computerCustom", "custom");
 
+        //todo add usables to deck
         Deck computerPlayer1Deck = new Deck("Deck");
         addToComputerDeck(computerPlayer1Deck, 0, 1);
         addToComputerDeck(computerPlayer1Deck, 6, 1);
@@ -779,7 +779,7 @@ public class DataBase {
         addToComputerDeck(computerPlayer2Deck, 7, 1);
         addToComputerDeck(computerPlayer2Deck, 8, 1);
         addToComputerDeck(computerPlayer2Deck, 12, 1);
-//        addToComputerDeck(computerPlayer2Deck,18,1);
+        addToComputerDeck(computerPlayer2Deck, 18, 1);
         addToComputerDeck(computerPlayer2Deck, 24, 1);
         addToComputerDeck(computerPlayer2Deck, 31, 1);
         addToComputerDeck(computerPlayer2Deck, 32, 1);
@@ -962,10 +962,10 @@ public class DataBase {
     private void addToComputerDeck(Deck computerDeck, int index, int number) {
         Card card;
         card = cardList.get(index);
-        if(card instanceof Unit){
-            card=((Unit)card).clone();
-        }else if(card instanceof Spell){
-            card=((Spell)card).clone();
+        if (card instanceof Unit) {
+            card = ((Unit) card).clone();
+        } else if (card instanceof Spell) {
+            card = ((Spell) card).clone();
         }
         card.setId(computerPlayerLevel1.getUsername() + "_" + card.getName() + "_" + number);
         if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
@@ -988,17 +988,17 @@ public class DataBase {
         }
     }
 
-    public void setNewIdsForCustomPlayer(){
+    public void setNewIdsForCustomPlayer() {
         Deck deck = computerPlayerCostum.getMainDeck();
-        if(deck!=null){
-            for (Card card : deck.getCards()){
-                card.setId(computerPlayerCostum.getUsername()+"_"+card.getId().split("_")[1]+"_"
-                        +card.getId().split("_")[2]);
+        if (deck != null) {
+            for (Card card : deck.getCards()) {
+                card.setId(computerPlayerCostum.getUsername() + "_" + card.getId().split("_")[1] + "_"
+                        + card.getId().split("_")[2]);
             }
-            deck.getHero().setId(computerPlayerCostum.getUsername()+"_"+deck.getHero().getId().split("_")[1]+"_"
-                    +deck.getHero().getId().split("_")[2]);
-            deck.getItem().setId(computerPlayerCostum.getUsername()+"_"+deck.getItem().getId().split("_")[1]+"_"
-                    +deck.getItem().getId().split("_")[2]);
+            deck.getHero().setId(computerPlayerCostum.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
+                    + deck.getHero().getId().split("_")[2]);
+            deck.getItem().setId(computerPlayerCostum.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
+                    + deck.getItem().getId().split("_")[2]);
         }
     }
 

@@ -38,7 +38,8 @@ public class Unit extends Card {
         this.ap = ap;
         this.minRange = minRange;
         this.maxRange = maxRange;
-        this.specialPowers.add(specialPower);
+        if (specialPower != null)
+            this.specialPowers.add(specialPower);
         this.heroOrMinion = heroOrMinion;
         this.description = description;
         this.canUseComboAttack = canUseComboAttack;
@@ -232,7 +233,7 @@ public class Unit extends Card {
     public boolean isImmuneTo(String effect) {
         for (Buff buff : buffs) {
             if (buff instanceof ImmunityBuff
-                    && ((ImmunityBuff) buff).getImmunity().contains(effect))
+                    && ((ImmunityBuff) buff).getImmunity().matches(effect))
                 return true;
         }
         return false;
@@ -290,6 +291,8 @@ public class Unit extends Card {
     }
 
     public Spell getMainSpecialPower() {
+        if (specialPowers.isEmpty())
+            return null;
         return specialPowers.get(0);
     }
 

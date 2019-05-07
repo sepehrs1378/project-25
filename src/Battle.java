@@ -219,12 +219,6 @@ public class Battle {
         return null;
     }
 
-    public Card getCardByCardID(String id) {
-        Card card = this.getBattleGround().getCardByID(id);
-        return null;
-        //todo complete this method
-    }
-
     public List<Player> getPlayersHavingBuff(Buff buff) {
         List<Player> players = new ArrayList<>();
         if (player1.getBuffs().contains(buff))

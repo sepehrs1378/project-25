@@ -15,7 +15,8 @@ public class ControllerMatchInfo {
 
     public void showMatchHistory(Account account) {
         List<MatchInfo> matchList = account.getMatchList();
-        for (MatchInfo matchInfo : matchList) {
+        for (int i = matchList.size() - 1; i >= 0; i--) {
+            MatchInfo matchInfo = matchList.get(i);
             String opponent = matchInfo.getOpponent();
             String winOrLoss;
             if (matchInfo.getWinner().equals(opponent)) {
