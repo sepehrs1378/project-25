@@ -8,8 +8,15 @@ public class Deck {
     private String name;
 
     public Deck(Deck deck) {
-        this.cards = new ArrayList<>(deck.getCards());
-        this.hero = deck.hero;
+        this.cards = new ArrayList<>();
+        for (Card card:deck.getCards()){
+            if (card instanceof Unit){
+                cards.add(((Unit)card).clone());
+            }else if(card instanceof Spell){
+                cards.add(((Spell)card).clone());
+            }
+        }
+        this.hero = deck.hero.clone();
         this.item = deck.item;
         this.name = deck.name;
     }
