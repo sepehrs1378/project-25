@@ -30,8 +30,8 @@ public class Battle {
         MatchInfo matchInfo2 = new MatchInfo();
         firstPlayerAccount.addMatchToMatchList(matchInfo1);
         secondPlayerAccount.addMatchToMatchList(matchInfo2);
-        matchInfo1.setOpponent(firstPlayerAccount.getUsername());
-        matchInfo2.setOpponent(secondPlayerAccount.getUsername());
+        matchInfo1.setOpponent(secondPlayerAccount.getUsername());
+        matchInfo2.setOpponent(firstPlayerAccount.getUsername());
         matchInfo1.setMatchDate();
         matchInfo2.setMatchDate();
         startBattle();
@@ -39,7 +39,7 @@ public class Battle {
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if (player != null)
+        if (player != null){
             return endBattle(player);
 
             removeBuffs();
