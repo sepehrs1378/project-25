@@ -17,19 +17,16 @@ public class WeaknessBuff extends Buff {
 
     @Override
     public void doEffect(Unit unit) {
-//        List<Unit> units = dataBase.getCurrentBattle()
-//                .getBattleGround().getUnitsHavingBuff(this);
         if (isInFirstActivationTurn()) {
-//            for (Unit unit : units) {
             unit.changeHp(-hpMinus);
             unit.changeAp(-apMinus);
-//            }
         }
     }
 
     @Override
-    public void doEndingEffect() {
-        //todo
+    public void doEndingEffect(Unit unit) {
+        unit.changeHp(hpMinus);
+        unit.changeHp(apMinus);
     }
 
     @Override

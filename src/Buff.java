@@ -18,7 +18,7 @@ abstract public class Buff {
 
     public abstract void doEffect(Unit unit);
 
-    public abstract void doEndingEffect();
+    public abstract void doEndingEffect(Unit unit);
 
     public void revive() {
         this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
@@ -41,18 +41,6 @@ abstract public class Buff {
         return currentTurn > startTurn + durationTurn;
     }
 
-    /*public void remove() {
-        List<Cell> cells = dataBase.getCurrentBattle().getBattleGround().getCellsHavingBuff(this);
-        List<Unit> units = dataBase.getCurrentBattle().getBattleGround().getUnitsHavingBuff(this);
-        List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
-        for (Cell cell : cells)
-            cell.getBuffs().remove(this);
-        for (Unit unit : units)
-            unit.getBuffs().remove(this);
-        for (Player player : players)
-            player.getBuffs().remove(this);
-    }
-*/
     public abstract Buff clone();
 
     public String getPositiveOrNegative() {

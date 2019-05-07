@@ -14,18 +14,16 @@ public class PowerBuff extends Buff {
 
     @Override
     public void doEffect(Unit unit) {
-//        List<Unit> units = dataBase.getCurrentBattle()
-//                .getBattleGround().getUnitsHavingBuff(this);
         if (isInFirstActivationTurn()) {
-//            for (Unit unit : units) {
-                unit.changeHp(hpPlus);
-                unit.changeAp(apPlus);
-//            }
+            unit.changeHp(hpPlus);
+            unit.changeAp(apPlus);
         }
     }
 
     @Override
-    public void doEndingEffect() {
+    public void doEndingEffect(Unit unit) {
+        unit.changeHp(-hpPlus);
+        unit.changeAp(-apPlus);
         //todo
     }
 
