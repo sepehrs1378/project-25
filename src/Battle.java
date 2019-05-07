@@ -47,11 +47,11 @@ public class Battle {
         doBuffsEffects();
         checkForDeadUnits();
         checkSpecialPowersCooldown();
-        if(this.mode.equals(Constants.ONE_FLAG)){
+        if (this.mode.equals(Constants.ONE_FLAG)) {
             Unit unit = battleGround.getUnitHavingFlag();
-            if(unit != null){
+            if (unit != null) {
                 int turn = unit.getFlags().get(0).getTurnsInUnitHand();
-                unit.getFlags().get(0).setTurnsInUnitHand(turn+1);
+                unit.getFlags().get(0).setTurnsInUnitHand(turn + 1);
             }
         }
         changeTurn();
@@ -187,13 +187,13 @@ public class Battle {
 
     public Player checkEndBattleModeOneFlag() {
         Unit unitWithFlag = battleGround.getUnitHavingFlag();
-        if(unitWithFlag!=null){
-            if(unitWithFlag.getFlags().get(0).getTurnsInUnitHand()>=6){
-                if(unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())){
-                    isBattleFinished=true;
+        if (unitWithFlag != null) {
+            if (unitWithFlag.getFlags().get(0).getTurnsInUnitHand() >= 6) {
+                if (unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())) {
+                    isBattleFinished = true;
                     return player1;
-                }else {
-                    isBattleFinished=true;
+                } else {
+                    isBattleFinished = true;
                     return player2;
                 }
             }
@@ -334,8 +334,8 @@ public class Battle {
                         specialPower.doSpell(row, column);
                 }
                 battleGround.getCells()[row][column].setUnit(unit);
-                battleGround.gatherCollectable(row,column);
-                battleGround.gatherFlags(unit,row,column);
+                battleGround.gatherCollectable(row, column);
+                battleGround.gatherFlags(unit, row, column);
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
                 playerInTurn.reduceMana(unit.getMana());

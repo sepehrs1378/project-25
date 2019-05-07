@@ -181,11 +181,10 @@ public class View {
             for (Cell[] cellRow : battle.getBattleGround().getCells()) {
                 int columnCounter = 0;
                 for (Cell cell : cellRow) {
-                    if(cell.getUnit()!=null)
-                    {
+                    if (cell.getUnit() != null) {
                         for (Flag flag : cell.getUnit().getFlags()) {
-                            System.out.println("flag"+flagCounter + " in row " + rowCounter +
-                                    " column "+ columnCounter + " "+cell.getUnit().getId());
+                            System.out.println("flag" + flagCounter + " in row " + rowCounter +
+                                    " column " + columnCounter + " " + cell.getUnit().getId());
                             flagCounter++;
                         }
                     }

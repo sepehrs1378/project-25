@@ -164,7 +164,7 @@ public class Request {
             return RequestType.START;
         if (command.toLowerCase().matches("^show match history$"))
             return RequestType.MATCH_HISTORY;
-        if (command.toLowerCase().matches("^forfeit$")){
+        if (command.toLowerCase().matches("^forfeit$")) {
             return RequestType.FORFEIT;
         }
         return RequestType.WRONG_REQUEST;

@@ -9,11 +9,11 @@ public class Deck {
 
     public Deck(Deck deck) {
         this.cards = new ArrayList<>();
-        for (Card card:deck.getCards()){
-            if (card instanceof Unit){
-                cards.add(((Unit)card).clone());
-            }else if(card instanceof Spell){
-                cards.add(((Spell)card).clone());
+        for (Card card : deck.getCards()) {
+            if (card instanceof Unit) {
+                cards.add(((Unit) card).clone());
+            } else if (card instanceof Spell) {
+                cards.add(((Spell) card).clone());
             }
         }
         this.hero = deck.hero.clone();

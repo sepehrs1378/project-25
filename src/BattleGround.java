@@ -120,7 +120,7 @@ class BattleGround {
         return null;
     }
 
-    public Unit getUnitHavingFlag(){
+    public Unit getUnitHavingFlag() {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
                 if (!cell.getUnit().getFlags().isEmpty())
@@ -168,7 +168,7 @@ class BattleGround {
         return OutputMessageType.UNIT_MOVED;
     }
 
-    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
+    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
         for (Flag flag : flags) {
@@ -177,7 +177,7 @@ class BattleGround {
         cell.getFlags().removeAll(flags);
     }
 
-    public void gatherCollectable(int destinationRow, int destinationColumn){
+    public void gatherCollectable(int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
         if (collectable != null) {
@@ -243,7 +243,7 @@ class BattleGround {
         while (counter > 0) {
             int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
             int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-            if (cells[row][column].getFlags().isEmpty() && cells[row][column].getUnit()==null && cells[row][column].getCollectable() == null) {
+            if (cells[row][column].getFlags().isEmpty() && cells[row][column].getUnit() == null && cells[row][column].getCollectable() == null) {
                 cells[row][column].getFlags().add(flags.get(counter - 1));
                 flags.remove(counter - 1);
                 counter--;
