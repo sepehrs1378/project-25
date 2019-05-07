@@ -108,6 +108,7 @@ class Spell extends Card {
             addSpellsToUnit(unit);
             if (isDispeller)
                 dispelBuffsOfUnit(unit);
+            System.out.println(getApChange());
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
