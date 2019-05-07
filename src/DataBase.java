@@ -260,7 +260,7 @@ public class DataBase {
 
         //10
         String descUnit10 = "price : 8000 - mana : 0 - hp : 55 - ap : 7 - minRange : 1 - maxRange : 4 - Unit Type : Hero - can't use combo";
-        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, (Spell) null, Constants.HERO, descUnit10, false);
+        Unit rostam = new Unit("shop_rostam_1", "rostam", 8000, 0, 55, 7, 1, 4, null, Constants.HERO, descUnit10, false);
         cardList.add(rostam);
     }
 

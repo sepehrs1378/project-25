@@ -15,7 +15,7 @@ public class StunBuff extends Buff {
     }
 
     @Override
-    public StunBuff clone(){
-        return new StunBuff(getDurationTurn(),isDispellable(),isContinuous());
+    public StunBuff clone() {
+        return new StunBuff(getDurationTurn(), isDispellable(), isContinuous());
     }
 }

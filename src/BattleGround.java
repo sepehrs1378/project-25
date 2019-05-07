@@ -284,13 +284,13 @@ class BattleGround {
         return units;
     }
 
-    public int[] getCoordinationOfCell(Cell cell){
+    public int[] getCoordinationOfCell(Cell cell) {
         int[] coordination = new int[2];
-        for (int i=0;i<cells.length;i++){
-            for (int j=0;j<cells[i].length;j++){
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
                 if (cell == cells[i][j]) {
-                    coordination[0] =i;
-                    coordination[1] =j;
+                    coordination[0] = i;
+                    coordination[1] = j;
                     return coordination;
                 }
             }
@@ -298,22 +298,22 @@ class BattleGround {
         return null;
     }
 
-    public int[] getRandomCellToMoveForUnit(Unit unit){
+    public int[] getRandomCellToMoveForUnit(Unit unit) {
         int[] coordination = new int[2];
         int[] unitCoordination = getCoordinationOfUnit(unit);
         List<Cell> cellsList = new ArrayList<>();
-        int row =0;
-        for (Cell[] cellRow:cells){
-            int column =0;
-            for (Cell cell:cellRow){
-                if(cell.getUnit()==null && (Math.abs(row-unitCoordination[0])+Math.abs(column-unitCoordination[1]))<=2){
+        int row = 0;
+        for (Cell[] cellRow : cells) {
+            int column = 0;
+            for (Cell cell : cellRow) {
+                if (cell.getUnit() == null && (Math.abs(row - unitCoordination[0]) + Math.abs(column - unitCoordination[1])) <= 2) {
                     cellsList.add(cell);
                 }
                 column++;
             }
             row++;
         }
-        int randomNumber = (int)(Math.random()*cellsList.size());
+        int randomNumber = (int) (Math.random() * cellsList.size());
         return getCoordinationOfCell(cellsList.get(randomNumber));
     }
 }

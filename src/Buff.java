@@ -1,5 +1,3 @@
-import java.util.List;
-
 abstract public class Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private String positiveOrNegative;

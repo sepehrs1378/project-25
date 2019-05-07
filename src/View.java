@@ -353,8 +353,8 @@ public class View {
         }
     }
 
-    public void showValidDecks(List<Deck> decks){
-        for (Deck deck:decks){
+    public void showValidDecks(List<Deck> decks) {
+        for (Deck deck : decks) {
             System.out.println(deck.getName());
         }
     }
