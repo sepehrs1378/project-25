@@ -18,82 +18,87 @@ public class ControllerBattleCommands {
     public void main() throws GoToMainMenuException {
         boolean didExit = false;
         while (!didExit) {
-            if(database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
-                    && database.getCurrentBattle().getPlayerInTurn()==database.getCurrentBattle().getPlayer2()){
-                AI.getInstance().doNextMove();
-            }
-            database.getCurrentBattle().checkForDeadUnits();
-            request.getNewCommand();
-            switch (request.getType()) {
-                case GAME_INFO:
-                    showGameInfo();
-                    break;
-                case SHOW_MY_MINIONS:
-                    showMyMinions();
-                    break;
-                case SHOW_OPPONENT_MINIONS:
-                    showOpponentMinions();
-                    break;
-                case SHOW_CARD_INFO_ID:
-                    showCardInfoId();
-                    break;
-                case SELECT_ID:
-                    selectId();
-                    break;
-                case MOVE_TO_X_Y:
-                    moveTo();
-                    break;
-                case ATTACK_ID:
-                    attackId();
-                    break;
-                case ATTACK_COMBO:
-                    attackCombo();
-                    break;
-                case USE_SPECIAL_POWER_X_Y:
-                    useSpecialPower();
-                    break;
-                case SHOW_HAND:
-                    showHand();
-                    break;
-                case INSERT_NAME_IN_X_Y:
-                    insertName();
-                    break;
-                case END_TURN:
-                    didExit = endTurn();
-                    break;
-                case SHOW_COLLECTABLES:
-                    showCollectables();
-                    break;
-                case SHOW_INFO:
-                    showInfo();
-                    break;
-                case USE_COLLECTABLE_IN_X_Y:
-                    useCollectable();
-                    break;
-                case SHOW_NEXT_CARD:
-                    showNextCard();
-                    break;
-                case ENTER:
-                    enter();
-                    break;
-                case END_GAME:
-                    endGame();
-                    throw new GoToMainMenuException("go to main menu");
-                case FORFEIT:
-                    forfeitGame();
-                    endGame();
-                    throw new GoToMainMenuException("go to main menu");
-                case SHOW_MENU:
-                    showMenu();
-                    break;
-                case HELP:
-                    help();
-                    break;
-                case SHOW_BATTLEGROUND:
-                    showBattleground();
-                    break;
-                default:
-                    view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+            try {
+                if (database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
+                        && database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer2()) {
+                    AI.getInstance().doNextMove();
+                }
+                database.getCurrentBattle().checkForDeadUnits();
+                request.getNewCommand();
+                switch (request.getType()) {
+                    case GAME_INFO:
+                        showGameInfo();
+                        break;
+                    case SHOW_MY_MINIONS:
+                        showMyMinions();
+                        break;
+                    case SHOW_OPPONENT_MINIONS:
+                        showOpponentMinions();
+                        break;
+                    case SHOW_CARD_INFO_ID:
+                        showCardInfoId();
+                        break;
+                    case SELECT_ID:
+                        selectId();
+                        break;
+                    case MOVE_TO_X_Y:
+                        moveTo();
+                        break;
+                    case ATTACK_ID:
+                        attackId();
+                        break;
+                    case ATTACK_COMBO:
+                        attackCombo();
+                        break;
+                    case USE_SPECIAL_POWER_X_Y:
+                        useSpecialPower();
+                        break;
+                    case SHOW_HAND:
+                        showHand();
+                        break;
+                    case INSERT_NAME_IN_X_Y:
+                        insertName();
+                        break;
+                    case END_TURN:
+                        didExit = endTurn();
+                        break;
+                    case SHOW_COLLECTABLES:
+                        showCollectables();
+                        break;
+                    case SHOW_INFO:
+                        showInfo();
+                        break;
+                    case USE_COLLECTABLE_IN_X_Y:
+                        useCollectable();
+                        break;
+                    case SHOW_NEXT_CARD:
+                        showNextCard();
+                        break;
+                    case ENTER:
+                        enter();
+                        break;
+                    case END_GAME:
+                        endGame();
+                        throw new GoToMainMenuException("go to main menu");
+                    case FORFEIT:
+                        forfeitGame();
+                        endGame();
+                        throw new GoToMainMenuException("go to main menu");
+                    case SHOW_MENU:
+                        showMenu();
+                        break;
+                    case HELP:
+                        help();
+                        break;
+                    case SHOW_BATTLEGROUND:
+                        showBattleground();
+                        break;
+                    default:
+                        view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+                }
+            } catch (GoToMainMenuException e) {
+                throw e;
+            } catch (Exception e) {
             }
         }
     }
