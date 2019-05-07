@@ -217,3 +217,4 @@ select player_rostam_1
 move to (2,7)
 show battleground
 show card info player_rostam_1
+show hand

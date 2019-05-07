@@ -13,7 +13,7 @@ public class PoisonBuff extends Buff {
 
     @Override
     public void doEffect(Unit unit) {
-        if (!isActive()) {
+        if (isActive()) {
             unit.changeHp(-damagePerTurn);
         }
     }

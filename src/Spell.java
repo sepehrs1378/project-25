@@ -120,7 +120,7 @@ class Spell extends Card {
 
     private void addBuffsToUnit(Unit unit) {
         for (Buff buff : addedBuffs) {
-            if (buff != null) {
+            if (buff != null && unit != null) {
                 if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
                     continue;
                 if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
