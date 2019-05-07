@@ -28,6 +28,7 @@ public class ControllerMainMenu {
                     help();
                     break;
                 case MATCH_HISTORY:
+                    view.showMatchHistoryTitle();
                     controllerMatchInfo.showMatchHistory(dataBase.getLoggedInAccount());
                     break;
                 default:

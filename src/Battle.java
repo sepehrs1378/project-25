@@ -30,8 +30,10 @@ public class Battle {
         Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         playerAccount1.addMatchToMatchList(matchInfo1);
         playerAccount2.addMatchToMatchList(matchInfo2);
-        matchInfo1.setOpponent(playerAccount2);
-        matchInfo2.setOpponent(playerAccount1);
+        matchInfo1.setOpponent(playerAccount2.getUsername());
+        matchInfo2.setOpponent(playerAccount1.getUsername());
+        matchInfo1.setMatchDate();
+        matchInfo2.setMatchDate();
         startBattle();
     }
 
@@ -448,13 +450,13 @@ public class Battle {
         int sizeMatchList1 = player1Account.getMatchList().size();
         int sizeMatchList2 = player2Account.getMatchList().size();
         if (winner == player1) {
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account);
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account);
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account.getUsername());
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
         } else if (winner == player2) {
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account);
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account);
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account.getUsername());
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account.getUsername());
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }

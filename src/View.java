@@ -135,20 +135,25 @@ public class View {
     }
 
     public void showMatchHistoryTitle() {
-        System.out.println("OPPONENT    WIN/LOSS    TIME");
+        System.out.println("OPPONENT                 " +
+                "WIN/LOSS                 " +
+                "TIME");
     }
 
     public void showMatchHistory(String opponentName, String winOrLoss, long seconds,
-                                 long minutes, long hours, long days) {
-        System.out.print(opponentName + "   " + winOrLoss);
-        if (days == 0 && hours == 0 && minutes == 0) {
+                                 long minutes, long hours, long days, long years) {
+        opponentName += generateEmptySpace(opponentName);
+        System.out.print(opponentName + winOrLoss);
+        if (years == 0 && days == 0 && hours == 0 && minutes == 0) {
             System.out.println(seconds + "seconds ago");
-        } else if (days == 0 && hours == 0) {
+        } else if (years == 0 && days == 0 && hours == 0) {
             System.out.println(minutes + "minutes ago");
-        } else if (days == 0) {
+        } else if (years == 0 && days == 0) {
             System.out.println(hours + "hours ago");
-        } else {
+        } else if (years == 0) {
             System.out.println(days + "days ago");
+        } else {
+            System.out.println(years + "years ago");
         }
     }
 
@@ -350,6 +355,14 @@ public class View {
 
     public void print(String message) {
         System.out.println(message);
+    }
+
+    public String generateEmptySpace(String string) {
+        String spaces = "";
+        for (int i = 0; i + string.length() < 25; i++) {
+            spaces += " ";
+        }
+        return spaces;
     }
 }
 
