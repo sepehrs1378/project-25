@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Battle {
@@ -22,12 +21,9 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
-        List<Flag> flags = new ArrayList<>();
-        for (int i = 0; i < numberOfFlags; i++)
-            flags.add(new Flag());
-        battleGround.addFlagsToBattleGround(flags);
-        battleGround.setCollectableOnGround(collectable);
-        this.collectable = collectable;
+        this.collectable = collectable == null ? null : collectable.clone();
+        battleGround.setCollectableOnGround(this.collectable);
+        battleGround.setFlagsOnGround(numberOfFlags);
         MatchInfo matchInfo1 = new MatchInfo();
         MatchInfo matchInfo2 = new MatchInfo();
         Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -42,23 +38,34 @@ public class Battle {
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
         if (player != null) {
-            endBattle(player);
+            return endBattle(player);
         }
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();
-        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
+        resetSelectedForPlayers();
         doBuffsEffects();
         checkForDeadUnits();
-        //todo check turns of flag in hand??
+        checkSpecialPowersCooldown();
+        if (this.mode.equals(Constants.ONE_FLAG)) {
+            Unit unit = battleGround.getUnitHavingFlag();
+            if (unit != null) {
+                int turn = unit.getFlags().get(0).getTurnsInUnitHand();
+                unit.getFlags().get(0).setTurnsInUnitHand(turn + 1);
+            }
+        }
         changeTurn();
         turnNumber++;
         setManaBasedOnTurnNumber();
         playerInTurn.moveNextCardToHand();
         return OutputMessageType.TURN_CHANGED;
+    }
+
+    private void resetSelectedForPlayers() {
+        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
+        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
     }
 
     public Player getPlayer1() {
@@ -168,10 +175,10 @@ public class Battle {
     }
 
     public Player checkEndBattleModeClassic() {
-        if (player1.getDeck().getHero().getHp() <= 0) {
+        if (battleGround.getHeroOfPlayer(player1).getHp() <= 0) {
             isBattleFinished = true;
             return player2;
-        } else if (player2.getDeck().getHero().getHp() <= 0) {
+        } else if (battleGround.getHeroOfPlayer(player2).getHp() <= 0) {
             isBattleFinished = true;
             return player1;
         }
@@ -179,6 +186,22 @@ public class Battle {
     }
 
     public Player checkEndBattleModeOneFlag() {
+        Unit unitWithFlag = battleGround.getUnitHavingFlag();
+        if (unitWithFlag != null) {
+            if (unitWithFlag.getFlags().get(0).getTurnsInUnitHand() >= 6) {
+                if (unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())) {
+                    isBattleFinished = true;
+                    return player1;
+                } else {
+                    isBattleFinished = true;
+                    return player2;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Player checkEndBattleModeFlags() {
         int numberOfFlagsPlayer1 = battleGround.getNumberOfFlagsForPlayer(player1);
         int numberOfFlagsPlayer2 = battleGround.getNumberOfFlagsForPlayer(player2);
         if (numberOfFlagsPlayer1 >= getNumberOfFlags() / 2 + 1) {
@@ -187,19 +210,6 @@ public class Battle {
         } else if (numberOfFlagsPlayer2 >= getNumberOfFlags() / 2 + 1) {
             isBattleFinished = true;
             return player2;
-        }
-        return null;
-    }
-
-    public Player checkEndBattleModeFlags() {
-        Cell cell = battleGround.getCellWithFlag();
-        if (cell != null) {
-            if (cell.getUnit().getFlags().get(0).getTurnsInUnitHand() >= 6) {
-                isBattleFinished = true;
-                if (cell.getUnit().getId().contains(player1.getPlayerInfo().getPlayerName()))
-                    return player1;
-                return player2;
-            }
         }
         return null;
     }
@@ -274,6 +284,15 @@ public class Battle {
         }
     }
 
+    public void checkSpecialPowersCooldown() {
+        Spell specialPower = battleGround.getHeroOfPlayer(player1).getMainSpecialPower();
+        if (specialPower != null)
+            specialPower.changeTurnsToGetReady(-1);
+        specialPower = battleGround.getHeroOfPlayer(player2).getMainSpecialPower();
+        if (specialPower != null)
+            specialPower.changeTurnsToGetReady(-1);
+    }
+
     public void doBuffsEffects() {
         int i;
         int j;
@@ -315,6 +334,8 @@ public class Battle {
                         specialPower.doSpell(row, column);
                 }
                 battleGround.getCells()[row][column].setUnit(unit);
+                battleGround.gatherCollectable(row, column);
+                battleGround.gatherFlags(unit, row, column);
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
                 playerInTurn.reduceMana(unit.getMana());
@@ -353,14 +374,32 @@ public class Battle {
     }
 
     public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
-        if (hero.getMainSpecialPower().getMana() <= player.getMana()
-                && hero.getMainSpecialPower().getCoolDown() == 0
+        if (hero == null)
+            return OutputMessageType.NO_HERO;
+        if (hero.getMainSpecialPower() == null)
+            return OutputMessageType.HERO_HAS_NO_SPELL;
+        if (hero.getMainSpecialPower().getTurnsToGetReady() > 0)
+            return OutputMessageType.SPECIAL_POWER_IN_COOLDOWN;
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH
+                || column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
+            return OutputMessageType.OUT_OF_BOUNDARIES;
+        if (hero.getMainSpecialPower().getMana() >= player.getMana())
+            return OutputMessageType.NOT_ENOUGH_MANA;
+        if (hero.getMainSpecialPower().getCoolDown() == 0
                 && hero.getMainSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
             hero.getMainSpecialPower().doSpell(row, column);
-        } else {
-            return OutputMessageType.NO_HERO;
+            hero.getMainSpecialPower().setTurnsToGetReady(hero.getMainSpecialPower().getCoolDown());
         }
         return OutputMessageType.SPECIAL_POWER_USED;
+    }
+
+    public OutputMessageType useCollectable(Collectable collectable, int row, int column) {
+        if (collectable == null)
+            return OutputMessageType.COLLECTABLE_NOT_SELECTED;
+        if (row < 0 || row >= Constants.BATTLE_GROUND_WIDTH
+                || column < 0 || column >= Constants.BATTLE_GROUND_LENGTH)
+            return OutputMessageType.OUT_OF_BOUNDARIES;
+        return OutputMessageType.COLLECTABLE_USED;
     }
 
     public List<String> getAvailableMoves() {
@@ -411,11 +450,12 @@ public class Battle {
         if (winner == player1) {
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account);
             player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account);
-
+            isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
         } else if (winner == player2) {
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account);
             player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account);
+            isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }
         return OutputMessageType.INVALID_PLAYER;

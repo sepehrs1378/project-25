@@ -251,9 +251,10 @@ public class Unit extends Card {
         this.flags = flags;
     }
 
-    public void dropFlags() {
+    public void dropFlags(Cell cell) {
         for (Flag flag : flags)
             flag.setTurnsInUnitHand(0);
+        cell.setFlags(flags);
         this.flags = null;
     }
 

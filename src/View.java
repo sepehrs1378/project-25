@@ -176,19 +176,21 @@ public class View {
                 }
             }
         } else if (battle.getMode().equals(Constants.FLAGS)) {
-            int rowCounter = 1;
+            int rowCounter = 0;
             int flagCounter = 1;
             for (Cell[] cellRow : battle.getBattleGround().getCells()) {
-                int columnCounter = 1;
+                int columnCounter = 0;
                 for (Cell cell : cellRow) {
-                    for (Flag flag : cell.getFlags()) {
-                        if (cell.getUnit() != null) {
+                    if (cell.getUnit() != null) {
+                        for (Flag flag : cell.getUnit().getFlags()) {
                             System.out.println("flag" + flagCounter + " in row " + rowCounter +
                                     " column " + columnCounter + " " + cell.getUnit().getId());
-                        } else {
-                            System.out.println("flag" + flagCounter + " in row " + rowCounter +
-                                    " column " + columnCounter);
+                            flagCounter++;
                         }
+                    }
+                    for (Flag flag : cell.getFlags()) {
+                        System.out.println("flag" + flagCounter + " in row " + rowCounter +
+                                " column " + columnCounter);
                         flagCounter++;
                     }
                     columnCounter++;

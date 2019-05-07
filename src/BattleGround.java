@@ -91,7 +91,7 @@ class BattleGround {
         int numberOfFlags = 0;
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
+                if (cell.getUnit() != null && cell.getUnit().getId().split("_")[0].equals(player.getPlayerInfo().getPlayerName())) {
                     numberOfFlags += cell.getUnit().getFlags().size();
                 }
             }
@@ -120,6 +120,16 @@ class BattleGround {
         return null;
     }
 
+    public Unit getUnitHavingFlag() {
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (!cell.getUnit().getFlags().isEmpty())
+                    return cell.getUnit();
+            }
+        }
+        return null;
+    }
+
     public List<Unit> getMinionsOfPlayer(Player player) {
         List<Unit> minions = new ArrayList<>();
         for (Cell[] cellRow : cells) {
@@ -140,7 +150,7 @@ class BattleGround {
         if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
-        if(selectedUnit.didMoveThisTurn())
+        if (selectedUnit.didMoveThisTurn())
             return OutputMessageType.UNIT_ALREADY_MOVED;
         //todo check obstacles ...
         if (cells[destinationRow][destinationColumn].getUnit() != null)
@@ -158,19 +168,20 @@ class BattleGround {
         return OutputMessageType.UNIT_MOVED;
     }
 
-    private void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
+    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
-        for (Flag flag : flags){
+        for (Flag flag : flags) {
             unit.addFlag(flag);
         }
-        cell.setFlags(new ArrayList<>());
+        cell.getFlags().removeAll(flags);
     }
 
-    private void gatherCollectable(int destinationRow, int destinationColumn){
+    public void gatherCollectable(int destinationRow, int destinationColumn) {
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
-        if (collectable != null){
+        if (collectable != null) {
+            dataBase.changePlayerNameInId(collectable, dataBase.getCurrentBattle().getPlayerInTurn());
             dataBase.getCurrentBattle().getPlayerInTurn().getCollectables().add(collectable);
             cell.setCollectable(null);
         }
@@ -224,12 +235,15 @@ class BattleGround {
         return cellsHavingBuff;
     }
 
-    public void addFlagsToBattleGround(List<Flag> flags) {
+    public void setFlagsOnGround(int numberOfFlags) {
+        List<Flag> flags = new ArrayList<>();
+        for (int i = 0; i < numberOfFlags; i++)
+            flags.add(new Flag());
         int counter = flags.size();
         while (counter > 0) {
             int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
             int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-            if (cells[row][column].getFlags().isEmpty()) {
+            if (cells[row][column].getFlags().isEmpty() && cells[row][column].getUnit() == null && cells[row][column].getCollectable() == null) {
                 cells[row][column].getFlags().add(flags.get(counter - 1));
                 flags.remove(counter - 1);
                 counter--;

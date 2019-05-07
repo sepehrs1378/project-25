@@ -38,7 +38,7 @@ public class Cell {
         return this.flags;
     }
 
-    public void setFlags(List<Flag> flags){
+    public void setFlags(List<Flag> flags) {
         this.flags = flags;
     }
 
