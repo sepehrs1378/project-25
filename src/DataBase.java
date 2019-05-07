@@ -988,6 +988,20 @@ public class DataBase {
         }
     }
 
+    public void setNewIdsForCustomPlayer(){
+        Deck deck = computerPlayerCostum.getMainDeck();
+        if(deck!=null){
+            for (Card card : deck.getCards()){
+                card.setId(computerPlayerCostum.getUsername()+"_"+card.getId().split("_")[1]+"_"
+                        +card.getId().split("_")[2]);
+            }
+            deck.getHero().setId(computerPlayerCostum.getUsername()+"_"+deck.getHero().getId().split("_")[1]+"_"
+                    +deck.getHero().getId().split("_")[2]);
+            deck.getItem().setId(computerPlayerCostum.getUsername()+"_"+deck.getItem().getId().split("_")[1]+"_"
+                    +deck.getItem().getId().split("_")[2]);
+        }
+    }
+
 
     boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;

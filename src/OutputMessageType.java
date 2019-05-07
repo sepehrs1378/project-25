@@ -50,6 +50,8 @@ public enum OutputMessageType {
     WINNER_PLAYER1("first player has won the game"),
     WINNER_PLAYER2("second player has won the game"),
     INVALID_PLAYER("no one has won the game"),
+    PLEASE_SELECT_A_DECK("please select a deck from below decks:"),
+    INVALID_MODE("invalid mode"),
     ITEM_IS_EMTPY("there is no item in the selected deck"),
     HERO_IS_EMPTY("hero slot is empty in the deck"),
     FOUND_ITEM("found item with id: "),

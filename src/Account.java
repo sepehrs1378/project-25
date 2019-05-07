@@ -86,6 +86,16 @@ public class Account implements Comparable<Account> {
         this.mainDeck = mainDeck;
     }
 
+    public List<Deck> getValidDecks(){
+        List<Deck> decks = new ArrayList<>();
+        for(Deck deck:this.getPlayerInfo().getCollection().getDecks()){
+            if(deck.isValid()){
+                decks.add(deck);
+            }
+        }
+        return decks;
+    }
+
     public int compareTo(Account compareAccount) {
         return compareAccount.getNumberOfWins() - getNumberOfWins();
     }

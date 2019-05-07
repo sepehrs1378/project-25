@@ -348,6 +348,12 @@ public class View {
         }
     }
 
+    public void showValidDecks(List<Deck> decks){
+        for (Deck deck:decks){
+            System.out.println(deck.getName());
+        }
+    }
+
     public void print(String message) {
         System.out.println(message);
     }
