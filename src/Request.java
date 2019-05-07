@@ -167,6 +167,9 @@ public class Request {
         if (command.toLowerCase().matches("^forfeit$")) {
             return RequestType.FORFEIT;
         }
+        if (command.toLowerCase().matches("^show users$")) {
+            return RequestType.SHOW_USERS;
+        }
         return RequestType.WRONG_REQUEST;
     }
 

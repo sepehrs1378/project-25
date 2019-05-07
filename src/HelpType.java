@@ -48,12 +48,15 @@ public enum HelpType {
             "\n\tshow battleground" +
             "\n\thelp" +
             "\n\tend game"),
-    CONTROLLER_SINGLE_PLAYER_MENU("Story\nCustom game"),
+    CONTROLLER_SINGLE_PLAYER_MENU("Single player commands :" +
+            "\n\tenter story" +
+            "\n\tenter custom"),
     STORY_MODE_OPTIONS("level1\nlevel2\nlevel3"),
-    CONTROLLER_BATTLEMENU_HELP("Battle menu commands:" +
+    CONTROLLER_BATTLE_MENU_HELP("Battle menu commands:" +
             "\n\tenter singleplayer" +
             "\n\tenter multiplayer" +
             "\n\thelp" +
+            "\n\tshow users" +
             "\n\texit"),
     CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
             "\tenter collection\n" +

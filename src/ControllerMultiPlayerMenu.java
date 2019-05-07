@@ -26,6 +26,9 @@ public class ControllerMultiPlayerMenu {
                 case HELP:
                     help();
                     break;
+                case SHOW_USERS:
+                    view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }

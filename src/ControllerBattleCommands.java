@@ -76,8 +76,8 @@ public class ControllerBattleCommands {
                     break;
                 case FORFEIT:
                     forfeitGame();
-                    didExit = endGame();
-                    break;
+                    endGame();
+                    throw new GoToMainMenuException("go to main menu");
                 case SHOW_MENU:
                     showMenu();
                     break;
