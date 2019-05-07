@@ -98,7 +98,6 @@ class Spell extends Card {
 
     private void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn);
-        System.out.println(targetUnits);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
                     && dataBase.getCurrentBattle().getBattleGround().
@@ -108,7 +107,6 @@ class Spell extends Card {
             addSpellsToUnit(unit);
             if (isDispeller)
                 dispelBuffsOfUnit(unit);
-            System.out.println(getApChange());
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
@@ -122,14 +120,16 @@ class Spell extends Card {
 
     private void addBuffsToUnit(Unit unit) {
         for (Buff buff : addedBuffs) {
-            if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
-                continue;
-            if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
-                continue;
-            Buff cloneBuff = buff.clone();
-            cloneBuff.setDead(false);
-            cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
-            unit.getBuffs().add(cloneBuff);
+            if (buff != null) {
+                if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
+                    continue;
+                if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
+                    continue;
+                Buff cloneBuff = buff.clone();
+                cloneBuff.setDead(false);
+                cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
+                unit.getBuffs().add(cloneBuff);
+            }
         }
     }
 

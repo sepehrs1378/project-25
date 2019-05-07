@@ -51,8 +51,11 @@ public class ControllerGraveYard {
         Card card = dataBase.getCurrentBattle().getPlayerInTurn().getGraveYard().findCard(cardId);
         if (card instanceof Unit) {
             Unit unit = (Unit) card;
-            if (unit.getHeroOrMinion().equals("hero")) {
+            if (unit.getHeroOrMinion().equals(Constants.HERO)) {
                 view.showCardInfoHero(unit);
+            }
+            if (unit.getHeroOrMinion().equals(Constants.MINION)) {
+                view.showCardInfoMinion(unit);
             }
         }
     }
