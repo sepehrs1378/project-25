@@ -7,3 +7,5 @@ public class Main {
 }
 //todo do we use a Card or its Clone in the Battle?
 //todo change money in Constants before tahvil
+//todo check insert method : when i move the hero i can't insert cards near it
+//todo nullPointerException in "show match history"

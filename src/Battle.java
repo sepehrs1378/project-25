@@ -42,7 +42,7 @@ public class Battle {
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
         if (player != null) {
-            endBattle(player);
+            return endBattle(player);
         }
         reviveContinuousBuffs();
         removeExpiredBuffs();
@@ -179,19 +179,7 @@ public class Battle {
     }
 
     public Player checkEndBattleModeOneFlag() {
-        int numberOfFlagsPlayer1 = battleGround.getNumberOfFlagsForPlayer(player1);
-        int numberOfFlagsPlayer2 = battleGround.getNumberOfFlagsForPlayer(player2);
-        if (numberOfFlagsPlayer1 >= getNumberOfFlags() / 2 + 1) {
-            isBattleFinished = true;
-            return player1;
-        } else if (numberOfFlagsPlayer2 >= getNumberOfFlags() / 2 + 1) {
-            isBattleFinished = true;
-            return player2;
-        }
-        return null;
-    }
-
-    public Player checkEndBattleModeFlags() {
+        //todo
         Cell cell = battleGround.getCellWithFlag();
         if (cell != null) {
             if (cell.getUnit().getFlags().get(0).getTurnsInUnitHand() >= 6) {
@@ -200,6 +188,19 @@ public class Battle {
                     return player1;
                 return player2;
             }
+        }
+        return null;
+    }
+
+    public Player checkEndBattleModeFlags() {
+        int numberOfFlagsPlayer1 = battleGround.getNumberOfFlagsForPlayer(player1);
+        int numberOfFlagsPlayer2 = battleGround.getNumberOfFlagsForPlayer(player2);
+        if (numberOfFlagsPlayer1 >= getNumberOfFlags() / 2 + 1) {
+            isBattleFinished = true;
+            return player1;
+        } else if (numberOfFlagsPlayer2 >= getNumberOfFlags() / 2 + 1) {
+            isBattleFinished = true;
+            return player2;
         }
         return null;
     }
@@ -315,6 +316,8 @@ public class Battle {
                         specialPower.doSpell(row, column);
                 }
                 battleGround.getCells()[row][column].setUnit(unit);
+                battleGround.gatherCollectable(row,column);
+                battleGround.gatherFlags(unit,row,column);
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
                 playerInTurn.reduceMana(unit.getMana());
@@ -411,11 +414,12 @@ public class Battle {
         if (winner == player1) {
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account);
             player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account);
-
+            isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
         } else if (winner == player2) {
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account);
             player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account);
+            isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }
         return OutputMessageType.INVALID_PLAYER;

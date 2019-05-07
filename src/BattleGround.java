@@ -91,7 +91,7 @@ class BattleGround {
         int numberOfFlags = 0;
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit() != null && cell.getUnit().getId().contains(player.getPlayerInfo().getPlayerName())) {
+                if (cell.getUnit() != null && cell.getUnit().getId().split("_")[0].equals(player.getPlayerInfo().getPlayerName())) {
                     numberOfFlags += cell.getUnit().getFlags().size();
                 }
             }
@@ -158,16 +158,16 @@ class BattleGround {
         return OutputMessageType.UNIT_MOVED;
     }
 
-    private void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
+    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn){
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
         for (Flag flag : flags){
             unit.addFlag(flag);
         }
-        cell.setFlags(new ArrayList<>());
+        cell.getFlags().removeAll(flags);
     }
 
-    private void gatherCollectable(int destinationRow, int destinationColumn){
+    public void gatherCollectable(int destinationRow, int destinationColumn){
         Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
         if (collectable != null){
@@ -229,7 +229,7 @@ class BattleGround {
         while (counter > 0) {
             int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
             int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-            if (cells[row][column].getFlags().isEmpty()) {
+            if (cells[row][column].getFlags().isEmpty() && cells[row][column].getUnit()==null && cells[row][column].getCollectable() == null) {
                 cells[row][column].getFlags().add(flags.get(counter - 1));
                 flags.remove(counter - 1);
                 counter--;

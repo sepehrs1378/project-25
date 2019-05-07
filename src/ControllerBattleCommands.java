@@ -55,7 +55,7 @@ public class ControllerBattleCommands {
                     insertName();
                     break;
                 case END_TURN:
-                    endTurn();
+                    didExit=endTurn();
                     break;
                 case SHOW_COLLECTABLES:
                     showCollectables();
@@ -357,8 +357,15 @@ public class ControllerBattleCommands {
         return true;
     }
 
-    private void endTurn() {
-        view.printOutputMessage(database.getCurrentBattle().nextTurn());
+    private boolean endTurn() {
+        OutputMessageType outputMessageType = database.getCurrentBattle().nextTurn();
+        view.printOutputMessage(outputMessageType);
+        if (outputMessageType == OutputMessageType.WINNER_PLAYER1 || outputMessageType == OutputMessageType.WINNER_PLAYER2){
+            endGame();
+            return true;
+        }
+        return false;
+
     }
 
     public void enter() {

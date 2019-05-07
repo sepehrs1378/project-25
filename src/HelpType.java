@@ -51,18 +51,21 @@ public enum HelpType {
     STORY_MODE_OPTIONS("level1\nlevel2\nlevel3"),
     CONTROLLER_BATTLEMENU_HELP("Battle menu commands:" +
             "\n\tenter singleplayer" +
-            "\n\tenter multiplayer"),
+            "\n\tenter multiplayer" +
+            "\n\thelp" +
+            "\n\texit"),
     CONTROLLER_MAIN_MENU_HELP("Main Menu Commands:\n" +
             "\tenter collection\n" +
             "\tenter shop\n" +
             "\tenter battle\n" +
             "\tlogout\n" +
             "\thelp\n" +
-            "\tmatch history"),
+            "\tshow match history"),
     MODES_HELP("flags\none_flag\nclassic"),
 
     CONTROLLER_MULTI_PLAYER_MENU("Commands:\n" +
-            "\tselect [username]\n" +
+            "\tselect user [username]\n" +
+            "\thelp\n" +
             "\texit\n"),
     CONTROLLER_GRAVEYARD("Commands:\n" +
             "\tshow info [card id]\n" +
