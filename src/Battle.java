@@ -41,7 +41,7 @@ public class Battle {
         Player player = checkEndBattle();
         if (player != null)
             return endBattle(player);
-        }
+
             removeBuffs();
             resetUnitsMoveAndAttack();
             resetSelectedForPlayers();
