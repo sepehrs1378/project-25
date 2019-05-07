@@ -20,7 +20,6 @@ public class AI {
             attackWithUnit(battle,unit);
         }
         insertNextCard(battle);
-        View.getInstance().printOutputMessage(battle.nextTurn());
     }
 
     private void insertNextCard(Battle battle) {

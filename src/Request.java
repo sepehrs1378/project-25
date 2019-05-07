@@ -91,20 +91,6 @@ public class Request {
         if (command.toLowerCase().matches("^save$"))
             return RequestType.SAVE;
         if (command.toLowerCase().matches("^search [^ ]+$"))
-/*
-            String[] strings = command.split(" ");
-            String output = "";
-            int counter = 0;
-            for (String string : strings) {
-                if (counter != strings.length - 1) {
-                    output += string.toLowerCase() + " ";
-                } else {
-                    output += string;
-                }
-                counter++;
-            }
-            command = output;
-*/
             return RequestType.SEARCH_NAME;
         if (command.toLowerCase().matches("^search collection [^ ]+$"))
             return RequestType.SEARCH_COLLECTION_NAME;

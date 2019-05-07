@@ -47,30 +47,22 @@ public class ControllerSinglePlayerMenu {
                         , Constants.CLASSIC, 0, null , Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            } else if (request.getCommand().equals("enter level2") && database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
+            }
+            if (request.getCommand().equals("enter level2") && database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
                         , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            } else if (request.getCommand().equals("enter level3")&&database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
-                view.print("Please enter number of flags:");
-                boolean isTrueNumber = false;
-                int numberOfFlags = 0;
-                while (!isTrueNumber) {
-                    request.getNewCommand();
-                    if (request.getCommand().matches("\\d+") && Integer.parseInt(request.getCommand()) > 0) {
-                        numberOfFlags = Integer.parseInt(request.getCommand());
-                        isTrueNumber = true;
-                    } else {
-                        view.printOutputMessage(OutputMessageType.INVALID_NUMBER);
-                        view.print("please enter a correct number");
-                    }
-
-                }
+            }else if(request.getCommand().equals("enter level2") && !database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+                view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
+            }
+            if (request.getCommand().equals("enter level3")&&database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
-                        , Constants.FLAGS, numberOfFlags, null, Constants.SINGLE);
+                        , Constants.FLAGS, 7, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
+            }else if(request.getCommand().equals("enter level3") &&!database.getLoggedInAccount().getLevelsOpennessStatus()[2]){
+                view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
         } else if (request.getCommand().equals("enter custom")) {
             List<Deck> decks = database.getLoggedInAccount().getValidDecks();
