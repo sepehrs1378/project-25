@@ -5,7 +5,7 @@ public class StunBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    public void doEffect(Unit unit) {
         //todo looks like it's gonna' be empty
     }
 

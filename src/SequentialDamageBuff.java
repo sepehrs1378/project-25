@@ -14,10 +14,6 @@ public class SequentialDamageBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
-        //todo looks like it's gonna' be empty
-    }
-
     public void doEffect(Unit unit) {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         unit.changeHp(-damagePerTurn.get(currentTurn - getStartTurn()));

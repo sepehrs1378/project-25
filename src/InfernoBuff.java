@@ -11,7 +11,8 @@ public class InfernoBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    //todo complete it later for damage to units on cells
+    public void doEffect(Unit unit) {
         List<Cell> cells = dataBase.getCurrentBattle().
                 getBattleGround().getCellsHavingBuff(this);
         if (!isActive()) {
@@ -20,6 +21,11 @@ public class InfernoBuff extends Buff {
                     cell.getUnit().changeHp(-damagePerTurn);
             }
         }
+    }
+
+    @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
     }
 
     @Override

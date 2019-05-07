@@ -9,7 +9,7 @@ public class ImmunityBuff extends Buff {
     }
 
     @Override
-    public void doEffect() {
+    public void doEffect(Unit unit) {
         //todo looks gonna be empty
     }
 

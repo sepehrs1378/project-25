@@ -39,13 +39,22 @@ public class Battle {
         Player player = checkEndBattle();
         if (player != null)
             return endBattle(player);
-        reviveContinuousBuffs();
-        removeExpiredBuffs();
+        removeBuffs();
         resetUnitsMoveAndAttack();
         resetSelectedForPlayers();
         doBuffsEffects();
         checkForDeadUnits();
         checkSpecialPowersCooldown();
+        checkFlagInHandTurn();
+        changeTurn();
+        turnNumber++;
+        reviveContinuousBuffs();
+        setManaBasedOnTurnNumber();
+        playerInTurn.moveNextCardToHand();
+        return OutputMessageType.TURN_CHANGED;
+    }
+
+    private void checkFlagInHandTurn() {
         if (this.mode.equals(Constants.ONE_FLAG)) {
             Unit unit = battleGround.getUnitHavingFlag();
             if (unit != null) {
@@ -53,11 +62,6 @@ public class Battle {
                 unit.getFlags().get(0).setTurnsInUnitHand(turn + 1);
             }
         }
-        changeTurn();
-        turnNumber++;
-        setManaBasedOnTurnNumber();
-        playerInTurn.moveNextCardToHand();
-        return OutputMessageType.TURN_CHANGED;
     }
 
     private void resetSelectedForPlayers() {
@@ -246,25 +250,45 @@ public class Battle {
         }
     }
 
-    public void removeExpiredBuffs() {
+    public void removeBuffs() {
+        removeBuffsFromCellsAndUnits();
+        removeBuffsFrom(player1);
+        removeBuffsFrom(player2);
+    }
+
+    private void removeBuffsFromCellsAndUnits() {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
-                for (Buff buff : cell.getBuffs()) {
-                    if (buff.isExpired())
-                        buff.remove();
+                int k = 0;
+                while (k < cell.getBuffs().size()) {
+                    Buff buff = cell.getBuffs().get(k);
+                    if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+                        cell.getBuffs().remove(buff);
+                    else k++;
+                }
+                if (cell.getUnit() == null)
+                    continue;
+                k = 0;
+                while (k < cell.getUnit().getBuffs().size()) {
+                    Buff buff = cell.getUnit().getBuffs().get(k);
+                    if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+                        cell.getUnit().getBuffs().remove(buff);
+                    else k++;
                 }
             }
         }
-        for (Buff buff : player1.getBuffs()) {
-            if (buff.isExpired())
-                buff.remove();
-        }
-        for (Buff buff : player2.getBuffs()) {
-            if (buff.isExpired())
-                buff.remove();
+    }
+
+    private void removeBuffsFrom(Player player2) {
+        int i;
+        i = 0;
+        while (i < player2.getBuffs().size()) {
+            Buff buff = player2.getBuffs().get(i);
+            if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+                player2.getBuffs().remove(buff);
         }
     }
 
@@ -299,19 +323,24 @@ public class Battle {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
-                    buff.doEffect();
+//                    buff.doEffect();
+                    //todo
                 }
                 if (cell.isEmptyOfUnit())
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
-                    buff.doEffect();
+                    buff.doEffect(cell.getUnit());
                 }
             }
         }
-        for (Buff buff : player1.getBuffs())
-            buff.doEffect();
-        for (Buff buff : player2.getBuffs())
-            buff.doEffect();
+        for (Buff buff : player1.getBuffs()) {
+            if (buff instanceof ManaBuff)
+                ((ManaBuff) buff).doEffect(player1);
+        }
+        for (Buff buff : player2.getBuffs()) {
+            if (buff instanceof ManaBuff)
+                ((ManaBuff) buff).doEffect(player2);
+        }
     }
 
     public OutputMessageType insert(Card card, int row, int column) {
@@ -338,6 +367,8 @@ public class Battle {
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
                 playerInTurn.reduceMana(unit.getMana());
+                unit.setDidMoveThisTurn(true);
+                unit.setDidAttackThisTurn(true);
             } else return OutputMessageType.THIS_CELL_IS_FULL;
         }
         if (card instanceof Spell) {

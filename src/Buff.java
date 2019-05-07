@@ -16,7 +16,7 @@ abstract public class Buff {
         this.isContinuous = isContinuous;
     }
 
-    public abstract void doEffect();
+    public abstract void doEffect(Unit unit);
 
     public abstract void doEndingEffect();
 
@@ -38,10 +38,10 @@ abstract public class Buff {
 
     public boolean isExpired() {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        return currentTurn <= startTurn + durationTurn;//todo condition may be wrong
+        return currentTurn > startTurn + durationTurn;
     }
 
-    public void remove() {
+    /*public void remove() {
         List<Cell> cells = dataBase.getCurrentBattle().getBattleGround().getCellsHavingBuff(this);
         List<Unit> units = dataBase.getCurrentBattle().getBattleGround().getUnitsHavingBuff(this);
         List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
@@ -52,7 +52,7 @@ abstract public class Buff {
         for (Player player : players)
             player.getBuffs().remove(this);
     }
-
+*/
     public abstract Buff clone();
 
     public String getPositiveOrNegative() {
@@ -81,6 +81,10 @@ abstract public class Buff {
 
     public void setDead(boolean dead) {
         isDead = dead;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public int getDurationTurn() {
