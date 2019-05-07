@@ -15,17 +15,12 @@ public class AI {
 
     public void doNextMove() {
         Battle battle = dataBase.getCurrentBattle();
-        System.out.println("1");
         moveUnits(battle);
-        System.out.println("2");
         for (Unit unit:battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())){
             attackWithUnit(battle,unit);
         }
-        System.out.println("3");
         insertNextCard(battle);
-        System.out.println("4");
-        battle.nextTurn();
-        System.out.println("5");
+        View.getInstance().printOutputMessage(battle.nextTurn());
     }
 
     private void insertNextCard(Battle battle) {

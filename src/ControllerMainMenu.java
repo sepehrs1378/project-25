@@ -48,7 +48,7 @@ public class ControllerMainMenu {
             case "enter battle":
                 try {
                     ControllerBattleMenu.getInstance().main();
-                } catch (Exception e) {
+                } catch (GoToMainMenuException e) {
                 }
                 break;
             default:
