@@ -152,7 +152,6 @@ class BattleGround {
         Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
         if (selectedUnit.didMoveThisTurn())
             return OutputMessageType.UNIT_ALREADY_MOVED;
-        //todo check obstacles ...
         if (cells[destinationRow][destinationColumn].getUnit() != null)
             return OutputMessageType.CELL_IS_FULL;
         int[] coordination = getCoordinationOfUnit(selectedUnit);

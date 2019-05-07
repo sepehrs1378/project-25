@@ -7,4 +7,3 @@ public class Main {
 }
 //todo do we use a Card or its Clone in the Battle?
 //todo change money in Constants before tahvil
-//todo singlePlayer decks

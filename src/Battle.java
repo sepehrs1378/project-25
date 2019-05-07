@@ -38,13 +38,14 @@ public class Battle {
     }
 
     public OutputMessageType nextTurn() {
-        Player player = checkEndBattle();
-        if (player != null)
-            return endBattle(player);
-        removeBuffs();
-        resetUnitsMoveAndAttack();
         resetSelectedForPlayers();
+        resetUnitsMoveAndAttack();
         doBuffsEffects();
+        removeBuffs();
+        Player player = checkEndBattle();
+        if (player != null) {
+            return endBattle(player);
+        }
         checkForDeadUnits();
         checkSpecialPowersCooldown();
         checkFlagInHandTurn();
@@ -319,7 +320,7 @@ public class Battle {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
-                    //todo
+                    //todo IMPORTANT
                 }
                 if (cell.isEmptyOfUnit())
                     continue;

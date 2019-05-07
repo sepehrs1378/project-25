@@ -13,7 +13,7 @@ public class DamagePerTurnBuff extends Buff {
     @Override
     public void doEffect(Unit unit) {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        if (!isActive()) {
+        if (isActive()) {
             int damage = damagePerTurn[currentTurn - (getStartTurn())];
             unit.changeHp(damage);
         }
