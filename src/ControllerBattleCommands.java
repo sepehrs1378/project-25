@@ -15,7 +15,7 @@ public class ControllerBattleCommands {
     private ControllerBattleCommands() {
     }
 
-    public void main() {
+    public void main() throws GoToMainMenuException{
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -296,15 +296,15 @@ public class ControllerBattleCommands {
         return true;
     }
 
-    private boolean endTurn() {
+    private boolean endTurn() throws GoToMainMenuException {
         OutputMessageType outputMessageType = database.getCurrentBattle().nextTurn();
         view.printOutputMessage(outputMessageType);
-        if (outputMessageType == OutputMessageType.WINNER_PLAYER1 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
+        if (outputMessageType == OutputMessageType.WINNER_PLAYER1
+                || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             endGame();
-            return true;
+            throw new GoToMainMenuException("go to main menu");
         }
         return false;
-
     }
 
     public void enter() {

@@ -45,7 +45,10 @@ public class ControllerMainMenu {
                 ControllerShop.getOurInstance().main();
                 break;
             case "enter battle":
-                ControllerBattleMenu.getInstance().main();
+                try {
+                    ControllerBattleMenu.getInstance().main();
+                } catch (Exception e) {
+                }
                 break;
             default:
                 request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);

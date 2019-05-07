@@ -37,9 +37,8 @@ public class Battle {
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if (player != null) {
+        if (player != null)
             return endBattle(player);
-        }
         reviveContinuousBuffs();
         removeExpiredBuffs();
         resetUnitsMoveAndAttack();

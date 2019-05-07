@@ -10,7 +10,7 @@ public class ControllerBattleMenu {
     private ControllerBattleMenu() {
     }
 
-    public void main() {
+    public void main() throws GoToMainMenuException {
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
@@ -34,7 +34,7 @@ public class ControllerBattleMenu {
         view.printHelp(HelpType.CONTROLLER_BATTLEMENU_HELP);
     }
 
-    private void enter() {
+    private void enter() throws GoToMainMenuException {
         if (request.getCommand().equals("enter singleplayer")) {
             ControllerSinglePlayerMenu.getInstance().main();
         } else if (request.getCommand().equals("enter multiplayer")) {
