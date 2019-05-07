@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class PoisonBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
     private int damagePerTurn;

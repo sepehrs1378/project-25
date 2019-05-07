@@ -11,7 +11,7 @@ public class ControllerMultiPlayerMenu {
     private ControllerMultiPlayerMenu() {
     }
 
-    public void main() throws GoToMainMenuException{
+    public void main() throws GoToMainMenuException {
         view.showUsers(database.getAccounts(), database.getLoggedInAccount().getUsername());
         boolean didExit = false;
         while (!didExit) {
@@ -64,7 +64,7 @@ public class ControllerMultiPlayerMenu {
                 if (database.getLoggedInAccount().getMainDeck() != null &&
                         secondPlayer.getMainDeck() != null
                         && database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
-                    Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags, null,Constants.MULTI);
+                    Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags, null, Constants.MULTI);
                     database.setCurrentBattle(battle);
                     ControllerBattleCommands.getInstance().main();
                 } else {

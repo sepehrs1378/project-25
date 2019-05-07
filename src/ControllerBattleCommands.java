@@ -18,8 +18,8 @@ public class ControllerBattleCommands {
     public void main() throws GoToMainMenuException {
         boolean didExit = false;
         while (!didExit) {
-            if(database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
-                    && database.getCurrentBattle().getPlayerInTurn()==database.getCurrentBattle().getPlayer2()){
+            if (database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
+                    && database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer2()) {
                 AI.getInstance().doNextMove();
                 endTurn();
             }

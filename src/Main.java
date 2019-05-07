@@ -5,5 +5,3 @@ public class Main {
         controllerAccount.main();
     }
 }
-//todo do we use a Card or its Clone in the Battle?
-//todo change money in Constants before tahvil

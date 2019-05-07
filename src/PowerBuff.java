@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class PowerBuff extends Buff {
     private int apPlus;
     private int hpPlus;

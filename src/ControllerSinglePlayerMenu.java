@@ -37,14 +37,14 @@ public class ControllerSinglePlayerMenu {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
     }
 
-    public void enter() throws GoToMainMenuException{
+    public void enter() throws GoToMainMenuException {
         if (request.getCommand().equals("enter story")) {
             view.printHelp(HelpType.STORY_MODE_OPTIONS);
             view.print("please enter your level:");
             request.getNewCommand();
             if (request.getCommand().equals("enter level1")) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1()
-                        , Constants.CLASSIC, 0, null , Constants.SINGLE);
+                        , Constants.CLASSIC, 0, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
             }
@@ -53,15 +53,15 @@ public class ControllerSinglePlayerMenu {
                         , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            }else if(request.getCommand().equals("enter level2") && !database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+            } else if (request.getCommand().equals("enter level2") && !database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
-            if (request.getCommand().equals("enter level3")&&database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
+            if (request.getCommand().equals("enter level3") && database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
                         , Constants.FLAGS, 7, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            }else if(request.getCommand().equals("enter level3") &&!database.getLoggedInAccount().getLevelsOpennessStatus()[2]){
+            } else if (request.getCommand().equals("enter level3") && !database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
         } else if (request.getCommand().equals("enter custom")) {
@@ -69,10 +69,10 @@ public class ControllerSinglePlayerMenu {
             view.printOutputMessage(OutputMessageType.PLEASE_SELECT_A_DECK);
             view.showValidDecks(decks);
             request.getNewCommand();
-            if (request.getCommand().matches("^start game \\w+ \\w+\\s*\\w*$")){
+            if (request.getCommand().matches("^start game \\w+ \\w+\\s*\\w*$")) {
                 Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().
-                        getDeckFromListOfDecks(decks,request.getCommand().split("\\s+")[2]);
-                if (deck != null){
+                        getDeckFromListOfDecks(decks, request.getCommand().split("\\s+")[2]);
+                if (deck != null) {
                     database.getComputerPlayerCostum().setMainDeck(new Deck(deck));
                     database.setNewIdsForCustomPlayer();
                     switch (request.getCommand().split("\\s+")[3]) {
@@ -108,8 +108,8 @@ public class ControllerSinglePlayerMenu {
                             view.printOutputMessage(OutputMessageType.INVALID_MODE);
                             break;
                     }
-                }else view.printOutputMessage(OutputMessageType.DECK_NOT_VALID);
-            }else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
+                } else view.printOutputMessage(OutputMessageType.DECK_NOT_VALID);
+            } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
 
 
         } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);

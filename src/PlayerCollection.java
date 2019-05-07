@@ -322,8 +322,8 @@ public class PlayerCollection {
         return output;
     }
 
-    public Deck getDeckFromListOfDecks(List<Deck> decks, String deckName){
-        for (Deck deck:decks){
+    public Deck getDeckFromListOfDecks(List<Deck> decks, String deckName) {
+        for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
                 return deck;
         }

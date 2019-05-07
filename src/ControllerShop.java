@@ -14,7 +14,7 @@ class ControllerShop {
         return ourInstance;
     }
 
-    public void main()  {
+    public void main() {
         boolean didExit = false;
         while (!didExit) {
             request.getNewCommand();
