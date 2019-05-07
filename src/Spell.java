@@ -6,6 +6,7 @@ class Spell extends Card {
     private int apChange;
     private int hpChange;
     private int coolDown;
+    private int turnsToGetReady = 0;
     private Target target;
     private List<Spell> addedSpells = new ArrayList<>();
     private List<Buff> addedBuffs = new ArrayList<>();
@@ -153,6 +154,12 @@ class Spell extends Card {
         }
     }
 
+    public void changeTurnsToGetReady(int amount) {
+        turnsToGetReady += amount;
+        if (turnsToGetReady < 0)
+            turnsToGetReady = 0;
+    }
+
     public int getApChange() {
         return apChange;
     }
@@ -179,5 +186,13 @@ class Spell extends Card {
 
     public SpellActivationType getActivationType() {
         return activationType;
+    }
+
+    public int getTurnsToGetReady() {
+        return turnsToGetReady;
+    }
+
+    public void setTurnsToGetReady(int turnsToGetReady) {
+        this.turnsToGetReady = turnsToGetReady;
     }
 }

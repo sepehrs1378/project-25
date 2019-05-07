@@ -70,6 +70,10 @@ public enum OutputMessageType {
     TURN_CHANGED("Turn changed"),
     NOT_ENOUGH_MANA("Not enough mana"),
     NOT_NEARBY_FRIENDLY_UNITS("Selected cell is not nearby friendly units"),
+    SPECIAL_POWER_IN_COOLDOWN("Special power is not ready yet..."),
+    COLLECTABLE_NOT_SELECTED("No collectable is selected"),
+    COLLECTABLE_USED("Collectable used"),
+    HERO_HAS_NO_SPELL("Hero has no spell"),
     NO_ERROR("");
 
     private String message;
