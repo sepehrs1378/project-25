@@ -24,7 +24,6 @@ public class Constants {
     public static final String WHOLE_UNITS = "whole units";
     public static final String WHOLE_HEROES = "whole heroes";
     public static final String WHOLE_MINIONS = "whole minions";
-
     public static final String CELL = "cell";
 
     public static final String MELEE = "melee";

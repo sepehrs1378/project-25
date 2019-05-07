@@ -232,7 +232,7 @@ public class Unit extends Card {
     public boolean isImmuneTo(String effect) {
         for (Buff buff : buffs) {
             if (buff instanceof ImmunityBuff
-                    && ((ImmunityBuff) buff).getImmunity().contains(effect))
+                    && ((ImmunityBuff) buff).getImmunity().matches(effect))
                 return true;
         }
         return false;

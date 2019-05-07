@@ -3,9 +3,9 @@ import java.util.List;
 
 class Target {
     private DataBase dataBase = DataBase.getInstance();
-    private String typeOfTarget;
-    private String friendlyOrEnemy;
-    private String targetUnitClass;
+    private List<String> typeOfTarget = new ArrayList<>();
+    private List<String> friendlyOrEnemy = new ArrayList<>();
+    private List<String> targetUnitClass = new ArrayList<>();
     private int width;
     private int length;
     private int manhattanDistance;
@@ -15,9 +15,70 @@ class Target {
     public Target(String typeOfTarget, int width, int length,
                   String friendlyOrEnemy, boolean isRandomSelecting,
                   boolean doesAffectAllCards, int manhattanDistance, String targetUnitClass) {
-        this.typeOfTarget = typeOfTarget;
-        this.friendlyOrEnemy = friendlyOrEnemy;
-        this.targetUnitClass = targetUnitClass;
+        switch (typeOfTarget) {
+            case Constants.MINION:
+                this.typeOfTarget.add(Constants.MINION);
+                break;
+            case Constants.HERO:
+                this.typeOfTarget.add(Constants.HERO);
+                break;
+            case Constants.HERO_MINION:
+                this.typeOfTarget.add(Constants.HERO);
+                this.typeOfTarget.add(Constants.MINION);
+                break;
+            case Constants.WHOLE_HEROES:
+                //todo
+                break;
+            case Constants.WHOLE_MINIONS:
+                //todo
+                break;
+            case Constants.WHOLE_UNITS:
+                //todo
+                break;
+            default:
+        }
+        switch (friendlyOrEnemy) {
+            case Constants.FRIEND:
+                this.friendlyOrEnemy.add(Constants.FRIEND);
+                break;
+            case Constants.ENEMY:
+                this.friendlyOrEnemy.add(Constants.ENEMY);
+                break;
+            case Constants.ALL:
+                this.friendlyOrEnemy.add(Constants.FRIEND);
+                this.friendlyOrEnemy.add(Constants.ENEMY);
+                break;
+            default:
+        }
+        switch (targetUnitClass) {
+            case Constants.MELEE:
+                this.targetUnitClass.add(Constants.MELEE);
+                break;
+            case Constants.HYBRID:
+                this.targetUnitClass.add(Constants.HYBRID);
+                break;
+            case Constants.RANGED:
+                this.targetUnitClass.add(Constants.RANGED);
+                break;
+            case Constants.MELLE_RANGED:
+                this.targetUnitClass.add(Constants.MELEE);
+                this.targetUnitClass.add(Constants.RANGED);
+                break;
+            case Constants.MELEE_HYBRID:
+                this.targetUnitClass.add(Constants.MELEE);
+                this.targetUnitClass.add(Constants.HYBRID);
+                break;
+            case Constants.RANGED_HYBRID:
+                this.targetUnitClass.add(Constants.RANGED);
+                this.targetUnitClass.add(Constants.HYBRID);
+                break;
+            case Constants.ALL:
+                this.targetUnitClass.add(Constants.HYBRID);
+                this.targetUnitClass.add(Constants.RANGED);
+                this.targetUnitClass.add(Constants.MELEE);
+                break;
+            default:
+        }
         this.width = width;
         this.length = length;
         this.manhattanDistance = manhattanDistance;
@@ -25,11 +86,9 @@ class Target {
         this.doesAffectAllCards = doesAffectAllCards;
     }
 
-    public Target clone() {
-        return new Target(typeOfTarget, width, length,
-                friendlyOrEnemy, isRandomSelecting, doesAffectAllCards,
-                manhattanDistance, targetUnitClass);
-    }
+//    public Target clone() {
+//        return new Target()
+//    }
 
     public List<Cell> getTargetCells(int insertionRow, int insertionColumn) {
         List<Cell> targetCells = new ArrayList<>();
@@ -57,8 +116,8 @@ class Target {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 unit = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j].getUnit();
                 if (unit != null) {
-                    if (unit.getHeroOrMinion().equals(typeOfTarget)
-                            && dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit).equals(friendlyOrEnemy)
+                    if (typeOfTarget.contains(unit.getHeroOrMinion())
+                            && friendlyOrEnemy.contains(dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit))
                             && isCoordinationValid(i, j, insertionRow, insertionColumn))
                         targetUnits.add(unit);
                 }

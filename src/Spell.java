@@ -80,7 +80,7 @@ class Spell extends Card {
     public Spell clone() {
         return new Spell(getId(), getName(), getPrice(),
                 getMana(), apChange, hpChange, coolDown,
-                target.clone(), addedBuffs, activationType,
+                target, addedBuffs, activationType,
                 description, isDispeller);
     }
 
@@ -88,6 +88,9 @@ class Spell extends Card {
         List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn);
         for (Cell cell : targetCells) {
             for (Buff buff : getAddedBuffs()) {
+                Buff cloneBuff = buff.clone();
+                cloneBuff.setDead(false);
+                cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
                 cell.getBuffs().add(buff);
             }
         }
@@ -95,6 +98,7 @@ class Spell extends Card {
 
     private void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
         List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn);
+        System.out.println(targetUnits);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
                     && dataBase.getCurrentBattle().getBattleGround().
