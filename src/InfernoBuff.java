@@ -21,4 +21,9 @@ public class InfernoBuff extends Buff {
             }
         }
     }
+
+    @Override
+    public InfernoBuff clone() {
+        return new InfernoBuff(getDurationTurn(), isDispellable(), isContinuous(), damagePerTurn);
+    }
 }

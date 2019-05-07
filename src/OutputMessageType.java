@@ -38,7 +38,7 @@ public enum OutputMessageType {
     CELL_IS_FULL("selected cell is full"),
     CELL_OUT_OF_RANGE("Cell unit is out of range"),
     NO_FLAG_NUMBER("please enter number of flags in flags mode!"),
-    ATTACKED_SUCCESSFULLY(""),
+    ATTACKED_SUCCESSFULLY("Attacked Successfully"),
     ALREADY_ATTACKED("Unit has already attacked"),
     NO_CARD_IN_BATTLEGROUND("There is no such card in battle ground"),
     CARD_ALREADY_IN_DECK("Card exists in Deck"),

@@ -13,6 +13,11 @@ public class NegativeArmorBuff extends Buff {
         //todo looks like it's gonna' be empty
     }
 
+    @Override
+    public NegativeArmorBuff clone() {
+        return new NegativeArmorBuff(getDurationTurn(), isContinuous(), isDispellable(), negativeArmorAmount);
+    }
+
     public int getNegativeArmorAmount() {
         return negativeArmorAmount;
     }

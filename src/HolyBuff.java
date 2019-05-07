@@ -13,6 +13,11 @@ public class HolyBuff extends Buff {
         //todo looks gonna be empty
     }
 
+    @Override
+    public HolyBuff clone() {
+        return new HolyBuff(getDurationTurn(), isDispellable(), isContinuous(), armor);
+    }
+
     public int getArmor() {
         return armor;
     }

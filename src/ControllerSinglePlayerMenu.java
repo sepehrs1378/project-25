@@ -8,7 +8,7 @@ public class ControllerSinglePlayerMenu {
 
     }
 
-    public void main() throws GoToMainMenuException{
+    public void main() throws GoToMainMenuException {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
         boolean didExit = false;
         while (!didExit) {
@@ -21,6 +21,7 @@ public class ControllerSinglePlayerMenu {
                     break;
                 case HELP:
                     help();
+                    break;
                 case EXIT:
                     didExit = true;
                     break;
@@ -34,7 +35,7 @@ public class ControllerSinglePlayerMenu {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
     }
 
-    public void enter() throws GoToMainMenuException{
+    public void enter() throws GoToMainMenuException {
         if (request.getCommand().equals("story")) {
             view.printHelp(HelpType.STORY_MODE_OPTIONS);
             view.print("please enter your level:");

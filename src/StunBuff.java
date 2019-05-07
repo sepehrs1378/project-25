@@ -8,4 +8,9 @@ public class StunBuff extends Buff {
     public void doEffect() {
         //todo looks like it's gonna' be empty
     }
+
+    @Override
+    public StunBuff clone(){
+        return new StunBuff(getDurationTurn(),isDispellable(),isContinuous());
+    }
 }

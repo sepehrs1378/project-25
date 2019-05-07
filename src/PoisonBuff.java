@@ -21,4 +21,9 @@ public class PoisonBuff extends Buff {
             }
         }
     }
+
+    @Override
+    public PoisonBuff clone(){
+        return new PoisonBuff(getDurationTurn(),isDispellable(),isContinuous(),damagePerTurn);
+    }
 }

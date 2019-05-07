@@ -20,4 +20,9 @@ public class ManaBuff extends Buff {
         }
         //todo ممکنه تاثیرش به خاطر nextTurn اعمال نشه و بره زیر مقدار دهی معمولی مانا
     }
+
+    @Override
+    public ManaBuff clone() {
+        return new ManaBuff(getDurationTurn(), isDispellable(), isContinuous(), manaAddedPerTurn);
+    }
 }

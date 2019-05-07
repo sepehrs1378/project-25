@@ -51,6 +51,8 @@ abstract public class Buff {
             player.getBuffs().remove(this);
     }
 
+    public abstract Buff clone();
+
     public String getPositiveOrNegative() {
         return positiveOrNegative;
     }
@@ -75,7 +77,7 @@ abstract public class Buff {
         isActive = active;
     }
 
-    public boolean isActive(boolean active) {
-        return isActive;
+    public int getDurationTurn() {
+        return durationTurn;
     }
 }

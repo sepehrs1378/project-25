@@ -18,6 +18,14 @@ public class SequentialDamageBuff extends Buff {
         //todo looks like it's gonna' be empty
     }
 
+    @Override
+    public SequentialDamageBuff clone() {
+        int[] damageArray = new int[10];
+        for (int i = 0; i < damagePerTurn.size(); i++)
+            damageArray[i] = damagePerTurn.get(i);
+        return new SequentialDamageBuff(getDurationTurn(), isContinuous(), isDispellable(), damageArray);
+    }
+
     public void doEffect(Unit unit) {
         int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
         unit.changeHp(-damagePerTurn.get(currentTurn - getStartTurn()));

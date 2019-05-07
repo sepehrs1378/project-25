@@ -23,4 +23,9 @@ public class PowerBuff extends Buff {
             }
         }
     }
+
+    @Override
+    public PowerBuff clone() {
+        return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus);
+    }
 }

@@ -121,6 +121,7 @@ class Spell extends Card {
                 continue;
             if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
                 continue;
+
             unit.getBuffs().add(buff);
         }
     }

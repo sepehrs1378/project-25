@@ -13,6 +13,11 @@ public class ImmunityBuff extends Buff {
         //todo looks gonna be empty
     }
 
+    @Override
+    public ImmunityBuff clone() {
+        return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(), immunity);
+    }
+
     public String getImmunity() {
         return immunity;
     }

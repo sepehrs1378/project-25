@@ -8,4 +8,9 @@ public class DisarmBuff extends Buff {
     public void doEffect() {
         //todo looks gonna be empty
     }
+
+    @Override
+    public DisarmBuff clone() {
+        return new DisarmBuff(getDurationTurn(), isDispellable(), isContinuous());
+    }
 }
