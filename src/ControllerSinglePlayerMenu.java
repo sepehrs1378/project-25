@@ -77,13 +77,12 @@ public class ControllerSinglePlayerMenu {
             view.printOutputMessage(OutputMessageType.PLEASE_SELECT_A_DECK);
             view.showValidDecks(decks);
             request.getNewCommand();
-            if (request.getCommand().matches("start game \\w+ \\w+ \\w*")){
+            if (request.getCommand().matches("^start game \\w+ \\w+\\s*\\w*$")){
                 Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().
                         getDeckFromListOfDecks(decks,request.getCommand().split("\\s+")[2]);
                 if (deck != null){
                     database.getComputerPlayerCostum().setMainDeck(new Deck(deck));
                     database.setNewIdsForCustomPlayer();
-                    request.getNewCommand();
                     switch (request.getCommand().split("\\s+")[3]) {
                         case Constants.CLASSIC: {
                             Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),

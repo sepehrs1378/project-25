@@ -15,7 +15,7 @@ public class Battle {
     private String singleOrMulti;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
-            , String mode, int numberOfFlags, Collectable collectable , String singleOrMulti) {
+            , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti) {
         this.singleOrMulti = singleOrMulti;
         dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
@@ -30,8 +30,8 @@ public class Battle {
         MatchInfo matchInfo2 = new MatchInfo();
         firstPlayerAccount.addMatchToMatchList(matchInfo1);
         secondPlayerAccount.addMatchToMatchList(matchInfo2);
-        matchInfo1.setOpponent(firstPlayerAccount);
-        matchInfo2.setOpponent(secondPlayerAccount);
+        matchInfo1.setOpponent(firstPlayerAccount.getUsername());
+        matchInfo2.setOpponent(secondPlayerAccount.getUsername());
         matchInfo1.setMatchDate();
         matchInfo2.setMatchDate();
         startBattle();
@@ -41,19 +41,20 @@ public class Battle {
         Player player = checkEndBattle();
         if (player != null) {
             return endBattle(player);
-        removeBuffs();
-        resetUnitsMoveAndAttack();
-        resetSelectedForPlayers();
-        doBuffsEffects();
-        checkForDeadUnits();
-        checkSpecialPowersCooldown();
-        checkFlagInHandTurn();
-        changeTurn();
-        turnNumber++;
-        reviveContinuousBuffs();
-        setManaBasedOnTurnNumber();
-        playerInTurn.moveNextCardToHand();
-        return OutputMessageType.TURN_CHANGED;
+        }
+            removeBuffs();
+            resetUnitsMoveAndAttack();
+            resetSelectedForPlayers();
+            doBuffsEffects();
+            checkForDeadUnits();
+            checkSpecialPowersCooldown();
+            checkFlagInHandTurn();
+            changeTurn();
+            turnNumber++;
+            reviveContinuousBuffs();
+            setManaBasedOnTurnNumber();
+            playerInTurn.moveNextCardToHand();
+            return OutputMessageType.TURN_CHANGED;
     }
 
     private void checkFlagInHandTurn() {
@@ -501,3 +502,4 @@ public class Battle {
         return singleOrMulti;
     }
 }
+
