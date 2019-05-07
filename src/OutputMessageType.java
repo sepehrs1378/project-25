@@ -58,6 +58,7 @@ public enum OutputMessageType {
     FOUND_CARD("found card with id: "),
     CARD_NOT_FOUND("Card wasn't found"),
     OUT_OF_BOUNDARIES("Out of boundaries"),
+    LEVEL_IS_LOCKED("please win previous levels to unlock this level"),
     NO_SUCH_CARD_IN_COLLECTION("there is no such card in the PlayerCollection"),
     NO_HERO("Hero can't use special power"),
     INVALID_NUMBER("the number was out of battleGround boundaries"),

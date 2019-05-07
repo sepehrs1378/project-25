@@ -124,6 +124,4 @@ enter battle
 enter multiplayer
 select user player1
 start multiplayer game flags 1
-show battleground
-game info
-end turn
+

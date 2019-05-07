@@ -47,6 +47,7 @@ public enum HelpType {
             "\n\tenter graveyard" +
             "\n\tshow battleground" +
             "\n\thelp" +
+            "\n\tforfeit" +
             "\n\tend game"),
     CONTROLLER_SINGLE_PLAYER_MENU("Single player commands :" +
             "\n\tenter story" +

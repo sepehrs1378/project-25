@@ -921,6 +921,14 @@ public class DataBase {
             if (account.getUsername().equals(username))
                 return account;
         }
+        if (computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerLevel3;
+        else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerLevel2;
+        if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerLevel1;
+        if (computerPlayerCostum.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerCostum;
         return null;
     }
 
