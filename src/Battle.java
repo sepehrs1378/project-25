@@ -12,9 +12,11 @@ public class Battle {
     private int turnNumber = 1;
     private boolean isBattleFinished = false;
     private int numberOfFlags;
+    private String singleOrMulti;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
-            , String mode, int numberOfFlags, Collectable collectable) {
+            , String mode, int numberOfFlags, Collectable collectable , String singleOrMulti) {
+        this.singleOrMulti = singleOrMulti;
         dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
@@ -26,12 +28,10 @@ public class Battle {
         battleGround.setFlagsOnGround(numberOfFlags);
         MatchInfo matchInfo1 = new MatchInfo();
         MatchInfo matchInfo2 = new MatchInfo();
-        Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
-        playerAccount1.addMatchToMatchList(matchInfo1);
-        playerAccount2.addMatchToMatchList(matchInfo2);
-        matchInfo1.setOpponent(playerAccount2);
-        matchInfo2.setOpponent(playerAccount1);
+        firstPlayerAccount.addMatchToMatchList(matchInfo1);
+        secondPlayerAccount.addMatchToMatchList(matchInfo2);
+        matchInfo1.setOpponent(firstPlayerAccount);
+        matchInfo2.setOpponent(secondPlayerAccount);
         startBattle();
     }
 
@@ -463,5 +463,9 @@ public class Battle {
 
     public Collectable getCollectable() {
         return collectable;
+    }
+
+    public String getSingleOrMulti() {
+        return singleOrMulti;
     }
 }

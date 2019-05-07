@@ -35,21 +35,21 @@ public class ControllerSinglePlayerMenu {
     }
 
     public void enter() {
-        if (request.getCommand().equals("story")) {
+        if (request.getCommand().equals("enter story")) {
             view.printHelp(HelpType.STORY_MODE_OPTIONS);
             view.print("please enter your level:");
             request.getNewCommand();
-            if (request.getCommand().equals("level1")) {
+            if (request.getCommand().equals("enter level1")) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1()
-                        , Constants.CLASSIC, 0, null);
+                        , Constants.CLASSIC, 0, null , Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            } else if (request.getCommand().equals("level2")) {
+            } else if (request.getCommand().equals("enter level2")) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
-                        , Constants.ONE_FLAG, 1, null);
+                        , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
-            } else if (request.getCommand().equals("level3")) {
+            } else if (request.getCommand().equals("enter level3")) {
                 view.print("Please enter number of flags:");
                 boolean isTrueNumber = false;
                 int numberOfFlags = 0;
@@ -65,7 +65,7 @@ public class ControllerSinglePlayerMenu {
 
                 }
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
-                        , Constants.FLAGS, numberOfFlags, null);
+                        , Constants.FLAGS, numberOfFlags, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
                 ControllerBattleCommands.getInstance().main();
             }

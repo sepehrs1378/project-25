@@ -770,6 +770,7 @@ public class DataBase {
         addToComputerDeck(computerPlayer1Deck, 67, 1);
         addToComputerDeck(computerPlayer1Deck, 65, 1);
         addToComputerDeck(computerPlayer1Deck, 69, 1);
+        computerPlayerLevel1.setMainDeck(computerPlayer1Deck);
 
         Deck computerPlayer2Deck = new Deck("deck");
         addToComputerDeck(computerPlayer2Deck, 1, 1);
@@ -793,6 +794,7 @@ public class DataBase {
         addToComputerDeck(computerPlayer2Deck, 59, 1);
         addToComputerDeck(computerPlayer2Deck, 62, 1);
         addToComputerDeck(computerPlayer2Deck, 68, 1);
+        computerPlayerLevel2.setMainDeck(computerPlayer2Deck);
 
         Deck computerPlayer3Deck = new Deck("deck");
         addToComputerDeck(computerPlayer3Deck, 0, 1);
@@ -817,10 +819,9 @@ public class DataBase {
         addToComputerDeck(computerPlayer3Deck, 58, 1);
         addToComputerDeck(computerPlayer3Deck, 60, 1);
         addToComputerDeck(computerPlayer3Deck, 63, 1);
+        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);
 
         Deck computerPlayerCostumDeck = new Deck("deck");
-
-
     }
 
     public List<Card> getCardList() {
@@ -960,7 +961,12 @@ public class DataBase {
 
     private void addToComputerDeck(Deck computerDeck, int index, int number) {
         Card card;
-        card = cardList.get(index).clone();
+        card = cardList.get(index);
+        if(card instanceof Unit){
+            card=((Unit)card).clone();
+        }else if(card instanceof Spell){
+            card=((Spell)card).clone();
+        }
         card.setId(computerPlayerLevel1.getUsername() + "_" + card.getName() + "_" + number);
         if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
             computerDeck.setHero((Unit) card);
