@@ -60,7 +60,7 @@ public class Account implements Comparable<Account> {
     public int getNumberOfWins() {
         int numberOfWins = 0;
         for (MatchInfo matchInfo : matchList) {
-            if (matchInfo.getWinner() == this)
+            if (matchInfo.getWinner().equals(this.getUsername()))
                 numberOfWins++;
         }
         return numberOfWins;
@@ -84,6 +84,16 @@ public class Account implements Comparable<Account> {
 
     public void setMainDeck(Deck mainDeck) {
         this.mainDeck = mainDeck;
+    }
+
+    public List<Deck> getValidDecks(){
+        List<Deck> decks = new ArrayList<>();
+        for(Deck deck:this.getPlayerInfo().getCollection().getDecks()){
+            if(deck.isValid()){
+                decks.add(deck);
+            }
+        }
+        return decks;
     }
 
     public int compareTo(Account compareAccount) {

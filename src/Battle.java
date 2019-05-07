@@ -12,9 +12,11 @@ public class Battle {
     private int turnNumber = 1;
     private boolean isBattleFinished = false;
     private int numberOfFlags;
+    private String singleOrMulti;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
-            , String mode, int numberOfFlags, Collectable collectable) {
+            , String mode, int numberOfFlags, Collectable collectable , String singleOrMulti) {
+        this.singleOrMulti = singleOrMulti;
         dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
@@ -26,18 +28,18 @@ public class Battle {
         battleGround.setFlagsOnGround(numberOfFlags);
         MatchInfo matchInfo1 = new MatchInfo();
         MatchInfo matchInfo2 = new MatchInfo();
-        Account playerAccount1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account playerAccount2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
-        playerAccount1.addMatchToMatchList(matchInfo1);
-        playerAccount2.addMatchToMatchList(matchInfo2);
-        matchInfo1.setOpponent(playerAccount2);
-        matchInfo2.setOpponent(playerAccount1);
+        firstPlayerAccount.addMatchToMatchList(matchInfo1);
+        secondPlayerAccount.addMatchToMatchList(matchInfo2);
+        matchInfo1.setOpponent(firstPlayerAccount);
+        matchInfo2.setOpponent(secondPlayerAccount);
+        matchInfo1.setMatchDate();
+        matchInfo2.setMatchDate();
         startBattle();
     }
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if (player != null)
+        if (player != null) {
             return endBattle(player);
         removeBuffs();
         resetUnitsMoveAndAttack();
@@ -477,13 +479,13 @@ public class Battle {
         int sizeMatchList1 = player1Account.getMatchList().size();
         int sizeMatchList2 = player2Account.getMatchList().size();
         if (winner == player1) {
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account);
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account);
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account.getUsername());
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
         } else if (winner == player2) {
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account);
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account);
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account.getUsername());
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account.getUsername());
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }
@@ -492,5 +494,9 @@ public class Battle {
 
     public Collectable getCollectable() {
         return collectable;
+    }
+
+    public String getSingleOrMulti() {
+        return singleOrMulti;
     }
 }
