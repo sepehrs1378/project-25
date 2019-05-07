@@ -47,7 +47,13 @@ public class Battle {
         doBuffsEffects();
         checkForDeadUnits();
         checkSpecialPowersCooldown();
-        //todo check turns of flag in hand??
+        if(this.mode.equals(Constants.ONE_FLAG)){
+            Unit unit = battleGround.getUnitHavingFlag();
+            if(unit != null){
+                int turn = unit.getFlags().get(0).getTurnsInUnitHand();
+                unit.getFlags().get(0).setTurnsInUnitHand(turn+1);
+            }
+        }
         changeTurn();
         turnNumber++;
         setManaBasedOnTurnNumber();
@@ -169,10 +175,10 @@ public class Battle {
     }
 
     public Player checkEndBattleModeClassic() {
-        if (player1.getDeck().getHero().getHp() <= 0) {
+        if (battleGround.getHeroOfPlayer(player1).getHp() <= 0) {
             isBattleFinished = true;
             return player2;
-        } else if (player2.getDeck().getHero().getHp() <= 0) {
+        } else if (battleGround.getHeroOfPlayer(player2).getHp() <= 0) {
             isBattleFinished = true;
             return player1;
         }
@@ -180,14 +186,16 @@ public class Battle {
     }
 
     public Player checkEndBattleModeOneFlag() {
-        //todo
-        Cell cell = battleGround.getCellWithFlag();
-        if (cell != null) {
-            if (cell.getUnit().getFlags().get(0).getTurnsInUnitHand() >= 6) {
-                isBattleFinished = true;
-                if (cell.getUnit().getId().contains(player1.getPlayerInfo().getPlayerName()))
+        Unit unitWithFlag = battleGround.getUnitHavingFlag();
+        if(unitWithFlag!=null){
+            if(unitWithFlag.getFlags().get(0).getTurnsInUnitHand()>=6){
+                if(unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())){
+                    isBattleFinished=true;
                     return player1;
-                return player2;
+                }else {
+                    isBattleFinished=true;
+                    return player2;
+                }
             }
         }
         return null;

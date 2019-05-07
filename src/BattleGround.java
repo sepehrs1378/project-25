@@ -120,6 +120,16 @@ class BattleGround {
         return null;
     }
 
+    public Unit getUnitHavingFlag(){
+        for (Cell[] cellRow : cells) {
+            for (Cell cell : cellRow) {
+                if (!cell.getUnit().getFlags().isEmpty())
+                    return cell.getUnit();
+            }
+        }
+        return null;
+    }
+
     public List<Unit> getMinionsOfPlayer(Player player) {
         List<Unit> minions = new ArrayList<>();
         for (Cell[] cellRow : cells) {
