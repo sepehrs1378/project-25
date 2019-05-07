@@ -121,8 +121,10 @@ class Spell extends Card {
                 continue;
             if (buff instanceof DisarmBuff && unit.isImmuneTo(Constants.DISARM))
                 continue;
-
-            unit.getBuffs().add(buff);
+            Buff cloneBuff = buff.clone();
+            cloneBuff.setDead(false);
+            cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
+            unit.getBuffs().add(cloneBuff);
         }
     }
 
@@ -135,7 +137,7 @@ class Spell extends Card {
                 Buff buff = unit.getBuffs().get(i);
                 if (buff.getPositiveOrNegative().equals(Constants.NEGATIVE)
                         && buff.isDispellable()) {
-                    unit.getBuffs().get(i).setActive(false);
+                    unit.getBuffs().get(i).setDead(true);
                     continue;
                 }
                 i++;

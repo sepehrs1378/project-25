@@ -13,7 +13,7 @@ public class ManaBuff extends Buff {
     @Override
     public void doEffect() {
         List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
-        if (isActive()) {
+        if (!isActive()) {
             for (Player player : players) {
                 player.changeMana(manaAddedPerTurn);
             }

@@ -14,6 +14,11 @@ public class ImmunityBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
     public ImmunityBuff clone() {
         return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(), immunity);
     }

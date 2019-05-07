@@ -28,6 +28,11 @@ public class WeaknessBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo
+    }
+
+    @Override
     public WeaknessBuff clone() {
         return new WeaknessBuff(getDurationTurn(), isDispellable(), isContinuous(), hpMinus, apMinus);
     }

@@ -10,6 +10,11 @@ public class DisarmBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
     public DisarmBuff clone() {
         return new DisarmBuff(getDurationTurn(), isDispellable(), isContinuous());
     }

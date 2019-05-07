@@ -25,6 +25,11 @@ public class PowerBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo
+    }
+
+    @Override
     public PowerBuff clone() {
         return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus);
     }

@@ -15,7 +15,7 @@ public class PoisonBuff extends Buff {
     public void doEffect() {
         List<Unit> units = dataBase.getCurrentBattle().
                 getBattleGround().getUnitsHavingBuff(this);
-        if (isActive()) {
+        if (!isActive()) {
             for (Unit unit : units) {
                 unit.changeHp(-damagePerTurn);
             }
@@ -23,7 +23,7 @@ public class PoisonBuff extends Buff {
     }
 
     @Override
-    public PoisonBuff clone(){
-        return new PoisonBuff(getDurationTurn(),isDispellable(),isContinuous(),damagePerTurn);
+    public PoisonBuff clone() {
+        return new PoisonBuff(getDurationTurn(), isDispellable(), isContinuous(), damagePerTurn);
     }
 }

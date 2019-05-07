@@ -14,6 +14,11 @@ public class NegativeArmorBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
     public NegativeArmorBuff clone() {
         return new NegativeArmorBuff(getDurationTurn(), isContinuous(), isDispellable(), negativeArmorAmount);
     }

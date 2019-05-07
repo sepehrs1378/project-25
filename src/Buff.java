@@ -7,7 +7,7 @@ abstract public class Buff {
     private int durationTurn;
     private boolean isDispellable;
     private boolean isContinuous;
-    private boolean isActive;
+    private boolean isDead;
 
     public Buff(int durationTurn, boolean isDispellable
             , boolean isContinuous) {
@@ -18,9 +18,11 @@ abstract public class Buff {
 
     public abstract void doEffect();
 
+    public abstract void doEndingEffect();
+
     public void revive() {
         this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
-        this.setActive(true);
+        this.setDead(false);
         //todo maybe not completed
     }
 
@@ -65,6 +67,10 @@ abstract public class Buff {
         return startTurn;
     }
 
+    public void setStartTurn(int startTurn) {
+        this.startTurn = startTurn;
+    }
+
     public boolean isContinuous() {
         return isContinuous;
     }
@@ -73,8 +79,8 @@ abstract public class Buff {
         return isDispellable;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 
     public int getDurationTurn() {

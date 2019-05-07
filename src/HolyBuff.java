@@ -14,6 +14,11 @@ public class HolyBuff extends Buff {
     }
 
     @Override
+    public void doEndingEffect() {
+        //todo looks gonna be empty
+    }
+
+    @Override
     public HolyBuff clone() {
         return new HolyBuff(getDurationTurn(), isDispellable(), isContinuous(), armor);
     }
