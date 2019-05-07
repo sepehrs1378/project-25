@@ -1,11 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AI {
     private static final AI ourInstance = new AI();
     private DataBase dataBase = DataBase.getInstance();
-    private BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-    private Battle battle = dataBase.getCurrentBattle();
-    private Player computerPlayer = dataBase.getCurrentBattle().getPlayer2();
 
     public static AI getInstance() {
         return ourInstance;
@@ -15,24 +14,83 @@ public class AI {
     }
 
     public void doNextMove() {
-        int mana = computerPlayer.getMana();
-        for (Unit unit : battleGround.getMinionsOfPlayer(battle.getPlayer2())) {
-            int[] currentCoordinations = battleGround.getCoordinationOfUnit(unit);
-            int[] enemyCoordinations = findEnemyUnitInRange(currentCoordinations[0], currentCoordinations[1]);
-            if (enemyCoordinations == null)
-                continue;
-            else {
+        Battle battle = dataBase.getCurrentBattle();
+        System.out.println("1");
+        moveUnits(battle);
+        System.out.println("2");
+        for (Unit unit:battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())){
+            attackWithUnit(battle,unit);
+        }
+        System.out.println("3");
+        insertNextCard(battle);
+        System.out.println("4");
+        battle.nextTurn();
+        System.out.println("5");
+    }
+
+    private void insertNextCard(Battle battle) {
+        for (Card card : battle.getPlayer2().getHand().getCards()) {
+            if (card.getMana() <= battle.getPlayer2().getMana()) {
+                List<Cell> cells = getAvailabaleCells(battle,battle.getBattleGround());
+                for (Cell cell:cells){
+                    int[] coordination = battle.getBattleGround().getCoordinationOfCell(cell);
+                    if (cell.getUnit()==null && coordination!=null){
+                        battle.insert(card,coordination[0],coordination[1]);
+                        battle.getPlayer2().moveNextCardToHand();
+                        battle.getPlayer2().setNextCard();
+                        return;
+                    }
+                }
+
 
             }
         }
     }
 
-    public void moveUnit(Unit unit) {
-
+    private List<Cell> getAvailabaleCells(Battle battle, BattleGround battleGround) {
+        List<Unit> units = battleGround.getUnitsOfPlayer(battle.getPlayer2());
+        List<Cell> cells = new ArrayList<>();
+        for (Unit unit : units) {
+            int[] coordination = battleGround.getCoordinationOfUnit(unit);
+            for (int i = coordination[0] - 1; i <= coordination[0] + 1; i++) {
+                for (int j = coordination[1] - 1; j <= coordination[1] + 1; j++) {
+                    if (i < Constants.BATTLE_GROUND_WIDTH && i >= 0 && j<Constants.BATTLE_GROUND_LENGTH && j>=0){
+                        if (i==coordination[0]&&j==coordination[1]){
+                            continue;
+                        }
+                        cells.add(battleGround.getCells()[i][j]);
+                    }
+                }
+            }
+        }
+        return cells;
     }
 
-    public void attackWithUnit(Unit unit) {
+    public void moveUnits(Battle battle) {
+        for(Unit unit:battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())){
+            if(!unit.didMoveThisTurn()){
+                int[] coordination =battle.getBattleGround().getRandomCellToMoveForUnit(unit);
+                battle.getPlayer2().setSelectedUnit(unit);
+                battle.getBattleGround().moveUnit(coordination[0],coordination[1]);
+            }
+        }
+    }
 
+    public void attackWithUnit(Battle battle, Unit unit) {
+        List<String> unitIds = new ArrayList<>();
+        for (Cell[] cellRow:battle.getBattleGround().getCells()){
+            for(Cell cell:cellRow){
+                if(cell.getUnit()!= null && cell.getUnit().getId().split("_")[0]
+                        .equals(battle.getPlayer1().getPlayerInfo().getPlayerName())){
+                    unitIds.add(cell.getUnit().getId());
+                }
+            }
+        }
+        int counter =0 ;
+        while (!unit.didAttackThisTurn() && counter<unitIds.size()){
+            unit.attackUnit(unitIds.get(counter));
+            counter++;
+        }
     }
 
     public Unit getBestTargetForUnitAttack(Unit unit) {
@@ -43,7 +101,7 @@ public class AI {
         return null;//todo
     }
 
-    public int[] findEnemyUnitInRange(int row, int column) {
+    public int[] findEnemyUnitInRange(BattleGround battleGround, int row, int column) {
         int rowCounter = 0;
         int coloumnCounter = 0;
         for (Cell[] cellRow : battleGround.getCells()) {

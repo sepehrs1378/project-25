@@ -18,6 +18,10 @@ public class ControllerBattleCommands {
     public void main() throws GoToMainMenuException {
         boolean didExit = false;
         while (!didExit) {
+            if(database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
+                    && database.getCurrentBattle().getPlayerInTurn()==database.getCurrentBattle().getPlayer2()){
+                AI.getInstance().doNextMove();
+            }
             database.getCurrentBattle().checkForDeadUnits();
             request.getNewCommand();
             switch (request.getType()) {
@@ -73,8 +77,8 @@ public class ControllerBattleCommands {
                     enter();
                     break;
                 case END_GAME:
-                    didExit = endGame();
-                    break;
+                    endGame();
+                    throw new GoToMainMenuException("go to main menu");
                 case FORFEIT:
                     forfeitGame();
                     endGame();
