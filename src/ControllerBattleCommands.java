@@ -22,6 +22,7 @@ public class ControllerBattleCommands {
                 if (database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
                         && database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer2()) {
                     AI.getInstance().doNextMove();
+                    endTurn();
                 }
                 database.getCurrentBattle().checkForDeadUnits();
                 request.getNewCommand();
