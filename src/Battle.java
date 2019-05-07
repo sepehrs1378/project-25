@@ -39,7 +39,7 @@ public class Battle {
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if (player != null) {
+        if (player != null)
             return endBattle(player);
         }
             removeBuffs();
@@ -326,7 +326,6 @@ public class Battle {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
-//                    buff.doEffect();
                     //todo
                 }
                 if (cell.isEmptyOfUnit())

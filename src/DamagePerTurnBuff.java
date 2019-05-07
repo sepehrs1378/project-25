@@ -24,7 +24,7 @@ public class DamagePerTurnBuff extends Buff {
     }
 
     @Override
-    public void doEndingEffect() {
+    public void doEndingEffect(Unit unit) {
         //todo looks gonna be empty
     }
 
