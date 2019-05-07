@@ -283,11 +283,11 @@ public class ControllerBattleCommands {
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
-            matchInfo1.setWinner(player2);
-            matchInfo2.setWinner(player2);
+            matchInfo1.setWinner(player2.getUsername());
+            matchInfo2.setWinner(player2.getUsername());
         } else {
-            matchInfo1.setWinner(player1);
-            matchInfo2.setWinner(player1);
+            matchInfo1.setWinner(player1.getUsername());
+            matchInfo2.setWinner(player1.getUsername());
         }
     }
 
