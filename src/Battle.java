@@ -39,22 +39,21 @@ public class Battle {
 
     public OutputMessageType nextTurn() {
         Player player = checkEndBattle();
-        if (player != null){
+        if (player != null)
             return endBattle(player);
-
-            removeBuffs();
-            resetUnitsMoveAndAttack();
-            resetSelectedForPlayers();
-            doBuffsEffects();
-            checkForDeadUnits();
-            checkSpecialPowersCooldown();
-            checkFlagInHandTurn();
-            changeTurn();
-            turnNumber++;
-            reviveContinuousBuffs();
-            setManaBasedOnTurnNumber();
-            playerInTurn.moveNextCardToHand();
-            return OutputMessageType.TURN_CHANGED;
+        removeBuffs();
+        resetUnitsMoveAndAttack();
+        resetSelectedForPlayers();
+        doBuffsEffects();
+        checkForDeadUnits();
+        checkSpecialPowersCooldown();
+        checkFlagInHandTurn();
+        changeTurn();
+        turnNumber++;
+        reviveContinuousBuffs();
+        setManaBasedOnTurnNumber();
+        playerInTurn.moveNextCardToHand();
+        return OutputMessageType.TURN_CHANGED;
     }
 
     private void checkFlagInHandTurn() {
