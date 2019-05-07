@@ -21,7 +21,6 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
-        List<Flag> flags = new ArrayList<>();
         this.collectable = collectable == null ? null : collectable.clone();
         battleGround.setCollectableOnGround(this.collectable);
         battleGround.setFlagsOnGround(numberOfFlags);
