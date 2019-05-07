@@ -24,7 +24,6 @@ public class PowerBuff extends Buff {
     public void doEndingEffect(Unit unit) {
         unit.changeHp(-hpPlus);
         unit.changeAp(-apPlus);
-        //todo
     }
 
     @Override

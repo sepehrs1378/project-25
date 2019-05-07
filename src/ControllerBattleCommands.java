@@ -15,9 +15,14 @@ public class ControllerBattleCommands {
     private ControllerBattleCommands() {
     }
 
-    public void main() throws GoToMainMenuException{
+    public void main() throws GoToMainMenuException {
         boolean didExit = false;
         while (!didExit) {
+            if(database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
+                    && database.getCurrentBattle().getPlayerInTurn()==database.getCurrentBattle().getPlayer2()){
+                AI.getInstance().doNextMove();
+            }
+            database.getCurrentBattle().checkForDeadUnits();
             request.getNewCommand();
             switch (request.getType()) {
                 case GAME_INFO:
@@ -268,7 +273,7 @@ public class ControllerBattleCommands {
     }
 
     private void insertName() {
-        String id = request.getCommand().split("[ (),]")[1];//todo is it correct?
+        String id = request.getCommand().split("[ (),]")[1];
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
         Card card = database.getCurrentBattle().getPlayerInTurn()

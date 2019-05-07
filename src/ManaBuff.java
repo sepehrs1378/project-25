@@ -28,7 +28,7 @@ public class ManaBuff extends Buff {
 
     @Override
     public void doEndingEffect(Unit unit) {
-        //todo looks gonna be empty
+        //empty
     }
 
     @Override
