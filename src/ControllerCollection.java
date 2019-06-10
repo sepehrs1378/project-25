@@ -79,7 +79,7 @@ public class ControllerCollection {
     }
 
     private void show() {
-        //todo plz complete it
+        view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
     }
 
     private void showDeckName() {
