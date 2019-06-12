@@ -27,7 +27,7 @@ public class ControllerBattleMenu {
                     break;
                 case SHOW_USERS:
                     view.showUsers(dataBase.getAccounts(), dataBase.getLoggedInAccount().getUsername());
-                     break;
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }
