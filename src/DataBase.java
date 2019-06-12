@@ -1009,8 +1009,23 @@ public class DataBase {
         }
     }
 
-
     boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;
+    }
+
+    public void saveBattle(){
+
+    }
+
+    public void saveGame(){
+
+    }
+
+    public void importDeck(){
+
+    }
+
+    public void exportDeck(){
+
     }
 }

@@ -317,7 +317,6 @@ public class ControllerBattleCommands {
         }
         return false;
     }
-//just checking if my account works
     public void enter() {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
