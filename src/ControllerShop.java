@@ -40,6 +40,9 @@ class ControllerShop {
                 case EXIT:
                     didExit = true;
                     break;
+                case HELP:
+                    help();
+                    break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
             }

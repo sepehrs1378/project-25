@@ -8,7 +8,6 @@ public class ControllerAccount {
     private ControllerAccount() {
     }
 
-
     public static ControllerAccount getInstance() {
         return controllerAccount;
     }
