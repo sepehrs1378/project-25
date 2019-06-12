@@ -317,6 +317,7 @@ public class ControllerBattleCommands {
         }
         return false;
     }
+
     public void enter() {
         if (!request.getCommand().equals("enter graveyard")) {
             request.setOutputMessageType(OutputMessageType.WRONG_COMMAND);
