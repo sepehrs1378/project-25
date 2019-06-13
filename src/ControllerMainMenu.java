@@ -27,8 +27,9 @@ public class ControllerMainMenu {
     private ImageView multiPlayerBtn;
 
     @FXML
-    void enterSinglePlayer(MouseEvent event) {
-
+    void enterSinglePlayer(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
+        Main.window.setScene(new Scene(root));
     }
 
     @FXML
