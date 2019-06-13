@@ -1,3 +1,7 @@
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +11,29 @@ public class ControllerBattleCommands {
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
     private View view = View.getInstance();
+
+    @FXML
+    private ImageView endTurnMineBtn;
+
+    @FXML
+    private ImageView endTurnEnemyBtn;
+
+    @FXML
+    void endTurnBtnClicked(ActionEvent event) throws GoToMainMenuException {
+        endTurn();
+        endTurnMineBtn.setVisible(false);
+        endTurnEnemyBtn.setVisible(true);
+    }
+
+    @FXML
+    void makeEndTurnMineBtnOpaque(ActionEvent event) {
+        endTurnMineBtn.setOpacity(1);
+    }
+
+    @FXML
+    void makeEndTurnMineTransparent(ActionEvent event) {
+        endTurnMineBtn.setOpacity(0.6);
+    }
 
     public static ControllerBattleCommands getInstance() {
         return instance;
