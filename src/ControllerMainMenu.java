@@ -2,8 +2,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
@@ -28,7 +30,15 @@ public class ControllerMainMenu {
 
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
+        Label[][] battleGroundCells = new Label[5][9];
+        for(int i=0;i<5;i++){
+            for(int j=0;j<9;j++){
+                battleGroundCells[i][j] = setLabelStyle(new Label());
+                battleGroundCells[i][j].relocate(450+(67)*j,280+(67)*i);
+                root.getChildren().add(battleGroundCells[i][j]);
+            }
+        }
         Main.window.setScene(new Scene(root));
     }
 
@@ -179,4 +189,18 @@ public class ControllerMainMenu {
     public void help() {
         view.printHelp(HelpType.CONTROLLER_MAIN_MENU_HELP);
     }
+
+    public Label setLabelStyle(Label label){
+        label.setMinWidth(60);
+        label.setMinHeight(60);
+        label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
+        label.setOnMouseEntered(e->{
+            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
+        });
+        label.setOnMouseExited(e->{
+            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
+        });
+        return label;
+    }
+
 }
