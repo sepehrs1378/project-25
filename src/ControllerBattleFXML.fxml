@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
+   <children>
+      <ImageView fitHeight="819.0" fitWidth="1500.0">
+         <image>
+            <Image url="@pics/maps/redrock/background@2x.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="819.0" fitWidth="1500.0" layoutX="-2.0" layoutY="-2.0">
+         <image>
+            <Image url="@pics/maps/redrock/midground@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="819.0" fitWidth="519.0">
+         <image>
+            <Image url="@pics/maps/redrock/foreground@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="813.0" fitWidth="1500.0">
+         <image>
+            <Image url="@pics/maps/redrock/midground_glow@2x.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
