@@ -7,7 +7,6 @@ public class ControllerSinglePlayerMenu {
     private DataBase database = DataBase.getInstance();
 
     private ControllerSinglePlayerMenu() {
-
     }
 
     public void main() throws GoToMainMenuException {

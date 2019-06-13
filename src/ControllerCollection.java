@@ -6,9 +6,9 @@ public class ControllerCollection {
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-    private ControllerCollection() {
-
-    }
+//    private ControllerCollection() {
+//
+//    }
 
     public static ControllerCollection getInstance() {
         return ourInstance;
