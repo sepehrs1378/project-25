@@ -1,14 +1,14 @@
 import java.util.List;
 
 public class ControllerCollection {
-    private static ControllerCollection ourInstance = new ControllerCollection();
+    private static ControllerCollection ourInstance;
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-//    private ControllerCollection() {
-//
-//    }
+    public ControllerCollection() {
+        ourInstance = this;
+    }
 
     public static ControllerCollection getInstance() {
         return ourInstance;

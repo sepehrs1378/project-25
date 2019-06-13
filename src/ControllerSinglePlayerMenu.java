@@ -1,12 +1,13 @@
 import java.util.List;
 
 public class ControllerSinglePlayerMenu {
-    private static ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
+    private static ControllerSinglePlayerMenu ourInstance;
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private DataBase database = DataBase.getInstance();
 
-    private ControllerSinglePlayerMenu() {
+    public ControllerSinglePlayerMenu() {
+        ourInstance = this;
     }
 
     public void main() throws GoToMainMenuException {
@@ -45,13 +46,13 @@ public class ControllerSinglePlayerMenu {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1()
                         , Constants.CLASSIC, 0, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getInstance().main();
+                ControllerBattleCommands.getOurInstance().main();
             }
             if (request.getCommand().equals("enter level2") && database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
                         , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getInstance().main();
+                ControllerBattleCommands.getOurInstance().main();
             } else if (request.getCommand().equals("enter level2") && !database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
@@ -59,7 +60,7 @@ public class ControllerSinglePlayerMenu {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
                         , Constants.FLAGS, 7, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getInstance().main();
+                ControllerBattleCommands.getOurInstance().main();
             } else if (request.getCommand().equals("enter level3") && !database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
@@ -79,14 +80,14 @@ public class ControllerSinglePlayerMenu {
                             Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                     Constants.CLASSIC, 0, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
-                            ControllerBattleCommands.getInstance().main();
+                            ControllerBattleCommands.getOurInstance().main();
                             break;
                         }
                         case Constants.ONE_FLAG: {
                             Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                     Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
-                            ControllerBattleCommands.getInstance().main();
+                            ControllerBattleCommands.getOurInstance().main();
                             break;
                         }
                         case Constants.FLAGS:
@@ -95,12 +96,12 @@ public class ControllerSinglePlayerMenu {
                                         Constants.FLAGS, Integer.parseInt(request.getCommand().split("\\s+")[4]), null,
                                         Constants.SINGLE);
                                 database.setCurrentBattle(battle);
-                                ControllerBattleCommands.getInstance().main();
+                                ControllerBattleCommands.getOurInstance().main();
                             } else {
                                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                         Constants.FLAGS, 7, null, Constants.SINGLE);
                                 database.setCurrentBattle(battle);
-                                ControllerBattleCommands.getInstance().main();
+                                ControllerBattleCommands.getOurInstance().main();
                             }
                             break;
                         default:

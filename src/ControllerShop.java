@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 class ControllerShop {
-    private static ControllerShop ourInstance = new ControllerShop();
+    private static ControllerShop ourInstance;
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-    private ControllerShop() {
-
+    public ControllerShop() {
+        ourInstance = this;
     }
 
     public static ControllerShop getOurInstance() {

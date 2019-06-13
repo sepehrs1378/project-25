@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerBattleCommands {
-    private static ControllerBattleCommands instance = new ControllerBattleCommands();
+    private static ControllerBattleCommands ourInstance;
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
     private View view = View.getInstance();
@@ -35,12 +35,13 @@ public class ControllerBattleCommands {
         endTurnEnemyBtn.setVisible(true);
     }
 
-    public static ControllerBattleCommands getInstance() {
-        return instance;
+    public static ControllerBattleCommands getOurInstance() {
+        return ourInstance;
     }
 
-//    private ControllerBattleCommands() {
-//    }
+    public ControllerBattleCommands() {
+        ourInstance = this;
+    }
 
     public void main() throws GoToMainMenuException {
         boolean didExit = false;

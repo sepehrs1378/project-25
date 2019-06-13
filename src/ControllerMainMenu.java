@@ -17,6 +17,7 @@ public class ControllerMainMenu {
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
+    private Label[][] battleGroundCells = new Label[5][9];
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
 
@@ -34,7 +35,6 @@ public class ControllerMainMenu {
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
         AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
-        Label[][] battleGroundCells = new Label[5][9];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 9; j++) {
                 battleGroundCells[i][j] = setLabelStyle(new Label());
@@ -44,6 +44,7 @@ public class ControllerMainMenu {
                 root.getChildren().add(battleGroundCells[i][j]);
             }
         }
+        Image image = new Image(new FileInputStream(""));
         //todo units images
         Main.window.setScene(new Scene(root));
     }
