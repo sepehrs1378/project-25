@@ -34,7 +34,7 @@
             <Image url="@pics/in_battle_pics/button_end_turn_enemy.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="endTurnMineBtn" fitHeight="60.0" fitWidth="130.0" layoutX="1320.0" layoutY="650.0" onMouseClicked="#endTurnBtnClicked" onMouseEntered="#makeEndTurnBtnOpaque" onMouseExited="#makeEndTurnTransparent" opacity="0.6">
+      <ImageView fx:id="endTurnMineBtn" fitHeight="60.0" fitWidth="130.0" layoutX="1320.0" layoutY="650.0" onMouseClicked="#endTurnMineBtnClicked" onMouseEntered="#makeEndTurnMineBtnOpaque" onMouseExited="#makeEndTurnMineTransparent" opacity="0.6">
          <image>
             <Image url="@pics/in_battle_pics/button_end_turn_mine.png" />
          </image>
