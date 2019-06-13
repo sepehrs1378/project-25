@@ -104,11 +104,6 @@ public class Main extends Application {
         return -1;
     }
 
-//    private void enterNextPage(){
-//        Parent root = FXMLLoader.load(getClass().getResource(""))
-//        window.setScene();
-//    }
-
     @FXML
     void makeLoginOpaque(MouseEvent event) {
         loginBtn.setStyle("-fx-opacity: 1");

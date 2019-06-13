@@ -1,6 +1,6 @@
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,28 +19,28 @@ public class ControllerBattleCommands {
     private ImageView endTurnEnemyBtn;
 
     @FXML
-    void endTurnBtnClicked(ActionEvent event) throws GoToMainMenuException {
-        endTurn();
+    void makeEndTurnMineOpaque(MouseEvent event) {
+        endTurnMineBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeEndTurnMineTransparent(MouseEvent event) {
+        endTurnMineBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void endTurn(MouseEvent event) throws GoToMainMenuException {
+//        endTurn(); todo
         endTurnMineBtn.setVisible(false);
         endTurnEnemyBtn.setVisible(true);
-    }
-
-    @FXML
-    void makeEndTurnMineBtnOpaque(ActionEvent event) {
-        endTurnMineBtn.setOpacity(1);
-    }
-
-    @FXML
-    void makeEndTurnMineTransparent(ActionEvent event) {
-        endTurnMineBtn.setOpacity(0.6);
     }
 
     public static ControllerBattleCommands getInstance() {
         return instance;
     }
 
-    private ControllerBattleCommands() {
-    }
+//    private ControllerBattleCommands() {
+//    }
 
     public void main() throws GoToMainMenuException {
         boolean didExit = false;
