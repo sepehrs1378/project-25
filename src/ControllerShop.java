@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 class ControllerShop {
-    private static ControllerShop ourInstance = new ControllerShop();
+    private static ControllerShop ourInstance;
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-    private ControllerShop() {
-
+    public ControllerShop() {
+        ourInstance = this;
     }
 
     public static ControllerShop getOurInstance() {
@@ -39,6 +39,9 @@ class ControllerShop {
                     break;
                 case EXIT:
                     didExit = true;
+                    break;
+                case HELP:
+                    help();
                     break;
                 default:
                     view.printOutputMessage(OutputMessageType.WRONG_COMMAND);

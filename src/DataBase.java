@@ -570,7 +570,6 @@ public class DataBase {
         cardList.add(arzhangDiv);
     }
 
-    //todo it is better to merge makeUsables() && makeCollectables in one method because it is important for the indexes of cardList to be accurate based on phase1.peyvast :)
     private void makeItems() {
         //for items we will also add the number in their separate List for knowing which item in peyvast is in the separated item lists(needed in costume game mode) look at examples below for more info
         //inPeyvast     inEachList
@@ -1010,8 +1009,23 @@ public class DataBase {
         }
     }
 
-
     boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;
+    }
+
+    public void saveBattle(){
+
+    }
+
+    public void saveGame(){
+
+    }
+
+    public void importDeck(){
+
+    }
+
+    public void exportDeck(){
+
     }
 }

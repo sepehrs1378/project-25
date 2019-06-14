@@ -1,18 +1,46 @@
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerBattleCommands {
-    private static ControllerBattleCommands instance = new ControllerBattleCommands();
+    private static ControllerBattleCommands ourInstance;
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
     private View view = View.getInstance();
 
-    public static ControllerBattleCommands getInstance() {
-        return instance;
+    @FXML
+    private ImageView endTurnMineBtn;
+
+    @FXML
+    private ImageView endTurnEnemyBtn;
+
+    @FXML
+    void makeEndTurnMineOpaque(MouseEvent event) {
+        endTurnMineBtn.setStyle("-fx-opacity: 1");
     }
 
-    private ControllerBattleCommands() {
+    @FXML
+    void makeEndTurnMineTransparent(MouseEvent event) {
+        endTurnMineBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void endTurn(MouseEvent event) throws GoToMainMenuException {
+//        endTurn(); todo
+        endTurnMineBtn.setVisible(false);
+        endTurnEnemyBtn.setVisible(true);
+    }
+
+    public static ControllerBattleCommands getOurInstance() {
+        return ourInstance;
+    }
+
+    public ControllerBattleCommands() {
+        ourInstance = this;
     }
 
     public void main() throws GoToMainMenuException {
@@ -88,9 +116,6 @@ public class ControllerBattleCommands {
                     case SHOW_MENU:
                         showMenu();
                         break;
-                    case HELP:
-                        help();
-                        break;
                     case SHOW_BATTLEGROUND:
                         showBattleground();
                         break;
@@ -100,6 +125,7 @@ public class ControllerBattleCommands {
             } catch (GoToMainMenuException e) {
                 throw e;
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -325,9 +351,5 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
-    }
-
-    public void help() {
-        view.printList(database.getCurrentBattle().getAvailableMoves());
     }
 }

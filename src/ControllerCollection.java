@@ -1,13 +1,13 @@
 import java.util.List;
 
 public class ControllerCollection {
-    private static ControllerCollection ourInstance = new ControllerCollection();
+    private static ControllerCollection ourInstance;
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-    private ControllerCollection() {
-
+    public ControllerCollection() {
+        ourInstance = this;
     }
 
     public static ControllerCollection getInstance() {
@@ -79,7 +79,7 @@ public class ControllerCollection {
     }
 
     private void show() {
-        //todo plz complete it
+        view.showCardsAndItemsOfCollection(dataBase.getLoggedInAccount().getPlayerInfo().getCollection());
     }
 
     private void showDeckName() {
