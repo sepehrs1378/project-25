@@ -3,12 +3,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ControllerMainMenu {
@@ -35,7 +33,17 @@ public class ControllerMainMenu {
 
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        setupBattleGroundCells(root);
+        //todo units images
+        Main.window.setScene(new Scene(root));
+    }
+
+    public void startTempBattle(AnchorPane root) {
+
+    }
+
+    private void setupBattleGroundCells(AnchorPane root) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 9; j++) {
                 battleGroundCells[i][j] = setLabelStyle(new Label());
@@ -47,8 +55,6 @@ public class ControllerMainMenu {
                 root.getChildren().add(battleGroundCells[i][j]);
             }
         }
-        //todo units images
-        Main.window.setScene(new Scene(root));
     }
 
     @FXML
