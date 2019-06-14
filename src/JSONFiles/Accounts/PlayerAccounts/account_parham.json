@@ -1,0 +1,22 @@
+{
+  "@type": "Account",
+  "@val": {
+    "levelsOpennessStatus": [
+      true,
+      false,
+      false
+    ],
+    "password": "saremi",
+    "username": "parham",
+    "playerInfo": {
+      "playerName": "parham",
+      "collection": {
+        "decks": [],
+        "cards": [],
+        "items": []
+      }
+    },
+    "matchList": [],
+    "money": 1000000
+  }
+}
