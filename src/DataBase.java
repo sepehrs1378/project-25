@@ -1,3 +1,5 @@
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -1027,7 +1029,7 @@ public class DataBase {
 
 
     public void saveAccounts(){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         for (Account account:accountList){
             String fileName = "account_"+account.getUsername()+".json";
             FileWriter fileWriter;
@@ -1040,6 +1042,42 @@ public class DataBase {
                 e.printStackTrace();
             }
         }
+    }
+    public void readAccounts(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Accounts/PlayerAccounts");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")){
+                    try {
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/"+fileName);
+                        accountList.add(gson.fromJson(reader,Account.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        try {
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
+            computerPlayerLevel1 = gson.fromJson(reader,Account.class);
+            System.out.println(computerPlayerLevel1.getUsername());
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
+            computerPlayerLevel2 = gson.fromJson(reader,Account.class);
+            System.out.println(computerPlayerLevel2.getUsername());
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
+            computerPlayerLevel3 = gson.fromJson(reader,Account.class);
+            System.out.println(computerPlayerLevel3.getUsername());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
