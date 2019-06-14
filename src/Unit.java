@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Unit extends Card {
-    private DataBase dataBase = DataBase.getInstance();
+    private transient DataBase dataBase = DataBase.getInstance();
     private int hp;
     private int ap;
     private int minRange;

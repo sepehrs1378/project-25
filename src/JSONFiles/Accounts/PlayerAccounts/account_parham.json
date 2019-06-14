@@ -1,0 +1,19 @@
+{
+  "levelsOpennessStatus": [
+    true,
+    false,
+    false
+  ],
+  "password": "123456",
+  "username": "parham",
+  "playerInfo": {
+    "playerName": "parham",
+    "collection": {
+      "decks": [],
+      "cards": [],
+      "items": []
+    }
+  },
+  "matchList": [],
+  "money": 1000000
+}

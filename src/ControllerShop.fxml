@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="shopPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerShop">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1290.0">
+         <image>
+            <Image url="@pics/shop_background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="916.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXTextField fx:id="addCardText" layoutX="375.0" layoutY="35.0" prefHeight="31.0" prefWidth="641.0" promptText="search a card" style="-fx-background-color: #f9f6ed;" />
+      <JFXButton layoutX="532.0" layoutY="84.0" onMouseClicked="#addCard" prefHeight="31.0" prefWidth="384.0" style="-fx-background-color: #f9f6ed;" text="Add" />
+      <ImageView fx:id="backBtn" fitHeight="112.0" fitWidth="102.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" opacity="0.6" preserveRatio="true">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

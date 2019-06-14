@@ -20,6 +20,7 @@ public class ControllerMainMenu {
     private Label[][] battleGroundCells = new Label[5][9];
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
+    private ControllerShop controllerShop = ControllerShop.getOurInstance();
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -131,8 +132,11 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void enterShop(MouseEvent event) {
-
+    void enterShop(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
+        Main.window.setScene(new Scene(root));
+        controllerShop = ControllerShop.getOurInstance();
+        controllerShop.showCards();
     }
 
     @FXML

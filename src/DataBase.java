@@ -1,3 +1,11 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.stream.JsonWriter;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1017,19 +1025,21 @@ public class DataBase {
         return getAccountWithUsername(username) != null;
     }
 
-    public void saveBattle() {
 
+    public void saveAccounts(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        for (Account account:accountList){
+            String fileName = "account_"+account.getUsername()+".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/"+fileName));
+                gson.toJson(account,fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void saveGame() {
-
-    }
-
-    public void importDeck() {
-
-    }
-
-    public void exportDeck() {
-
-    }
 }
