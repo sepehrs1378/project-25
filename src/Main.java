@@ -125,6 +125,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(e->{
+            DataBase.getInstance().saveAccounts();
+            primaryStage.close();
+        });
         primaryStage.show();
     }
 }

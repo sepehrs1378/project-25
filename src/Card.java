@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Card {
-    private static final DataBase dataBase = DataBase.getInstance();
+    private static transient final DataBase dataBase = DataBase.getInstance();
     private String id;
     private String name;
     private int price;
