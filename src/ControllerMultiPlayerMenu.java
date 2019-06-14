@@ -66,7 +66,7 @@ public class ControllerMultiPlayerMenu {
                         && database.getLoggedInAccount().getMainDeck().isValid() && secondPlayer.getMainDeck().isValid()) {
                     Battle battle = new Battle(database.getLoggedInAccount(), secondPlayer, mode, numberOfFlags, null, Constants.MULTI);
                     database.setCurrentBattle(battle);
-                    ControllerBattleCommands.getOurInstance().main();
+                    ControllerBattleCommands.getInstance().main();
                 } else {
                     request.setOutputMessageType(OutputMessageType.INVALID_DECK_PLAYER);
                     view.printOutputMessage(request.getOutputMessageType());

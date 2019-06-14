@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerBattleCommands {
-    private static ControllerBattleCommands ourInstance;
+    private static ControllerBattleCommands instance = new ControllerBattleCommands();
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
     private View view = View.getInstance();
@@ -35,13 +35,12 @@ public class ControllerBattleCommands {
         endTurnEnemyBtn.setVisible(true);
     }
 
-    public static ControllerBattleCommands getOurInstance() {
-        return ourInstance;
+    public static ControllerBattleCommands getInstance() {
+        return instance;
     }
 
-    public ControllerBattleCommands() {
-        ourInstance = this;
-    }
+//    private ControllerBattleCommands() {
+//    }
 
     public void main() throws GoToMainMenuException {
         boolean didExit = false;
@@ -116,6 +115,9 @@ public class ControllerBattleCommands {
                     case SHOW_MENU:
                         showMenu();
                         break;
+                    case HELP:
+                        help();
+                        break;
                     case SHOW_BATTLEGROUND:
                         showBattleground();
                         break;
@@ -125,7 +127,6 @@ public class ControllerBattleCommands {
             } catch (GoToMainMenuException e) {
                 throw e;
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
@@ -351,5 +352,9 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
+    }
+
+    public void help() {
+        view.printList(database.getCurrentBattle().getAvailableMoves());
     }
 }

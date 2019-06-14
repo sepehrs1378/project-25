@@ -9,11 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 public class ControllerCollection {
-    private static ControllerCollection ourInstance;
+    private static ControllerCollection ourInstance = new ControllerCollection();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
@@ -28,9 +27,6 @@ public class ControllerCollection {
 
     @FXML
     private ScrollPane scrollPane;
-
-    @FXML
-    private ImageView backBtn;
 
     @FXML
     private ImageView showCardsBtn;
@@ -59,6 +55,9 @@ public class ControllerCollection {
 
     @FXML
     private JFXTextField deckNameItemText;
+
+    @FXML
+    private ImageView backBtn;
 
     @FXML
     void goBack(MouseEvent event) throws IOException {

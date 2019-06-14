@@ -2,58 +2,67 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ControllerMainMenu {
-    private static ControllerMainMenu ourInstance;
+    private static ControllerMainMenu ourInstance = new ControllerMainMenu();
     private DataBase dataBase = DataBase.getInstance();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
-    private Label[][] battleGroundCells = new Label[5][9];
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
+    public static Stage stage;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
     }
 
-    public ControllerMainMenu() {
-        ourInstance = this;
-    }
+//    private ControllerMainMenu() {
+//    }
 
     @FXML
     private ImageView multiPlayerBtn;
 
     @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    void closeMenu(MouseEvent event) {
+        Main.window.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 9; j++) {
-                battleGroundCells[i][j] = setLabelStyle(new Label());
-                battleGroundCells[i][j].relocate
-                        (GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * j
-                                , GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * i);
-                battleGroundCells[i][j].setMinWidth(63);
-                battleGroundCells[i][j].setMinHeight(50);
-                root.getChildren().add(battleGroundCells[i][j]);
-            }
-        }
-        //todo units images
-        Main.window.setScene(new Scene(root));
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setScene(new Scene(root));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        stage = primaryStage;
+        primaryStage.showAndWait();
     }
 
     @FXML
     void enterMultiPlayer(MouseEvent event) {
-        //todo not needed for phase 2
+        //todo in phase 3
     }
 
     @FXML
@@ -78,12 +87,12 @@ public class ControllerMainMenu {
         changeOpacity = false;
         multiPlayerBtn.setVisible(true);
         singleBtn.setVisible(true);
-        if (shouldClose) {
+        if (shouldClose){
             multiPlayerBtn.setVisible(false);
             singleBtn.setVisible(false);
             shouldClose = false;
             changeOpacity = true;
-        } else
+        }else
             shouldClose = true;
     }
 
@@ -104,7 +113,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeBattleBtnTransparent(MouseEvent event) {
-        if (changeOpacity) {
+        if (changeOpacity){
             battleBtn.setStyle("-fx-opacity: 0.6");
         }
     }
@@ -201,18 +210,4 @@ public class ControllerMainMenu {
     public void help() {
         view.printHelp(HelpType.CONTROLLER_MAIN_MENU_HELP);
     }
-
-    public Label setLabelStyle(Label label) {
-        label.setMinWidth(60);
-        label.setMinHeight(60);
-        label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        label.setOnMouseEntered(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
-        });
-        label.setOnMouseExited(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        });
-        return label;
-    }
-
 }

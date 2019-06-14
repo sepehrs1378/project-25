@@ -1,7 +1,15 @@
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.List;
 
 public class ControllerSinglePlayerMenu {
-    private static ControllerSinglePlayerMenu ourInstance;
+    private static ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private DataBase database = DataBase.getInstance();
@@ -9,6 +17,80 @@ public class ControllerSinglePlayerMenu {
     public ControllerSinglePlayerMenu() {
         ourInstance = this;
     }
+
+    @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    private ImageView level1Btn;
+
+    @FXML
+    private ImageView level2Btn;
+
+    @FXML
+    private ImageView level3Btn;
+
+    @FXML
+    void enterLevel1(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void enterLevel2(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void enterLevel3(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void makeLevel1BtnOpaque(MouseEvent event) {
+        level1Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel1BtnTransparent(MouseEvent event) {
+        level1Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeLevel2BtnOpaque(MouseEvent event) {
+        level2Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel2BtnTransparent(MouseEvent event) {
+        level2Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeLevel3BtnOpaque(MouseEvent event) {
+        level3Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel3BtnTransparent(MouseEvent event) {
+        level3Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void closeSinglePlayerMenu(MouseEvent event) throws IOException {
+        ControllerMainMenu.stage.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
 
     public void main() throws GoToMainMenuException {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);
@@ -46,13 +128,13 @@ public class ControllerSinglePlayerMenu {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1()
                         , Constants.CLASSIC, 0, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getOurInstance().main();
+                ControllerBattleCommands.getInstance().main();
             }
             if (request.getCommand().equals("enter level2") && database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
                         , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getOurInstance().main();
+                ControllerBattleCommands.getInstance().main();
             } else if (request.getCommand().equals("enter level2") && !database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
@@ -60,7 +142,7 @@ public class ControllerSinglePlayerMenu {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
                         , Constants.FLAGS, 7, null, Constants.SINGLE);
                 database.setCurrentBattle(battle);
-                ControllerBattleCommands.getOurInstance().main();
+                ControllerBattleCommands.getInstance().main();
             } else if (request.getCommand().equals("enter level3") && !database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
                 view.printOutputMessage(OutputMessageType.LEVEL_IS_LOCKED);
             }
@@ -80,14 +162,14 @@ public class ControllerSinglePlayerMenu {
                             Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                     Constants.CLASSIC, 0, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
-                            ControllerBattleCommands.getOurInstance().main();
+                            ControllerBattleCommands.getInstance().main();
                             break;
                         }
                         case Constants.ONE_FLAG: {
                             Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                     Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
-                            ControllerBattleCommands.getOurInstance().main();
+                            ControllerBattleCommands.getInstance().main();
                             break;
                         }
                         case Constants.FLAGS:
@@ -96,12 +178,12 @@ public class ControllerSinglePlayerMenu {
                                         Constants.FLAGS, Integer.parseInt(request.getCommand().split("\\s+")[4]), null,
                                         Constants.SINGLE);
                                 database.setCurrentBattle(battle);
-                                ControllerBattleCommands.getOurInstance().main();
+                                ControllerBattleCommands.getInstance().main();
                             } else {
                                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
                                         Constants.FLAGS, 7, null, Constants.SINGLE);
                                 database.setCurrentBattle(battle);
-                                ControllerBattleCommands.getOurInstance().main();
+                                ControllerBattleCommands.getInstance().main();
                             }
                             break;
                         default:

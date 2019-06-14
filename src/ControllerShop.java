@@ -2,6 +2,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,10 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
@@ -24,6 +27,11 @@ public class ControllerShop {
     public ControllerShop() {
         ourInstance = this;
     }
+    @FXML
+    private HBox upperBox;
+
+    @FXML
+    private HBox lowerBox;
 
     @FXML
     private AnchorPane shopPane;
@@ -33,6 +41,15 @@ public class ControllerShop {
 
     @FXML
     private ImageView backBtn;
+
+    @FXML
+    private Label moneyLabel;
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
@@ -45,22 +62,41 @@ public class ControllerShop {
     }
 
 
-    @FXML
-    void goBack(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
-        Main.window.setScene(new Scene(root));
+    public void showCards() throws IOException {
+        moneyLabel.setText(Integer.toString(dataBase.getLoggedInAccount().getMoney()));
+        Node[] nodes = new Node[80];
+        List<Card> cardList = dataBase.getCardList();
+        List<Usable> usableList = dataBase.getUsableList();
+        for (int i = 0; i < 40; i++) {
+            addCardToBox(nodes, cardList, i);
+            upperBox.getChildren().add(nodes[i]);
+        }
+        lowerBox.setLayoutY(upperBox.getLayoutY() + upperBox.getPrefHeight() + 18);
+        for (int i = 40; i < 70; i++) {
+            addCardToBox(nodes, cardList, i);
+            lowerBox.getChildren().add(nodes[i]);
+        }
+        for (int i = 70; i < 79; i++) {
+            //todo i should be less than 81 not 79
+            Usable usable = usableList.get(i - 70);
+            FXMLLoader fxmlLoader;
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
+            nodes[i] = fxmlLoader.load();
+            CardBackGroundController cardBackGroundController = fxmlLoader.getController();
+            cardBackGroundController.setLabelsOfCardOrItem(usable);
+            lowerBox.getChildren().add(nodes[i]);
+        }
     }
 
-    public void showCards() throws IOException {
-//        File file = new File("../pics/card_background.png");
-//        Image image = new Image(file.toURI().toString());
-//        ImageView imageView = new ImageView();
-//        imageView.setImage(image);
-//        imageView.setFitHeight(100);
-//        imageView.setFitWidth(100);
-//        imageView.setX(200);
-//        imageView.setY(200);
-//        shopPane.getChildren().add(imageView);
+    private void addCardToBox(Node[] nodes, List<Card> cardList, int i) throws IOException {
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader();
+        Card card = cardList.get(i);
+        fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
+        nodes[i] = fxmlLoader.load();
+        CardBackGroundController cardBackGroundController = fxmlLoader.getController();
+        cardBackGroundController.setLabelsOfCardOrItem(card);
     }
 
     @FXML
