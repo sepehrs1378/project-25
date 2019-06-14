@@ -166,7 +166,7 @@ public class DataBase {
         //todo correct it later
         String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
         Target kingsGuardTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
-        Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, desc19, false);
         cardList.add(kingsGuard);
 
         //20
