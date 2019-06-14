@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 9,
+    "ap": 5,
+    "minRange": 2,
+    "maxRange": 4,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 250 - mana : 5 - hp : 9 - ap : 5 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_ejdehaAtashAndaz_1",
+    "name": "ejdehaAtashAndaz",
+    "price": 250,
+    "mana": 5
+  }
+}

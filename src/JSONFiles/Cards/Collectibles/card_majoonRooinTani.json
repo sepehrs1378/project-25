@@ -1,0 +1,55 @@
+{
+  "@type": "Collectable",
+  "@val": {
+    "spell": {
+      "apChange": 0,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [
+          "hero",
+          "minion"
+        ],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": true,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        {
+          "@type": "HolyBuff",
+          "@val": {
+            "armor": 10,
+            "positiveOrNegative": "positive",
+            "startTurn": 0,
+            "durationTurn": 2,
+            "isDispellable": true,
+            "isContinuous": false,
+            "isDead": false
+          }
+        }
+      ],
+      "activationType": "ON_CAST",
+      "description": "Contains : HolyBuff - Spell Activation Type : on cast - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "battle_majoonRooinTani_1",
+    "name": "majoonRooinTani",
+    "description": "majoonRooinTani"
+  }
+}

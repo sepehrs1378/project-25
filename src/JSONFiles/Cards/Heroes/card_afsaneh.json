@@ -1,0 +1,58 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 40,
+    "ap": 3,
+    "minRange": 2,
+    "maxRange": 3,
+    "specialPowers": [
+      {
+        "apChange": 2,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "hero",
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 1,
+          "length": 1,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": true
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          null
+        ],
+        "activationType": "ON_CAST",
+        "description": "mana : 1 - apChange : 2 - cooldown : 3 - spell activation type : on cast - is dispeller",
+        "isDispeller": true,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 1
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "hero",
+    "description": "price : 11000 - mana : 0 - hp : 40 - ap : 3 - minRange : 2 - maxRange : 3 - Unit Type : Hero - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_afsaneh_1",
+    "name": "afsaneh",
+    "price": 11000,
+    "mana": 0
+  }
+}

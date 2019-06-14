@@ -1,0 +1,38 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 4,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero"
+      ],
+      "friendlyOrEnemy": [
+        "friend"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 2147483647,
+      "length": 2147483647,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Friendly Hero - adds 4 ap",
+    "isDispeller": false,
+    "id": "shop_godStrength_1",
+    "name": "godStrength",
+    "price": 450,
+    "mana": 2
+  }
+}

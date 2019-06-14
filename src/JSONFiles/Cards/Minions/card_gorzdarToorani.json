@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 3,
+    "ap": 10,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 450 - mana : 2 - hp : 3 - ap : 10 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_gorzdarToorani_1",
+    "name": "gorzdarToorani",
+    "price": 450,
+    "mana": 2
+  }
+}

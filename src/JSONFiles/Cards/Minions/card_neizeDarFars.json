@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 5,
+    "ap": 3,
+    "minRange": 1,
+    "maxRange": 3,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 1 - hp : 5 - ap : 3 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_neizeDarFars_1",
+    "name": "neizeDarFars",
+    "price": 500,
+    "mana": 1
+  }
+}

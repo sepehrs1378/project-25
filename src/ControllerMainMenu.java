@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 
 public class ControllerMainMenu {
@@ -35,12 +36,15 @@ public class ControllerMainMenu {
     void enterSinglePlayer(MouseEvent event) throws IOException {
         AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         setupBattleGroundCells(root);
+        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
+                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+        DataBase.getInstance().setCurrentBattle(battle);
         //todo units images
         Main.window.setScene(new Scene(root));
     }
 
     public void startTempBattle(AnchorPane root) {
-
+        //todo maybe not needed...
     }
 
     private void setupBattleGroundCells(AnchorPane root) {

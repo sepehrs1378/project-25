@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 24,
+    "ap": 6,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_pahlevanFars_1",
+    "name": "pahlevanFars",
+    "price": 600,
+    "mana": 9
+  }
+}

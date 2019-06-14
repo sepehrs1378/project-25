@@ -1,0 +1,81 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 6,
+    "ap": 6,
+    "minRange": 2,
+    "maxRange": 5,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 3,
+          "length": 3,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "PowerBuff",
+            "@val": {
+              "apPlus": 2,
+              "hpPlus": 0,
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          },
+          {
+            "@type": "HolyBuff",
+            "@val": {
+              "armor": 1,
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": true,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "PASSIVE",
+        "description": "Contains : PowerBuf and HolyBuff - Spell Activation Type : passive - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 550 - mana : 6 - hp : 6 - ap : 6 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_jadoogarAzam_1",
+    "name": "jadoogarAzam",
+    "price": 550,
+    "mana": 6
+  }
+}

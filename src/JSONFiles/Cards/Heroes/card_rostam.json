@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 55,
+    "ap": 7,
+    "minRange": 1,
+    "maxRange": 4,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "hero",
+    "description": "price : 8000 - mana : 0 - hp : 55 - ap : 7 - minRange : 1 - maxRange : 4 - Unit Type : Hero - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_rostam_1",
+    "name": "rostam",
+    "price": 8000,
+    "mana": 0
+  }
+}

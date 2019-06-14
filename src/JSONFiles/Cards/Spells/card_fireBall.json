@@ -1,0 +1,39 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": -4,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 1,
+      "length": 1,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Enemy Unit - causes 4 damage to an enemy unit",
+    "isDispeller": false,
+    "id": "shop_fireBall_1",
+    "name": "fireBall",
+    "price": 400,
+    "mana": 1
+  }
+}

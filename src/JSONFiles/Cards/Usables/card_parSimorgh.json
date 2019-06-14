@@ -1,0 +1,43 @@
+{
+  "@type": "Usable",
+  "@val": {
+    "price": 3500,
+    "passivePower": {
+      "apChange": -2,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [
+          "hero"
+        ],
+        "friendlyOrEnemy": [
+          "enemy"
+        ],
+        "targetUnitClass": [
+          "ranged",
+          "hybrid"
+        ],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": false,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        null
+      ],
+      "activationType": "ON_BATTLE_START",
+      "description": "Contains : no Buffs - Spell Activation Type : at start of the battle - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "shop_parSimorgh_1",
+    "name": "parSimorgh",
+    "description": "price : 3500"
+  }
+}
