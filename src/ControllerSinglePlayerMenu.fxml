@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="656.0" prefWidth="889.0" style="-fx-background-color: #0f035b;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerSinglePlayerMenu">
+   <children>
+      <ImageView fitHeight="656.0" fitWidth="889.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="2.0" layoutY="439.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="2.0" layoutY="127.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="891.0" layoutY="40.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="2.0" layoutY="343.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="1.0" layoutY="239.0">
+         <image>
+            <Image url="@pics/single_player_menu_effect_image2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="528.0" fitWidth="357.0" layoutX="38.0" layoutY="60.0">
+         <image>
+            <Image url="@pics/single_player_background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeBtn" fitHeight="49.0" fitWidth="52.0" layoutX="837.0" layoutY="4.0" onMouseClicked="#closeSinglePlayerMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" opacity="0.6">
+         <image>
+            <Image url="@pics/close_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="593.0" fitWidth="405.0" layoutX="14.0" layoutY="28.0">
+         <image>
+            <Image url="@pics/story_section.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level1Btn" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="172.0" onMouseClicked="#enterLevel1" onMouseEntered="#makeLevel1BtnOpaque" onMouseExited="#makeLevel1BtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@pics/level_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level2Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="261.0" onMouseClicked="#enterLevel2" onMouseEntered="#makeLevel2BtnOpaque" onMouseExited="#makeLevel2BtnTransparent" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@pics/level_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="level3Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="372.0" onMouseClicked="#enterLevel3" onMouseEntered="#makeLevel3BtnOpaque" onMouseExited="#makeLevel3BtnTransparent" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@pics/level_3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="64.0" fitWidth="200.0" layoutX="117.0" layoutY="88.0">
+         <image>
+            <Image url="@pics/story_title_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="528.0" fitWidth="357.0" layoutX="471.0" layoutY="63.0">
+         <image>
+            <Image url="@pics/custom_section_background_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="593.0" fitWidth="405.0" layoutX="445.0" layoutY="32.0">
+         <image>
+            <Image url="@pics/custom_section.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="64.0" fitWidth="200.0" layoutX="550.0" layoutY="95.0">
+         <image>
+            <Image url="@pics/custom_title_image.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
