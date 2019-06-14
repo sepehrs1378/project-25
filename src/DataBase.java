@@ -1,5 +1,11 @@
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.stream.JsonWriter;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -604,6 +610,7 @@ public class DataBase {
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //String descUsable1 = "price : 300";
         //todo
+        usableList.add(namoosSepar);
         //usableList.add(null);
 
         //4             //1
@@ -669,7 +676,7 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
-        //usableList.add(null);
+        usableList.add(parSimorgh);
         //todo
         //todo what does it mean?
 
@@ -1073,20 +1080,53 @@ public class DataBase {
     }
 
 
-    public void saveAccounts() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        for (Account account : accountList) {
-            String fileName = "account_" + account.getUsername() + ".json";
+    public void saveAccounts(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        for (Account account:accountList){
+            String fileName = "account_"+account.getUsername()+".json";
             FileWriter fileWriter;
             try {
-                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/" + fileName));
-                gson.toJson(account, fileWriter);
+                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/"+fileName));
+                gson.toJson(account,fileWriter);
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+    public void readAccounts(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Accounts/PlayerAccounts");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")){
+                    try {
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/"+fileName);
+                        accountList.add(gson.fromJson(reader,Account.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        try {
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
+            computerPlayerLevel1 = gson.fromJson(reader,Account.class);
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
+            computerPlayerLevel2 = gson.fromJson(reader,Account.class);
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
+            computerPlayerLevel3 = gson.fromJson(reader,Account.class);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
