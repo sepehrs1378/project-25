@@ -48,6 +48,9 @@ public class ControllerMainMenu {
             }
         }
         //todo units images
+        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getComputerPlayerLevel1()
+                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+        DataBase.getInstance().setCurrentBattle(battle);
         Main.window.setScene(new Scene(root));
     }
 
