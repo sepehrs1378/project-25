@@ -46,7 +46,6 @@ public class ControllerMainMenu {
                 root.getChildren().add(battleGroundCells[i][j]);
             }
         }
-        Image image = new Image(new FileInputStream(""));
         //todo units images
         Main.window.setScene(new Scene(root));
     }

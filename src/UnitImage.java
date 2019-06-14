@@ -17,14 +17,14 @@ public class UnitImage {
     private long deathDuration = 1000;
     private long spellDuration = 1500;
     private long runDuration = 1000;
-    private ImageView unitView;
+    private ImageView unitView = new ImageView();
     private String id;
     private UnitStatus unitStatus;
 
     public UnitImage(String id) {
         unitStatus = UnitStatus.stand;
         try {
-            unitView = new ImageView(new Image(new FileInputStream
+            unitView.setImage(new Image(new FileInputStream
                     ("./src/ApProjectResources/units/" + getUnitName()
                             + "/" + unitStatus.toString())));
         } catch (IOException e) {
@@ -105,24 +105,6 @@ public class UnitImage {
         animationTimer.start();
     }
 
-    public void showSpell() {
-        setUnitStatus(UnitStatus.spell);
-        AnimationTimer animationTimer = new AnimationTimer() {
-            private long lastTime = 0;
-
-            @Override
-            public void handle(long now) {
-                if (lastTime == 0)
-                    lastTime = now;
-                if (now - lastTime > spellDuration * 1000000) {
-                    setUnitStatus(UnitStatus.spell);
-                    this.stop();
-                }
-            }
-        };
-        animationTimer.start();
-    }
-
     public void showDeath() {
         setUnitStatus(UnitStatus.death);
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -134,6 +116,25 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > deathDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
+                    this.stop();
+                }
+            }
+        };
+        animationTimer.start();
+    }
+
+    public void showSpell() {
+        setUnitStatus(UnitStatus.spell);
+        //todo show spell effects
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastTime = 0;
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now - lastTime > spellDuration * 1000000) {
+                    setUnitStatus(UnitStatus.spell);
                     this.stop();
                 }
             }
