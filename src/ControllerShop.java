@@ -1,13 +1,76 @@
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-class ControllerShop {
+public class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-    private ControllerShop() {
+    public ControllerShop() {
+        ourInstance = this;
+    }
 
+    @FXML
+    private AnchorPane shopPane;
+
+    @FXML
+    private JFXTextField addCardText;
+
+    @FXML
+    private ImageView backBtn;
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
+
+    public void showCards() throws IOException {
+//        File file = new File("../pics/card_background.png");
+//        Image image = new Image(file.toURI().toString());
+//        ImageView imageView = new ImageView();
+//        imageView.setImage(image);
+//        imageView.setFitHeight(100);
+//        imageView.setFitWidth(100);
+//        imageView.setX(200);
+//        imageView.setY(200);
+//        shopPane.getChildren().add(imageView);
+    }
+
+    @FXML
+    void addCard(MouseEvent event) {
+        if (addCardText.getText().isEmpty()){
+            return;
+        }
+        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(addCardText.getText());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, outputMessageType.getMessage());
+        alert.showAndWait();
     }
 
     public static ControllerShop getOurInstance() {

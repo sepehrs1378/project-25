@@ -26,12 +26,12 @@
             <Image url="@pics/battle_button.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="441.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" visible="false">
+      <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="441.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" opacity="0.6" visible="false">
          <image>
             <Image url="@pics/multiplayer_button.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="809.0" layoutY="441.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" visible="false">
+      <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="809.0" layoutY="441.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" opacity="0.6" visible="false">
          <image>
             <Image url="@pics/single_player_button.png" />
          </image>
