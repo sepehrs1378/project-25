@@ -1,0 +1,55 @@
+{
+  "@type": "Usable",
+  "@val": {
+    "price": 4000,
+    "passivePower": {
+      "apChange": 0,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [
+          "hero"
+        ],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 1,
+        "length": 1,
+        "manhattanDistance": 0,
+        "isRandomSelecting": false,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        {
+          "@type": "HolyBuff",
+          "@val": {
+            "armor": 12,
+            "positiveOrNegative": "positive",
+            "startTurn": 0,
+            "durationTurn": 2147483647,
+            "isDispellable": true,
+            "isContinuous": false,
+            "isDead": false
+          }
+        }
+      ],
+      "activationType": "PASSIVE",
+      "description": "Contains : HolyBuff - Spell Activation Type : passive - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "shop_namoosSepar_1",
+    "name": "namoosSepar",
+    "description": ""
+  }
+}

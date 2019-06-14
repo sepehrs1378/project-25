@@ -1,0 +1,20 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target",
+    "isDispeller": false,
+    "id": "shop_kingsGuard_1",
+    "name": "kingsGuard",
+    "price": 1750,
+    "mana": 9
+  }
+}

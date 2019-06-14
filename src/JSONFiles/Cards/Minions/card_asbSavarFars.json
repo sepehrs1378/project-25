@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 10,
+    "ap": 6,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 200 - mana : 4 - hp : 10 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_asbSavarFars_1",
+    "name": "asbSavarFars",
+    "price": 200,
+    "mana": 4
+  }
+}

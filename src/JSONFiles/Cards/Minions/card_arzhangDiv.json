@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 6,
+    "ap": 6,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 600 - mana : 3 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": true,
+    "id": "shop_arzhangDiv_1",
+    "name": "arzhangDiv",
+    "price": 600,
+    "mana": 3
+  }
+}

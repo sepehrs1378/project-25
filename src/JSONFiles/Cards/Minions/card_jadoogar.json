@@ -1,0 +1,82 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 5,
+    "ap": 4,
+    "minRange": 2,
+    "maxRange": 3,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 3,
+          "length": 3,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "PowerBuff",
+            "@val": {
+              "apPlus": 2,
+              "hpPlus": 0,
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          },
+          {
+            "@type": "WeaknessBuff",
+            "@val": {
+              "apMinus": 0,
+              "hpMinus": 1,
+              "positiveOrNegative": "negative",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "PASSIVE",
+        "description": "Contains : PowerBuff and WeaknessBuff - Spell Activation Type : passive - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 550 - mana : 4 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_jadoogar_1",
+    "name": "jadoogar",
+    "price": 550,
+    "mana": 4
+  }
+}

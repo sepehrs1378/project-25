@@ -1,0 +1,68 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 50,
+    "ap": 4,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 8,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "hero",
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 2147483647,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "StunBuff",
+            "@val": {
+              "positiveOrNegative": "negative",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_CAST",
+        "description": "mana : 5 - cooldown : 8 - spell activation type : on cast - is not dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 5
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "hero",
+    "description": "price : 9000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_simorgh_1",
+    "name": "simorgh",
+    "price": 9000,
+    "mana": 0
+  }
+}

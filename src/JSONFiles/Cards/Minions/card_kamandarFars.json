@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 5,
+    "ap": 4,
+    "minRange": 2,
+    "maxRange": 7,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 300 - mana : 2 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_kamandarFars_1",
+    "name": "kamandarFars",
+    "price": 300,
+    "mana": 2
+  }
+}

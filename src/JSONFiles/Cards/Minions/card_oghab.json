@@ -1,0 +1,35 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 0,
+    "ap": 2,
+    "minRange": 1,
+    "maxRange": 3,
+    "specialPowers": [],
+    "flags": [],
+    "buffs": [
+      {
+        "@type": "PowerBuff",
+        "@val": {
+          "apPlus": 0,
+          "hpPlus": 10,
+          "positiveOrNegative": "positive",
+          "startTurn": 0,
+          "durationTurn": 2147483647,
+          "isDispellable": true,
+          "isContinuous": false,
+          "isDead": false
+        }
+      }
+    ],
+    "heroOrMinion": "minion",
+    "description": "price : 200 - mana : 2 - hp : 0 - ap : 2 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_oghab_1",
+    "name": "oghab",
+    "price": 200,
+    "mana": 2
+  }
+}

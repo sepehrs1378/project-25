@@ -1,0 +1,66 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 14,
+    "ap": 8,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "melee"
+          ],
+          "width": 2147483647,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "ImmunityBuff",
+            "@val": {
+              "immunity": "weaker ap",
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 2147483647,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_DEFEND",
+        "description": "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 400 - mana : 7 - hp : 14 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_ashkboos_1",
+    "name": "ashkboos",
+    "price": 400,
+    "mana": 7
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "@type": "Collectable",
+  "@val": {
+    "spell": {
+      "apChange": 6,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [
+          "hero",
+          "minion"
+        ],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": true,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        null
+      ],
+      "activationType": "ON_CAST",
+      "description": "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "battle_bladesOfAgility_1",
+    "name": "bladesOfAgility",
+    "description": "bladesOfAgility"
+  }
+}

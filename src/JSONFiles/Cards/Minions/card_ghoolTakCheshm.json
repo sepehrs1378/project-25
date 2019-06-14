@@ -1,0 +1,57 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 12,
+    "ap": 11,
+    "minRange": 2,
+    "maxRange": 4,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": -2,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 3,
+          "length": 3,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          null
+        ],
+        "activationType": "ON_DEATH",
+        "description": "Contains : no Buff - Spell Activation Type : on death - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 7 - hp : 12 - ap : 11 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_ghoolTakCheshm_1",
+    "name": "ghoolTakCheshm",
+    "price": 500,
+    "mana": 7
+  }
+}

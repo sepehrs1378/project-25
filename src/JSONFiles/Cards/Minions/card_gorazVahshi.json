@@ -1,0 +1,66 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 10,
+    "ap": 14,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "melee"
+          ],
+          "width": 1,
+          "length": 1,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": true
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "ImmunityBuff",
+            "@val": {
+              "immunity": "disarm",
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 2147483647,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_DEFEND",
+        "description": "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 6 - hp : 10 - ap : 14 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_gorazVahshi_1",
+    "name": "gorazVahshi",
+    "price": 500,
+    "mana": 6
+  }
+}

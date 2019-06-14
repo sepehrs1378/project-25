@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 6,
+    "ap": 20,
+    "minRange": 2,
+    "maxRange": 3,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_iraj_1",
+    "name": "iraj",
+    "price": 500,
+    "mana": 4
+  }
+}

@@ -1,11 +1,5 @@
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonStreamParser;
-import com.google.gson.stream.JsonWriter;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -33,11 +27,20 @@ public class DataBase {
     }
 
     public void makeEveryThing() {
-        makeCardSpells();
-        makeHeroes();
-        makeMinions();
-        makeItems();
-        makeAccounts();
+        computerPlayerCustom = new Account("computerCustom", "custom");
+        readSpells();
+        readHeroes();
+        readMinions();
+        readCollectibles();
+        readUsables();
+//        makeCardSpells();
+//        makeHeroes();
+//        makeMinions();
+//        makeItems();
+//        makeAccounts();
+        System.out.println(cardList.size());
+        System.out.println(collectableList.size());
+        System.out.println(usableList.size());
     }
 
     private void makeCardSpells() {
@@ -754,7 +757,6 @@ public class DataBase {
         computerPlayerLevel1 = new Account("computer1", "1");
         computerPlayerLevel2 = new Account("computer2", "2");
         computerPlayerLevel3 = new Account("computer3", "3");
-        computerPlayerCustom = new Account("computerCustom", "custom");
 
         //todo add usables to deck
         Deck computerPlayer1Deck = new Deck("Deck");
@@ -1028,14 +1030,14 @@ public class DataBase {
     }
 
 
-    public void saveAccounts(){
+    public void saveAccounts() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
-        for (Account account:accountList){
-            String fileName = "account_"+account.getUsername()+".json";
+        for (Account account : accountList) {
+            String fileName = "account_" + account.getUsername() + ".json";
             FileWriter fileWriter;
             try {
-                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/"+fileName));
-                gson.toJson(account,fileWriter);
+                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/" + fileName));
+                gson.toJson(account, fileWriter);
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
@@ -1043,17 +1045,18 @@ public class DataBase {
             }
         }
     }
-    public void readAccounts(){
+
+    public void readAccounts() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Accounts/PlayerAccounts");
         String[] fileNames = folder.list();
         FileReader reader;
         if (fileNames != null) {
             for (String fileName : fileNames) {
-                if (fileName.endsWith(".json")){
+                if (fileName.endsWith(".json")) {
                     try {
-                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/"+fileName);
-                        accountList.add(gson.fromJson(reader,Account.class));
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
+                        accountList.add(gson.fromJson(reader, Account.class));
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -1063,21 +1066,163 @@ public class DataBase {
         }
         try {
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
-            computerPlayerLevel1 = gson.fromJson(reader,Account.class);
-            System.out.println(computerPlayerLevel1.getUsername());
+            computerPlayerLevel1 = gson.fromJson(reader, Account.class);
 
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
-            computerPlayerLevel2 = gson.fromJson(reader,Account.class);
-            System.out.println(computerPlayerLevel2.getUsername());
+            computerPlayerLevel2 = gson.fromJson(reader, Account.class);
 
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
-            computerPlayerLevel3 = gson.fromJson(reader,Account.class);
-            System.out.println(computerPlayerLevel3.getUsername());
+            computerPlayerLevel3 = gson.fromJson(reader, Account.class);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
+    public void savaCards() {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        for (Card card : cardList) {
+            String fileName = "card_" + card.getName() + ".json";
+            FileWriter fileWriter = null;
+            try {
+                if (card instanceof Spell) {
+                    fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Spells/" + fileName));
+                } else if (card instanceof Unit) {
+                    if (((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+                        fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Heroes/" + fileName));
+                    } else if (((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
+                        fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Minions/" + fileName));
+                    }
+                }
+                yaGson.toJson(card, fileWriter);
+                if (fileWriter != null) {
+                    fileWriter.flush();
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Usable usable : usableList) {
+            String fileName = "card_" + usable.getName() + ".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Usables/" + fileName));
+                yaGson.toJson(usable, fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Collectable collectable : collectableList) {
+            String fileName = "card_" + collectable.getName() + ".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Collectibles/" + fileName));
+                yaGson.toJson(collectable, fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void readCollectibles() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Collectibles");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Collectibles/" + fileName);
+                        collectableList.add(gson.fromJson(reader, Collectable.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public void readUsables(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Usables");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Usables/" + fileName);
+                        usableList.add(gson.fromJson(reader, Usable.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void readHeroes(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Heroes");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Heroes/" + fileName);
+                        cardList.add(gson.fromJson(reader, Unit.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public void readMinions(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Minions");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Minions/" + fileName);
+                        cardList.add(gson.fromJson(reader, Unit.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public void readSpells(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Spells");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Spells/" + fileName);
+                        cardList.add(gson.fromJson(reader, Spell.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 }

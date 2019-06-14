@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 30,
+    "ap": 8,
+    "minRange": 1,
+    "maxRange": 2,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price :600 - mana : 9 - hp : 30 - ap : 8 - minRange : 1 - maxRange : 2 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_ghoolBozorg_1",
+    "name": "ghoolBozorg",
+    "price": 600,
+    "mana": 9
+  }
+}

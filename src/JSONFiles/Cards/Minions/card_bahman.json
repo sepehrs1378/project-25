@@ -1,0 +1,57 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 16,
+    "ap": 9,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": -16,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 2147483647,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": true,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          null
+        ],
+        "activationType": "ON_SPAWN",
+        "description": "Contains : WeaknessBuff - Spell Activation Type : on spawn - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_bahman_1",
+    "name": "bahman",
+    "price": 450,
+    "mana": 8
+  }
+}

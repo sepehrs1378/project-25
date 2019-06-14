@@ -1,0 +1,48 @@
+{
+  "@type": "Usable",
+  "@val": {
+    "price": 9000,
+    "passivePower": {
+      "apChange": 0,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": false,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        {
+          "@type": "ManaBuff",
+          "@val": {
+            "manaAddedPerTurn": 1,
+            "startTurn": 0,
+            "durationTurn": 2147483647,
+            "isDispellable": false,
+            "isContinuous": false,
+            "isDead": false
+          }
+        }
+      ],
+      "activationType": "ON_BATTLE_START",
+      "description": "Contains : ManaBuff - Spell Activation Type : at the start of the battle - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "shop_kingWisdom_1",
+    "name": "kingWisdom",
+    "description": ""
+  }
+}

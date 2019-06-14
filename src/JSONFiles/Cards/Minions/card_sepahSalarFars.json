@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 12,
+    "ap": 4,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 800 - mana : 7 - hp : 12 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": true,
+    "id": "shop_sepahSalarFars_1",
+    "name": "sepahSalarFars",
+    "price": 800,
+    "mana": 7
+  }
+}

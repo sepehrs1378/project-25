@@ -1,0 +1,55 @@
+{
+  "@type": "Collectable",
+  "@val": {
+    "spell": {
+      "apChange": 0,
+      "hpChange": 3,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [
+          "minion"
+        ],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": true,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        {
+          "@type": "PowerBuff",
+          "@val": {
+            "apPlus": 3,
+            "hpPlus": 0,
+            "positiveOrNegative": "positive",
+            "startTurn": 0,
+            "durationTurn": 2147483647,
+            "isDispellable": true,
+            "isContinuous": false,
+            "isDead": false
+          }
+        }
+      ],
+      "activationType": "ON_CAST",
+      "description": "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "battle_exir_1",
+    "name": "exir",
+    "description": "collectable"
+  }
+}

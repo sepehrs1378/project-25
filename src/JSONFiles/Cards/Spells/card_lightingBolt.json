@@ -1,0 +1,38 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": -8,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero"
+      ],
+      "friendlyOrEnemy": [
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 2147483647,
+      "length": 2147483647,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Enemy Hero - applies 8 damage to target",
+    "isDispeller": false,
+    "id": "shop_lightingBolt_1",
+    "name": "lightingBolt",
+    "price": 1250,
+    "mana": 2
+  }
+}
