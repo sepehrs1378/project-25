@@ -38,7 +38,9 @@ public class ControllerMainMenu {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 9; j++) {
                 battleGroundCells[i][j] = setLabelStyle(new Label());
-                battleGroundCells[i][j].relocate(450 + 67 * j, 280 + 80 * i);
+                battleGroundCells[i][j].relocate
+                        (GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * j
+                                , GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * i);
                 battleGroundCells[i][j].setMinWidth(63);
                 battleGroundCells[i][j].setMinHeight(50);
                 root.getChildren().add(battleGroundCells[i][j]);

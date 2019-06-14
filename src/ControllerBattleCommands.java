@@ -116,9 +116,6 @@ public class ControllerBattleCommands {
                     case SHOW_MENU:
                         showMenu();
                         break;
-                    case HELP:
-                        help();
-                        break;
                     case SHOW_BATTLEGROUND:
                         showBattleground();
                         break;
@@ -128,6 +125,7 @@ public class ControllerBattleCommands {
             } catch (GoToMainMenuException e) {
                 throw e;
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -353,9 +351,5 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
-    }
-
-    public void help() {
-        view.printList(database.getCurrentBattle().getAvailableMoves());
     }
 }
