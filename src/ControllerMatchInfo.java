@@ -1,11 +1,11 @@
 import java.util.List;
 
 public class ControllerMatchInfo {
-    private static ControllerMatchInfo ourInstance = new ControllerMatchInfo();
+    private static ControllerMatchInfo ourInstance;
     private View view = View.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
 
-    private ControllerMatchInfo() {
+    public ControllerMatchInfo() {
     }
 
     public static ControllerMatchInfo getInstance() {
