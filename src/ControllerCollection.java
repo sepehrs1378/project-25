@@ -1,3 +1,11 @@
+import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
+import java.util.Collections;
 import java.util.List;
 
 public class ControllerCollection {
@@ -6,13 +14,102 @@ public class ControllerCollection {
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
 
-//    private ControllerCollection() {
-//
-//    }
+    public ControllerCollection() {
+        ourInstance = this;
+    }
 
     public static ControllerCollection getInstance() {
         return ourInstance;
     }
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private ImageView showCardsBtn;
+
+    @FXML
+    void makeShowCardsBtnOpaque(MouseEvent event) {
+        showCardsBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeShowCardsBtnTransparent(MouseEvent event) {
+        showCardsBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    private JFXTextField createNewDeckText;
+
+    @FXML
+    private JFXTextField cardInCollectionText;
+
+    @FXML
+    private JFXTextField deckNameText;
+
+    @FXML
+    private JFXTextField itemText;
+
+    @FXML
+    private JFXTextField deckNameItemText;
+
+    @FXML
+    void addItemToDeck(MouseEvent event) {
+        if (itemText.getText().isEmpty()){
+            return;
+        }
+        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+        if (deckNameItemText.getText().isEmpty()){
+            return;
+        }
+        Deck deck = playerCollection.getDeckByName(deckNameText.getText());
+        Item item = playerCollection.getItemWithID(itemText.getText());
+        deck.setItem(item);
+    }
+
+
+
+    @FXML
+    void addCardToDeck(MouseEvent event) {
+        if (cardInCollectionText.getText().isEmpty()){
+            return;
+        }
+        if (deckNameText.getText().isEmpty()){
+            return;
+        }
+        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+        OutputMessageType outputMessageType =
+                playerCollection.addCard(cardInCollectionText.getText(), deckNameText.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
+        alert.showAndWait();
+    }
+
+
+    @FXML
+    void createNewDeck(MouseEvent event) {
+        if (createNewDeckText.getText().isEmpty()){
+            return;
+        }
+        OutputMessageType outputMessageType =
+                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(createNewDeckText.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
+        alert.showAndWait();
+    }
+
+    @FXML
+    void showCards(MouseEvent event) {
+//        List<Card> cards = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getCards();
+//        for (int i = 0; i < cards.size(); i++) {
+//            Card card = cards.get(i);
+//            if (card instanceof  Unit){
+//
+//            }else if (card instanceof Spell){
+//
+//            }
+//
+//        } todo
+    }
+
 
     public void main() {
         boolean didExit = false;
