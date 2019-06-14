@@ -13,7 +13,7 @@ public class DataBase {
     private Account computerPlayerLevel1;
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
-    private Account computerPlayerCostum;
+    private Account computerPlayerCustom;
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -32,7 +32,7 @@ public class DataBase {
 
     private void makeCardSpells() {
         //1
-        String desc1 = "Target : Enemy Unit - disarms an enemy unit for the entirety of the current battle";
+        String desc1 = "Target : Enemy Unit - disarms an enemy unit for the entirety of the battle";
         Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         DisarmBuff totalDisarmBuff = new DisarmBuff(1000, true, false);
         Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, totalDisarmBuff, SpellActivationType.ON_CAST, desc1, false);
@@ -744,7 +744,7 @@ public class DataBase {
         computerPlayerLevel1 = new Account("computer1", "1");
         computerPlayerLevel2 = new Account("computer2", "2");
         computerPlayerLevel3 = new Account("computer3", "3");
-        computerPlayerCostum = new Account("computerCustom", "custom");
+        computerPlayerCustom = new Account("computerCustom", "custom");
 
         //todo add usables to deck
         Deck computerPlayer1Deck = new Deck("Deck");
@@ -820,6 +820,10 @@ public class DataBase {
         addToComputerDeck(computerPlayer3Deck, 63, 1);
         computerPlayerLevel3.setMainDeck(computerPlayer3Deck);
 
+        accountList.add(computerPlayerLevel1);
+        accountList.add(computerPlayerLevel2);
+        accountList.add(computerPlayerLevel3);
+
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
 
@@ -847,8 +851,8 @@ public class DataBase {
         return computerPlayerLevel3;
     }
 
-    public Account getComputerPlayerCostum() {
-        return computerPlayerCostum;
+    public Account getComputerPlayerCustom() {
+        return computerPlayerCustom;
     }
 
     public Account getLoggedInAccount() {
@@ -926,8 +930,8 @@ public class DataBase {
             return computerPlayerLevel2;
         if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(username))
             return computerPlayerLevel1;
-        if (computerPlayerCostum.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerCostum;
+        if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerCustom;
         return null;
     }
 
@@ -996,15 +1000,15 @@ public class DataBase {
     }
 
     public void setNewIdsForCustomPlayer() {
-        Deck deck = computerPlayerCostum.getMainDeck();
+        Deck deck = computerPlayerCustom.getMainDeck();
         if (deck != null) {
             for (Card card : deck.getCards()) {
-                card.setId(computerPlayerCostum.getUsername() + "_" + card.getId().split("_")[1] + "_"
+                card.setId(computerPlayerCustom.getUsername() + "_" + card.getId().split("_")[1] + "_"
                         + card.getId().split("_")[2]);
             }
-            deck.getHero().setId(computerPlayerCostum.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
+            deck.getHero().setId(computerPlayerCustom.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
                     + deck.getHero().getId().split("_")[2]);
-            deck.getItem().setId(computerPlayerCostum.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
+            deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
                     + deck.getItem().getId().split("_")[2]);
         }
     }
@@ -1013,19 +1017,19 @@ public class DataBase {
         return getAccountWithUsername(username) != null;
     }
 
-    public void saveBattle(){
+    public void saveBattle() {
 
     }
 
-    public void saveGame(){
+    public void saveGame() {
 
     }
 
-    public void importDeck(){
+    public void importDeck() {
 
     }
 
-    public void exportDeck(){
+    public void exportDeck() {
 
     }
 }
