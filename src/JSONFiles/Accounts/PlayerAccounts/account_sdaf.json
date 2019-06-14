@@ -1,0 +1,19 @@
+{
+  "levelsOpennessStatus": [
+    true,
+    false,
+    false
+  ],
+  "password": "asdf",
+  "username": "sdaf",
+  "playerInfo": {
+    "playerName": "sdaf",
+    "collection": {
+      "decks": [],
+      "cards": [],
+      "items": []
+    }
+  },
+  "matchList": [],
+  "money": 1000000
+}
