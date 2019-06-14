@@ -1,3 +1,11 @@
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.List;
 
 public class ControllerSinglePlayerMenu {
@@ -6,8 +14,83 @@ public class ControllerSinglePlayerMenu {
     private View view = View.getInstance();
     private DataBase database = DataBase.getInstance();
 
-    private ControllerSinglePlayerMenu() {
+    public ControllerSinglePlayerMenu() {
+        ourInstance = this;
     }
+
+    @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    private ImageView level1Btn;
+
+    @FXML
+    private ImageView level2Btn;
+
+    @FXML
+    private ImageView level3Btn;
+
+    @FXML
+    void enterLevel1(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void enterLevel2(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void enterLevel3(MouseEvent event) {
+        //todo
+    }
+
+    @FXML
+    void makeLevel1BtnOpaque(MouseEvent event) {
+        level1Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel1BtnTransparent(MouseEvent event) {
+        level1Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeLevel2BtnOpaque(MouseEvent event) {
+        level2Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel2BtnTransparent(MouseEvent event) {
+        level2Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeLevel3BtnOpaque(MouseEvent event) {
+        level3Btn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLevel3BtnTransparent(MouseEvent event) {
+        level3Btn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void closeSinglePlayerMenu(MouseEvent event) throws IOException {
+        ControllerMainMenu.stage.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
 
     public void main() throws GoToMainMenuException {
         view.printHelp(HelpType.CONTROLLER_SINGLE_PLAYER_MENU);

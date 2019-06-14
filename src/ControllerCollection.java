@@ -1,11 +1,14 @@
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
 
 public class ControllerCollection {
@@ -52,6 +55,25 @@ public class ControllerCollection {
 
     @FXML
     private JFXTextField deckNameItemText;
+
+    @FXML
+    private ImageView backBtn;
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
     void addItemToDeck(MouseEvent event) {

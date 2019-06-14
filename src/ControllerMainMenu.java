@@ -4,6 +4,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -16,6 +19,7 @@ public class ControllerMainMenu {
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
+    public static Stage stage;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -28,14 +32,37 @@ public class ControllerMainMenu {
     private ImageView multiPlayerBtn;
 
     @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    void closeMenu(MouseEvent event) {
+        Main.window.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleFXML.fxml"));
-        Main.window.setScene(new Scene(root));
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setScene(new Scene(root));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        stage = primaryStage;
+        primaryStage.showAndWait();
     }
 
     @FXML
     void enterMultiPlayer(MouseEvent event) {
-
+        //todo in phase 3
     }
 
     @FXML
