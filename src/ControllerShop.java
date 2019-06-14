@@ -24,11 +24,32 @@ public class ControllerShop {
     public ControllerShop() {
         ourInstance = this;
     }
+
     @FXML
     private AnchorPane shopPane;
 
     @FXML
     private JFXTextField addCardText;
+
+    @FXML
+    private ImageView backBtn;
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
 
     public void showCards() throws IOException {
 //        File file = new File("../pics/card_background.png");

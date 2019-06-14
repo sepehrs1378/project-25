@@ -16,6 +16,10 @@
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="916.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" />
       <JFXTextField fx:id="addCardText" layoutX="375.0" layoutY="35.0" prefHeight="31.0" prefWidth="641.0" promptText="search a card" style="-fx-background-color: #f9f6ed;" />
       <JFXButton layoutX="532.0" layoutY="84.0" onMouseClicked="#addCard" prefHeight="31.0" prefWidth="384.0" style="-fx-background-color: #f9f6ed;" text="Add" />
-      <JFXButton layoutX="54.0" layoutY="20.0" onMouseClicked="#goBack" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #f9f6ed;" text="Back" />
+      <ImageView fx:id="backBtn" fitHeight="112.0" fitWidth="102.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" opacity="0.6" preserveRatio="true">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

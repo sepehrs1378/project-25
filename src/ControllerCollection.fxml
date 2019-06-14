@@ -31,6 +31,11 @@
                   <JFXTextField fx:id="itemText" layoutX="29.0" layoutY="357.0" prefHeight="31.0" prefWidth="481.0" promptText="Search Item ID In Collection" style="-fx-background-color: #f9f6ed;" />
                   <JFXTextField fx:id="deckNameItemText" layoutX="542.0" layoutY="357.0" prefHeight="31.0" prefWidth="269.0" promptText="Deck Name" style="-fx-background-color: #f9f6ed;" />
                   <JFXButton layoutX="853.0" layoutY="357.0" onMouseClicked="#addItemToDeck" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #f9f6ed;" text="Add Item To Deck" />
+                  <ImageView fx:id="backBtn" fitHeight="96.0" fitWidth="100.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" opacity="0.6">
+                     <image>
+                        <Image url="@pics/back_button.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
         </content>
