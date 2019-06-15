@@ -1,95 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
-   <children>
-      <ImageView fitHeight="819.0" fitWidth="1500.0">
-         <image>
-            <Image url="@pics/maps/redrock/background@2x.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="819.0" fitWidth="1500.0" layoutX="-2.0" layoutY="-2.0">
-         <image>
-            <Image url="@pics/maps/redrock/midground@2x.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="819.0" fitWidth="519.0">
-         <image>
-            <Image url="@pics/maps/redrock/foreground@2x.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="813.0" fitWidth="1500.0">
-         <image>
-            <Image url="@pics/maps/redrock/midground_glow@2x.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="endTurnEnemyBtn" fitHeight="72.0" fitWidth="194.0" layoutX="1264.0" layoutY="719.0" opacity="0.6" visible="false">
-         <image>
-            <Image url="@pics/in_battle_pics/button_end_turn_enemy.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="endTurnMineBtn" fitHeight="72.0" fitWidth="194.0" layoutX="1264.0" layoutY="719.0" onMouseClicked="#endTurn" onMouseEntered="#makeEndTurnMineOpaque" onMouseExited="#makeEndTurnMineTransparent" opacity="0.6">
-         <image>
-            <Image url="@pics/in_battle_pics/button_end_turn_mine.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="464.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="789.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="627.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="123.0" fitWidth="127.0" layoutX="1100.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="131.0" fitWidth="123.0" layoutX="946.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/nextCardRing.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="260.0" layoutY="709.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ApProjectResources/battleGroundUI/nextCardSign.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="127.0" layoutY="636.0" text="Next Card" textFill="#f21313">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Button layoutX="1424.0" layoutY="14.0" mnemonicParsing="false" text="Save">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Button>
-      <Button layoutX="1328.0" layoutY="14.0" mnemonicParsing="false" text="Back">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Button>
-   </children>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ControllerBattleCommands">
+    <children>
+        <ImageView fitHeight="819.0" fitWidth="1500.0">
+            <image>
+                <Image url="@pics/maps/redrock/background@2x.jpg"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="819.0" fitWidth="1500.0" layoutX="-2.0" layoutY="-2.0">
+            <image>
+                <Image url="@pics/maps/redrock/midground@2x.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="819.0" fitWidth="519.0">
+            <image>
+                <Image url="@pics/maps/redrock/foreground@2x.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="813.0" fitWidth="1500.0">
+            <image>
+                <Image url="@pics/maps/redrock/midground_glow@2x.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="endTurnEnemyBtn" fitHeight="72.0" fitWidth="194.0" layoutX="1264.0" layoutY="719.0"
+                   opacity="0.6" visible="false">
+            <image>
+                <Image url="@pics/in_battle_pics/button_end_turn_enemy.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="endTurnMineBtn" fitHeight="72.0" fitWidth="194.0" layoutX="1264.0" layoutY="719.0"
+                   onMouseClicked="#endTurn" onMouseEntered="#makeEndTurnMineOpaque"
+                   onMouseExited="#makeEndTurnMineTransparent" opacity="0.6">
+            <image>
+                <Image url="@pics/in_battle_pics/button_end_turn_mine.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="464.0" layoutY="677.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/cardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="789.0" layoutY="677.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/cardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="627.0" layoutY="677.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/cardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="123.0" fitWidth="127.0" layoutX="1100.0" layoutY="677.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/cardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="131.0" fitWidth="123.0" layoutX="946.0" layoutY="677.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/cardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/nextCardRing.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="260.0" layoutY="709.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@ApProjectResources/battleGroundUI/nextCardSign.png"/>
+            </image>
+        </ImageView>
+        <Label layoutX="127.0" layoutY="636.0" text="Next Card" textFill="#f21313">
+            <font>
+                <Font size="23.0"/>
+            </font>
+        </Label>
+        <Button layoutX="1424.0" layoutY="14.0" mnemonicParsing="false" text="Save">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Button>
+        <Button layoutX="1328.0" layoutY="14.0" mnemonicParsing="false" text="Back">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

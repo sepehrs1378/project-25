@@ -1287,25 +1287,25 @@ public class DataBase {
         }
     }
 
-    public void saveGame(Battle battle){
+    public void saveGame(Battle battle) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Games");
         String[] fileNames = folder.list();
-        String fileName ="battle_"+ battle.getPlayer1().getPlayerInfo().getPlayerName()
-                +"_"+battle.getPlayer2().getPlayerInfo().getPlayerName()+"_";
-        int numberOfBattles=0;
+        String fileName = "battle_" + battle.getPlayer1().getPlayerInfo().getPlayerName()
+                + "_" + battle.getPlayer2().getPlayerInfo().getPlayerName() + "_";
+        int numberOfBattles = 0;
         if (fileNames != null) {
             for (String name : fileNames) {
-                if (name.contains(fileName)){
+                if (name.contains(fileName)) {
                     numberOfBattles++;
                 }
             }
         }
-        fileName+=numberOfBattles;
-        fileName+=".json";
+        fileName += numberOfBattles;
+        fileName += ".json";
         try {
-            FileWriter fileWriter =new FileWriter(new File("src/JSONFiles/Games/"+fileName));
-            yaGson.toJson(battle,fileWriter);
+            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Games/" + fileName));
+            yaGson.toJson(battle, fileWriter);
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
@@ -1315,7 +1315,7 @@ public class DataBase {
 
     public static void loadGame(String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        if (!address.endsWith(".json")){
+        if (!address.endsWith(".json")) {
             System.out.println("selected file is not a json file");
             return;
         }
@@ -1328,7 +1328,7 @@ public class DataBase {
         } catch (FileNotFoundException e) {
             //todo show this message in correct place
             System.out.println("file not found");
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             System.out.println("invalid file, selected file is not a saved battle");
         }
 
