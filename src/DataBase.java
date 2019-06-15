@@ -891,9 +891,6 @@ public class DataBase {
         addCardToDeck(temp2, temp2Deck, 69, 1);
         temp2.setMainDeck(temp2Deck);
 
-        accountList.add(computerPlayerLevel1);
-        accountList.add(computerPlayerLevel2);
-        accountList.add(computerPlayerLevel3);
         accountList.add(temp1);
         accountList.add(temp2);
 
