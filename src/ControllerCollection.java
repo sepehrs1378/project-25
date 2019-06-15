@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 public class ControllerCollection {
@@ -78,11 +77,11 @@ public class ControllerCollection {
 
     @FXML
     void addItemToDeck(MouseEvent event) {
-        if (itemText.getText().isEmpty()){
+        if (itemText.getText().isEmpty()) {
             return;
         }
         PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-        if (deckNameItemText.getText().isEmpty()){
+        if (deckNameItemText.getText().isEmpty()) {
             return;
         }
         Deck deck = playerCollection.getDeckByName(deckNameText.getText());
@@ -91,13 +90,12 @@ public class ControllerCollection {
     }
 
 
-
     @FXML
     void addCardToDeck(MouseEvent event) {
-        if (cardInCollectionText.getText().isEmpty()){
+        if (cardInCollectionText.getText().isEmpty()) {
             return;
         }
-        if (deckNameText.getText().isEmpty()){
+        if (deckNameText.getText().isEmpty()) {
             return;
         }
         PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
@@ -110,7 +108,7 @@ public class ControllerCollection {
 
     @FXML
     void createNewDeck(MouseEvent event) {
-        if (createNewDeckText.getText().isEmpty()){
+        if (createNewDeckText.getText().isEmpty()) {
             return;
         }
         OutputMessageType outputMessageType =

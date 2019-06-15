@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 public class PlayerCollection {
     private static transient DataBase dataBase = DataBase.getInstance();
     private List<Deck> decks = new ArrayList<>();
