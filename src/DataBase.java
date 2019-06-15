@@ -18,9 +18,19 @@ public class DataBase {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
+    private Account temp1 = new Account("temp1", "1");
+    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
+    }
+
+    public Account getTemp2() {
+        return temp2;
+    }
+
+    public Account getTemp1() {
+        return temp1;
     }
 
     private DataBase() {
@@ -37,7 +47,7 @@ public class DataBase {
 //        makeHeroes();
 //        makeMinions();
 //        makeItems();
-//        makeAccounts();
+        makeAccounts();
         System.out.println(cardList.size());
         System.out.println(collectableList.size());
         System.out.println(usableList.size());
@@ -611,6 +621,7 @@ public class DataBase {
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //String descUsable1 = "price : 300";
         //todo
+        usableList.add(namoosSepar);
         //usableList.add(null);
 
         //4             //1
@@ -676,8 +687,8 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
-        //usableList.add(null);
-        //todo
+        usableList.add(parSimorgh);
+        //todo nefrinMarg
         //todo what does it mean?
 
         //13            //8
@@ -759,78 +770,129 @@ public class DataBase {
         computerPlayerLevel3 = new Account("computer3", "3");
 
         //todo add usables to deck
-        Deck computerPlayer1Deck = new Deck("Deck");
-        addToComputerDeck(computerPlayer1Deck, 0, 1);
-        addToComputerDeck(computerPlayer1Deck, 6, 1);
-        addToComputerDeck(computerPlayer1Deck, 9, 1);
-        addToComputerDeck(computerPlayer1Deck, 10, 1);
-        addToComputerDeck(computerPlayer1Deck, 11, 1);
-        addToComputerDeck(computerPlayer1Deck, 17, 1);
-        addToComputerDeck(computerPlayer1Deck, 19, 1);
-        addToComputerDeck(computerPlayer1Deck, 20, 1);
-        addToComputerDeck(computerPlayer1Deck, 30, 1);
-        addToComputerDeck(computerPlayer1Deck, 38, 1);
-        addToComputerDeck(computerPlayer1Deck, 40, 1);
-        addToComputerDeck(computerPlayer1Deck, 40, 2);
-        addToComputerDeck(computerPlayer1Deck, 42, 1);
-        addToComputerDeck(computerPlayer1Deck, 46, 1);
-        addToComputerDeck(computerPlayer1Deck, 47, 1);
-        addToComputerDeck(computerPlayer1Deck, 50, 1);
-        addToComputerDeck(computerPlayer1Deck, 51, 1);
-        addToComputerDeck(computerPlayer1Deck, 55, 1);
-        addToComputerDeck(computerPlayer1Deck, 67, 1);
-        addToComputerDeck(computerPlayer1Deck, 65, 1);
-        addToComputerDeck(computerPlayer1Deck, 69, 1);
+        /*Deck computerPlayer1Deck = new Deck("Deck");
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 0, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 6, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 9, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 10, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 11, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 17, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 19, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 20, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 30, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 38, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 40, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 40, 2);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 42, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 46, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 47, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 50, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 51, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 55, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 67, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 65, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 69, 1);
         computerPlayerLevel1.setMainDeck(computerPlayer1Deck);
 
         Deck computerPlayer2Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer2Deck, 1, 1);
-        addToComputerDeck(computerPlayer2Deck, 2, 1);
-        addToComputerDeck(computerPlayer2Deck, 4, 1);
-        addToComputerDeck(computerPlayer2Deck, 7, 1);
-        addToComputerDeck(computerPlayer2Deck, 8, 1);
-        addToComputerDeck(computerPlayer2Deck, 12, 1);
-        addToComputerDeck(computerPlayer2Deck, 18, 1);
-        addToComputerDeck(computerPlayer2Deck, 24, 1);
-        addToComputerDeck(computerPlayer2Deck, 31, 1);
-        addToComputerDeck(computerPlayer2Deck, 32, 1);
-        addToComputerDeck(computerPlayer2Deck, 34, 1);
-        addToComputerDeck(computerPlayer2Deck, 37, 1);
-        addToComputerDeck(computerPlayer2Deck, 41, 1);
-        addToComputerDeck(computerPlayer2Deck, 44, 1);
-        addToComputerDeck(computerPlayer2Deck, 44, 2);
-        addToComputerDeck(computerPlayer2Deck, 48, 1);
-        addToComputerDeck(computerPlayer2Deck, 52, 1);
-        addToComputerDeck(computerPlayer2Deck, 56, 1);
-        addToComputerDeck(computerPlayer2Deck, 59, 1);
-        addToComputerDeck(computerPlayer2Deck, 62, 1);
-        addToComputerDeck(computerPlayer2Deck, 68, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 1, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 2, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 4, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 7, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 8, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 12, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 18, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 24, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 31, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 32, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 34, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 37, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 41, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 44, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 44, 2);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 48, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 52, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 56, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 59, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 62, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 68, 1);
         computerPlayerLevel2.setMainDeck(computerPlayer2Deck);
 
         Deck computerPlayer3Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer3Deck, 0, 1);
-        addToComputerDeck(computerPlayer3Deck, 5, 1);
-        addToComputerDeck(computerPlayer3Deck, 6, 1);
-        addToComputerDeck(computerPlayer3Deck, 9, 1);
-        addToComputerDeck(computerPlayer3Deck, 11, 1);
-        addToComputerDeck(computerPlayer3Deck, 13, 1);
-        addToComputerDeck(computerPlayer3Deck, 14, 1);
-        addToComputerDeck(computerPlayer3Deck, 15, 1);
-        addToComputerDeck(computerPlayer3Deck, 26, 1);
-        addToComputerDeck(computerPlayer3Deck, 35, 1);
-        addToComputerDeck(computerPlayer3Deck, 36, 1);
-        addToComputerDeck(computerPlayer3Deck, 39, 1);
-        addToComputerDeck(computerPlayer3Deck, 43, 1);
-        addToComputerDeck(computerPlayer3Deck, 45, 1);
-        addToComputerDeck(computerPlayer3Deck, 45, 2);
-        addToComputerDeck(computerPlayer3Deck, 49, 1);
-        addToComputerDeck(computerPlayer3Deck, 53, 1);
-        addToComputerDeck(computerPlayer3Deck, 54, 1);
-        addToComputerDeck(computerPlayer3Deck, 57, 1);
-        addToComputerDeck(computerPlayer3Deck, 58, 1);
-        addToComputerDeck(computerPlayer3Deck, 60, 1);
-        addToComputerDeck(computerPlayer3Deck, 63, 1);
-        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 0, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 5, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 6, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 9, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 11, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 13, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 14, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 15, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 26, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 35, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 36, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 39, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 43, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 45, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 45, 2);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 49, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 53, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 54, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 57, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 58, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 60, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 63, 1);
+        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*/
+
+        Deck temp1Deck = new Deck("deck");
+        addCardToDeck(temp1, temp1Deck, 0, 1);
+        addCardToDeck(temp1, temp1Deck, 6, 1);
+        addCardToDeck(temp1, temp1Deck, 9, 1);
+        addCardToDeck(temp1, temp1Deck, 10, 1);
+        addCardToDeck(temp1, temp1Deck, 11, 1);
+        addCardToDeck(temp1, temp1Deck, 17, 1);
+        addCardToDeck(temp1, temp1Deck, 19, 1);
+        addCardToDeck(temp1, temp1Deck, 20, 1);
+        addCardToDeck(temp1, temp1Deck, 30, 1);
+        addCardToDeck(temp1, temp1Deck, 38, 1);
+        addCardToDeck(temp1, temp1Deck, 40, 1);
+        addCardToDeck(temp1, temp1Deck, 40, 2);
+        addCardToDeck(temp1, temp1Deck, 42, 1);
+        addCardToDeck(temp1, temp1Deck, 46, 1);
+        addCardToDeck(temp1, temp1Deck, 47, 1);
+        addCardToDeck(temp1, temp1Deck, 50, 1);
+        addCardToDeck(temp1, temp1Deck, 51, 1);
+        addCardToDeck(temp1, temp1Deck, 55, 1);
+        addCardToDeck(temp1, temp1Deck, 67, 1);
+        addCardToDeck(temp1, temp1Deck, 65, 1);
+        addCardToDeck(temp1, temp1Deck, 69, 1);
+        temp1.setMainDeck(temp1Deck);
+
+        Deck temp2Deck = new Deck("deck");
+        addCardToDeck(temp2, temp2Deck, 0, 1);
+        addCardToDeck(temp2, temp2Deck, 6, 1);
+        addCardToDeck(temp2, temp2Deck, 9, 1);
+        addCardToDeck(temp2, temp2Deck, 10, 1);
+        addCardToDeck(temp2, temp2Deck, 11, 1);
+        addCardToDeck(temp2, temp2Deck, 17, 1);
+        addCardToDeck(temp2, temp2Deck, 19, 1);
+        addCardToDeck(temp2, temp2Deck, 20, 1);
+        addCardToDeck(temp2, temp2Deck, 30, 1);
+        addCardToDeck(temp2, temp2Deck, 38, 1);
+        addCardToDeck(temp2, temp2Deck, 40, 1);
+        addCardToDeck(temp2, temp2Deck, 40, 2);
+        addCardToDeck(temp2, temp2Deck, 42, 1);
+        addCardToDeck(temp2, temp2Deck, 46, 1);
+        addCardToDeck(temp2, temp2Deck, 47, 1);
+        addCardToDeck(temp2, temp2Deck, 50, 1);
+        addCardToDeck(temp2, temp2Deck, 51, 1);
+        addCardToDeck(temp2, temp2Deck, 55, 1);
+        addCardToDeck(temp2, temp2Deck, 67, 1);
+        addCardToDeck(temp2, temp2Deck, 65, 1);
+        addCardToDeck(temp2, temp2Deck, 69, 1);
+        temp2.setMainDeck(temp2Deck);
+
+        accountList.add(temp1);
+        accountList.add(temp2);
 
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
@@ -978,20 +1040,19 @@ public class DataBase {
         return null;
     }
 
-    private void addToComputerDeck(Deck computerDeck, int index, int number) {
-        Card card;
-        card = cardList.get(index);
+    private void addCardToDeck(Account account, Deck deck, int index, int number) {
+        Card card = cardList.get(index);
         if (card instanceof Unit) {
             card = ((Unit) card).clone();
         } else if (card instanceof Spell) {
             card = ((Spell) card).clone();
         }
-        card.setId(computerPlayerLevel1.getUsername() + "_" + card.getName() + "_" + number);
+        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
         if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
-            computerDeck.setHero((Unit) card);
+            deck.setHero((Unit) card);
             return;
         }
-        computerDeck.addToCards(card);
+        deck.addToCards(card);
     }
 
     public void changePlayerNameInId(Object object, Player player) {
@@ -1062,6 +1123,7 @@ public class DataBase {
         }
         try {
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
+
             computerPlayerLevel1 = gson.fromJson(reader, Account.class);
 
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
@@ -1144,7 +1206,8 @@ public class DataBase {
             }
         }
     }
-    public void readUsables(){
+
+    public void readUsables() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Cards/Usables");
         String[] fileNames = folder.list();
@@ -1164,7 +1227,7 @@ public class DataBase {
         }
     }
 
-    public void readHeroes(){
+    public void readHeroes() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Cards/Heroes");
         String[] fileNames = folder.list();
@@ -1183,7 +1246,8 @@ public class DataBase {
             }
         }
     }
-    public void readMinions(){
+
+    public void readMinions() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Cards/Minions");
         String[] fileNames = folder.list();
@@ -1202,7 +1266,8 @@ public class DataBase {
             }
         }
     }
-    public void readSpells(){
+
+    public void readSpells() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Cards/Spells");
         String[] fileNames = folder.list();
