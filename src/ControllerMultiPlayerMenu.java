@@ -49,7 +49,7 @@ public class ControllerMultiPlayerMenu {
             view.printHelp(request.getHelpType());
             request.getNewCommand();
             if (request.getCommand().matches("start multiplayer game \\w+\\s*\\w*")) {
-                //todo refactor this method (works already)
+                //todo refactor this method
                 int numberOfFlags = 0;
                 String mode = request.getCommand().split(" ")[3];
                 if (mode.equals(Constants.FLAGS)) {

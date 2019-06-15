@@ -1,5 +1,7 @@
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -12,16 +14,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class UnitImage {
-    //todo دیوریشن ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
-    private long attackDuration = 1500;
-    private long deathDuration = 1000;
-    private long spellDuration = 1500;
-    private long runDuration = 1000;
+    //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
+    private long attackDuration = 3000;
+    private long deathDuration = 3000;
+    private long spellDuration = 3000;
+    private long runDuration = 3000;
+    private int unitViewSize = 150;
     private ImageView unitView = new ImageView();
+    private Label apNumber = new Label("0");//todo relocate and reset it
+    private Label hpNumber = new Label("0");//todo
     private String id;
     private UnitStatus unitStatus;
 
-    public UnitImage(String id) {
+    {
+        apNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #fff700;-fx-background-radius: 100;-fx-font-size: 18");
+        hpNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #ff0003;-fx-background-radius: 100;-fx-font-size: 18");
+        unitView.setFitWidth(unitViewSize);
+        unitView.setFitHeight(unitViewSize);
+    }
+
+    public UnitImage(String id, AnchorPane root) {
+        this.id = id;
         unitStatus = UnitStatus.stand;
         try {
             unitView.setImage(new Image(new FileInputStream
@@ -30,12 +43,9 @@ public class UnitImage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        resetStatsPositions();
+        addToRoot(root);
         //todo
-    }
-
-    public UnitStatus getUnitStatus() {
-        return unitStatus;
     }
 
     public void setUnitStatus(UnitStatus unitStatus) {
@@ -53,23 +63,36 @@ public class UnitImage {
         return id.split("_")[1];
     }
 
-    public void showRun(int row, int column, AnchorPane root) {
+    public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
         setUnitStatus(UnitStatus.run);
 
-        double startX = unitView.getX() + unitView.getFitWidth() / 2;
-        double startY = unitView.getY() + unitView.getFitHeight() / 2;
-        double endX = row * GraphicConstants.CELL_HEIGHT
-                + GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT / 2;
-        double endY = column * GraphicConstants.CELL_WIDTH
-                + GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH / 2;
+        double startX = unitView.getLayoutX() + unitView.getFitWidth() / 2;
+        double startY = unitView.getLayoutY() + unitView.getFitHeight() / 2;
+        double endX = ControllerMainMenu.getInstance().getCellLayoutX(destinationColumn)
+                + GraphicConstants.CELL_WIDTH / 2;
+        double endY = ControllerMainMenu.getInstance().getCellLayoutY(destinationRow)
+                + GraphicConstants.CELL_HEIGHT / 2;
+
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
-        path.setVisible(true);//todo remove it when not needed
+        path.setVisible(true);
+        root.getChildren().add(path);
 
         PathTransition pathTransition = new PathTransition
                 (Duration.millis(runDuration), path, unitView);
-        pathTransition.setAutoReverse(true);
+        pathTransition.setAutoReverse(false);
         pathTransition.setCycleCount(1);
         pathTransition.play();
+
+        /*Path path = new Path(new MoveTo(bossView.getX() + bossView.getFitWidth() / 2
+        , bossView.getY() + bossView.getFitHeight() / 2)
+        , new LineTo(300, 100));
+        path.setVisible(false);
+        root.getChildren().add(path);
+
+        PathTransition pathTransition = new PathTransition(Duration.millis(1500), path, bossView);
+        pathTransition.setAutoReverse(true);
+        pathTransition.setCycleCount(3);
+        pathTransition.play();*/
 
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
@@ -81,14 +104,14 @@ public class UnitImage {
                 if (now - lastTime > runDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
                     this.stop();
-                }
+                } else resetStatsPositions();
             }
         };
         animationTimer.start();
     }
 
     public void showAttack() {
-        setUnitStatus(UnitStatus.stand);
+        setUnitStatus(UnitStatus.attack);
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
 
@@ -134,11 +157,43 @@ public class UnitImage {
                 if (lastTime == 0)
                     lastTime = now;
                 if (now - lastTime > spellDuration * 1000000) {
-                    setUnitStatus(UnitStatus.spell);
+                    setUnitStatus(UnitStatus.stand);
                     this.stop();
                 }
             }
         };
         animationTimer.start();
+    }
+
+    private void addToRoot(AnchorPane root) {
+        root.getChildren().add(unitView);
+        root.getChildren().add(apNumber);
+        root.getChildren().add(hpNumber);
+    }
+
+    private void resetStatsPositions() {
+        hpNumber.relocate(unitView.getLayoutX() + unitViewSize * 0.33
+                , unitView.getLayoutY() + unitViewSize);
+        apNumber.relocate(unitView.getLayoutX() + unitViewSize * 0.66
+                , unitView.getLayoutY() + unitViewSize);
+    }
+
+    public void changeApNumber(int apNumber) {
+        this.apNumber.setText(" " + apNumber + " ");
+    }
+
+    public void changeHpNumber(int hpNumber) {
+        this.hpNumber.setText(" " + hpNumber + " ");
+    }
+
+    public void setInCell(int row, int column) {
+        relocate(ControllerMainMenu.getInstance().getCellLayoutX(column)
+                , ControllerMainMenu.getInstance().getCellLayoutY(row));
+
+    }
+
+    public void relocate(double x, double y) {
+        unitView.relocate(x, y);
+        resetStatsPositions();
     }
 }

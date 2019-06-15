@@ -1,3 +1,10 @@
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 import java.util.List;
 
 public class ControllerSinglePlayerMenu {
@@ -5,6 +12,27 @@ public class ControllerSinglePlayerMenu {
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private DataBase database = DataBase.getInstance();
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
+
+    @FXML
+    void startLevel1(MouseEvent event) {
+
+    }
+
+    @FXML
+    void startLevel2(MouseEvent event) {
+
+    }
+
+    @FXML
+    void startLevel3(MouseEvent event) {
+
+    }
 
     public ControllerSinglePlayerMenu() {
         ourInstance = this;
@@ -114,7 +142,6 @@ public class ControllerSinglePlayerMenu {
 
         } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
-
 
     public static ControllerSinglePlayerMenu getInstance() {
         return ourInstance;

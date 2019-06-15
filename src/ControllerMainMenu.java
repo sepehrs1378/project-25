@@ -8,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
@@ -16,6 +18,7 @@ public class ControllerMainMenu {
     private View view = View.getInstance();
     private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private Label[][] battleGroundCells = new Label[5][9];
+    private List<UnitImage> unitImageList = new ArrayList<>();
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
@@ -31,31 +34,48 @@ public class ControllerMainMenu {
     @FXML
     private ImageView multiPlayerBtn;
 
+    public Label[][] getBattleGroundCells() {
+        return battleGroundCells;
+    }
+
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
         AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         setupBattleGroundCells(root);
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
-                , Constants.CLASSIC, 0, null, Constants.SINGLE);
-        DataBase.getInstance().setCurrentBattle(battle);
+        startTempBattle();//todo remove it later
+        setupHeroesImages(root);
         //todo units images
         Main.window.setScene(new Scene(root));
     }
 
-    public void startTempBattle(AnchorPane root) {
-        //todo maybe not needed...
+    private void startTempBattle() {
+        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
+                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+        DataBase.getInstance().setCurrentBattle(battle);
+    }
+
+    private void setupHeroesImages(AnchorPane root) {
+        Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
+        Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
+        UnitImage playerHeroImage = new UnitImage(playerHero.getId(), root);
+        UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), root);
+        unitImageList.add(opponentHeroImage);
+        unitImageList.add(playerHeroImage);
+        playerHeroImage.setInCell(2, 0);
+        opponentHeroImage.setInCell(2, 8);
+        playerHeroImage.showRun(2,2,root);
     }
 
     private void setupBattleGroundCells(AnchorPane root) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 9; j++) {
-                battleGroundCells[i][j] = setLabelStyle(new Label());
-                battleGroundCells[i][j].relocate
-                        (GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * j
-                                , GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * i);
-                battleGroundCells[i][j].setMinWidth(63);
-                battleGroundCells[i][j].setMinHeight(50);
-                root.getChildren().add(battleGroundCells[i][j]);
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                battleGroundCells[row][column] = setLabelStyle(new Label());
+                battleGroundCells[row][column].relocate
+                        (getCellLayoutX(column)
+                                , getCellLayoutY(row));
+                battleGroundCells[row][column].setMinWidth(63);
+                battleGroundCells[row][column].setMinHeight(50);
+                root.getChildren().add(battleGroundCells[row][column]);
             }
         }
     }
@@ -224,4 +244,11 @@ public class ControllerMainMenu {
         return label;
     }
 
+    public double getCellLayoutX(int column) {
+        return GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * column;
+    }
+
+    public double getCellLayoutY(int row) {
+        return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
+    }
 }

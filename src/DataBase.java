@@ -851,7 +851,7 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 11, 1);
         addCardToDeck(temp1, temp1Deck, 17, 1);
         addCardToDeck(temp1, temp1Deck, 19, 1);
-        addCardToDeck(temp1, temp1Deck, 20, 1);
+        addCardToDeck(temp1, temp1Deck, 29, 1);
         addCardToDeck(temp1, temp1Deck, 30, 1);
         addCardToDeck(temp1, temp1Deck, 38, 1);
         addCardToDeck(temp1, temp1Deck, 40, 1);
@@ -875,7 +875,7 @@ public class DataBase {
         addCardToDeck(temp2, temp2Deck, 11, 1);
         addCardToDeck(temp2, temp2Deck, 17, 1);
         addCardToDeck(temp2, temp2Deck, 19, 1);
-        addCardToDeck(temp2, temp2Deck, 20, 1);
+        addCardToDeck(temp2, temp2Deck, 29, 1);
         addCardToDeck(temp2, temp2Deck, 30, 1);
         addCardToDeck(temp2, temp2Deck, 38, 1);
         addCardToDeck(temp2, temp2Deck, 40, 1);
