@@ -832,10 +832,6 @@ public class DataBase {
         addToComputerDeck(computerPlayer3Deck, 63, 1);
         computerPlayerLevel3.setMainDeck(computerPlayer3Deck);
 
-        accountList.add(computerPlayerLevel1);
-        accountList.add(computerPlayerLevel2);
-        accountList.add(computerPlayerLevel3);
-
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
 
