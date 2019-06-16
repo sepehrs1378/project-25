@@ -63,7 +63,7 @@ public class ControllerMainMenu {
         unitImageList.add(playerHeroImage);
         playerHeroImage.setInCell(2, 0);
         opponentHeroImage.setInCell(2, 8);
-        playerHeroImage.showRun(2,2,root);
+        playerHeroImage.showRun(2,5,root);
     }
 
     private void setupBattleGroundCells(AnchorPane root) {

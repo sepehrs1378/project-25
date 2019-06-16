@@ -18,7 +18,7 @@ public class UnitImage {
     private long attackDuration = 3000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
-    private long runDuration = 3000;
+    private long runDuration = 2000;
     private int unitViewSize = 150;
     private ImageView unitView = new ImageView();
     private Label apNumber = new Label("0");//todo relocate and reset it
@@ -66,33 +66,22 @@ public class UnitImage {
     public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
         setUnitStatus(UnitStatus.run);
 
-        double startX = unitView.getLayoutX() + unitView.getFitWidth() / 2;
-        double startY = unitView.getLayoutY() + unitView.getFitHeight() / 2;
+        double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
+        double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerMainMenu.getInstance().getCellLayoutX(destinationColumn)
-                + GraphicConstants.CELL_WIDTH / 2;
+                + GraphicConstants.CELL_WIDTH / 2.0;
         double endY = ControllerMainMenu.getInstance().getCellLayoutY(destinationRow)
-                + GraphicConstants.CELL_HEIGHT / 2;
+                + GraphicConstants.CELL_HEIGHT / 2.0;
 
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
-        path.setVisible(true);
+        path.setVisible(false);
         root.getChildren().add(path);
 
         PathTransition pathTransition = new PathTransition
                 (Duration.millis(runDuration), path, unitView);
-        pathTransition.setAutoReverse(false);
+        pathTransition.setAutoReverse(true);
         pathTransition.setCycleCount(1);
         pathTransition.play();
-
-        /*Path path = new Path(new MoveTo(bossView.getX() + bossView.getFitWidth() / 2
-        , bossView.getY() + bossView.getFitHeight() / 2)
-        , new LineTo(300, 100));
-        path.setVisible(false);
-        root.getChildren().add(path);
-
-        PathTransition pathTransition = new PathTransition(Duration.millis(1500), path, bossView);
-        pathTransition.setAutoReverse(true);
-        pathTransition.setCycleCount(3);
-        pathTransition.play();*/
 
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
@@ -103,6 +92,8 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > runDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
+                    root.getChildren().remove(path);
+                    System.out.println(unitView.getTranslateX() + "    " + unitView.getTranslateY());
                     this.stop();
                 } else resetStatsPositions();
             }
@@ -172,10 +163,10 @@ public class UnitImage {
     }
 
     private void resetStatsPositions() {
-        hpNumber.relocate(unitView.getLayoutX() + unitViewSize * 0.33
-                , unitView.getLayoutY() + unitViewSize);
-        apNumber.relocate(unitView.getLayoutX() + unitViewSize * 0.66
-                , unitView.getLayoutY() + unitViewSize);
+        hpNumber.setTranslateX(unitView.getTranslateX() + unitViewSize * 0.33);
+        hpNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
+        apNumber.setTranslateX(unitView.getTranslateX() + unitViewSize * 0.66);
+        apNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
     }
 
     public void changeApNumber(int apNumber) {
@@ -189,11 +180,15 @@ public class UnitImage {
     public void setInCell(int row, int column) {
         relocate(ControllerMainMenu.getInstance().getCellLayoutX(column)
                 , ControllerMainMenu.getInstance().getCellLayoutY(row));
-
     }
 
     public void relocate(double x, double y) {
-        unitView.relocate(x, y);
+        unitView.setTranslateX(x);
+        unitView.setTranslateY(y);
         resetStatsPositions();
+    }
+
+    public void setInHand(int ringNumber) {
+        //todo
     }
 }
