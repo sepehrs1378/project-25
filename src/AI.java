@@ -3,7 +3,7 @@ import java.util.List;
 
 public class AI {
     private static final AI ourInstance = new AI();
-    private DataBase dataBase = DataBase.getInstance();
+    private static DataBase dataBase = DataBase.getInstance();
 
     public static AI getInstance() {
         return ourInstance;

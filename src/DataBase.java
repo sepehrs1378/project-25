@@ -1117,6 +1117,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1201,6 +1203,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1221,6 +1225,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1241,6 +1247,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1261,6 +1269,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1281,6 +1291,8 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }catch(ClassCastException ignored){
+
                     }
                 }
             }
@@ -1293,14 +1305,7 @@ public class DataBase {
         String[] fileNames = folder.list();
         String fileName = "battle_" + battle.getPlayer1().getPlayerInfo().getPlayerName()
                 + "_" + battle.getPlayer2().getPlayerInfo().getPlayerName() + "_";
-        int numberOfBattles = 0;
-        if (fileNames != null) {
-            for (String name : fileNames) {
-                if (name.contains(fileName)) {
-                    numberOfBattles++;
-                }
-            }
-        }
+        int numberOfBattles = getNumOfSimilarFiles(fileNames, fileName);
         fileName += numberOfBattles;
         fileName += ".json";
         try {
@@ -1323,14 +1328,65 @@ public class DataBase {
         try {
             reader = new FileReader(new File(address));
             Battle battle = yaGson.fromJson(reader, Battle.class);
-            System.out.println(battle.getPlayer2().getPlayerInfo().getPlayerName());
-            System.out.println(battle.getPlayer1().getPlayerInfo().getPlayerName());
+            reader.close();
         } catch (FileNotFoundException e) {
             //todo show this message in correct place
             System.out.println("file not found");
         } catch (ClassCastException e) {
             System.out.println("invalid file, selected file is not a saved battle");
+        } catch (IOException ignored) {
         }
 
+    }
+
+    public void importDeck(String address){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        if (!address.endsWith(".json")) {
+            System.out.println("selected file is not a json file");
+            return;
+        }
+        FileReader reader;
+        try {
+            reader = new FileReader(new File(address));
+            Deck deck = yaGson.fromJson(reader, Deck.class);
+            loggedInAccount.getPlayerInfo().getCollection().getDecks().add(deck);
+            reader.close();
+        } catch (FileNotFoundException e) {
+            //todo show this message in correct place
+            System.out.println("file not found");
+        } catch (ClassCastException e) {
+            System.out.println("invalid file, selected file is not a saved battle");
+        } catch (IOException ignored) {
+        }
+    }
+
+    public void exportDeck(Deck deck){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Decks");
+        String[] fileNames = folder.list();
+        String fileName = "deck_"+deck.getName()+"_";
+        int numberOfDecks = getNumOfSimilarFiles(fileNames, fileName);
+        fileName += ".json";
+        fileName += numberOfDecks;
+        try {
+            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Decks/" + fileName));
+            yaGson.toJson(deck, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getNumOfSimilarFiles(String[] fileNames, String fileName) {
+        int number=0;
+        if (fileNames != null) {
+            for (String name : fileNames) {
+                if (name.contains(fileName)) {
+                    number++;
+                }
+            }
+        }
+        return number;
     }
 }
