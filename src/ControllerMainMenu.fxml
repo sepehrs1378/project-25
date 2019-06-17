@@ -41,5 +41,10 @@
                 <Image url="@pics/close_button.png" />
             </image>
         </ImageView>
+      <ImageView fx:id="backBtn" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

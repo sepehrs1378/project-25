@@ -36,8 +36,29 @@ public class ControllerMainMenu {
     private ImageView closeBtn;
 
     @FXML
+    private ImageView backBtn;
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
+        Main.window.setScene(new Scene(root));
+        dataBase.saveAccounts();
+    }
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
     void closeMenu(MouseEvent event) {
         Main.window.close();
+        dataBase.saveAccounts();
     }
 
     @FXML

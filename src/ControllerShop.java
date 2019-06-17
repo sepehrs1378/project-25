@@ -126,7 +126,7 @@ public class ControllerShop {
         List<Card> cardList = dataBase.getCardList();
         List<Usable> usableList = dataBase.getUsableList();
         for (int i = 0; i < 40; i++) {
-            addCardToBox(nodes, cardList, i);
+            addCardToBox(nodes, cardList, i, i);
             upperBox.getChildren().add(nodes[i]);
         }
         lowerBox.setLayoutY(upperBox.getLayoutY() + upperBox.getPrefHeight() + 18);
