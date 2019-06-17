@@ -1,0 +1,39 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 2,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "friend"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 1,
+      "length": 1,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Friendly Unit - adds 2 values to ap of one friendly unit",
+    "isDispeller": false,
+    "id": "shop_empower_1",
+    "name": "empower",
+    "price": 250,
+    "mana": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 12,
+    "ap": 12,
+    "minRange": 2,
+    "maxRange": 7,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_ghoolSangAndaz_1",
+    "name": "ghoolSangAndaz",
+    "price": 300,
+    "mana": 9
+  }
+}

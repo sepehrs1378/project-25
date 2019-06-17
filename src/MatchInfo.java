@@ -1,7 +1,6 @@
 import java.util.Date;
 
 public class MatchInfo {
-    private final ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private String opponent;
     private String winner = "";
     private long matchDate;

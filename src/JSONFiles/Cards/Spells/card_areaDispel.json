@@ -1,0 +1,40 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "friend",
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 2,
+      "length": 2,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : 2 * 2 square area - this spell removes negative buffs afflicted on friendly units and all positive buffs currently possessed by enemy units",
+    "isDispeller": true,
+    "id": "shop_areaDispel_1",
+    "name": "areaDispel",
+    "price": 1500,
+    "mana": 2
+  }
+}

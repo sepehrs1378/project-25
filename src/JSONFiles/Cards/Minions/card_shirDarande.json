@@ -1,0 +1,66 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 1,
+    "ap": 8,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "melee"
+          ],
+          "width": 1,
+          "length": 1,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "ImmunityBuff",
+            "@val": {
+              "immunity": "holy buff",
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 2147483647,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_ATTACK",
+        "description": "Contains : ImmunityBuff - Spell Activation Type : on attack - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 600 - mana : 2 - hp : 1 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_shirDarande_1",
+    "name": "shirDarande",
+    "price": 600,
+    "mana": 2
+  }
+}

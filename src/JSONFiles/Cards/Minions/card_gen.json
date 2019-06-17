@@ -1,0 +1,69 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 10,
+    "ap": 4,
+    "minRange": 2,
+    "maxRange": 4,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 2147483647,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "PowerBuff",
+            "@val": {
+              "apPlus": 1,
+              "hpPlus": 0,
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 2147483647,
+              "isDispellable": true,
+              "isContinuous": true,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "PASSIVE",
+        "description": "Contains : PowerBuff - Spell Activation Type : passive - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 5 - hp : 10 - ap : 4 - minRange : 2 - maxRange : 4 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_gen_1",
+    "name": "gen",
+    "price": 500,
+    "mana": 5
+  }
+}

@@ -1,3 +1,7 @@
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,26 +17,45 @@ public class DataBase {
     private Account computerPlayerLevel1;
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
-    private Account computerPlayerCostum;
+    private Account computerPlayerCustom;
+    private Account temp1 = new Account("temp1", "1");
+    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
+    }
+
+    public Account getTemp2() {
+        return temp2;
+    }
+
+    public Account getTemp1() {
+        return temp1;
     }
 
     private DataBase() {
     }
 
     public void makeEveryThing() {
-        makeCardSpells();
-        makeHeroes();
-        makeMinions();
-        makeItems();
+        computerPlayerCustom = new Account("computerCustom", "custom");
+        readSpells();
+        readHeroes();
+        readMinions();
+        readCollectibles();
+        readUsables();
+//        makeCardSpells();
+//        makeHeroes();
+//        makeMinions();
+//        makeItems();
         makeAccounts();
+        System.out.println(cardList.size());
+        System.out.println(collectableList.size());
+        System.out.println(usableList.size());
     }
 
     private void makeCardSpells() {
         //1
-        String desc1 = "Target : Enemy Unit - disarms an enemy unit for the entirety of the current battle";
+        String desc1 = "Target : Enemy Unit - disarms an enemy unit for the entirety of the battle";
         Target totalDisarmTarget = new Target(Constants.HERO_MINION, 1, 1, Constants.ENEMY, false, false, 0, Constants.ALL);
         DisarmBuff totalDisarmBuff = new DisarmBuff(1000, true, false);
         Spell totalDisarm = new Spell("shop_totalDisarm_1", "totalDisarm", 1000, 0, 0, 0, 0, totalDisarmTarget, totalDisarmBuff, SpellActivationType.ON_CAST, desc1, false);
@@ -598,6 +621,7 @@ public class DataBase {
         DisarmBuff kamanDamoolBuff = new DisarmBuff(1, true, false);
         //String descUsable1 = "price : 300";
         //todo
+        usableList.add(namoosSepar);
         //usableList.add(null);
 
         //4             //1
@@ -663,8 +687,8 @@ public class DataBase {
         collectableList.add(randomDamage);
 
         //12            //5
-        //usableList.add(null);
-        //todo
+        usableList.add(parSimorgh);
+        //todo nefrinMarg
         //todo what does it mean?
 
         //13            //8
@@ -744,81 +768,134 @@ public class DataBase {
         computerPlayerLevel1 = new Account("computer1", "1");
         computerPlayerLevel2 = new Account("computer2", "2");
         computerPlayerLevel3 = new Account("computer3", "3");
-        computerPlayerCostum = new Account("computerCustom", "custom");
 
         //todo add usables to deck
-        Deck computerPlayer1Deck = new Deck("Deck");
-        addToComputerDeck(computerPlayer1Deck, 0, 1);
-        addToComputerDeck(computerPlayer1Deck, 6, 1);
-        addToComputerDeck(computerPlayer1Deck, 9, 1);
-        addToComputerDeck(computerPlayer1Deck, 10, 1);
-        addToComputerDeck(computerPlayer1Deck, 11, 1);
-        addToComputerDeck(computerPlayer1Deck, 17, 1);
-        addToComputerDeck(computerPlayer1Deck, 19, 1);
-        addToComputerDeck(computerPlayer1Deck, 20, 1);
-        addToComputerDeck(computerPlayer1Deck, 30, 1);
-        addToComputerDeck(computerPlayer1Deck, 38, 1);
-        addToComputerDeck(computerPlayer1Deck, 40, 1);
-        addToComputerDeck(computerPlayer1Deck, 40, 2);
-        addToComputerDeck(computerPlayer1Deck, 42, 1);
-        addToComputerDeck(computerPlayer1Deck, 46, 1);
-        addToComputerDeck(computerPlayer1Deck, 47, 1);
-        addToComputerDeck(computerPlayer1Deck, 50, 1);
-        addToComputerDeck(computerPlayer1Deck, 51, 1);
-        addToComputerDeck(computerPlayer1Deck, 55, 1);
-        addToComputerDeck(computerPlayer1Deck, 67, 1);
-        addToComputerDeck(computerPlayer1Deck, 65, 1);
-        addToComputerDeck(computerPlayer1Deck, 69, 1);
+        /*Deck computerPlayer1Deck = new Deck("Deck");
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 0, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 6, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 9, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 10, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 11, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 17, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 19, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 20, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 30, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 38, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 40, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 40, 2);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 42, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 46, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 47, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 50, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 51, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 55, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 67, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 65, 1);
+        addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 69, 1);
         computerPlayerLevel1.setMainDeck(computerPlayer1Deck);
 
         Deck computerPlayer2Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer2Deck, 1, 1);
-        addToComputerDeck(computerPlayer2Deck, 2, 1);
-        addToComputerDeck(computerPlayer2Deck, 4, 1);
-        addToComputerDeck(computerPlayer2Deck, 7, 1);
-        addToComputerDeck(computerPlayer2Deck, 8, 1);
-        addToComputerDeck(computerPlayer2Deck, 12, 1);
-        addToComputerDeck(computerPlayer2Deck, 18, 1);
-        addToComputerDeck(computerPlayer2Deck, 24, 1);
-        addToComputerDeck(computerPlayer2Deck, 31, 1);
-        addToComputerDeck(computerPlayer2Deck, 32, 1);
-        addToComputerDeck(computerPlayer2Deck, 34, 1);
-        addToComputerDeck(computerPlayer2Deck, 37, 1);
-        addToComputerDeck(computerPlayer2Deck, 41, 1);
-        addToComputerDeck(computerPlayer2Deck, 44, 1);
-        addToComputerDeck(computerPlayer2Deck, 44, 2);
-        addToComputerDeck(computerPlayer2Deck, 48, 1);
-        addToComputerDeck(computerPlayer2Deck, 52, 1);
-        addToComputerDeck(computerPlayer2Deck, 56, 1);
-        addToComputerDeck(computerPlayer2Deck, 59, 1);
-        addToComputerDeck(computerPlayer2Deck, 62, 1);
-        addToComputerDeck(computerPlayer2Deck, 68, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 1, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 2, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 4, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 7, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 8, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 12, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 18, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 24, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 31, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 32, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 34, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 37, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 41, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 44, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 44, 2);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 48, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 52, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 56, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 59, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 62, 1);
+        addCardToDeck(computerPlayerLevel2, computerPlayer2Deck, 68, 1);
         computerPlayerLevel2.setMainDeck(computerPlayer2Deck);
 
         Deck computerPlayer3Deck = new Deck("deck");
-        addToComputerDeck(computerPlayer3Deck, 0, 1);
-        addToComputerDeck(computerPlayer3Deck, 5, 1);
-        addToComputerDeck(computerPlayer3Deck, 6, 1);
-        addToComputerDeck(computerPlayer3Deck, 9, 1);
-        addToComputerDeck(computerPlayer3Deck, 11, 1);
-        addToComputerDeck(computerPlayer3Deck, 13, 1);
-        addToComputerDeck(computerPlayer3Deck, 14, 1);
-        addToComputerDeck(computerPlayer3Deck, 15, 1);
-        addToComputerDeck(computerPlayer3Deck, 26, 1);
-        addToComputerDeck(computerPlayer3Deck, 35, 1);
-        addToComputerDeck(computerPlayer3Deck, 36, 1);
-        addToComputerDeck(computerPlayer3Deck, 39, 1);
-        addToComputerDeck(computerPlayer3Deck, 43, 1);
-        addToComputerDeck(computerPlayer3Deck, 45, 1);
-        addToComputerDeck(computerPlayer3Deck, 45, 2);
-        addToComputerDeck(computerPlayer3Deck, 49, 1);
-        addToComputerDeck(computerPlayer3Deck, 53, 1);
-        addToComputerDeck(computerPlayer3Deck, 54, 1);
-        addToComputerDeck(computerPlayer3Deck, 57, 1);
-        addToComputerDeck(computerPlayer3Deck, 58, 1);
-        addToComputerDeck(computerPlayer3Deck, 60, 1);
-        addToComputerDeck(computerPlayer3Deck, 63, 1);
-        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 0, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 5, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 6, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 9, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 11, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 13, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 14, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 15, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 26, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 35, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 36, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 39, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 43, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 45, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 45, 2);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 49, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 53, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 54, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 57, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 58, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 60, 1);
+        addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 63, 1);
+        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*/
+
+        Deck temp1Deck = new Deck("deck");
+        addCardToDeck(temp1, temp1Deck, 0, 1);
+        addCardToDeck(temp1, temp1Deck, 6, 1);
+        addCardToDeck(temp1, temp1Deck, 9, 1);
+        addCardToDeck(temp1, temp1Deck, 10, 1);
+        addCardToDeck(temp1, temp1Deck, 11, 1);
+        addCardToDeck(temp1, temp1Deck, 17, 1);
+        addCardToDeck(temp1, temp1Deck, 19, 1);
+        addCardToDeck(temp1, temp1Deck, 20, 1);
+        addCardToDeck(temp1, temp1Deck, 30, 1);
+        addCardToDeck(temp1, temp1Deck, 38, 1);
+        addCardToDeck(temp1, temp1Deck, 40, 1);
+        addCardToDeck(temp1, temp1Deck, 40, 2);
+        addCardToDeck(temp1, temp1Deck, 42, 1);
+        addCardToDeck(temp1, temp1Deck, 46, 1);
+        addCardToDeck(temp1, temp1Deck, 47, 1);
+        addCardToDeck(temp1, temp1Deck, 50, 1);
+        addCardToDeck(temp1, temp1Deck, 51, 1);
+        addCardToDeck(temp1, temp1Deck, 55, 1);
+        addCardToDeck(temp1, temp1Deck, 67, 1);
+        addCardToDeck(temp1, temp1Deck, 65, 1);
+        addCardToDeck(temp1, temp1Deck, 69, 1);
+        temp1.setMainDeck(temp1Deck);
+
+        Deck temp2Deck = new Deck("deck");
+        addCardToDeck(temp2, temp2Deck, 0, 1);
+        addCardToDeck(temp2, temp2Deck, 6, 1);
+        addCardToDeck(temp2, temp2Deck, 9, 1);
+        addCardToDeck(temp2, temp2Deck, 10, 1);
+        addCardToDeck(temp2, temp2Deck, 11, 1);
+        addCardToDeck(temp2, temp2Deck, 17, 1);
+        addCardToDeck(temp2, temp2Deck, 19, 1);
+        addCardToDeck(temp2, temp2Deck, 20, 1);
+        addCardToDeck(temp2, temp2Deck, 30, 1);
+        addCardToDeck(temp2, temp2Deck, 38, 1);
+        addCardToDeck(temp2, temp2Deck, 40, 1);
+        addCardToDeck(temp2, temp2Deck, 40, 2);
+        addCardToDeck(temp2, temp2Deck, 42, 1);
+        addCardToDeck(temp2, temp2Deck, 46, 1);
+        addCardToDeck(temp2, temp2Deck, 47, 1);
+        addCardToDeck(temp2, temp2Deck, 50, 1);
+        addCardToDeck(temp2, temp2Deck, 51, 1);
+        addCardToDeck(temp2, temp2Deck, 55, 1);
+        addCardToDeck(temp2, temp2Deck, 67, 1);
+        addCardToDeck(temp2, temp2Deck, 65, 1);
+        addCardToDeck(temp2, temp2Deck, 69, 1);
+        temp2.setMainDeck(temp2Deck);
+
+        accountList.add(computerPlayerLevel1);
+        accountList.add(computerPlayerLevel2);
+        accountList.add(computerPlayerLevel3);
+        accountList.add(temp1);
+        accountList.add(temp2);
 
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
@@ -847,8 +924,8 @@ public class DataBase {
         return computerPlayerLevel3;
     }
 
-    public Account getComputerPlayerCostum() {
-        return computerPlayerCostum;
+    public Account getComputerPlayerCustom() {
+        return computerPlayerCustom;
     }
 
     public Account getLoggedInAccount() {
@@ -926,8 +1003,8 @@ public class DataBase {
             return computerPlayerLevel2;
         if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(username))
             return computerPlayerLevel1;
-        if (computerPlayerCostum.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerCostum;
+        if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(username))
+            return computerPlayerCustom;
         return null;
     }
 
@@ -966,20 +1043,19 @@ public class DataBase {
         return null;
     }
 
-    private void addToComputerDeck(Deck computerDeck, int index, int number) {
-        Card card;
-        card = cardList.get(index);
+    private void addCardToDeck(Account account, Deck deck, int index, int number) {
+        Card card = cardList.get(index);
         if (card instanceof Unit) {
             card = ((Unit) card).clone();
         } else if (card instanceof Spell) {
             card = ((Spell) card).clone();
         }
-        card.setId(computerPlayerLevel1.getUsername() + "_" + card.getName() + "_" + number);
+        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
         if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
-            computerDeck.setHero((Unit) card);
+            deck.setHero((Unit) card);
             return;
         }
-        computerDeck.addToCards(card);
+        deck.addToCards(card);
     }
 
     public void changePlayerNameInId(Object object, Player player) {
@@ -996,15 +1072,15 @@ public class DataBase {
     }
 
     public void setNewIdsForCustomPlayer() {
-        Deck deck = computerPlayerCostum.getMainDeck();
+        Deck deck = computerPlayerCustom.getMainDeck();
         if (deck != null) {
             for (Card card : deck.getCards()) {
-                card.setId(computerPlayerCostum.getUsername() + "_" + card.getId().split("_")[1] + "_"
+                card.setId(computerPlayerCustom.getUsername() + "_" + card.getId().split("_")[1] + "_"
                         + card.getId().split("_")[2]);
             }
-            deck.getHero().setId(computerPlayerCostum.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
+            deck.getHero().setId(computerPlayerCustom.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
                     + deck.getHero().getId().split("_")[2]);
-            deck.getItem().setId(computerPlayerCostum.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
+            deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
                     + deck.getItem().getId().split("_")[2]);
         }
     }
@@ -1013,19 +1089,204 @@ public class DataBase {
         return getAccountWithUsername(username) != null;
     }
 
-    public void saveBattle(){
 
+    public void saveAccounts() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        for (Account account : accountList) {
+            String fileName = "account_" + account.getUsername() + ".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/" + fileName));
+                gson.toJson(account, fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void saveGame(){
+    public void readAccounts() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Accounts/PlayerAccounts");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
+                        accountList.add(gson.fromJson(reader, Account.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        try {
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
 
+            computerPlayerLevel1 = gson.fromJson(reader, Account.class);
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
+            computerPlayerLevel2 = gson.fromJson(reader, Account.class);
+
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
+            computerPlayerLevel3 = gson.fromJson(reader, Account.class);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void importDeck(){
-
+    public void savaCards() {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        for (Card card : cardList) {
+            String fileName = "card_" + card.getName() + ".json";
+            FileWriter fileWriter = null;
+            try {
+                if (card instanceof Spell) {
+                    fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Spells/" + fileName));
+                } else if (card instanceof Unit) {
+                    if (((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+                        fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Heroes/" + fileName));
+                    } else if (((Unit) card).getHeroOrMinion().equals(Constants.MINION)) {
+                        fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Minions/" + fileName));
+                    }
+                }
+                yaGson.toJson(card, fileWriter);
+                if (fileWriter != null) {
+                    fileWriter.flush();
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Usable usable : usableList) {
+            String fileName = "card_" + usable.getName() + ".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Usables/" + fileName));
+                yaGson.toJson(usable, fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Collectable collectable : collectableList) {
+            String fileName = "card_" + collectable.getName() + ".json";
+            FileWriter fileWriter;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Collectibles/" + fileName));
+                yaGson.toJson(collectable, fileWriter);
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void exportDeck(){
+    public void readCollectibles() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Collectibles");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Collectibles/" + fileName);
+                        collectableList.add(gson.fromJson(reader, Collectable.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
+    public void readUsables() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Usables");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Usables/" + fileName);
+                        usableList.add(gson.fromJson(reader, Usable.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void readHeroes() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Heroes");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Heroes/" + fileName);
+                        cardList.add(gson.fromJson(reader, Unit.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void readMinions() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Minions");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Minions/" + fileName);
+                        cardList.add(gson.fromJson(reader, Unit.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void readSpells() {
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Spells");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Spells/" + fileName);
+                        cardList.add(gson.fromJson(reader, Spell.class));
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }

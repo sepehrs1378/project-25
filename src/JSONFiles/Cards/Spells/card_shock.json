@@ -1,0 +1,49 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 1,
+      "length": 1,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      {
+        "@type": "StunBuff",
+        "@val": {
+          "positiveOrNegative": "negative",
+          "startTurn": 0,
+          "durationTurn": 2,
+          "isDispellable": true,
+          "isContinuous": false,
+          "isDead": false
+        }
+      }
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Enemy Unit - stuns target for duration of 2 turns",
+    "isDispeller": false,
+    "id": "shop_shock_1",
+    "name": "shock",
+    "price": 1200,
+    "mana": 1
+  }
+}

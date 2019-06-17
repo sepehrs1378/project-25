@@ -1,0 +1,39 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": -6,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 2147483647,
+      "length": 1,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Every Enemy Unit In A Column - appplies 6 damage to target",
+    "isDispeller": false,
+    "id": "shop_allAttack_1",
+    "name": "allAttack",
+    "price": 1500,
+    "mana": 4
+  }
+}

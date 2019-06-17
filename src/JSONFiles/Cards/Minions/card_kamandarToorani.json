@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 3,
+    "ap": 4,
+    "minRange": 2,
+    "maxRange": 5,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 1 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_kamandarToorani_1",
+    "name": "kamandarToorani",
+    "price": 500,
+    "mana": 1
+  }
+}

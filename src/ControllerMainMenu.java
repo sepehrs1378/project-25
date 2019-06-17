@@ -25,8 +25,9 @@ public class ControllerMainMenu {
         return ourInstance;
     }
 
-//    private ControllerMainMenu() {
-//    }
+    public ControllerMainMenu() {
+        ourInstance = this;
+    }
 
     @FXML
     private ImageView multiPlayerBtn;

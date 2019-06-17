@@ -1,0 +1,69 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 50,
+    "ap": 4,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 2,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "hero"
+          ],
+          "friendlyOrEnemy": [
+            "friend"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 2147483647,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": true
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "PowerBuff",
+            "@val": {
+              "apPlus": 4,
+              "hpPlus": 0,
+              "positiveOrNegative": "positive",
+              "startTurn": 0,
+              "durationTurn": 2147483647,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_CAST",
+        "description": "mana : 1 - cooldown : 2 - spell activation type : on cast - is not dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 1
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "hero",
+    "description": "price : 8000 - mana : 0 - hp : 50 - ap : 4 - minRange : 1 - maxRange : 1 - Unit Type : Hero - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_divSefid_1",
+    "name": "divSefid",
+    "price": 8000,
+    "mana": 0
+  }
+}

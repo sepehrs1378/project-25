@@ -1,0 +1,67 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 3,
+    "ap": 4,
+    "minRange": 2,
+    "maxRange": 5,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": 0,
+        "coolDown": 0,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 3,
+          "length": 3,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          {
+            "@type": "StunBuff",
+            "@val": {
+              "positiveOrNegative": "negative",
+              "startTurn": 0,
+              "durationTurn": 1,
+              "isDispellable": true,
+              "isContinuous": false,
+              "isDead": false
+            }
+          }
+        ],
+        "activationType": "ON_SPAWN",
+        "description": "Contains : StunBuff - Spell Activation Type : on spawn - isn't dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 0
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 500 - mana : 3 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_naneSarma_1",
+    "name": "naneSarma",
+    "price": 500,
+    "mana": 3
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "@type": "Spell",
+  "@val": {
+    "apChange": 0,
+    "hpChange": 0,
+    "coolDown": 0,
+    "turnsToGetReady": 0,
+    "target": {
+      "typeOfTarget": [
+        "hero",
+        "minion"
+      ],
+      "friendlyOrEnemy": [
+        "friend",
+        "enemy"
+      ],
+      "targetUnitClass": [
+        "hybrid",
+        "ranged",
+        "melee"
+      ],
+      "width": 1,
+      "length": 1,
+      "manhattanDistance": 0,
+      "isRandomSelecting": false,
+      "doesAffectAllCards": false
+    },
+    "addedSpells": [],
+    "addedBuffs": [
+      null
+    ],
+    "activationType": "ON_CAST",
+    "description": "Target : Friendly or Enemy Unit - removes positive buffs currently possessed by Enemy Units and removes all negative buffs currently afflicted on Friendly Units",
+    "isDispeller": true,
+    "id": "shop_dispel_1",
+    "name": "dispel",
+    "price": 2100,
+    "mana": 0
+  }
+}

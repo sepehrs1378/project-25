@@ -122,11 +122,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        DataBase.getInstance().readAccounts();
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setOnCloseRequest(e->{
+            DataBase.getInstance().saveAccounts();
+            primaryStage.close();
+        });
         primaryStage.show();
     }
 }

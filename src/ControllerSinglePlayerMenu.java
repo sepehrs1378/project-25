@@ -155,18 +155,18 @@ public class ControllerSinglePlayerMenu {
                 Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().
                         getDeckFromListOfDecks(decks, request.getCommand().split("\\s+")[2]);
                 if (deck != null) {
-                    database.getComputerPlayerCostum().setMainDeck(new Deck(deck));
+                    database.getComputerPlayerCustom().setMainDeck(new Deck(deck));
                     database.setNewIdsForCustomPlayer();
                     switch (request.getCommand().split("\\s+")[3]) {
                         case Constants.CLASSIC: {
-                            Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
+                            Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                                     Constants.CLASSIC, 0, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
                             ControllerBattleCommands.getInstance().main();
                             break;
                         }
                         case Constants.ONE_FLAG: {
-                            Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
+                            Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                                     Constants.ONE_FLAG, 1, null, Constants.SINGLE);
                             database.setCurrentBattle(battle);
                             ControllerBattleCommands.getInstance().main();
@@ -174,13 +174,13 @@ public class ControllerSinglePlayerMenu {
                         }
                         case Constants.FLAGS:
                             if (request.getCommand().split("\\s+").length == 5) {
-                                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
+                                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                                         Constants.FLAGS, Integer.parseInt(request.getCommand().split("\\s+")[4]), null,
                                         Constants.SINGLE);
                                 database.setCurrentBattle(battle);
                                 ControllerBattleCommands.getInstance().main();
                             } else {
-                                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCostum(),
+                                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                                         Constants.FLAGS, 7, null, Constants.SINGLE);
                                 database.setCurrentBattle(battle);
                                 ControllerBattleCommands.getInstance().main();

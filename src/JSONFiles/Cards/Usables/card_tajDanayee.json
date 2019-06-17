@@ -1,0 +1,52 @@
+{
+  "@type": "Usable",
+  "@val": {
+    "price": 300,
+    "passivePower": {
+      "apChange": 0,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 1,
+        "length": 1,
+        "manhattanDistance": 0,
+        "isRandomSelecting": false,
+        "doesAffectAllCards": true
+      },
+      "addedSpells": [],
+      "addedBuffs": [
+        {
+          "@type": "ManaBuff",
+          "@val": {
+            "manaAddedPerTurn": 1,
+            "startTurn": 0,
+            "durationTurn": 3,
+            "isDispellable": false,
+            "isContinuous": false,
+            "isDead": false
+          }
+        }
+      ],
+      "activationType": "PASSIVE",
+      "description": "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "shop_tajDanayee_1",
+    "name": "tajDanayee",
+    "description": "price : 300"
+  }
+}

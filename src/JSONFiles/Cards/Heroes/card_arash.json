@@ -1,0 +1,58 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 30,
+    "ap": 2,
+    "minRange": 2,
+    "maxRange": 6,
+    "specialPowers": [
+      {
+        "apChange": 0,
+        "hpChange": -4,
+        "coolDown": 2,
+        "turnsToGetReady": 0,
+        "target": {
+          "typeOfTarget": [
+            "hero",
+            "minion"
+          ],
+          "friendlyOrEnemy": [
+            "enemy"
+          ],
+          "targetUnitClass": [
+            "hybrid",
+            "ranged",
+            "melee"
+          ],
+          "width": 1,
+          "length": 2147483647,
+          "manhattanDistance": 0,
+          "isRandomSelecting": false,
+          "doesAffectAllCards": false
+        },
+        "addedSpells": [],
+        "addedBuffs": [
+          null
+        ],
+        "activationType": "ON_CAST",
+        "description": "mana : 2 - hpChange : -4 - cooldown : 2 - spell activation type : on cast - is not dispeller",
+        "isDispeller": false,
+        "id": "",
+        "name": "",
+        "price": 0,
+        "mana": 2
+      }
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "hero",
+    "description": "price : 10000 - mana : 0 - hp : 30 - ap : 2 - minRange : 2 - maxRange : 6 - Unit Type : Hero - can't use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": false,
+    "id": "shop_arash_1",
+    "name": "arash",
+    "price": 10000,
+    "mana": 0
+  }
+}

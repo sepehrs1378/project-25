@@ -1,0 +1,23 @@
+{
+  "@type": "Unit",
+  "@val": {
+    "hp": 6,
+    "ap": 10,
+    "minRange": 1,
+    "maxRange": 1,
+    "specialPowers": [
+      null
+    ],
+    "flags": [],
+    "buffs": [],
+    "heroOrMinion": "minion",
+    "description": "price : 800 - mana : 6 - hp : 6 - ap : 10 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo",
+    "didAttackThisTurn": false,
+    "didMoveThisTurn": false,
+    "canUseComboAttack": true,
+    "id": "shop_shahzadehToorani_1",
+    "name": "shahzadehToorani",
+    "price": 800,
+    "mana": 6
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "@type": "Usable",
+  "@val": {
+    "price": 15000,
+    "passivePower": {
+      "apChange": 0,
+      "hpChange": 0,
+      "coolDown": 0,
+      "turnsToGetReady": 0,
+      "target": {
+        "typeOfTarget": [],
+        "friendlyOrEnemy": [
+          "friend"
+        ],
+        "targetUnitClass": [
+          "hybrid",
+          "ranged",
+          "melee"
+        ],
+        "width": 2147483647,
+        "length": 2147483647,
+        "manhattanDistance": 0,
+        "isRandomSelecting": false,
+        "doesAffectAllCards": false
+      },
+      "addedSpells": [
+        {
+          "apChange": 0,
+          "hpChange": -1,
+          "coolDown": 0,
+          "turnsToGetReady": 0,
+          "target": {
+            "typeOfTarget": [
+              "hero"
+            ],
+            "friendlyOrEnemy": [
+              "enemy"
+            ],
+            "targetUnitClass": [
+              "hybrid",
+              "ranged",
+              "melee"
+            ],
+            "width": 2147483647,
+            "length": 2147483647,
+            "manhattanDistance": 0,
+            "isRandomSelecting": false,
+            "doesAffectAllCards": false
+          },
+          "addedSpells": [],
+          "addedBuffs": [
+            null
+          ],
+          "activationType": "ON_SPAWN",
+          "description": "Contains : no Buffs - Spell Activation Type : on spawn - isn't dispeller",
+          "isDispeller": false,
+          "id": "",
+          "name": "",
+          "price": 0,
+          "mana": 0
+        }
+      ],
+      "addedBuffs": [
+        null
+      ],
+      "activationType": "ON_BATTLE_START",
+      "description": "",
+      "isDispeller": false,
+      "id": "",
+      "name": "",
+      "price": 0,
+      "mana": 0
+    },
+    "id": "shop_assassinationDagger_1",
+    "name": "assassinationDagger",
+    "description": "Contains : ManaBuff - Spell Activation Type : on spawn - isn't dispeller"
+  }
+}

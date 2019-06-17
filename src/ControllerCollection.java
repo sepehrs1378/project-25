@@ -147,9 +147,6 @@ public class ControllerCollection {
                 case SEARCH_NAME:
                     searchName();
                     break;
-                case SAVE:
-                    save();
-                    break;
                 case CREATE_DECK_NAME:
                     createDeckName();
                     break;
@@ -228,10 +225,6 @@ public class ControllerCollection {
                 break;
             default:
         }
-    }
-
-    private void save() {
-        //todo plz complete it
     }
 
     public void validateDeckName() {
