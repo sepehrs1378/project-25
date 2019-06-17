@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCollection">
-   <children>
-      <ScrollPane fx:id="scrollPane" layoutX="6.0" prefHeight="720.0" prefWidth="1274.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="1274.0">
-               <children>
-                  <ImageView fitHeight="726.0" fitWidth="1280.0" layoutX="-6.0" layoutY="-6.0">
-                     <image>
-                        <Image url="@pics/collection_background.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="showCardsBtn" layoutX="1043.0" layoutY="14.0" onMouseClicked="#showCards" onMouseEntered="#makeShowCardsBtnOpaque" onMouseExited="#makeShowCardsBtnTransparent" opacity="0.6">
-                     <image>
-                        <Image url="@pics/show_cards_button.png" />
-                     </image>
-                  </ImageView>
-                  <JFXTextField fx:id="createNewDeckText" layoutX="107.0" layoutY="57.0" prefHeight="31.0" prefWidth="494.0" promptText="enter name of new deck" style="-fx-background-color: #f9f6ed;" />
-                  <JFXButton layoutX="700.0" layoutY="57.0" onMouseClicked="#createNewDeck" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #f9f6ed;" text="Create New Deck" />
-                  <JFXButton buttonType="RAISED" layoutX="852.0" layoutY="195.0" onMouseClicked="#addCardToDeck" prefHeight="31.0" prefWidth="155.0" ripplerFill="#b26d6d" style="-fx-background-color: #f9f6ed;" text="Add Card To Deck" />
-                  <JFXTextField fx:id="cardInCollectionText" layoutX="29.0" layoutY="195.0" prefHeight="31.0" prefWidth="485.0" promptText="Search Card ID In Collection" style="-fx-background-color: #f9f6ed;" />
-                  <JFXTextField fx:id="deckNameText" layoutX="544.0" layoutY="195.0" prefHeight="31.0" prefWidth="264.0" promptText="Deck Name" style="-fx-background-color: #f9f6ed;" />
-                  <JFXTextField fx:id="itemText" layoutX="29.0" layoutY="357.0" prefHeight="31.0" prefWidth="481.0" promptText="Search Item ID In Collection" style="-fx-background-color: #f9f6ed;" />
-                  <JFXTextField fx:id="deckNameItemText" layoutX="542.0" layoutY="357.0" prefHeight="31.0" prefWidth="269.0" promptText="Deck Name" style="-fx-background-color: #f9f6ed;" />
-                  <JFXButton layoutX="853.0" layoutY="357.0" onMouseClicked="#addItemToDeck" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #f9f6ed;" text="Add Item To Deck" />
-                  <ImageView fx:id="backBtn" fitHeight="96.0" fitWidth="100.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" opacity="0.6">
-                     <image>
-                        <Image url="@pics/back_button.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-   </children>
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCollection">
+    <children>
+        <ScrollPane fx:id="scrollPane" layoutX="6.0" prefHeight="720.0" prefWidth="1274.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="1274.0">
+                    <children>
+                        <ImageView fitHeight="726.0" fitWidth="1280.0" layoutX="-6.0" layoutY="-6.0">
+                            <image>
+                                <Image url="@pics/collection_background.jpg"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="showCardsBtn" layoutX="1043.0" layoutY="14.0" onMouseClicked="#showCards"
+                                   onMouseEntered="#makeShowCardsBtnOpaque" onMouseExited="#makeShowCardsBtnTransparent"
+                                   opacity="0.6">
+                            <image>
+                                <Image url="@pics/show_cards_button.png"/>
+                            </image>
+                        </ImageView>
+                        <JFXTextField fx:id="createNewDeckText" layoutX="107.0" layoutY="57.0" prefHeight="31.0"
+                                      prefWidth="494.0" promptText="enter name of new deck"
+                                      style="-fx-background-color: #f9f6ed;"/>
+                        <JFXButton layoutX="700.0" layoutY="57.0" onMouseClicked="#createNewDeck" prefHeight="31.0"
+                                   prefWidth="152.0" style="-fx-background-color: #f9f6ed;" text="Create New Deck"/>
+                        <JFXButton buttonType="RAISED" layoutX="852.0" layoutY="195.0" onMouseClicked="#addCardToDeck"
+                                   prefHeight="31.0" prefWidth="155.0" ripplerFill="#b26d6d"
+                                   style="-fx-background-color: #f9f6ed;" text="Add Card To Deck"/>
+                        <JFXTextField fx:id="cardInCollectionText" layoutX="29.0" layoutY="195.0" prefHeight="31.0"
+                                      prefWidth="485.0" promptText="Search Card ID In Collection"
+                                      style="-fx-background-color: #f9f6ed;"/>
+                        <JFXTextField fx:id="deckNameText" layoutX="544.0" layoutY="195.0" prefHeight="31.0"
+                                      prefWidth="264.0" promptText="Deck Name" style="-fx-background-color: #f9f6ed;"/>
+                        <JFXTextField fx:id="itemText" layoutX="29.0" layoutY="357.0" prefHeight="31.0"
+                                      prefWidth="481.0" promptText="Search Item ID In Collection"
+                                      style="-fx-background-color: #f9f6ed;"/>
+                        <JFXTextField fx:id="deckNameItemText" layoutX="542.0" layoutY="357.0" prefHeight="31.0"
+                                      prefWidth="269.0" promptText="Deck Name" style="-fx-background-color: #f9f6ed;"/>
+                        <JFXButton layoutX="853.0" layoutY="357.0" onMouseClicked="#addItemToDeck" prefHeight="31.0"
+                                   prefWidth="160.0" style="-fx-background-color: #f9f6ed;" text="Add Item To Deck"/>
+                        <ImageView fx:id="backBtn" fitHeight="96.0" fitWidth="100.0" onMouseClicked="#goBack"
+                                   onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent"
+                                   opacity="0.6">
+                            <image>
+                                <Image url="@pics/back_button.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>
