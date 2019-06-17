@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="656.0" prefWidth="889.0" style="-fx-background-color: #0f035b;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerSinglePlayerMenu">
    <children>
-      <ImageView fitHeight="656.0" fitWidth="889.0">
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutY="521.0">
          <image>
-            <Image url="@pics/single_player_menu_effect_image.png" />
+            <Image url="@pics/single_player_menu_effect_image2.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="2.0" layoutY="439.0">
@@ -21,7 +24,7 @@
             <Image url="@pics/single_player_menu_effect_image2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.0" fitWidth="891.0" layoutY="40.0">
+      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="1.0" layoutY="239.0">
          <image>
             <Image url="@pics/single_player_menu_effect_image2.png" />
          </image>
@@ -31,14 +34,19 @@
             <Image url="@pics/single_player_menu_effect_image2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.0" fitWidth="889.0" layoutX="1.0" layoutY="239.0">
+      <ImageView fitHeight="112.0" fitWidth="891.0" layoutY="40.0">
          <image>
             <Image url="@pics/single_player_menu_effect_image2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="528.0" fitWidth="357.0" layoutX="38.0" layoutY="60.0">
+      <ImageView fitHeight="656.0" fitWidth="889.0">
          <image>
-            <Image url="@pics/single_player_background.jpg" />
+            <Image url="@pics/single_player_menu_effect_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="656.0" fitWidth="889.0" layoutX="1.0" layoutY="-1.0">
+         <image>
+            <Image url="@pics/single_player_menu_pics/single_player_custom_background.png" />
          </image>
       </ImageView>
       <ImageView fx:id="closeBtn" fitHeight="49.0" fitWidth="52.0" layoutX="837.0" layoutY="4.0" onMouseClicked="#closeSinglePlayerMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" opacity="0.6">
@@ -51,17 +59,17 @@
             <Image url="@pics/story_section.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="level1Btn" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="172.0" onMouseClicked="#enterLevel1" onMouseEntered="#makeLevel1BtnOpaque" onMouseExited="#makeLevel1BtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
+      <ImageView fx:id="level1Btn" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="183.0" onMouseClicked="#enterLevel1" onMouseEntered="#makeLevel1BtnOpaque" onMouseExited="#makeLevel1BtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
          <image>
             <Image url="@pics/level_1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="level2Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="261.0" onMouseClicked="#enterLevel2" onMouseEntered="#makeLevel2BtnOpaque" onMouseExited="#makeLevel2BtnTransparent" style="-fx-opacity: 0.8;">
+      <ImageView fx:id="level2Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="276.0" onMouseClicked="#enterLevel2" onMouseEntered="#makeLevel2BtnOpaque" onMouseExited="#makeLevel2BtnTransparent" style="-fx-opacity: 0.8;">
          <image>
             <Image url="@pics/level_2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="level3Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="372.0" onMouseClicked="#enterLevel3" onMouseEntered="#makeLevel3BtnOpaque" onMouseExited="#makeLevel3BtnTransparent" style="-fx-opacity: 0.8;">
+      <ImageView fx:id="level3Btn" disable="true" fitHeight="67.0" fitWidth="230.0" layoutX="102.0" layoutY="366.0" onMouseClicked="#enterLevel3" onMouseEntered="#makeLevel3BtnOpaque" onMouseExited="#makeLevel3BtnTransparent" style="-fx-opacity: 0.8;">
          <image>
             <Image url="@pics/level_3.png" />
          </image>
@@ -69,11 +77,6 @@
       <ImageView fitHeight="64.0" fitWidth="200.0" layoutX="117.0" layoutY="88.0">
          <image>
             <Image url="@pics/story_title_image.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="528.0" fitWidth="357.0" layoutX="471.0" layoutY="63.0">
-         <image>
-            <Image url="@pics/custom_section_background_image.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="593.0" fitWidth="405.0" layoutX="445.0" layoutY="32.0">
@@ -84,6 +87,33 @@
       <ImageView fitHeight="64.0" fitWidth="200.0" layoutX="550.0" layoutY="95.0">
          <image>
             <Image url="@pics/custom_title_image.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="selectDeckBox" layoutX="636.0" layoutY="196.0" prefHeight="31.0" prefWidth="171.0" style="-fx-background-color: #0d6cba;" />
+      <ImageView fitHeight="40.0" fitWidth="134.0" layoutX="483.0" layoutY="196.0">
+         <image>
+            <Image url="@pics/single_player_menu_pics/custom_titles_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="49.0" fitWidth="134.0" layoutX="483.0" layoutY="300.0">
+         <image>
+            <Image url="@pics/single_player_menu_pics/select_mode_title.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="selectModeBox" layoutX="636.0" layoutY="309.0" onAction="#selectModeOfGame" prefHeight="31.0" prefWidth="171.0" style="-fx-background-color: #0d6cba;" />
+      <ImageView fx:id="flagNumberImage" fitHeight="56.0" fitWidth="134.0" layoutX="581.0" layoutY="383.0" visible="false">
+         <image>
+            <Image url="@pics/single_player_menu_pics/number_of_flags_title.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="flagNumberLabel" alignment="CENTER" layoutX="541.0" layoutY="455.0" style="-fx-background-color: #0d6cba;" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </JFXTextField>
+      <ImageView fx:id="playBtn" fitHeight="58.0" fitWidth="200.0" layoutX="550.0" layoutY="522.0" onMouseClicked="#enterCustomGame" onMouseEntered="#makePlayBtnOpaque" onMouseExited="#makePlayBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/single_player_menu_pics/custom_game_play_button.png" />
          </image>
       </ImageView>
    </children>

@@ -1,10 +1,11 @@
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -42,6 +43,67 @@ public class ControllerShop {
     private Label moneyLabel;
 
     @FXML
+    private Label buyMessage;
+
+    @FXML
+    void displayAppropriateCards(ActionEvent event) throws IOException {
+        lowerBox.getChildren().clear();
+        upperBox.getChildren().clear();
+        if (addCardText.getText().isEmpty()){
+            showCards();
+            return;
+        }
+        List<Card> cardList = new ArrayList<>();
+        List<Usable> usableList = new ArrayList<>();
+        for (int i = 0; i < dataBase.getCardList().size(); i++) {
+            if(dataBase.getCardList().get(i).getName().contains(addCardText.getText())){
+                cardList.add(dataBase.getCardList().get(i));
+            }
+        }
+        for (int i = 0; i < dataBase.getUsableList().size(); i++) {
+            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())){
+                usableList.add(dataBase.getUsableList().get(i));
+            }
+        }
+        if(usableList.isEmpty() && cardList.isEmpty()){
+            return;
+        }
+        int size = (usableList.size() + cardList.size());
+        Node[] nodes = new Node[size];
+        for (int i = 0; i < cardList.size(); i++) {
+            addCardToBox(nodes, cardList, i , i);
+        }
+        for (int i = 0; i < usableList.size(); i++) {
+            addUsableToBox(nodes, usableList, i, i + cardList.size());
+        }
+        if (size % 2 == 0){
+            size /= 2;
+        }else {
+            size = size / 2 + 1;
+        }
+        for (int i = 0; i < size; i++) {
+            upperBox.getChildren().add(nodes[i]);
+        }
+        if (size % 2 == 0){
+            for (int i = size; i < size * 2 - 1; i++) {
+                lowerBox.getChildren().add(nodes[i]);
+            }
+        }else {
+            for (int i = size; i < size * 2 - 2; i++) {
+                lowerBox.getChildren().add(nodes[i]);
+            }
+        }
+    }
+
+    public Label getBuyMessage(){
+        return buyMessage;
+    }
+
+    public Label getMoneyLabel(){
+        return moneyLabel;
+    }
+
+    @FXML
     void goBack(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
@@ -69,40 +131,34 @@ public class ControllerShop {
         }
         lowerBox.setLayoutY(upperBox.getLayoutY() + upperBox.getPrefHeight() + 18);
         for (int i = 40; i < 70; i++) {
-            addCardToBox(nodes, cardList, i);
+            addCardToBox(nodes, cardList, i, i);
             lowerBox.getChildren().add(nodes[i]);
         }
         for (int i = 70; i < 79; i++) {
             //todo i should be less than 81 not 79
-            Usable usable = usableList.get(i - 70);
-            FXMLLoader fxmlLoader;
-            fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
-            nodes[i] = fxmlLoader.load();
-            CardBackGroundController cardBackGroundController = fxmlLoader.getController();
-            cardBackGroundController.setLabelsOfCardOrItem(usable);
+            addUsableToBox(nodes, usableList, i - 70, i);
             lowerBox.getChildren().add(nodes[i]);
         }
     }
 
-    private void addCardToBox(Node[] nodes, List<Card> cardList, int i) throws IOException {
+    private void addUsableToBox(Node[] nodes, List<Usable> usableList, int i, int j) throws IOException {
+        Usable usable = usableList.get(i);
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
+        nodes[j] = fxmlLoader.load();
+        CardBackGroundController cardBackGroundController = fxmlLoader.getController();
+        cardBackGroundController.setLabelsOfCardOrItem(usable);
+    }
+
+    private void addCardToBox(Node[] nodes, List<Card> cardList, int i, int j) throws IOException {
         FXMLLoader fxmlLoader;
         fxmlLoader = new FXMLLoader();
         Card card = cardList.get(i);
         fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
-        nodes[i] = fxmlLoader.load();
+        nodes[j] = fxmlLoader.load();
         CardBackGroundController cardBackGroundController = fxmlLoader.getController();
         cardBackGroundController.setLabelsOfCardOrItem(card);
-    }
-
-    @FXML
-    void addCard(MouseEvent event) {
-        if (addCardText.getText().isEmpty()) {
-            return;
-        }
-        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(addCardText.getText());
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, outputMessageType.getMessage());
-        alert.showAndWait();
     }
 
     public static ControllerShop getOurInstance() {

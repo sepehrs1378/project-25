@@ -49,16 +49,16 @@ public class Main extends Application {
     void signUp(MouseEvent event) throws IOException {
         invalidPassword.setText("");
         invalidUsername.setText("");
-        if (username.getText().isEmpty()){
+        if (username.getText().isEmpty()) {
             invalidUsername.setText("username is empty");
             return;
         }
         int index = findIndexOfAccount(username.getText());
-        if (index != -1){
-             invalidUsername.setText("username already exists");
-             return;
+        if (index != -1) {
+            invalidUsername.setText("username already exists");
+            return;
         }
-        if (password.getText().isEmpty()){
+        if (password.getText().isEmpty()) {
             invalidPassword.setText("password is empty");
             return;
         }
@@ -73,11 +73,11 @@ public class Main extends Application {
     void login(MouseEvent event) throws IOException {
         if (emptyInvalidUsername()) return;
         int index = findIndexOfAccount(username.getText());
-        if (index == -1){
+        if (index == -1) {
             invalidUsername.setText("account does not exist");
             return;
         }
-        if (!dataBase.getAccounts().get(index).getPassword().equals(password.getText())){
+        if (!dataBase.getAccounts().get(index).getPassword().equals(password.getText())) {
             invalidPassword.setText("incorrect password");
             return;
         }
@@ -89,16 +89,16 @@ public class Main extends Application {
     private boolean emptyInvalidUsername() {
         invalidUsername.setText("");
         invalidPassword.setText("");
-        if (username.getText().isEmpty()){
+        if (username.getText().isEmpty()) {
             invalidUsername.setText("username is empty");
             return true;
         }
         return false;
     }
 
-    private int  findIndexOfAccount(String userName){
+    private int findIndexOfAccount(String userName) {
         for (int i = 0; i < dataBase.getAccounts().size(); i++) {
-            if (dataBase.getAccounts().get(i).getUsername().equals(userName)){
+            if (dataBase.getAccounts().get(i).getUsername().equals(userName)) {
                 return i;
             }
         }
@@ -128,7 +128,7 @@ public class Main extends Application {
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setOnCloseRequest(e->{
+        primaryStage.setOnCloseRequest(e -> {
             DataBase.getInstance().saveAccounts();
             primaryStage.close();
         });

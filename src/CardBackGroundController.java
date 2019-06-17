@@ -1,10 +1,22 @@
+import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class CardBackGroundController {
+    private DataBase dataBase = DataBase.getInstance();
+    private ControllerShop controllerShop = ControllerShop.getOurInstance();
+    private int number = 0;
     @FXML
     private AnchorPane cardPane;
 
@@ -33,8 +45,44 @@ public class CardBackGroundController {
     private Label priceLable;
 
     @FXML
-    void buyCard(MouseEvent event) {
+    private ImageView descBtn;
 
+    @FXML
+    void makeDescBtnOpaque(MouseEvent event) {
+        descBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeDescBtnTransparent(MouseEvent event) {
+        descBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void showDescription(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("DescriptionController.fxml"));
+        DescriptionController descriptionController = fxmlLoader.getController();
+        Parent root = fxmlLoader.load();
+        Stage descStage = new Stage();
+        descStage.setScene(new Scene(root));
+        descStage.show();
+    }
+
+    @FXML
+    void buyCard(MouseEvent event) {
+        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(cardName.getText());
+        number++;
+        numberBoughtLabel.setText(Integer.toString(number));
+        controllerShop.getMoneyLabel().setText(Integer.toString(dataBase.getLoggedInAccount().getMoney()));
+        controllerShop.getBuyMessage().setText(outputMessageType.getMessage());
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(1)
+        );
+        visiblePause.setOnFinished(
+                event1 -> controllerShop.getBuyMessage().setText("")
+        );
+        visiblePause.play();
     }
 
     @FXML
@@ -48,6 +96,7 @@ public class CardBackGroundController {
     }
 
     public void setLabelsOfCardOrItem(Object object){
+        numberBoughtLabel.setText(Integer.toString(number));
         if (object instanceof Card){
             Card newCard = (Card) object;
             if (newCard instanceof Unit){

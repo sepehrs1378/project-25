@@ -155,6 +155,7 @@ public class PlayerCollection {
     }
 
     public OutputMessageType buy(String name) {
+        dataBase = DataBase.getInstance();
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
             if (dataBase.getLoggedInAccount().getMoney() < card.getPrice())

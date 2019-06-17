@@ -5,41 +5,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMainMenu">
-   <children>
-      <ImageView fitHeight="720.0" fitWidth="1280.0">
-         <image>
-            <Image url="@pics/main_menu.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="shopBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="601.0" onMouseClicked="#enterShop" onMouseEntered="#makeShopBtnOpaque" onMouseExited="#makeShopBtnTransparent" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/shop_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="collectionBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="521.0" onMouseClicked="#enterCollection" onMouseEntered="#makeCollectionBtnOpaque" onMouseExited="#makeCollectionBtnTransparent" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/collection_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="battleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="441.0" onMouseClicked="#customOrMulti" onMouseEntered="#makeBattleBtnOpaque" onMouseExited="#makeBattleBtnTransparent" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/battle_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="441.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" opacity="0.6" visible="false">
-         <image>
-            <Image url="@pics/multiplayer_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="809.0" layoutY="441.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" opacity="0.6" visible="false">
-         <image>
-            <Image url="@pics/single_player_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="closeBtn" fitHeight="80.0" fitWidth="60.0" layoutX="1213.0" layoutY="6.0" onMouseClicked="#closeMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/close_button.png" />
-         </image>
-      </ImageView>
-   </children>
+    <children>
+        <ImageView fitHeight="720.0" fitWidth="1280.0">
+            <image>
+                <Image url="@pics/main_menu.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="shopBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="601.0" onMouseClicked="#enterShop" onMouseEntered="#makeShopBtnOpaque" onMouseExited="#makeShopBtnTransparent" style="-fx-opacity: 0.6;">
+            <image>
+                <Image url="@pics/shop_button.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="collectionBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="521.0" onMouseClicked="#enterCollection" onMouseEntered="#makeCollectionBtnOpaque" onMouseExited="#makeCollectionBtnTransparent" style="-fx-opacity: 0.6;">
+            <image>
+                <Image url="@pics/collection_button.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="battleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="441.0" onMouseClicked="#customOrMulti" onMouseEntered="#makeBattleBtnOpaque" onMouseExited="#makeBattleBtnTransparent" style="-fx-opacity: 0.6;">
+            <image>
+                <Image url="@pics/battle_button.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="441.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" opacity="0.6" visible="false">
+            <image>
+                <Image url="@pics/multiplayer_button.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="809.0" layoutY="441.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" opacity="0.6" visible="false">
+            <image>
+                <Image url="@pics/single_player_button.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="closeBtn" fitHeight="80.0" fitWidth="60.0" layoutX="1213.0" layoutY="6.0" onMouseClicked="#closeMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+            <image>
+                <Image url="@pics/close_button.png" />
+            </image>
+        </ImageView>
+    </children>
 </AnchorPane>

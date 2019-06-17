@@ -1,14 +1,19 @@
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerSinglePlayerMenu {
+public class ControllerSinglePlayerMenu implements Initializable {
     private static ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
@@ -31,18 +36,34 @@ public class ControllerSinglePlayerMenu {
     private ImageView level3Btn;
 
     @FXML
+    private ComboBox<String> selectDeckBox;
+
+    @FXML
+    private ComboBox<String> selectModeBox;
+
+    @FXML
+    private JFXTextField flagNumberLabel;
+
+    @FXML
+    private ImageView flagNumberImage;
+
+    @FXML
+    private ImageView playBtn;
+
+
+    @FXML
     void enterLevel1(MouseEvent event) {
-        //todo
+        //todo enter level 1
     }
 
     @FXML
     void enterLevel2(MouseEvent event) {
-        //todo
+        //todo enter level 2
     }
 
     @FXML
     void enterLevel3(MouseEvent event) {
-        //todo
+        //todo enter level 3
     }
 
     @FXML
@@ -200,5 +221,62 @@ public class ControllerSinglePlayerMenu {
 
     public static ControllerSinglePlayerMenu getInstance() {
         return ourInstance;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+            level2Btn.setDisable(false);
+        }
+        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+            level3Btn.setDisable(false);
+        }
+        ObservableList<String> deckList = FXCollections.observableArrayList();
+        for (int i = 0; i < database.getLoggedInAccount().getValidDecks().size(); i++) {
+            deckList.add(database.getLoggedInAccount().getValidDecks().get(i).getName());
+        }
+        selectDeckBox.setItems(deckList);
+        ObservableList<String> modeList = FXCollections.observableArrayList();
+        modeList.add(Constants.CLASSIC);
+        modeList.add(Constants.ONE_FLAG);
+        modeList.add(Constants.FLAGS);
+        selectModeBox.setItems(modeList);
+    }
+
+    @FXML
+    void selectModeOfGame(ActionEvent event) {
+        if (selectModeBox.getValue().isEmpty()){
+            flagNumberImage.setVisible(false);
+            flagNumberLabel.setVisible(false);
+            return;
+        }
+        if(!selectModeBox.getValue().equals(Constants.FLAGS)){
+            flagNumberImage.setVisible(false);
+            flagNumberLabel.setVisible(false);
+            return;
+        }
+        flagNumberImage.setVisible(true);
+        flagNumberLabel.setVisible(true);
+    }
+
+    @FXML
+    void enterCustomGame(MouseEvent event) {
+        if (selectModeBox.getValue() == null || selectDeckBox.getValue() == null){
+            return;
+        }
+        if (selectModeBox.getValue().equals(Constants.FLAGS) && !flagNumberLabel.getText().matches("\\d+")){
+            return;
+        }
+        //todo enter custom game
+    }
+
+    @FXML
+    void makePlayBtnOpaque(MouseEvent event) {
+        playBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makePlayBtnTransparent(MouseEvent event) {
+        playBtn.setStyle("-fx-opacity: 0.6");
     }
 }

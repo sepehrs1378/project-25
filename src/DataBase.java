@@ -866,30 +866,32 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 65, 1);
         addCardToDeck(temp1, temp1Deck, 69, 1);
         temp1.setMainDeck(temp1Deck);
+        temp1.getPlayerInfo().getCollection().getDecks().add(temp1Deck);
 
         Deck temp2Deck = new Deck("deck");
         addCardToDeck(temp2, temp2Deck, 0, 1);
         addCardToDeck(temp2, temp2Deck, 6, 1);
-        addCardToDeck(temp2, temp2Deck, 9, 1);
         addCardToDeck(temp2, temp2Deck, 10, 1);
+        addCardToDeck(temp2, temp2Deck, 9, 1);
         addCardToDeck(temp2, temp2Deck, 11, 1);
         addCardToDeck(temp2, temp2Deck, 17, 1);
-        addCardToDeck(temp2, temp2Deck, 19, 1);
         addCardToDeck(temp2, temp2Deck, 20, 1);
-        addCardToDeck(temp2, temp2Deck, 30, 1);
+        addCardToDeck(temp2, temp2Deck, 19, 1);
         addCardToDeck(temp2, temp2Deck, 38, 1);
+        addCardToDeck(temp2, temp2Deck, 30, 1);
         addCardToDeck(temp2, temp2Deck, 40, 1);
-        addCardToDeck(temp2, temp2Deck, 40, 2);
         addCardToDeck(temp2, temp2Deck, 42, 1);
+        addCardToDeck(temp2, temp2Deck, 40, 2);
         addCardToDeck(temp2, temp2Deck, 46, 1);
-        addCardToDeck(temp2, temp2Deck, 47, 1);
         addCardToDeck(temp2, temp2Deck, 50, 1);
+        addCardToDeck(temp2, temp2Deck, 47, 1);
         addCardToDeck(temp2, temp2Deck, 51, 1);
         addCardToDeck(temp2, temp2Deck, 55, 1);
-        addCardToDeck(temp2, temp2Deck, 67, 1);
         addCardToDeck(temp2, temp2Deck, 65, 1);
         addCardToDeck(temp2, temp2Deck, 69, 1);
+        addCardToDeck(temp2, temp2Deck, 67, 1);
         temp2.setMainDeck(temp2Deck);
+        temp2.getPlayerInfo().getCollection().getDecks().add(temp2Deck);
 
         accountList.add(temp1);
         accountList.add(temp2);

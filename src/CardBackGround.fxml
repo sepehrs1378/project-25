@@ -44,7 +44,7 @@
             <Image url="@pics/ap_desc.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="56.0" fitWidth="82.0" layoutX="134.0" layoutY="308.0" preserveRatio="true">
+      <ImageView fx:id="descBtn" fitHeight="56.0" fitWidth="82.0" layoutX="134.0" layoutY="308.0" onMouseClicked="#showDescription" onMouseEntered="#makeDescBtnOpaque" onMouseExited="#makeDescBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
          <image>
             <Image url="@pics/description_button.png" />
          </image>
