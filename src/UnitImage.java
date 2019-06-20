@@ -82,9 +82,9 @@ public class UnitImage {
 
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
-        double endX = ControllerMainMenu.getInstance().getCellLayoutX(destinationColumn)
+        double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
-        double endY = ControllerMainMenu.getInstance().getCellLayoutY(destinationRow)
+        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow)
                 + GraphicConstants.CELL_HEIGHT / 2.0;
 
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
@@ -192,8 +192,8 @@ public class UnitImage {
     }
 
     public void setInCell(int row, int column) {
-        relocate(ControllerMainMenu.getInstance().getCellLayoutX(column)
-                , ControllerMainMenu.getInstance().getCellLayoutY(row));
+        relocate(ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
+                , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
     }
 
     public void relocate(double x, double y) {

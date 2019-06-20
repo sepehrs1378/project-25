@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class ControllerMainMenu {
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
+    public static Stage stage;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -33,14 +37,52 @@ public class ControllerMainMenu {
     private ImageView multiPlayerBtn;
 
     @FXML
-    void enterSinglePlayer(MouseEvent event) throws IOException {
-        FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+    private ImageView backBtn;
+
+    @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    void close(MouseEvent event) {
+        dataBase.saveAccounts();
+        Main.window.close();
     }
 
-    private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
-                , Constants.CLASSIC, 0, null, Constants.SINGLE);
-        DataBase.getInstance().setCurrentBattle(battle);
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void enterSinglePlayer(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
     @FXML

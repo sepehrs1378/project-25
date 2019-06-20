@@ -62,17 +62,17 @@ public class ControllerBattleCommands implements Initializable {
     void enterSinglePlayer(MouseEvent event) throws IOException {
         AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         setupBattleGroundCells(root);
-        startTempBattle();//todo remove it later
+//        startTempBattle();//todo remove it later
         setupHeroesImages(root);
         //todo units images
         Main.window.setScene(new Scene(root));
     }
 
-    private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
-                , Constants.CLASSIC, 0, null, Constants.SINGLE);
-        DataBase.getInstance().setCurrentBattle(battle);
-    }
+//    private void startTempBattle() {
+//        Battle battle= new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
+//                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+//        DataBase.getInstance().setCurrentBattle(battle);
+//    }
 
     private void setupHeroesImages(AnchorPane root) {
         Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
@@ -102,7 +102,6 @@ public class ControllerBattleCommands implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startTempBattle();
         setupBattleGroundCells(battleGroundPane);
         setupHeroesImages(battleGroundPane);
         Main.window.setScene(new Scene(battleGroundPane));

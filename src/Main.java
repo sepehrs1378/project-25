@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -126,6 +128,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setOnCloseRequest(e->{
             DataBase.getInstance().saveAccounts();
             primaryStage.close();

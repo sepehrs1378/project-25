@@ -18,20 +18,20 @@ public class DataBase {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
-    private Account temp1 = new Account("temp1", "1");
-    private Account temp2 = new Account("temp2", "2");
+//    private Account temp1 = new Account("temp1", "1");
+//    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
     }
 
-    public Account getTemp2() {
-        return temp2;
-    }
-
-    public Account getTemp1() {
-        return temp1;
-    }
+//    public Account getTemp2() {
+//        return temp2;
+//    }
+//
+//    public Account getTemp1() {
+//        return temp1;
+//    }
 
     private DataBase() {
     }
@@ -842,7 +842,7 @@ public class DataBase {
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 60, 1);
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 63, 1);
         computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*/
-
+        /*Account temp1=new Account("temp1","1");
         Deck temp1Deck = new Deck("deck");
         addCardToDeck(temp1, temp1Deck, 0, 1);
         addCardToDeck(temp1, temp1Deck, 6, 1);
@@ -865,8 +865,10 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 67, 1);
         addCardToDeck(temp1, temp1Deck, 65, 1);
         addCardToDeck(temp1, temp1Deck, 69, 1);
+        temp1.getPlayerInfo().getCollection().getDecks().add(temp1Deck);
         temp1.setMainDeck(temp1Deck);
 
+        Account temp2 = new Account("temp2","2");
         Deck temp2Deck = new Deck("deck");
         addCardToDeck(temp2, temp2Deck, 0, 1);
         addCardToDeck(temp2, temp2Deck, 6, 1);
@@ -889,10 +891,11 @@ public class DataBase {
         addCardToDeck(temp2, temp2Deck, 67, 1);
         addCardToDeck(temp2, temp2Deck, 65, 1);
         addCardToDeck(temp2, temp2Deck, 69, 1);
+        temp2.getPlayerInfo().getCollection().getDecks().add(temp2Deck);
         temp2.setMainDeck(temp2Deck);
 
         accountList.add(temp1);
-        accountList.add(temp2);
+        accountList.add(temp2);*/
 
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
