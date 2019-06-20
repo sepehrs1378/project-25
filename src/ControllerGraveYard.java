@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class ControllerGraveYard {
-    private static ControllerGraveYard ourInstance;
+    private static ControllerGraveYard ourInstance = new ControllerGraveYard();
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private DataBase dataBase = DataBase.getInstance();
@@ -10,8 +10,7 @@ public class ControllerGraveYard {
         return ourInstance;
     }
 
-    public ControllerGraveYard() {
-        ourInstance = this;
+    private ControllerGraveYard() {
     }
 
     public void main() {

@@ -1,4 +1,5 @@
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -11,6 +12,7 @@ public class ControllerBattleCommands {
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
     private View view = View.getInstance();
+    private Label[][] battleGroundCells = new Label[5][9];
 
     @FXML
     private ImageView endTurnMineBtn;
@@ -41,6 +43,32 @@ public class ControllerBattleCommands {
 
     public ControllerBattleCommands() {
         ourInstance = this;
+    }
+
+    public void setupBattlegroundComponents() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
+                battleGroundCells[i][j].relocate
+                        (GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * j
+                                , GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * i);
+                battleGroundCells[i][j].setMinWidth(63);
+                battleGroundCells[i][j].setMinHeight(50);
+                battleGroundCells[i][j] = setLabelStyle(new Label());
+            }
+        }
+    }
+
+    private Label setLabelStyle(Label label) {
+        label.setMinWidth(60);
+        label.setMinHeight(60);
+        label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
+        label.setOnMouseEntered(e -> {
+            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
+        });
+        label.setOnMouseExited(e -> {
+            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
+        });
+        return label;
     }
 
     public void main() throws GoToMainMenuException {
@@ -351,5 +379,9 @@ public class ControllerBattleCommands {
         } else {
             ControllerGraveYard.getInstance().main();
         }
+    }
+
+    public Label[][] getBattleGroundCells() {
+        return battleGroundCells;
     }
 }

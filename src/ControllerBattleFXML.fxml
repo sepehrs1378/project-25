@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
+   <children>
+      <ImageView fitHeight="819.0" fitWidth="1500.0">
+         <image>
+            <Image url="@pics/maps/redrock/background@2x.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="819.0" fitWidth="1500.0" layoutX="-2.0" layoutY="-2.0">
+         <image>
+            <Image url="@pics/maps/redrock/midground@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="819.0" fitWidth="519.0">
+         <image>
+            <Image url="@pics/maps/redrock/foreground@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="813.0" fitWidth="1500.0">
+         <image>
+            <Image url="@pics/maps/redrock/midground_glow@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="endTurnEnemyBtn" fitHeight="60.0" fitWidth="130.0" layoutX="1320.0" layoutY="650.0" opacity="0.6" visible="false">
+         <image>
+            <Image url="@pics/in_battle_pics/button_end_turn_enemy.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="endTurnMineBtn" fitHeight="60.0" fitWidth="130.0" layoutX="1320.0" layoutY="650.0" onMouseClicked="#endTurn" onMouseEntered="#makeEndTurnMineOpaque" onMouseExited="#makeEndTurnMineTransparent" opacity="0.6">
+         <image>
+            <Image url="@pics/in_battle_pics/button_end_turn_mine.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

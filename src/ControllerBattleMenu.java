@@ -1,5 +1,5 @@
 public class ControllerBattleMenu {
-    private static ControllerBattleMenu ourInstance;
+    private static final ControllerBattleMenu ourInstance = new ControllerBattleMenu();
     private final Request request = Request.getInstance();
     private final View view = View.getInstance();
     private static final DataBase dataBase = DataBase.getInstance();
@@ -8,8 +8,7 @@ public class ControllerBattleMenu {
         return ourInstance;
     }
 
-    public ControllerBattleMenu() {
-        ourInstance = this;
+    private ControllerBattleMenu() {
     }
 
     public void main() throws GoToMainMenuException {

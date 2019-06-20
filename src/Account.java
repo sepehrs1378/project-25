@@ -49,13 +49,13 @@ public class Account implements Comparable<Account> {
         return matchList;
     }
 
-    public void addMatchToMatchList(MatchInfo Match) {
-        matchList.add(Match);
+    public void addMatchToMatchList(MatchInfo match) {
+        matchList.add(match);
     }
 
     public void openLevelOfStory(int level) {
         levelsOpennessStatus[level] = true;
-    }
+    } //todo use it!
 
     public int getNumberOfWins() {
         int numberOfWins = 0;

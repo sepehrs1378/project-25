@@ -19,21 +19,6 @@ public class ControllerSinglePlayerMenu {
         Main.window.setScene(new Scene(root));
     }
 
-    @FXML
-    void startLevel1(MouseEvent event) {
-
-    }
-
-    @FXML
-    void startLevel2(MouseEvent event) {
-
-    }
-
-    @FXML
-    void startLevel3(MouseEvent event) {
-
-    }
-
     public ControllerSinglePlayerMenu() {
         ourInstance = this;
     }
