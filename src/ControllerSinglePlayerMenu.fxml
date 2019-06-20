@@ -90,7 +90,7 @@
             <Image url="@pics/custom_title_image.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="selectDeckBox" layoutX="636.0" layoutY="196.0" prefHeight="31.0" prefWidth="171.0" style="-fx-background-color: #0d6cba;" />
+      <ComboBox fx:id="selectDeckBox" layoutX="636.0" layoutY="196.0" onAction="#selectDeck" prefHeight="31.0" prefWidth="171.0" style="-fx-background-color: #0d6cba;" />
       <ImageView fitHeight="40.0" fitWidth="134.0" layoutX="483.0" layoutY="196.0">
          <image>
             <Image url="@pics/single_player_menu_pics/custom_titles_image.png" />
@@ -112,21 +112,21 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </JFXTextField>
-      <ImageView fx:id="playBtn" fitHeight="58.0" fitWidth="200.0" layoutX="554.0" layoutY="539.0" onMouseClicked="#enterCustomGame" onMouseEntered="#makePlayBtnOpaque" onMouseExited="#makePlayBtnTransparent" style="-fx-opacity: 0.6;">
+      <ImageView fx:id="playBtn" fitHeight="58.0" fitWidth="200.0" layoutX="569.0" layoutY="541.0" onMouseClicked="#enterCustomGame" onMouseEntered="#makePlayBtnOpaque" onMouseExited="#makePlayBtnTransparent" style="-fx-opacity: 0.6;">
          <image>
             <Image url="@pics/single_player_menu_pics/custom_game_play_button.png" />
          </image>
       </ImageView>
-      <Label fx:id="invalidDeckLabel" layoutX="492.0" layoutY="250.0" prefHeight="31.0" prefWidth="311.0" text="please select a deck" textFill="#ff0909" visible="false">
+      <Label fx:id="invalidDeckLabel" layoutX="493.0" layoutY="250.0" prefHeight="40.0" prefWidth="311.0" text="please select a deck" textFill="RED" visible="false">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="invalidModeLabel" layoutX="498.0" layoutY="346.0" prefHeight="24.0" prefWidth="311.0" text="please select a mode" textFill="RED" visible="false" />
-      <Label fx:id="invalidNumberLabel" layoutX="558.0" layoutY="511.0" prefHeight="31.0" prefWidth="200.0" textFill="RED">
+      <Label fx:id="invalidModeLabel" layoutX="495.0" layoutY="353.0" prefHeight="21.0" prefWidth="311.0" text="please select mode of game" textFill="RED" visible="false">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="invalidNumberLabel" layoutX="525.0" layoutY="521.0" prefHeight="21.0" prefWidth="289.0" textFill="RED" />
    </children>
 </AnchorPane>

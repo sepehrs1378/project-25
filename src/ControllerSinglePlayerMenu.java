@@ -274,6 +274,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void selectModeOfGame(ActionEvent event) {
+        invalidModeLabel.setVisible(false);
         if (selectModeBox.getValue().isEmpty()) {
             flagNumberImage.setVisible(false);
             flagNumberLabel.setVisible(false);
@@ -289,8 +290,14 @@ public class ControllerSinglePlayerMenu implements Initializable {
     }
 
     @FXML
+    void selectDeck(ActionEvent event) {
+        invalidDeckLabel.setVisible(false);
+    }
+
+    @FXML
     void enterCustomGame(MouseEvent event) throws IOException {
-        if (selectModeBox.getValue() == null) {
+        if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null){
+            invalidDeckLabel.setVisible(true);
             invalidModeLabel.setVisible(true);
             return;
         }
@@ -298,13 +305,18 @@ public class ControllerSinglePlayerMenu implements Initializable {
             invalidDeckLabel.setVisible(true);
             return;
         }
+        if (selectModeBox.getValue() == null) {
+            invalidModeLabel.setVisible(true);
+            return;
+        }
         if (selectModeBox.getValue().equals(Constants.FLAGS)) {
             if (!flagNumberLabel.getText().matches("\\d*")){
                 invalidNumberLabel.setText("please enter a number");
-            }else if (Integer.parseInt(flagNumberLabel.getText()) > 43){
+                return;
+            }else if (!flagNumberLabel.getText().isEmpty() && Integer.parseInt(flagNumberLabel.getText()) > 43){
                 invalidNumberLabel.setText("please enter a number less than 43");
+                return;
             }
-            return;
         }
         Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectDeckBox.getValue());
         switch (selectModeBox.getValue()) {
