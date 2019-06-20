@@ -1,5 +1,4 @@
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -7,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,16 +56,6 @@ public class ControllerBattleCommands implements Initializable {
         ourInstance = this;
     }
 
-    @FXML
-    void enterSinglePlayer(MouseEvent event) throws IOException {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-        setupBattleGroundCells(root);
-        startTempBattle();//todo remove it later
-        setupHeroesImages(root);
-        //todo units images
-        Main.window.setScene(new Scene(root));
-    }
-
     private void startTempBattle() {
         Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
                 , Constants.CLASSIC, 0, null, Constants.SINGLE);
@@ -100,9 +88,32 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
+    public void handleUnitClicked(String id) {
+        Player currentPlayer = database.getCurrentBattle().getPlayerInTurn();
+        if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
+            UnitImage unitImage = getUnitImageWithId(id);
+            switch (currentPlayer.selectUnit(id)) {
+                case SELECTED:
+                    unitImage.setUnitStyleAsSelected();
+                    break;
+                case ENEMY_UNIT_SELECTED:
+                    //empty;
+                    break;
+                case INVALID_COLLECTABLE_CARD:
+                    //empty
+                    break;
+                case UNIT_IS_STUNNED:
+                    //empty
+                    break;
+                default:
+                    System.out.println("unhandled case !!!!!!!!");
+            }
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startTempBattle();
+        startTempBattle();//todo remove it later
         setupBattleGroundCells(battleGroundPane);
         setupHeroesImages(battleGroundPane);
         Main.window.setScene(new Scene(battleGroundPane));
@@ -119,6 +130,14 @@ public class ControllerBattleCommands implements Initializable {
             label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
         });
         return label;
+    }
+
+    public UnitImage getUnitImageWithId(String id) {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage.getId().equals(id))
+                return unitImage;
+        }
+        return null;
     }
 
     public void main() throws GoToMainMenuException {

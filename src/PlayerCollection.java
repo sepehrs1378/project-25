@@ -64,7 +64,7 @@ public class PlayerCollection {
                 }
             } else {
                 if (deck.getItem() == null) {
-                    return OutputMessageType.ITEM_IS_EMTPY;
+                    return OutputMessageType.ITEM_IS_EMPTY;
                 } else if (deck.getItem().getId().equals(id)) {
                     deck.setItem(null);
                 } else {

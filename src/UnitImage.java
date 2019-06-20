@@ -1,6 +1,5 @@
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +16,7 @@ public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
     private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
-    private String mouseClickedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
+    private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
     private long attackDuration = 3000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
@@ -47,19 +46,23 @@ public class UnitImage {
             e.printStackTrace();
         }
         unitView.setOnMouseClicked(event -> {
-
-            unitView.setStyle(mouseClickedStyle);
+            ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
         });
         unitView.setOnMouseEntered(event -> {
-            unitView.setStyle(mouseEnteredStyle);
+            if (!unitView.getStyle().equals(selectedStyle))
+                unitView.setStyle(mouseEnteredStyle);
         });
         unitView.setOnMouseExited(event -> {
-            if (!unitView.getStyle().equals(mouseClickedStyle))
+            if (!unitView.getStyle().equals(selectedStyle))
                 unitView.setStyle(mouseExitedStyle);
         });
         resetStatsPositions();
         addToRoot(root);
         //todo
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setUnitStatus(UnitStatus unitStatus) {
@@ -73,6 +76,10 @@ public class UnitImage {
         }
     }
 
+    public void setUnitStyleAsSelected() {
+        unitView.setStyle(selectedStyle);
+    }
+
     public String getUnitName() {
         return id.split("_")[1];
     }
@@ -82,9 +89,9 @@ public class UnitImage {
 
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
-        double endX = ControllerMainMenu.getInstance().getCellLayoutX(destinationColumn)
+        double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
-        double endY = ControllerMainMenu.getInstance().getCellLayoutY(destinationRow)
+        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow)
                 + GraphicConstants.CELL_HEIGHT / 2.0;
 
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
@@ -192,8 +199,8 @@ public class UnitImage {
     }
 
     public void setInCell(int row, int column) {
-        relocate(ControllerMainMenu.getInstance().getCellLayoutX(column)
-                , ControllerMainMenu.getInstance().getCellLayoutY(row));
+        relocate(ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
+                , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
     }
 
     public void relocate(double x, double y) {

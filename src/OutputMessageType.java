@@ -52,7 +52,7 @@ public enum OutputMessageType {
     INVALID_PLAYER("no one has won the game"),
     PLEASE_SELECT_A_DECK("please select a deck from below decks:"),
     INVALID_MODE("invalid mode"),
-    ITEM_IS_EMTPY("there is no item in the selected deck"),
+    ITEM_IS_EMPTY("there is no item in the selected deck"),
     HERO_IS_EMPTY("hero slot is empty in the deck"),
     FOUND_ITEM("found item with id: "),
     FOUND_CARD("found card with id: "),
@@ -77,6 +77,7 @@ public enum OutputMessageType {
     COLLECTABLE_NOT_SELECTED("No collectable is selected"),
     COLLECTABLE_USED("Collectable used"),
     HERO_HAS_NO_SPELL("Hero has no spell"),
+    ENEMY_UNIT_SELECTED(""),
     NO_ERROR("");
 
     private String message;
