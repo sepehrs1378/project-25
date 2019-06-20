@@ -15,6 +15,9 @@ import java.io.IOException;
 
 public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
+    private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
+    private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
+    private String mouseClickedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
     private long attackDuration = 3000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
@@ -43,6 +46,16 @@ public class UnitImage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        unitView.setOnMouseClicked(event -> {
+            unitView.setStyle(mouseClickedStyle);
+        });
+        unitView.setOnMouseEntered(event -> {
+            unitView.setStyle(mouseEnteredStyle);
+        });
+        unitView.setOnMouseExited(event -> {
+            if (!unitView.getStyle().equals(mouseClickedStyle))
+                unitView.setStyle(mouseExitedStyle);
+        });
         resetStatsPositions();
         addToRoot(root);
         //todo
