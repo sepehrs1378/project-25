@@ -1,16 +1,26 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ControllerBattleCommands {
+public class ControllerBattleCommands implements Initializable {
+    private static DataBase dataBase = DataBase.getInstance();
     private static ControllerBattleCommands ourInstance;
     private Request request = Request.getInstance();
     private DataBase database = DataBase.getInstance();
+    private List<UnitImage> unitImageList = new ArrayList<>();
     private View view = View.getInstance();
     private Label[][] battleGroundCells = new Label[5][9];
 
@@ -19,6 +29,9 @@ public class ControllerBattleCommands {
 
     @FXML
     private ImageView endTurnEnemyBtn;
+
+    @FXML
+    private AnchorPane battleGroundPane;
 
     @FXML
     void makeEndTurnMineOpaque(MouseEvent event) {
@@ -45,17 +58,54 @@ public class ControllerBattleCommands {
         ourInstance = this;
     }
 
-    public void setupBattlegroundComponents() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 9; j++) {
-                battleGroundCells[i][j].relocate
-                        (GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * j
-                                , GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * i);
-                battleGroundCells[i][j].setMinWidth(63);
-                battleGroundCells[i][j].setMinHeight(50);
-                battleGroundCells[i][j] = setLabelStyle(new Label());
+    @FXML
+    void enterSinglePlayer(MouseEvent event) throws IOException {
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        setupBattleGroundCells(root);
+        startTempBattle();//todo remove it later
+        setupHeroesImages(root);
+        //todo units images
+        Main.window.setScene(new Scene(root));
+    }
+
+    private void startTempBattle() {
+        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
+                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+        DataBase.getInstance().setCurrentBattle(battle);
+    }
+
+    private void setupHeroesImages(AnchorPane root) {
+        Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
+        Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
+        UnitImage playerHeroImage = new UnitImage(playerHero.getId(), root);
+        UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), root);
+        unitImageList.add(opponentHeroImage);
+        unitImageList.add(playerHeroImage);
+        playerHeroImage.setInCell(2, 0);
+        opponentHeroImage.setInCell(2, 8);
+        playerHeroImage.showRun(2, 5, root);
+    }
+
+    private void setupBattleGroundCells(AnchorPane root) {
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                battleGroundCells[row][column] = setLabelStyle(new Label());
+                battleGroundCells[row][column].relocate
+                        (getCellLayoutX(column)
+                                , getCellLayoutY(row));
+                battleGroundCells[row][column].setMinWidth(63);
+                battleGroundCells[row][column].setMinHeight(50);
+                root.getChildren().add(battleGroundCells[row][column]);
             }
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        startTempBattle();
+        setupBattleGroundCells(battleGroundPane);
+        setupHeroesImages(battleGroundPane);
+        Main.window.setScene(new Scene(battleGroundPane));
     }
 
     private Label setLabelStyle(Label label) {
@@ -381,7 +431,11 @@ public class ControllerBattleCommands {
         }
     }
 
-    public Label[][] getBattleGroundCells() {
-        return battleGroundCells;
+    public double getCellLayoutX(int column) {
+        return GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * column;
+    }
+
+    public double getCellLayoutY(int row) {
+        return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
     }
 }

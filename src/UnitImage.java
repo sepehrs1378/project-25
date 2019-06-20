@@ -47,6 +47,7 @@ public class UnitImage {
             e.printStackTrace();
         }
         unitView.setOnMouseClicked(event -> {
+
             unitView.setStyle(mouseClickedStyle);
         });
         unitView.setOnMouseEntered(event -> {

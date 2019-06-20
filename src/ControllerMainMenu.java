@@ -17,8 +17,6 @@ public class ControllerMainMenu {
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
-    private Label[][] battleGroundCells = new Label[5][9];
-    private List<UnitImage> unitImageList = new ArrayList<>();
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
@@ -34,50 +32,15 @@ public class ControllerMainMenu {
     @FXML
     private ImageView multiPlayerBtn;
 
-    public Label[][] getBattleGroundCells() {
-        return battleGroundCells;
-    }
-
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-        setupBattleGroundCells(root);
-        startTempBattle();//todo remove it later
-        setupHeroesImages(root);
-        //todo units images
-        Main.window.setScene(new Scene(root));
+        FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
     }
 
     private void startTempBattle() {
         Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
                 , Constants.CLASSIC, 0, null, Constants.SINGLE);
         DataBase.getInstance().setCurrentBattle(battle);
-    }
-
-    private void setupHeroesImages(AnchorPane root) {
-        Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
-        Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
-        UnitImage playerHeroImage = new UnitImage(playerHero.getId(), root);
-        UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), root);
-        unitImageList.add(opponentHeroImage);
-        unitImageList.add(playerHeroImage);
-        playerHeroImage.setInCell(2, 0);
-        opponentHeroImage.setInCell(2, 8);
-//        playerHeroImage.showRun(2,5,root);
-    }
-
-    private void setupBattleGroundCells(AnchorPane root) {
-        for (int row = 0; row < 5; row++) {
-            for (int column = 0; column < 9; column++) {
-                battleGroundCells[row][column] = setLabelStyle(new Label());
-                battleGroundCells[row][column].relocate
-                        (getCellLayoutX(column)
-                                , getCellLayoutY(row));
-                battleGroundCells[row][column].setMinWidth(63);
-                battleGroundCells[row][column].setMinHeight(50);
-                root.getChildren().add(battleGroundCells[row][column]);
-            }
-        }
     }
 
     @FXML
@@ -229,26 +192,5 @@ public class ControllerMainMenu {
 
     public void help() {
         view.printHelp(HelpType.CONTROLLER_MAIN_MENU_HELP);
-    }
-
-    public Label setLabelStyle(Label label) {
-        label.setMinWidth(60);
-        label.setMinHeight(60);
-        label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        label.setOnMouseEntered(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
-        });
-        label.setOnMouseExited(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        });
-        return label;
-    }
-
-    public double getCellLayoutX(int column) {
-        return GraphicConstants.BATTLE_GROUND_START_X + GraphicConstants.CELL_WIDTH * column;
-    }
-
-    public double getCellLayoutY(int row) {
-        return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
     }
 }
