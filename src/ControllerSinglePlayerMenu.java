@@ -3,10 +3,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,20 +55,44 @@ public class ControllerSinglePlayerMenu implements Initializable {
     @FXML
     private ImageView playBtn;
 
+    @FXML
+    private Label invalidDeckLabel;
 
     @FXML
-    void enterLevel1(MouseEvent event) {
-        //todo enter level 1
+    private Label invalidModeLabel;
+
+    @FXML
+    private Label invalidNumberLabel;
+
+
+    @FXML
+    void enterLevel1(MouseEvent event) throws IOException {
+        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
+                Constants.CLASSIC, 0, null, Constants.SINGLE);
+        database.setCurrentBattle(battle);
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        ControllerMainMenu.stage.close();
+        Main.window.setScene(new Scene(root));
     }
 
     @FXML
-    void enterLevel2(MouseEvent event) {
-        //todo enter level 2
+    void enterLevel2(MouseEvent event) throws IOException {
+        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
+                , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
+        database.setCurrentBattle(battle);
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        ControllerMainMenu.stage.close();
+        Main.window.setScene(new Scene(root));
     }
 
     @FXML
-    void enterLevel3(MouseEvent event) {
-        //todo enter level 3
+    void enterLevel3(MouseEvent event) throws IOException {
+        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
+                , Constants.FLAGS, 7, null, Constants.SINGLE);
+        database.setCurrentBattle(battle);
+        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        ControllerMainMenu.stage.close();
+        Main.window.setScene(new Scene(root));
     }
 
     @FXML
@@ -225,10 +254,10 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
             level2Btn.setDisable(false);
         }
-        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]){
+        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
             level3Btn.setDisable(false);
         }
         ObservableList<String> deckList = FXCollections.observableArrayList();
@@ -245,12 +274,12 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void selectModeOfGame(ActionEvent event) {
-        if (selectModeBox.getValue().isEmpty()){
+        if (selectModeBox.getValue().isEmpty()) {
             flagNumberImage.setVisible(false);
             flagNumberLabel.setVisible(false);
             return;
         }
-        if(!selectModeBox.getValue().equals(Constants.FLAGS)){
+        if (!selectModeBox.getValue().equals(Constants.FLAGS)) {
             flagNumberImage.setVisible(false);
             flagNumberLabel.setVisible(false);
             return;
@@ -260,14 +289,68 @@ public class ControllerSinglePlayerMenu implements Initializable {
     }
 
     @FXML
-    void enterCustomGame(MouseEvent event) {
-        if (selectModeBox.getValue() == null || selectDeckBox.getValue() == null){
+    void enterCustomGame(MouseEvent event) throws IOException {
+        if (selectModeBox.getValue() == null) {
+            invalidModeLabel.setVisible(true);
             return;
         }
-        if (selectModeBox.getValue().equals(Constants.FLAGS) && !flagNumberLabel.getText().matches("\\d+")){
+        if (selectDeckBox.getValue() == null){
+            invalidDeckLabel.setVisible(true);
             return;
         }
-        //todo enter custom game
+        if (selectModeBox.getValue().equals(Constants.FLAGS)) {
+            if (!flagNumberLabel.getText().matches("\\d*")){
+                invalidNumberLabel.setText("please enter a number");
+            }else if (Integer.parseInt(flagNumberLabel.getText()) > 43){
+                invalidNumberLabel.setText("please enter a number less than 43");
+            }
+            return;
+        }
+        Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectDeckBox.getValue());
+        switch (selectModeBox.getValue()) {
+            case Constants.CLASSIC: {
+                database.getComputerPlayerCustom().setMainDeck(deck);
+                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                        Constants.CLASSIC, 0, null, Constants.SINGLE);
+                database.setCurrentBattle(battle);
+                AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                ControllerMainMenu.stage.close();
+                Main.window.setScene(new Scene(root));
+                break;
+            }
+            case Constants.ONE_FLAG: {
+                database.getComputerPlayerCustom().setMainDeck(deck);
+                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                        Constants.ONE_FLAG, 1, null, Constants.SINGLE);
+                database.setCurrentBattle(battle);
+                AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                ControllerMainMenu.stage.close();
+                Main.window.setScene(new Scene(root));
+                break;
+            }
+            case Constants.FLAGS:
+                database.getComputerPlayerCustom().setMainDeck(deck);
+                if (flagNumberLabel.getText().isEmpty()) {
+                    Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                            Constants.FLAGS, 7, null, Constants.SINGLE);
+                    database.setCurrentBattle(battle);
+                    AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                    ControllerMainMenu.stage.close();
+                    Main.window.setScene(new Scene(root));
+                } else {
+                    Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                            Constants.FLAGS, Integer.parseInt(flagNumberLabel.getText()), null,
+                            Constants.SINGLE);
+                    database.setCurrentBattle(battle);
+                    ControllerMainMenu.stage.close();
+                    AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                    Main.window.setScene(new Scene(root));
+                }
+                break;
+            default:
+                view.printOutputMessage(OutputMessageType.INVALID_MODE);
+                break;
+        }
     }
 
     @FXML
