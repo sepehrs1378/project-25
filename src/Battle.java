@@ -437,11 +437,9 @@ public class Battle {
                     + "\n\tCan Move: " + !unit.didMoveThisTurn() +
                     "\n\tAttack Options: ";
             Player player;
-            if (player2 == playerInTurn) {
+            if (player2 == playerInTurn)
                 player = player1;
-            } else {
-                player = player2;
-            }
+            else player = player2;
             if (!unit.didAttackThisTurn()) {
                 for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
                     if (unit.canAttackTarget(enemyUnit)) {
@@ -465,7 +463,7 @@ public class Battle {
     }
 
     private void resetDeck(Deck deck) {
-
+        //todo is it needed?
     }
 
     private OutputMessageType endBattle(Player winner) {

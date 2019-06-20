@@ -189,7 +189,7 @@ public class DataBase {
         //todo correct it later
         String desc19 = "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target";
         Target kingsGuardTarget = new Target(Constants.MINION, Integer.MAX_VALUE, Integer.MAX_VALUE, Constants.ENEMY, true, false, 0, Constants.ALL);
-        Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, "", false);
+        Spell kingsGuard = new Spell("shop_kingsGuard_1", "kingsGuard", 1750, 9, 0, 0, 0, null, (Buff) null, SpellActivationType.ON_CAST, desc19, false);
         cardList.add(kingsGuard);
 
         //20
@@ -851,7 +851,7 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 11, 1);
         addCardToDeck(temp1, temp1Deck, 17, 1);
         addCardToDeck(temp1, temp1Deck, 19, 1);
-        addCardToDeck(temp1, temp1Deck, 20, 1);
+        addCardToDeck(temp1, temp1Deck, 29, 1);
         addCardToDeck(temp1, temp1Deck, 30, 1);
         addCardToDeck(temp1, temp1Deck, 38, 1);
         addCardToDeck(temp1, temp1Deck, 40, 1);
@@ -866,32 +866,30 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 65, 1);
         addCardToDeck(temp1, temp1Deck, 69, 1);
         temp1.setMainDeck(temp1Deck);
-        temp1.getPlayerInfo().getCollection().getDecks().add(temp1Deck);
 
         Deck temp2Deck = new Deck("deck");
         addCardToDeck(temp2, temp2Deck, 0, 1);
         addCardToDeck(temp2, temp2Deck, 6, 1);
-        addCardToDeck(temp2, temp2Deck, 10, 1);
         addCardToDeck(temp2, temp2Deck, 9, 1);
+        addCardToDeck(temp2, temp2Deck, 10, 1);
         addCardToDeck(temp2, temp2Deck, 11, 1);
         addCardToDeck(temp2, temp2Deck, 17, 1);
-        addCardToDeck(temp2, temp2Deck, 20, 1);
         addCardToDeck(temp2, temp2Deck, 19, 1);
-        addCardToDeck(temp2, temp2Deck, 38, 1);
+        addCardToDeck(temp2, temp2Deck, 29, 1);
         addCardToDeck(temp2, temp2Deck, 30, 1);
+        addCardToDeck(temp2, temp2Deck, 38, 1);
         addCardToDeck(temp2, temp2Deck, 40, 1);
-        addCardToDeck(temp2, temp2Deck, 42, 1);
         addCardToDeck(temp2, temp2Deck, 40, 2);
+        addCardToDeck(temp2, temp2Deck, 42, 1);
         addCardToDeck(temp2, temp2Deck, 46, 1);
-        addCardToDeck(temp2, temp2Deck, 50, 1);
         addCardToDeck(temp2, temp2Deck, 47, 1);
+        addCardToDeck(temp2, temp2Deck, 50, 1);
         addCardToDeck(temp2, temp2Deck, 51, 1);
         addCardToDeck(temp2, temp2Deck, 55, 1);
+        addCardToDeck(temp2, temp2Deck, 67, 1);
         addCardToDeck(temp2, temp2Deck, 65, 1);
         addCardToDeck(temp2, temp2Deck, 69, 1);
-        addCardToDeck(temp2, temp2Deck, 67, 1);
         temp2.setMainDeck(temp2Deck);
-        temp2.getPlayerInfo().getCollection().getDecks().add(temp2Deck);
 
         accountList.add(temp1);
         accountList.add(temp2);
@@ -1119,8 +1117,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1205,8 +1201,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1227,8 +1221,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1249,8 +1241,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1271,8 +1261,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1293,8 +1281,6 @@ public class DataBase {
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }catch(ClassCastException ignored){
-
                     }
                 }
             }
@@ -1307,7 +1293,14 @@ public class DataBase {
         String[] fileNames = folder.list();
         String fileName = "battle_" + battle.getPlayer1().getPlayerInfo().getPlayerName()
                 + "_" + battle.getPlayer2().getPlayerInfo().getPlayerName() + "_";
-        int numberOfBattles = getNumOfSimilarFiles(fileNames, fileName);
+        int numberOfBattles = 0;
+        if (fileNames != null) {
+            for (String name : fileNames) {
+                if (name.contains(fileName)) {
+                    numberOfBattles++;
+                }
+            }
+        }
         fileName += numberOfBattles;
         fileName += ".json";
         try {
@@ -1330,65 +1323,14 @@ public class DataBase {
         try {
             reader = new FileReader(new File(address));
             Battle battle = yaGson.fromJson(reader, Battle.class);
-            reader.close();
+            System.out.println(battle.getPlayer2().getPlayerInfo().getPlayerName());
+            System.out.println(battle.getPlayer1().getPlayerInfo().getPlayerName());
         } catch (FileNotFoundException e) {
             //todo show this message in correct place
             System.out.println("file not found");
         } catch (ClassCastException e) {
             System.out.println("invalid file, selected file is not a saved battle");
-        } catch (IOException ignored) {
         }
 
-    }
-
-    public void importDeck(String address){
-        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        if (!address.endsWith(".json")) {
-            System.out.println("selected file is not a json file");
-            return;
-        }
-        FileReader reader;
-        try {
-            reader = new FileReader(new File(address));
-            Deck deck = yaGson.fromJson(reader, Deck.class);
-            loggedInAccount.getPlayerInfo().getCollection().getDecks().add(deck);
-            reader.close();
-        } catch (FileNotFoundException e) {
-            //todo show this message in correct place
-            System.out.println("file not found");
-        } catch (ClassCastException e) {
-            System.out.println("invalid file, selected file is not a saved battle");
-        } catch (IOException ignored) {
-        }
-    }
-
-    public void exportDeck(Deck deck){
-        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        File folder = new File("src/JSONFiles/Decks");
-        String[] fileNames = folder.list();
-        String fileName = "deck_"+deck.getName()+"_";
-        int numberOfDecks = getNumOfSimilarFiles(fileNames, fileName);
-        fileName += ".json";
-        fileName += numberOfDecks;
-        try {
-            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Decks/" + fileName));
-            yaGson.toJson(deck, fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private int getNumOfSimilarFiles(String[] fileNames, String fileName) {
-        int number=0;
-        if (fileNames != null) {
-            for (String name : fileNames) {
-                if (name.contains(fileName)) {
-                    number++;
-                }
-            }
-        }
-        return number;
     }
 }

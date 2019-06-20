@@ -18,11 +18,17 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControllerSinglePlayerMenu implements Initializable {
-    private static ControllerSinglePlayerMenu ourInstance = new ControllerSinglePlayerMenu();
+public class ControllerSinglePlayerMenu implements Initializable{
+    private static ControllerSinglePlayerMenu ourInstance;
     private Request request = Request.getInstance();
     private View view = View.getInstance();
     private DataBase database = DataBase.getInstance();
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+    }
 
     public ControllerSinglePlayerMenu() {
         ourInstance = this;
@@ -246,7 +252,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
         } else view.printOutputMessage(OutputMessageType.WRONG_COMMAND);
     }
-
 
     public static ControllerSinglePlayerMenu getInstance() {
         return ourInstance;
