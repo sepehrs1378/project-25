@@ -17,7 +17,6 @@ public class ControllerBattleCommands implements Initializable {
     private static DataBase dataBase = DataBase.getInstance();
     private static ControllerBattleCommands ourInstance;
     private Request request = Request.getInstance();
-    private DataBase database = DataBase.getInstance();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private View view = View.getInstance();
     private Label[][] battleGroundCells = new Label[5][9];
@@ -71,7 +70,6 @@ public class ControllerBattleCommands implements Initializable {
         unitImageList.add(playerHeroImage);
         playerHeroImage.setInCell(2, 0);
         opponentHeroImage.setInCell(2, 8);
-        playerHeroImage.showRun(2, 5, root);
     }
 
     private void setupBattleGroundCells(AnchorPane root) {
@@ -84,12 +82,45 @@ public class ControllerBattleCommands implements Initializable {
                 battleGroundCells[row][column].setMinWidth(63);
                 battleGroundCells[row][column].setMinHeight(50);
                 root.getChildren().add(battleGroundCells[row][column]);
+                final int cellRow = row;
+                final int cellColumn = column;
+                battleGroundCells[row][column].setOnMouseClicked(event -> {
+                    handleCellClicked(cellRow, cellColumn);
+                });
             }
         }
     }
 
+    private void handleCellClicked(int row, int column) {
+        //todo complete it for other purposes too
+        switch (dataBase.getCurrentBattle().getBattleGround()
+                .moveUnit(row, column)) {
+            case UNIT_NOT_SELECTED:
+                //empty
+                break;
+            case OUT_OF_BOUNDARIES:
+                //empty
+                break;
+            case CELL_IS_FULL:
+                //empty
+                break;
+            case CELL_OUT_OF_RANGE:
+                //empty
+                break;
+            case UNIT_ALREADY_MOVED:
+                //empty
+                break;
+            case UNIT_MOVED:
+                Player currentPlayer=dataBase.getCurrentBattle().getPlayerInTurn();
+                UnitImage movedUnitImage=getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+                movedUnitImage.showRun(row,column,battleGroundPane);
+                break;
+            default:
+        }
+    }
+
     public void handleUnitClicked(String id) {
-        Player currentPlayer = database.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
             UnitImage unitImage = getUnitImageWithId(id);
             switch (currentPlayer.selectUnit(id)) {
@@ -144,12 +175,12 @@ public class ControllerBattleCommands implements Initializable {
         boolean didExit = false;
         while (!didExit) {
             try {
-                if (database.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
-                        && database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer2()) {
+                if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
+                        && dataBase.getCurrentBattle().getPlayerInTurn() == dataBase.getCurrentBattle().getPlayer2()) {
                     AI.getInstance().doNextMove();
                     endTurn();
                 }
-                database.getCurrentBattle().checkForDeadUnits();
+                dataBase.getCurrentBattle().checkForDeadUnits();
                 request.getNewCommand();
                 switch (request.getType()) {
                     case GAME_INFO:
@@ -229,32 +260,32 @@ public class ControllerBattleCommands implements Initializable {
 
     public void showGameInfo() {
         if (request.getCommand().equals("game info")) {
-            view.showGameInfo(database.getCurrentBattle());
+            view.showGameInfo(dataBase.getCurrentBattle());
         }
     }
 
     private void showMyMinions() {
-        List<Unit> minions = database.getCurrentBattle().getBattleGround()
-                .getMinionsOfPlayer(database.getCurrentBattle().getPlayerInTurn());
+        List<Unit> minions = dataBase.getCurrentBattle().getBattleGround()
+                .getMinionsOfPlayer(dataBase.getCurrentBattle().getPlayerInTurn());
         for (Unit minion : minions) {
-            view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
+            view.showMinionInBattle(minion, dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
         }
     }
 
     private void showOpponentMinions() {
         Player player;
-        if (database.getCurrentBattle().getPlayerInTurn() == database.getCurrentBattle().getPlayer1())
-            player = database.getCurrentBattle().getPlayer2();
-        else player = database.getCurrentBattle().getPlayer1();
-        List<Unit> minions = database.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
+        if (dataBase.getCurrentBattle().getPlayerInTurn() == dataBase.getCurrentBattle().getPlayer1())
+            player = dataBase.getCurrentBattle().getPlayer2();
+        else player = dataBase.getCurrentBattle().getPlayer1();
+        List<Unit> minions = dataBase.getCurrentBattle().getBattleGround().getMinionsOfPlayer(player);
         for (Unit minion : minions) {
-            view.showMinionInBattle(minion, database.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
+            view.showMinionInBattle(minion, dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(minion));
         }
     }
 
     private void showCardInfoId() {
         String cardId = request.getCommand().split("\\s+")[3];
-        Card card = database.getCurrentBattle().getBattleGround().getCardByID(cardId);
+        Card card = dataBase.getCurrentBattle().getBattleGround().getCardByID(cardId);
         if (card != null) {
             if (card instanceof Spell) {
                 view.showCardInfoSpell((Spell) card);
@@ -272,17 +303,17 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showCollectables() {
-        view.showCollectables(database.getCurrentBattle().getPlayerInTurn().getCollectables());
+        view.showCollectables(dataBase.getCurrentBattle().getPlayerInTurn().getCollectables());
     }
 
     private void showInfo() {
-        if (database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
-            view.showCollectable(database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
+        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable() != null) {
+            view.showCollectable(dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable());
         }
     }
 
     private void showNextCard() {
-        Card card = database.getCurrentBattle().getPlayerInTurn().getNextCard();
+        Card card = dataBase.getCurrentBattle().getPlayerInTurn().getNextCard();
         if (card instanceof Spell) {
             view.showCardInfoSpell((Spell) card);
         } else if (card instanceof Unit) {
@@ -291,7 +322,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showHand() {
-        view.showHand(database.getCurrentBattle().getPlayerInTurn().getHand());
+        view.showHand(dataBase.getCurrentBattle().getPlayerInTurn().getHand());
     }
 
     private void showMenu() {
@@ -301,17 +332,17 @@ public class ControllerBattleCommands implements Initializable {
     private void showBattleground() {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = database.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
                 if (cell.getUnit() == null && cell.getFlags().isEmpty() && cell.getCollectable() == null) {
                     view.showCell(" ");
                     continue;
                 }
                 if (cell.getUnit() != null) {
-                    if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
+                    if (cell.getUnit().getId().split("_")[0].equals(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
                         if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                             view.showCell("H");
                         } else view.showCell("1");
-                    } else if (cell.getUnit().getId().split("_")[0].equals(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
+                    } else if (cell.getUnit().getId().split("_")[0].equals(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName())) {
                         if (cell.getUnit().getHeroOrMinion().equals(Constants.HERO)) {
                             view.showCell("h");
                         } else view.showCell("2");
@@ -333,7 +364,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void selectId() {
         String id = request.getCommand().split(" ")[1];
-        view.printOutputMessage(database.getCurrentBattle().getPlayerInTurn().select(id));
+        view.printOutputMessage(dataBase.getCurrentBattle().getPlayerInTurn().select(id));
     }
 
     private void moveTo() {
@@ -345,7 +376,7 @@ public class ControllerBattleCommands implements Initializable {
         }
         int destinationRow = Integer.parseInt(matcher.group(1));
         int destinationColumn = Integer.parseInt(matcher.group(2));
-        switch (database.getCurrentBattle().getBattleGround().
+        switch (dataBase.getCurrentBattle().getBattleGround().
                 moveUnit(destinationRow, destinationColumn)) {
             case UNIT_NOT_SELECTED:
                 view.printOutputMessage(OutputMessageType.UNIT_NOT_SELECTED);
@@ -363,7 +394,7 @@ public class ControllerBattleCommands implements Initializable {
                 view.printOutputMessage(OutputMessageType.UNIT_ALREADY_MOVED);
                 break;
             case UNIT_MOVED:
-                view.showUnitMove(database.getCurrentBattle().
+                view.showUnitMove(dataBase.getCurrentBattle().
                                 getPlayerInTurn().getSelectedUnit().getId()
                         , destinationRow, destinationColumn);
                 break;
@@ -373,7 +404,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void attackId() {
         String id = request.getCommand().split(" ")[1];
-        view.printOutputMessage(database.getCurrentBattle()
+        view.printOutputMessage(dataBase.getCurrentBattle()
                 .getPlayerInTurn().getSelectedUnit().attack(id));
     }
 
@@ -389,31 +420,31 @@ public class ControllerBattleCommands implements Initializable {
     public void useSpecialPower() {
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
-        Player player = database.getCurrentBattle().getPlayerInTurn();
-        Unit hero = database.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-        view.printOutputMessage(database.getCurrentBattle().useSpecialPower(hero, player, row, column));
+        Player player = dataBase.getCurrentBattle().getPlayerInTurn();
+        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+        view.printOutputMessage(dataBase.getCurrentBattle().useSpecialPower(hero, player, row, column));
     }
 
     public void useCollectable() {
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[2]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
-        Collectable collectable = database.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
-        view.printOutputMessage(database.getCurrentBattle().useCollectable(collectable, row, column));
+        Collectable collectable = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
+        view.printOutputMessage(dataBase.getCurrentBattle().useCollectable(collectable, row, column));
     }
 
     private void insertName() {
         String id = request.getCommand().split("[ (),]")[1];
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
-        Card card = database.getCurrentBattle().getPlayerInTurn()
+        Card card = dataBase.getCurrentBattle().getPlayerInTurn()
                 .getHand().getCardByName(id);
-        view.printOutputMessage(database.getCurrentBattle().insert(card, row, column));
+        view.printOutputMessage(dataBase.getCurrentBattle().insert(card, row, column));
     }
 
     private void forfeitGame() {
-        Account account = database.getAccountWithUsername(database.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        Account player1 = database.getAccountWithUsername(database.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account player2 = database.getAccountWithUsername(database.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        Account account = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
@@ -426,12 +457,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endGame() {
-        database.setCurrentBattle(null);
+        dataBase.setCurrentBattle(null);
         return true;
     }
 
     private boolean endTurn() throws GoToMainMenuException {
-        OutputMessageType outputMessageType = database.getCurrentBattle().nextTurn();
+        OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
         view.printOutputMessage(outputMessageType);
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
@@ -456,5 +487,9 @@ public class ControllerBattleCommands implements Initializable {
 
     public double getCellLayoutY(int row) {
         return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
+    }
+
+    public AnchorPane getBattleGroundPane() {
+        return battleGroundPane;
     }
 }

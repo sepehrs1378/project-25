@@ -20,7 +20,7 @@ public class UnitImage {
     private long attackDuration = 3000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
-    private long runDuration = 2000;
+    private long runDuration = 1000;
     private int unitViewSize = 150;
     private ImageView unitView = new ImageView();
     private Label apNumber = new Label("0");//todo relocate and reset it
@@ -114,7 +114,6 @@ public class UnitImage {
                 if (now - lastTime > runDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
-                    System.out.println(unitView.getTranslateX() + "    " + unitView.getTranslateY());
                     this.stop();
                 } else resetStatsPositions();
             }
