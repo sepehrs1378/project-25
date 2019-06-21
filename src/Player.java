@@ -119,16 +119,13 @@ public class Player {
 
     public OutputMessageType selectUnit(String id) {
         Battle currentBattle = dataBase.getCurrentBattle();
-        if (currentBattle.getBattleGround().getUnitWithID(id) == null) {
+        if (currentBattle.getBattleGround().getUnitWithID(id) == null)
             return OutputMessageType.INVALID_COLLECTABLE_CARD;
-        }
         Unit unit = currentBattle.getBattleGround().getUnitWithID(id);
-        if (currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY)) {
+        if (currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
             return OutputMessageType.ENEMY_UNIT_SELECTED;
-        }
-        if (unit.isStunned()) {
+        if (unit.isStunned())
             return OutputMessageType.UNIT_IS_STUNNED;
-        }
         selectedUnit = unit;
         return OutputMessageType.SELECTED;
     }

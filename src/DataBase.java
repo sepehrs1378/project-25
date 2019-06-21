@@ -677,7 +677,7 @@ public class DataBase {
         //10            //6
         //String descSpell10 = "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller";
         //collectableList.add(null);
-        //todo
+        //todo nefrinMarg
 
         //11            //7
         String descSpell11 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";

@@ -78,6 +78,9 @@ public enum OutputMessageType {
     COLLECTABLE_USED("Collectable used"),
     HERO_HAS_NO_SPELL("Hero has no spell"),
     ENEMY_UNIT_SELECTED(""),
+    UNIT_ATTACKED(""),
+    UNIT_AND_ENEMY_ATTACKED(""),
+    UNSELECTED(""),
     NO_ERROR("");
 
     private String message;

@@ -442,7 +442,7 @@ public class Battle {
             else player = player2;
             if (!unit.didAttackThisTurn()) {
                 for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
-                    if (unit.canAttackTarget(enemyUnit)) {
+                    if (unit.canAttackTarget(enemyUnit, false)) {
                         temp += "\n\t\t" + enemyUnit.getId();
                     }
                 }

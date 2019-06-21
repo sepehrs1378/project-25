@@ -42,32 +42,32 @@
                 <Image url="@pics/in_battle_pics/button_end_turn_mine.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="464.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="handRing1" fitHeight="123.0" fitWidth="123.0" layoutX="464.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="789.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="handRing3" fitHeight="123.0" fitWidth="123.0" layoutX="789.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="123.0" fitWidth="123.0" layoutX="627.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="handRing2" fitHeight="123.0" fitWidth="123.0" layoutX="627.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="123.0" fitWidth="127.0" layoutX="1100.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="handRing5" fitHeight="123.0" fitWidth="127.0" layoutX="1100.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="131.0" fitWidth="123.0" layoutX="946.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="handRing4" fitHeight="131.0" fitWidth="123.0" layoutX="946.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="nextCardRing" fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/nextCardRing.png" />
             </image>

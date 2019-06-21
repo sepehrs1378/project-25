@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Unit extends Card {
-    private static transient DataBase dataBase = DataBase.getInstance();
+    private static DataBase dataBase = DataBase.getInstance();
     private int hp;
     private int ap;
     private int minRange;
@@ -46,6 +46,7 @@ public class Unit extends Card {
         this.buffs.add(buff);
     }
 
+    @Override
     public Unit clone() {
         Unit cloneUnit = new Unit(getId(), getName(), getPrice(), getMana(), hp, ap, minRange, maxRange, getMainSpecialPower(), heroOrMinion, description, canUseComboAttack);
         cloneUnit.specialPowers = this.specialPowers;
@@ -76,14 +77,31 @@ public class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public void attackUnit(String targetId) {
+    public OutputMessageType attack(String targetId) {
+        if (dataBase.getCurrentBattle().getPlayerInTurn().
+                getSelectedUnit().didAttackThisTurn)
+            return OutputMessageType.ALREADY_ATTACKED;
+        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
+            return OutputMessageType.INVALID_CARD;
+        if (!isTargetUnitWithinRange(targetId))
+            return OutputMessageType.TARGET_NOT_IN_RANGE;
+        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetId);
+        this.attackUnit(targetId, false);
+        if (targetUnit.canAttackTarget(this, true)) {
+            targetUnit.attackUnit(this.getId(), true);
+            return OutputMessageType.UNIT_AND_ENEMY_ATTACKED;
+        } else return OutputMessageType.UNIT_ATTACKED;
+    }
+
+    public void attackUnit(String targetId, boolean isCounterAttack) {
         if (this.didAttackThisTurn)
             return;
         if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
             return;
         if (!isTargetUnitWithinRange(targetId))
             return;
-        this.didAttackThisTurn = true;
+        if (!isCounterAttack)
+            this.didAttackThisTurn = true;
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
                 getUnitWithID(targetId);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
@@ -95,18 +113,17 @@ public class Unit extends Card {
         }
     }
 
-    public OutputMessageType attack(String targetId) {
-        if (dataBase.getCurrentBattle().getPlayerInTurn().
-                getSelectedUnit().didAttackThisTurn)
-            return OutputMessageType.ALREADY_ATTACKED;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
-            return OutputMessageType.INVALID_CARD;
-        if (!isTargetUnitWithinRange(targetId))
-            return OutputMessageType.TARGET_NOT_IN_RANGE;
-        this.attackUnit(targetId);
-        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetId);
-        targetUnit.counterAttackUnit(this);
-        return OutputMessageType.ATTACKED_SUCCESSFULLY;
+    public boolean canAttackTarget(Unit unit, boolean isCounterAttack) {
+        if (!isCounterAttack && dataBase.getCurrentBattle().getBattleGround().
+                isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+            return false;
+        if (this.isStunned())
+            return false;
+        if (!isCounterAttack && this.didAttackThisTurn)
+            return false;
+        if (!isTargetUnitWithinRange(unit.getId()))
+            return false;
+        return true;
     }
 
     public static OutputMessageType attackCombo(String targetId, String[] attackersIds) {
@@ -120,34 +137,17 @@ public class Unit extends Card {
                 return OutputMessageType.A_UNIT_DOESNT_EXIST;
             if (!attacker.canUseComboAttack)
                 return OutputMessageType.A_UNIT_CANT_USE_COMBO;
-            if (!attacker.canAttackTarget(target))
+            if (!attacker.canAttackTarget(target, false))
                 return OutputMessageType.A_UNIT_CANT_ATTACK_TARGET;
             attackers.add(attacker);
         }
         for (Unit attacker : attackers) {
-            attacker.attackUnit(targetId);
+            attacker.attackUnit(targetId, false);
         }
         Unit targetUnit = DataBase.getInstance().getCurrentBattle()
                 .getBattleGround().getUnitWithID(targetId);
-        targetUnit.counterAttackUnit(attackers.get(0));
+        targetUnit.attackUnit(attackers.get(0).getId(), true);
         return OutputMessageType.COMBO_ATTACK_SUCCESSFUL;
-    }
-
-    public void counterAttackUnit(Unit unit) {
-        if (!this.isDisarmed() && !this.isStunned()) {
-            attackUnit(unit.getId());
-        }
-    }
-
-    public boolean canAttackTarget(Unit unit) {
-        if (dataBase.getCurrentBattle().getBattleGround()
-                .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
-            return false;
-        if (this.isStunned())
-            return false;
-        if (this.didAttackThisTurn)
-            return false;
-        return isTargetUnitWithinRange(unit.getId());
     }
 
     private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
@@ -156,9 +156,8 @@ public class Unit extends Card {
             return 0;
         if (this.isImmuneTo(Constants.HOLY_BUFF))
             return attackerUnit.ap + targetedUnit.getNegativeArmor();
-        else
-            return attackerUnit.ap - targetedUnit.getPositiveArmor()
-                    + targetedUnit.getNegativeArmor();
+        else return attackerUnit.ap - targetedUnit.getPositiveArmor()
+                + targetedUnit.getNegativeArmor();
     }
 
     public List<Flag> getFlags() {

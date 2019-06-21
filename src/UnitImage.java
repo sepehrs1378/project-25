@@ -80,6 +80,10 @@ public class UnitImage {
         unitView.setStyle(selectedStyle);
     }
 
+    public void setStyleAsNotSelected() {
+        unitView.setStyle(null);
+    }
+
     public String getUnitName() {
         return id.split("_")[1];
     }
@@ -91,8 +95,7 @@ public class UnitImage {
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
-        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow)
-                + GraphicConstants.CELL_HEIGHT / 2.0;
+        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow);
 
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
         path.setVisible(false);
@@ -198,8 +201,10 @@ public class UnitImage {
     }
 
     public void setInCell(int row, int column) {
-        relocate(ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
-                , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
+        double x = ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
+                + GraphicConstants.CELL_WIDTH / 2 - unitViewSize / 2;
+        double y = ControllerBattleCommands.getOurInstance().getCellLayoutY(row) - unitViewSize / 2;
+        relocate(x, y);
     }
 
     public void relocate(double x, double y) {
@@ -208,7 +213,8 @@ public class UnitImage {
         resetStatsPositions();
     }
 
-    public void setInHand(int ringNumber) {
+    public void setInHand(int placeNumber) {
         //todo
+        resetStatsPositions();
     }
 }

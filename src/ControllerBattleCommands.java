@@ -18,8 +18,11 @@ public class ControllerBattleCommands implements Initializable {
     private static ControllerBattleCommands ourInstance;
     private Request request = Request.getInstance();
     private List<UnitImage> unitImageList = new ArrayList<>();
+    private List<ImageView> handRings = new ArrayList<>();
     private View view = View.getInstance();
     private Label[][] battleGroundCells = new Label[5][9];
+
+    //todo fix units facings
 
     @FXML
     private ImageView endTurnMineBtn;
@@ -41,10 +44,27 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     @FXML
+    private ImageView handRing1;
+
+    @FXML
+    private ImageView handRing2;
+
+    @FXML
+    private ImageView handRing3;
+
+    @FXML
+    private ImageView handRing4;
+
+    @FXML
+    private ImageView handRing5;
+
+    @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
-//        endTurn(); todo
-        endTurnMineBtn.setVisible(false);
-        endTurnEnemyBtn.setVisible(true);
+        //todo
+//        endTurn();
+        endTurn();
+//        endTurnMineBtn.setVisible(false);
+//        endTurnEnemyBtn.setVisible(true);
     }
 
     public static ControllerBattleCommands getOurInstance() {
@@ -111,9 +131,9 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case UNIT_MOVED:
-                Player currentPlayer=dataBase.getCurrentBattle().getPlayerInTurn();
-                UnitImage movedUnitImage=getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-                movedUnitImage.showRun(row,column,battleGroundPane);
+                Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+                UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+                movedUnitImage.showRun(row, column, battleGroundPane);
                 break;
             default:
         }
@@ -128,7 +148,7 @@ public class ControllerBattleCommands implements Initializable {
                     unitImage.setUnitStyleAsSelected();
                     break;
                 case ENEMY_UNIT_SELECTED:
-                    //empty;
+                    //empty
                     break;
                 case INVALID_COLLECTABLE_CARD:
                     //empty
@@ -140,6 +160,30 @@ public class ControllerBattleCommands implements Initializable {
                     System.out.println("unhandled case !!!!!!!!");
             }
         }
+        if (currentPlayer.getSelectedUnit() != null) {
+            UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+            //todo add this feature to unselect a unit with clicking on it if needed
+            switch (currentPlayer.getSelectedUnit().attack(id)) {
+                case UNIT_ATTACKED:
+                    selectedUnitImage.showAttack();
+                    break;
+                case UNIT_AND_ENEMY_ATTACKED:
+                    UnitImage targetedUnitImage = getUnitImageWithId(id);
+                    selectedUnitImage.showAttack();
+                    targetedUnitImage.showAttack();
+                    break;
+                case ALREADY_ATTACKED:
+                    //empty
+                    break;
+                case INVALID_CARD:
+                    //empty
+                    break;
+                case TARGET_NOT_IN_RANGE:
+                    //empty
+                    break;
+                default:
+            }
+        }
     }
 
     @Override
@@ -147,7 +191,26 @@ public class ControllerBattleCommands implements Initializable {
         startTempBattle();//todo remove it later
         setupBattleGroundCells(battleGroundPane);
         setupHeroesImages(battleGroundPane);
+        setupPlayerInfoViews(battleGroundPane);
+        setupHandRings();
         Main.window.setScene(new Scene(battleGroundPane));
+    }
+
+    public List<ImageView> getHandRings() {
+        return handRings;
+    }
+
+    private void setupHandRings() {
+        handRings.add(handRing1);
+        handRings.add(handRing2);
+        handRings.add(handRing3);
+        handRings.add(handRing4);
+        handRings.add(handRing5);
+    }
+
+    private void setupPlayerInfoViews(AnchorPane root) {
+        PlayerInfoView player1InfoView = new PlayerInfoView(1);
+        PlayerInfoView player2InfoView = new PlayerInfoView(2);
     }
 
     private Label setLabelStyle(Label label) {
