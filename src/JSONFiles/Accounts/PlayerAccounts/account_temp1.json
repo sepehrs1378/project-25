@@ -1071,12 +1071,951 @@
             "name": "deck"
           }
         ],
-        "cards": [],
+        "cards": [
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_1",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": "@root.playerInfo.collection.cards.0.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_2",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": "@root.playerInfo.collection.cards.0.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_3",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 4,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [
+                  "hero"
+                ],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 2147483647,
+                "length": 2147483647,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                null
+              ],
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Hero - adds 4 ap",
+              "isDispeller": false,
+              "id": "temp1_godStrength_1",
+              "name": "godStrength",
+              "price": 450,
+              "mana": 2
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 4,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": "@root.playerInfo.collection.cards.3.target",
+              "addedSpells": [],
+              "addedBuffs": "@root.playerInfo.collection.cards.3.addedBuffs",
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Hero - adds 4 ap",
+              "isDispeller": false,
+              "id": "temp1_godStrength_2",
+              "name": "godStrength",
+              "price": 450,
+              "mana": 2
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 4,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": "@root.playerInfo.collection.cards.3.target",
+              "addedSpells": [],
+              "addedBuffs": "@root.playerInfo.collection.cards.3.addedBuffs",
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Hero - adds 4 ap",
+              "isDispeller": false,
+              "id": "temp1_godStrength_3",
+              "name": "godStrength",
+              "price": 450,
+              "mana": 2
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 4,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": "@root.playerInfo.collection.cards.3.target",
+              "addedSpells": [],
+              "addedBuffs": "@root.playerInfo.collection.cards.3.addedBuffs",
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Hero - adds 4 ap",
+              "isDispeller": false,
+              "id": "temp1_godStrength_4",
+              "name": "godStrength",
+              "price": 450,
+              "mana": 2
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 4,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": "@root.playerInfo.collection.cards.3.target",
+              "addedSpells": [],
+              "addedBuffs": "@root.playerInfo.collection.cards.3.addedBuffs",
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Hero - adds 4 ap",
+              "isDispeller": false,
+              "id": "temp1_godStrength_5",
+              "name": "godStrength",
+              "price": 450,
+              "mana": 2
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 9,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": -16,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "enemy"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 2147483647,
+                    "length": 2147483647,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": true,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    null
+                  ],
+                  "activationType": "ON_SPAWN",
+                  "description": "Contains : WeaknessBuff - Spell Activation Type : on spawn - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_bahman_1",
+              "name": "bahman",
+              "price": 450,
+              "mana": 8
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 9,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.8.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_bahman_2",
+              "name": "bahman",
+              "price": 450,
+              "mana": 8
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 9,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.8.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_bahman_3",
+              "name": "bahman",
+              "price": 450,
+              "mana": 8
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 9,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.8.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_bahman_4",
+              "name": "bahman",
+              "price": 450,
+              "mana": 8
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 9,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.8.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 8 - hp : 16 - ap : 9 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_bahman_5",
+              "name": "bahman",
+              "price": 450,
+              "mana": 8
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "friend"
+                    ],
+                    "targetUnitClass": [
+                      "ranged"
+                    ],
+                    "width": 1,
+                    "length": 1,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": true
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "ImmunityBuff",
+                      "@val": {
+                        "immunity": "enemy card spell",
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 2147483647,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_DEFEND",
+                  "description": "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_1",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_2",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_3",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_4",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_5",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_6",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_7",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_8",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 7,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": "@root.playerInfo.collection.cards.13.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_giv_9",
+              "name": "giv",
+              "price": 450,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": "@root.playerInfo.collection.cards.0.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_4",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": "@root.playerInfo.collection.cards.0.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_5",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 20,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": "@root.playerInfo.collection.cards.0.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 500 - mana : 4 - hp : 6 - ap : 20 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_iraj_6",
+              "name": "iraj",
+              "price": 500,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 12,
+              "ap": 12,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_ghoolSangAndaz_1",
+              "name": "ghoolSangAndaz",
+              "price": 300,
+              "mana": 9
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 12,
+              "ap": 12,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": "@root.playerInfo.collection.cards.25.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_ghoolSangAndaz_2",
+              "name": "ghoolSangAndaz",
+              "price": 300,
+              "mana": 9
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 12,
+              "ap": 12,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": "@root.playerInfo.collection.cards.25.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_ghoolSangAndaz_3",
+              "name": "ghoolSangAndaz",
+              "price": 300,
+              "mana": 9
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 12,
+              "ap": 12,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": "@root.playerInfo.collection.cards.25.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 300 - mana : 9 - hp : 12 - ap : 12 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_ghoolSangAndaz_4",
+              "name": "ghoolSangAndaz",
+              "price": 300,
+              "mana": 9
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 6,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "hero",
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "enemy"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 1,
+                    "length": 1,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "DisarmBuff",
+                      "@val": {
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    },
+                    {
+                      "@type": "PoisonBuff",
+                      "@val": {
+                        "damagePerTurn": 1,
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 4,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_ATTACK",
+                  "description": "Contains : PoisonBuff and StunBuff - Spell Activation Type : on attack - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_jasoosToorani_1",
+              "name": "jasoosToorani",
+              "price": 700,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 6,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.29.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_jasoosToorani_2",
+              "name": "jasoosToorani",
+              "price": 700,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 6,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.29.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_jasoosToorani_3",
+              "name": "jasoosToorani",
+              "price": 700,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 6,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.29.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_jasoosToorani_4",
+              "name": "jasoosToorani",
+              "price": 700,
+              "mana": 4
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 6,
+              "minRange": 2,
+              "maxRange": 5,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "friend"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 3,
+                    "length": 3,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "PowerBuff",
+                      "@val": {
+                        "apPlus": 2,
+                        "hpPlus": 0,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    },
+                    {
+                      "@type": "HolyBuff",
+                      "@val": {
+                        "armor": 1,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "isDispellable": true,
+                        "isContinuous": true,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "PASSIVE",
+                  "description": "Contains : PowerBuf and HolyBuff - Spell Activation Type : passive - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 550 - mana : 6 - hp : 6 - ap : 6 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_jadoogarAzam_1",
+              "name": "jadoogarAzam",
+              "price": 550,
+              "mana": 6
+            }
+          }
+        ],
         "items": []
       }
     },
-    "matchList": [],
+    "matchList": [
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1561059944194,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      }
+    ],
     "mainDeck": "@root.playerInfo.collection.decks.0",
-    "money": 1000000
+    "money": 983900
   }
 }
