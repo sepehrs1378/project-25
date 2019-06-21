@@ -70,6 +70,11 @@ public class ControllerSinglePlayerMenu implements Initializable{
     @FXML
     private Label invalidNumberLabel;
 
+    @FXML
+    private ImageView singleDisabledImage;
+
+    @FXML
+    private ImageView disabledBackGround;
 
     @FXML
     void enterLevel1(MouseEvent event) throws IOException {
@@ -256,6 +261,12 @@ public class ControllerSinglePlayerMenu implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        level1Btn.setDisable(false);
+        selectModeBox.setDisable(false);
+        selectDeckBox.setDisable(false);
+        playBtn.setDisable(false);
+        singleDisabledImage.setVisible(false);
+        disabledBackGround.setVisible(false);
         if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
             level2Btn.setDisable(false);
         }
@@ -263,7 +274,6 @@ public class ControllerSinglePlayerMenu implements Initializable{
             level3Btn.setDisable(false);
         }
         ObservableList<String> deckList = FXCollections.observableArrayList();
-        System.out.println(database.getLoggedInAccount().getValidDecks());
         for (int i = 0; i < database.getLoggedInAccount().getValidDecks().size(); i++) {
             deckList.add(database.getLoggedInAccount().getValidDecks().get(i).getName());
         }
@@ -273,6 +283,16 @@ public class ControllerSinglePlayerMenu implements Initializable{
         modeList.add(Constants.ONE_FLAG);
         modeList.add(Constants.FLAGS);
         selectModeBox.setItems(modeList);
+        if (database.getLoggedInAccount().getMainDeck() == null || !database.getLoggedInAccount().getMainDeck().isValid()){
+            level1Btn.setDisable(true);
+            level2Btn.setDisable(true);
+            level3Btn.setDisable(true);
+            selectModeBox.setDisable(true);
+            selectDeckBox.setDisable(true);
+            playBtn.setDisable(true);
+            singleDisabledImage.setVisible(true);
+            disabledBackGround.setVisible(true);
+        }
     }
 
     @FXML

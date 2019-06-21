@@ -107,6 +107,7 @@ public class ControllerShop {
     void goBack(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
+        Main.setCursor();
     }
 
     @FXML

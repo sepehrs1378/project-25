@@ -50,11 +50,6 @@
             <Image url="@pics/single_player_menu_pics/single_player_custom_background.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="closeBtn" fitHeight="49.0" fitWidth="52.0" layoutX="837.0" layoutY="4.0" onMouseClicked="#closeSinglePlayerMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" opacity="0.6">
-         <image>
-            <Image url="@pics/close_button.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="593.0" fitWidth="405.0" layoutX="14.0" layoutY="28.0">
          <image>
             <Image url="@pics/story_section.png" />
@@ -128,5 +123,20 @@
          </font>
       </Label>
       <Label fx:id="invalidNumberLabel" layoutX="525.0" layoutY="521.0" prefHeight="21.0" prefWidth="289.0" textFill="RED" />
+      <ImageView fx:id="disabledBackGround" fitHeight="656.0" fitWidth="891.0" layoutY="-2.0">
+         <image>
+            <Image url="@pics/single_player_menu_pics/single_player_disabled_background.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="singleDisabledImage" fitHeight="173.0" fitWidth="689.0" layoutX="26.0" layoutY="227.0">
+         <image>
+            <Image url="@pics/single_player_menu_pics/main_deck_doesn't_exist.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeBtn" fitHeight="49.0" fitWidth="52.0" layoutX="837.0" layoutY="4.0" onMouseClicked="#closeSinglePlayerMenu" onMouseEntered="#makeCloseBtnOpaque" onMouseExited="#makeCloseBtnTransparent" opacity="0.6">
+         <image>
+            <Image url="@pics/close_button.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
