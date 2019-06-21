@@ -3,15 +3,17 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -35,6 +37,24 @@ public class Main extends Application {
 
     @FXML
     private JFXPasswordField password;
+
+    @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    void close(MouseEvent event) {
+        Main.window.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
     void makeSignUpOpaque(MouseEvent event) {
@@ -68,6 +88,13 @@ public class Main extends Application {
         dataBase.addAccount(account);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         window.setScene(new Scene(root));
+        setCursor();
+    }
+
+    public static void setCursor() {
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        window.getScene().setCursor(new ImageCursor(image));
     }
 
     @FXML
@@ -85,6 +112,7 @@ public class Main extends Application {
         dataBase.setLoggedInAccount(dataBase.getAccounts().get(index));
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         window.setScene(new Scene(root));
+        setCursor();
     }
 
     private boolean emptyInvalidUsername() {
@@ -129,6 +157,9 @@ public class Main extends Application {
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        primaryStage.getScene().setCursor(new ImageCursor(image));
         primaryStage.setOnCloseRequest(e->{
             DataBase.getInstance().saveAccounts();
             primaryStage.close();
