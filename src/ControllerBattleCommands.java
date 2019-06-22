@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -22,8 +23,10 @@ public class ControllerBattleCommands implements Initializable {
     private static ControllerBattleCommands ourInstance;
     private View view = View.getInstance();
     private Request request = Request.getInstance();
-    private List<UnitImage> unitImageList = new ArrayList<>();
+    private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
+    private List<UnitImage> unitImageList = new ArrayList<>();
+    private List<HandImage> handImageList = new ArrayList<>();
     private Label[][] battleGroundCells = new Label[5][9];
     private ImageView clickedImageView = new ImageView();
 
@@ -69,7 +72,6 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
-//        endTurn();
         endTurn();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
@@ -77,19 +79,24 @@ public class ControllerBattleCommands implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         startTempBattle();//todo remove it later
         setupHandRings();
         setupBattleGroundCells(battleGroundPane);
         setupHeroesImages(battleGroundPane);
         setupPlayerInfoViews(battleGroundPane);
+        setupCursor();
+        Main.window.setScene(new Scene(battleGroundPane));
+        updatePane();
+    }
+
+    private void setupCursor() {
         try {
             ImageCursor cursor = new ImageCursor(new Image(new FileInputStream("./src/pics/mouse_icon")));
             battleGroundPane.setCursor(cursor);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.window.setScene(new Scene(battleGroundPane));
-        updatePane();
     }
 
     public static ControllerBattleCommands getOurInstance() {
@@ -217,12 +224,25 @@ public class ControllerBattleCommands implements Initializable {
         return handRings;
     }
 
+    public boolean doesHandHaveCard(String id) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getUnitImage().getId().equals(id))
+                return true;
+        }
+        return false;
+    }
+
     private void setupHandRings() {
         handRings.add(handRing1);
         handRings.add(handRing2);
         handRings.add(handRing3);
         handRings.add(handRing4);
         handRings.add(handRing5);
+        handImageList.add(new HandImage(0, getBattleGroundPane()));
+        handImageList.add(new HandImage(1, getBattleGroundPane()));
+        handImageList.add(new HandImage(2, getBattleGroundPane()));
+        handImageList.add(new HandImage(3, getBattleGroundPane()));
+        handImageList.add(new HandImage(4, getBattleGroundPane()));
     }
 
     private void setupPlayerInfoViews(AnchorPane root) {
@@ -254,12 +274,15 @@ public class ControllerBattleCommands implements Initializable {
     public void updatePane() {
         for (UnitImage unitImage : unitImageList) {
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-            Unit unit=battleGround.getUnitWithID(unitImage.getId());
+            Unit unit = battleGround.getUnitWithID(unitImage.getId());
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
             if (unitImage.getUnitView().equals(clickedImageView))
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
+        }
+        for (Card card : loggedInPlayer.getHand().getCards()) {
+
         }
     }
 

@@ -16,7 +16,8 @@ public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
     private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
-    private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
+    private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
+    private AnchorPane root;
     private long attackDuration = 2000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
@@ -29,6 +30,7 @@ public class UnitImage {
     private Label hpNumber = new Label("0");//todo
     private String id;
     private UnitStatus unitStatus;
+
     {
         apNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #fff700;-fx-background-radius: 100;-fx-font-size: 18");
         hpNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #ff0003;-fx-background-radius: 100;-fx-font-size: 18");
@@ -37,6 +39,7 @@ public class UnitImage {
     }
 
     public UnitImage(String id, AnchorPane root) {
+        this.root = root;
         this.id = id;
         unitStatus = UnitStatus.stand;
         loadUnitImage();
@@ -52,7 +55,7 @@ public class UnitImage {
                 unitView.setStyle(mouseExitedStyle);
         });
         resetStatsPositions();
-        addToRoot(root);
+        addToRoot();
         //todo
     }
 
@@ -189,7 +192,7 @@ public class UnitImage {
         animationTimer.start();
     }
 
-    private void addToRoot(AnchorPane root) {
+    private void addToRoot() {
         root.getChildren().add(unitView);
         root.getChildren().add(apNumber);
         root.getChildren().add(hpNumber);
