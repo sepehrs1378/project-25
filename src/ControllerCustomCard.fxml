@@ -45,9 +45,12 @@
             <Image url="@pics/custom_card_menu/create_button_minion.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="minionHptxt" alignment="CENTER" layoutX="322.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#5e5d5d" />
-      <JFXTextField fx:id="minionAptxt" alignment="CENTER" layoutX="148.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#5e5d5d" />
-      <JFXTextField fx:id="heroAPtxt" alignment="CENTER" layoutX="540.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#5e5d5d" />
-      <JFXTextField fx:id="heroHPtxt" alignment="CENTER" layoutX="701.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#5e5d5d" />
+      <JFXTextField fx:id="minionHptxt" alignment="CENTER" layoutX="322.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="minionAptxt" alignment="CENTER" layoutX="148.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroAPtxt" alignment="CENTER" layoutX="540.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroHPtxt" alignment="CENTER" layoutX="701.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="minionName" alignment="CENTER" layoutX="177.0" layoutY="444.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroName" alignment="CENTER" layoutX="563.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="spellName" alignment="CENTER" layoutX="970.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
    </children>
 </AnchorPane>
