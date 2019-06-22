@@ -17,17 +17,18 @@ public class UnitImage {
     private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
     private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
-    private long attackDuration = 3000;
+    private long attackDuration = 2000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
     private long runDuration = 1000;
     private int unitViewSize = 150;
+
     private ImageView unitView = new ImageView();
+
     private Label apNumber = new Label("0");//todo relocate and reset it
     private Label hpNumber = new Label("0");//todo
     private String id;
     private UnitStatus unitStatus;
-
     {
         apNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #fff700;-fx-background-radius: 100;-fx-font-size: 18");
         hpNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #ff0003;-fx-background-radius: 100;-fx-font-size: 18");
@@ -38,13 +39,7 @@ public class UnitImage {
     public UnitImage(String id, AnchorPane root) {
         this.id = id;
         unitStatus = UnitStatus.stand;
-        try {
-            unitView.setImage(new Image(new FileInputStream
-                    ("./src/ApProjectResources/units/" + getUnitName()
-                            + "/" + unitStatus.toString())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadUnitImage();
         unitView.setOnMouseClicked(event -> {
             ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
         });
@@ -59,6 +54,21 @@ public class UnitImage {
         resetStatsPositions();
         addToRoot(root);
         //todo
+    }
+
+    public void setId(String id) {
+        this.id = id;
+        loadUnitImage();
+    }
+
+    private void loadUnitImage() {
+        try {
+            unitView.setImage(new Image(new FileInputStream
+                    ("./src/ApProjectResources/units/" + getUnitName()
+                            + "/" + unitStatus.toString())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getId() {
@@ -192,11 +202,11 @@ public class UnitImage {
         apNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
     }
 
-    public void changeApNumber(int apNumber) {
+    public void setApNumber(int apNumber) {
         this.apNumber.setText(" " + apNumber + " ");
     }
 
-    public void changeHpNumber(int hpNumber) {
+    public void setHpNumber(int hpNumber) {
         this.hpNumber.setText(" " + hpNumber + " ");
     }
 
@@ -213,8 +223,23 @@ public class UnitImage {
         resetStatsPositions();
     }
 
-    public void setInHand(int placeNumber) {
-        //todo
+    public void setInHand(int ringNumber) {
+        ImageView handRing = ControllerBattleCommands.getOurInstance().getHandRings().get(ringNumber);
+        double x = handRing.getLayoutX() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.5;
+        double y = handRing.getLayoutY() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.75;
+        relocate(x, y);
         resetStatsPositions();
+    }
+
+    public void setInNextCard() {
+        ImageView nextCardRing = ControllerBattleCommands.getOurInstance().getNextCardRing();
+        double x = nextCardRing.getLayoutX() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.5;
+        double y = nextCardRing.getLayoutY() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.75;
+        relocate(x, y);
+        resetStatsPositions();
+    }
+
+    public ImageView getUnitView() {
+        return unitView;
     }
 }

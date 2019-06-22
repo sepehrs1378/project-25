@@ -1,11 +1,15 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,12 @@ import java.util.regex.Pattern;
 public class ControllerBattleCommands implements Initializable {
     private static DataBase dataBase = DataBase.getInstance();
     private static ControllerBattleCommands ourInstance;
+    private View view = View.getInstance();
     private Request request = Request.getInstance();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<ImageView> handRings = new ArrayList<>();
-    private View view = View.getInstance();
     private Label[][] battleGroundCells = new Label[5][9];
+    private ImageView clickedImageView = new ImageView();
 
     //todo fix units facings
 
@@ -59,12 +64,32 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView handRing5;
 
     @FXML
+    private ImageView nextCardRing;
+
+    @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
 //        endTurn();
         endTurn();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        startTempBattle();//todo remove it later
+        setupHandRings();
+        setupBattleGroundCells(battleGroundPane);
+        setupHeroesImages(battleGroundPane);
+        setupPlayerInfoViews(battleGroundPane);
+        try {
+            ImageCursor cursor = new ImageCursor(new Image(new FileInputStream("./src/pics/mouse_icon")));
+            battleGroundPane.setCursor(cursor);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Main.window.setScene(new Scene(battleGroundPane));
+        updatePane();
     }
 
     public static ControllerBattleCommands getOurInstance() {
@@ -97,8 +122,7 @@ public class ControllerBattleCommands implements Initializable {
             for (int column = 0; column < 9; column++) {
                 battleGroundCells[row][column] = setLabelStyle(new Label());
                 battleGroundCells[row][column].relocate
-                        (getCellLayoutX(column)
-                                , getCellLayoutY(row));
+                        (getCellLayoutX(column), getCellLayoutY(row));
                 battleGroundCells[row][column].setMinWidth(63);
                 battleGroundCells[row][column].setMinHeight(50);
                 root.getChildren().add(battleGroundCells[row][column]);
@@ -137,6 +161,7 @@ public class ControllerBattleCommands implements Initializable {
                 break;
             default:
         }
+        updatePane();
     }
 
     public void handleUnitClicked(String id) {
@@ -146,6 +171,7 @@ public class ControllerBattleCommands implements Initializable {
             switch (currentPlayer.selectUnit(id)) {
                 case SELECTED:
                     unitImage.setUnitStyleAsSelected();
+                    clickedImageView = unitImage.getUnitView();
                     break;
                 case ENEMY_UNIT_SELECTED:
                     //empty
@@ -184,16 +210,7 @@ public class ControllerBattleCommands implements Initializable {
                 default:
             }
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        startTempBattle();//todo remove it later
-        setupBattleGroundCells(battleGroundPane);
-        setupHeroesImages(battleGroundPane);
-        setupPlayerInfoViews(battleGroundPane);
-        setupHandRings();
-        Main.window.setScene(new Scene(battleGroundPane));
+        updatePane();
     }
 
     public List<ImageView> getHandRings() {
@@ -232,6 +249,18 @@ public class ControllerBattleCommands implements Initializable {
                 return unitImage;
         }
         return null;
+    }
+
+    public void updatePane() {
+        for (UnitImage unitImage : unitImageList) {
+            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            Unit unit=battleGround.getUnitWithID(unitImage.getId());
+            unitImage.setApNumber(unit.getAp());
+            unitImage.setHpNumber(unit.getHp());
+            if (unitImage.getUnitView().equals(clickedImageView))
+                unitImage.setUnitStyleAsSelected();
+            else unitImage.setStyleAsNotSelected();
+        }
     }
 
     public void main() throws GoToMainMenuException {
@@ -554,5 +583,9 @@ public class ControllerBattleCommands implements Initializable {
 
     public AnchorPane getBattleGroundPane() {
         return battleGroundPane;
+    }
+
+    public ImageView getNextCardRing() {
+        return nextCardRing;
     }
 }

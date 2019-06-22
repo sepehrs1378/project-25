@@ -67,7 +67,7 @@
                 <Image url="@ApProjectResources/battleGroundUI/cardRing.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="nextCardRing" fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="nextCardRing" fitHeight="157.0" fitWidth="151.0" layoutX="110.0" layoutY="664.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@ApProjectResources/battleGroundUI/nextCardRing.png" />
             </image>

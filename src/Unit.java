@@ -100,8 +100,10 @@ public class Unit extends Card {
             return;
         if (!isTargetUnitWithinRange(targetId))
             return;
-        if (!isCounterAttack)
+        if (!isCounterAttack) {
             this.didAttackThisTurn = true;
+            this.didMoveThisTurn = true;
+        }
         Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
                 getUnitWithID(targetId);
         int damageDealt = calculateDamageDealt(this, targetedUnit);
