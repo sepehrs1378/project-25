@@ -52,5 +52,19 @@
       <JFXTextField fx:id="minionName" alignment="CENTER" layoutX="177.0" layoutY="444.0" promptText="name" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="heroName" alignment="CENTER" layoutX="563.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="spellName" alignment="CENTER" layoutX="970.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="minionAttackTypeBox" layoutX="199.0" layoutY="483.0" onAction="#minionComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="heroAttackTypeBox" layoutX="584.0" layoutY="483.0" onAction="#heroComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
+      <ImageView fx:id="maxRangeMinion" fitHeight="55.0" fitWidth="62.0" layoutX="342.0" layoutY="471.0">
+         <image>
+            <Image url="@pics/custom_card_menu/signature_card_ring_small.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="maxRangeHero" fitHeight="55.0" fitWidth="62.0" layoutX="721.0" layoutY="471.0">
+         <image>
+            <Image url="@pics/custom_card_menu/signature_card_ring_small.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="minionRangetxt" alignment="CENTER" layoutX="350.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroRangetxt" alignment="CENTER" layoutX="729.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
    </children>
 </AnchorPane>
