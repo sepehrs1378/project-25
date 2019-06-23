@@ -1316,7 +1316,7 @@ public class DataBase {
         }
     }
 
-    public static void loadGame(String address) {
+    public void loadGame(String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         if (!address.endsWith(".json")) {
             System.out.println("selected file is not a json file");
@@ -1335,5 +1335,50 @@ public class DataBase {
             System.out.println("invalid file, selected file is not a saved battle");
         }
 
+    }
+
+    public String importDeck(String address){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        if (!address.endsWith(".json")) {
+            return "selected file is not a json file";
+
+        }
+        FileReader reader = null;
+        try {
+            reader = new FileReader(new File(address));
+            Deck deck = yaGson.fromJson(reader, Deck.class);
+            loggedInAccount.getPlayerInfo().getCollection().getDecks().add(deck);
+            return "deck imported successfully!";
+        } catch (FileNotFoundException e) {
+            //todo show this message in correct place
+            return "file not found";
+        } catch (ClassCastException e) {
+            return "invalid file, selected file is not a saved battle";
+        }
+    }
+
+    public void exportDeck(Deck deck){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Decks");
+        String[] fileNames = folder.list();
+        String fileName = "deck_" + deck.getName() + "_";
+        int numberOfDecks=0;
+        if (fileNames != null) {
+            for (String name : fileNames) {
+                if (name.contains(fileName)) {
+                    numberOfDecks=numberOfDecks+1;
+                }
+            }
+        }
+        fileName += numberOfDecks;
+        fileName += ".json";
+        try {
+            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Decks/" + fileName));
+            yaGson.toJson(deck, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
