@@ -66,5 +66,12 @@
       </ImageView>
       <JFXTextField fx:id="minionRangetxt" alignment="CENTER" layoutX="350.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="heroRangetxt" alignment="CENTER" layoutX="729.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
+      <JFXButton fx:id="minionAddSpecialbtn" layoutX="187.0" layoutY="270.0" onAction="#minioinEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
+      <JFXButton fx:id="heroAddSpecialbtn" layoutX="572.0" layoutY="270.0" onAction="#heroEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
+      <JFXComboBox fx:id="activationTypecombox" layoutX="198.0" layoutY="303.0" prefHeight="25.0" prefWidth="128.0" promptText="activation type" />
+      <JFXTextField fx:id="activationCoolDown" layoutX="563.0" layoutY="303.0" promptText="activation cool down" />
+      <JFXTextField fx:id="minionCosttxt" alignment="CENTER" layoutX="181.0" layoutY="219.0" promptText="cost" />
+      <JFXTextField fx:id="heroCosttxt" alignment="CENTER" layoutX="562.0" layoutY="219.0" promptText="cost" />
+      <JFXTextField fx:id="spellCosttxt" alignment="CENTER" layoutX="969.0" layoutY="219.0" promptText="cost" />
    </children>
 </AnchorPane>

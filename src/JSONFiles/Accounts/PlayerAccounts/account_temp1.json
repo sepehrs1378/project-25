@@ -125,6 +125,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 2147483647,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -137,6 +138,7 @@
                         "positiveOrNegative": "positive",
                         "startTurn": 0,
                         "durationTurn": 3,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -177,6 +179,7 @@
                         "damagePerTurn": 1,
                         "startTurn": 0,
                         "durationTurn": 2,
+                        "delayTurn": 0,
                         "isDispellable": false,
                         "isContinuous": false,
                         "isDead": false
@@ -246,6 +249,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 2,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -296,6 +300,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 2147483647,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -375,6 +380,7 @@
                             "positiveOrNegative": "positive",
                             "startTurn": 0,
                             "durationTurn": 2147483647,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": true,
                             "isDead": false
@@ -511,6 +517,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": false,
                             "isDead": false
@@ -582,6 +589,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 2,
+                            "delayTurn": 0,
                             "isDispellable": false,
                             "isContinuous": true,
                             "isDead": false
@@ -651,6 +659,7 @@
                             "positiveOrNegative": "positive",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": false,
                             "isDead": false
@@ -664,6 +673,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": false,
                             "isDead": false
@@ -733,6 +743,7 @@
                             "positiveOrNegative": "positive",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": false,
                             "isDead": false
@@ -745,6 +756,7 @@
                             "positiveOrNegative": "positive",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": true,
                             "isDead": false
@@ -813,6 +825,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 2147483647,
+                            "delayTurn": 0,
                             "isDispellable": false,
                             "isContinuous": true,
                             "isDead": false
@@ -881,6 +894,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": true,
                             "isContinuous": false,
                             "isDead": false
@@ -973,6 +987,7 @@
                             "positiveOrNegative": "negative",
                             "startTurn": 0,
                             "durationTurn": 1,
+                            "delayTurn": 0,
                             "isDispellable": false,
                             "isContinuous": false,
                             "isDead": false
@@ -1041,6 +1056,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 3,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -1430,6 +1446,7 @@
                         "positiveOrNegative": "positive",
                         "startTurn": 0,
                         "durationTurn": 2147483647,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -1815,6 +1832,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 1,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -1827,6 +1845,7 @@
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 4,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -1959,6 +1978,7 @@
                         "positiveOrNegative": "positive",
                         "startTurn": 0,
                         "durationTurn": 1,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": false,
                         "isDead": false
@@ -1971,6 +1991,7 @@
                         "positiveOrNegative": "positive",
                         "startTurn": 0,
                         "durationTurn": 1,
+                        "delayTurn": 0,
                         "isDispellable": true,
                         "isContinuous": true,
                         "isDead": false

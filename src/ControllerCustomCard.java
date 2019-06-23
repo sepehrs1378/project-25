@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -12,45 +13,66 @@ import java.util.ResourceBundle;
 
 public class ControllerCustomCard implements Initializable {
     private ObservableList<String> modeList = FXCollections.observableArrayList();
-    @FXML
-    private JFXComboBox<String> heroAttackTypeBox;
-
-    @FXML
-    private JFXComboBox<String> minionAttackTypeBox;
 
     @FXML
     private JFXTextField minionName;
 
     @FXML
+    private JFXTextField minionCosttxt;
+
+    @FXML
     private JFXTextField minionHptxt;
-
-    @FXML
-    private JFXTextField heroAPtxt;
-
-    @FXML
-    private JFXTextField spellName;
-
-    @FXML
-    private JFXTextField heroName;
-
-    @FXML
-    private JFXTextField heroHPtxt;
-
-    @FXML
-    private JFXTextField minionAptxt;
-
-    @FXML
-    private JFXTextField minionRangetxt;
 
     @FXML
     private ImageView maxRangeHero;
 
     @FXML
+    private JFXTextField heroAPtxt;
+
+    @FXML
+    private JFXButton heroAddSpecialbtn;
+
+    @FXML
+    private JFXTextField spellName;
+
+    @FXML
     private ImageView maxRangeMinion;
+
+    @FXML
+    private JFXTextField minionRangetxt;
+
+    @FXML
+    private JFXTextField spellCosttxt;
+
+    @FXML
+    private JFXComboBox<String> activationTypecombox;
+
+    @FXML
+    private JFXComboBox<String> heroAttackTypeBox;
+
+    @FXML
+    private JFXTextField activationCoolDown;
+
+    @FXML
+    private JFXButton minionAddSpecialbtn;
+
+    @FXML
+    private JFXTextField heroName;
+
+    @FXML
+    private JFXComboBox<String> minionAttackTypeBox;
+
+    @FXML
+    private JFXTextField heroCosttxt;
+
+    @FXML
+    private JFXTextField heroHPtxt;
 
     @FXML
     private JFXTextField heroRangetxt;
 
+    @FXML
+    private JFXTextField minionAptxt;
     @FXML
     void minionComboOnAction(ActionEvent event) {
 
@@ -99,6 +121,16 @@ public class ControllerCustomCard implements Initializable {
         }
     }
 
+    @FXML
+    void minioinEditSpecialPower(ActionEvent event) {
+        //todo open edit page
+    }
+
+    @FXML
+    void heroEditSpecialPower(ActionEvent event) {
+        //todo open edit page
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String style = ("-fx-text-inner-color: #c3c3c3;-fx-prompt-text-fill: #969696;");
@@ -121,7 +153,12 @@ public class ControllerCustomCard implements Initializable {
         maxRangeMinion.setVisible(false);
         minionRangetxt.setVisible(false);
         heroRangetxt.setVisible(false);
+        minionCosttxt.setStyle(style);
         maxRangeHero.setVisible(false);
+        activationTypecombox.setStyle(style);
+        spellCosttxt.setStyle(style);
+        activationCoolDown.setStyle(style);
+        heroCosttxt.setStyle(style);
 
     }
 }
