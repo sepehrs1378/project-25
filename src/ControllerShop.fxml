@@ -37,12 +37,12 @@
             <Image url="@pics/back_button.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="75.0" layoutY="19.0" prefHeight="765.0" prefWidth="964.0" style="-fx-background-color: #170666;">
+      <ScrollPane layoutX="75.0" layoutY="19.0" prefHeight="765.0" prefWidth="964.0" stylesheets="@CSS/scrollpane_style.css">
          <content>
-            <AnchorPane prefHeight="743.0" prefWidth="965.0" style="-fx-background-color: #5b044a;">
+            <AnchorPane prefHeight="743.0" prefWidth="965.0">
                <children>
-                  <HBox fx:id="upperBox" prefHeight="351.0" prefWidth="953.0" style="-fx-background-color: #5b044a;" />
-                  <HBox fx:id="lowerBox" layoutX="4.0" layoutY="360.0" prefHeight="351.0" prefWidth="946.0" style="-fx-background-color: #5b044a;" />
+                  <HBox fx:id="upperBox" prefHeight="351.0" prefWidth="953.0" />
+                  <HBox fx:id="lowerBox" layoutX="4.0" layoutY="360.0" prefHeight="351.0" prefWidth="946.0" />
                </children>
             </AnchorPane>
          </content>

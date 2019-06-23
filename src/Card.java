@@ -6,7 +6,7 @@ public class Card {
     private String id;
     private String name;
     private int price;
-    private int mana;
+    private int mana = 0;
 
     public Card(String id, String name, int price, int mana) {
         this.id = id;

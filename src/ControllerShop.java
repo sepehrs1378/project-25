@@ -69,6 +69,7 @@ public class ControllerShop {
             return;
         }
         int size = (usableList.size() + cardList.size());
+        int originalSize = size;
         Node[] nodes = new Node[size];
         for (int i = 0; i < cardList.size(); i++) {
             addCardToBox(nodes, cardList, i , i);
@@ -84,12 +85,12 @@ public class ControllerShop {
         for (int i = 0; i < size; i++) {
             upperBox.getChildren().add(nodes[i]);
         }
-        if (size % 2 == 0){
-            for (int i = size; i < size * 2 - 1; i++) {
+        if (originalSize % 2 == 0){
+            for (int i = size; i < size * 2; i++) {
                 lowerBox.getChildren().add(nodes[i]);
             }
         }else {
-            for (int i = size; i < size * 2 - 2; i++) {
+            for (int i = size; i < size * 2 - 1; i++) {
                 lowerBox.getChildren().add(nodes[i]);
             }
         }

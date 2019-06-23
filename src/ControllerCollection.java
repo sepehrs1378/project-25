@@ -1,21 +1,32 @@
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerCollection {
+public class ControllerCollection implements Initializable {
     private static ControllerCollection ourInstance = new ControllerCollection();
     private Request request = Request.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     private View view = View.getInstance();
+    private Label selectedLabel = null;
 
     public ControllerCollection() {
         ourInstance = this;
@@ -29,32 +40,123 @@ public class ControllerCollection {
     private ScrollPane scrollPane;
 
     @FXML
-    private ImageView showCardsBtn;
+    private VBox deckListBox;
 
     @FXML
-    void makeShowCardsBtnOpaque(MouseEvent event) {
-        showCardsBtn.setStyle("-fx-opacity: 1");
+    private ImageView removeDeckBtn;
+
+    @FXML
+    private ImageView importBtn;
+
+    @FXML
+    private ImageView exportBtn;
+
+    @FXML
+    private ImageView editDeckBtn;
+
+    @FXML
+    private ImageView createDeckBtn;
+
+    @FXML
+    private JFXTextField deckNameLabel;
+
+    @FXML
+    private Label createDeckLabel;
+
+    @FXML
+    void createDeck(MouseEvent event) {
+        if(deckNameLabel.getText().isEmpty()){
+            return;
+        }
+        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(deckNameLabel.getText());
+
+        showDecks();
     }
 
     @FXML
-    void makeShowCardsBtnTransparent(MouseEvent event) {
-        showCardsBtn.setStyle("-fx-opacity: 0.6");
+    void makeCreateDeckBtnOpaque(MouseEvent event) {
+        createDeckBtn.setStyle("-fx-opacity: 1");
     }
 
     @FXML
-    private JFXTextField createNewDeckText;
+    void makeCreateDeckBtnTransparent(MouseEvent event) {
+        createDeckBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
-    private JFXTextField cardInCollectionText;
+    void importDeck(MouseEvent event) {
+
+    }
 
     @FXML
-    private JFXTextField deckNameText;
+    void makeEditDeckBtnOpaque(MouseEvent event) {
+        editDeckBtn.setStyle("-fx-opacity: 1");
+    }
 
     @FXML
-    private JFXTextField itemText;
+    void makeEditDeckBtnTransparent(MouseEvent event) {
+        editDeckBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
-    private JFXTextField deckNameItemText;
+    void makeExportBtnTransparent(MouseEvent event) {
+        exportBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeExportBtnOpaque(MouseEvent event) {
+        exportBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeImportBtnOpaque(MouseEvent event) {
+        importBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeImportBtnTransparent(MouseEvent event) {
+        importBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeRemoveDeckBtnOpaque(MouseEvent event) {
+        removeDeckBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeRemoveDeckBtnTransparent(MouseEvent event) {
+        removeDeckBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void removeDeck(MouseEvent event) {
+        Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
+        dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
+        if (deck == dataBase.getLoggedInAccount().getMainDeck()){
+            dataBase.getLoggedInAccount().setMainDeck(null);
+        }
+        showDecks();
+    }
+
+
+    @FXML
+    void enterEditMenu(MouseEvent event) throws IOException {
+        if (selectedLabel == null){
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("ControllerCollectionEditMenu.fxml"));
+        ControllerCollectionEditMenu.setDeckName(selectedLabel.getText().split("\\s+")[0]);
+        Parent root = fxmlLoader.load();
+        Main.window.setScene(new Scene(root));
+
+        Main.setCursor();
+    }
+
+    @FXML
+    void exportDeck(MouseEvent event) {
+
+    }
 
     @FXML
     private ImageView backBtn;
@@ -76,62 +178,86 @@ public class ControllerCollection {
         backBtn.setStyle("-fx-opacity: 0.6");
     }
 
-    @FXML
-    void addItemToDeck(MouseEvent event) {
-        if (itemText.getText().isEmpty()) {
-            return;
-        }
-        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-        if (deckNameItemText.getText().isEmpty()) {
-            return;
-        }
-        Deck deck = playerCollection.getDeckByName(deckNameText.getText());
-        Item item = playerCollection.getItemWithID(itemText.getText());
-        deck.setItem(item);
-    }
-
-
-    @FXML
-    void addCardToDeck(MouseEvent event) {
-        if (cardInCollectionText.getText().isEmpty()) {
-            return;
-        }
-        if (deckNameText.getText().isEmpty()) {
-            return;
-        }
-        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
-        OutputMessageType outputMessageType =
-                playerCollection.addCard(cardInCollectionText.getText(), deckNameText.getText());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
-        alert.showAndWait();
-    }
-
-
-    @FXML
-    void createNewDeck(MouseEvent event) {
-        if (createNewDeckText.getText().isEmpty()) {
-            return;
-        }
-        OutputMessageType outputMessageType =
-                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(createNewDeckText.getText());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
-        alert.showAndWait();
-    }
-
-    @FXML
-    void showCards(MouseEvent event) {
-//        List<Card> cards = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getCards();
-//        for (int i = 0; i < cards.size(); i++) {
-//            Card card = cards.get(i);
-//            if (card instanceof  Unit){
+    //    @FXML
+//    void addItemToDeck(MouseEvent event) {
+//        if (itemText.getText().isEmpty()) {
+//            return;
+//        }
+//        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+//        if (deckNameItemText.getText().isEmpty()) {
+//            return;
+//        }
+//        Deck deck = playerCollection.getDeckByName(deckNameText.getText());
+//        Item item = playerCollection.getItemWithID(itemText.getText());
+//        deck.setItem(item);
+//    }
 //
-//            }else if (card instanceof Spell){
 //
-//            }
+//    @FXML
+//    void addCardToDeck(MouseEvent event) {
+//        if (cardInCollectionText.getText().isEmpty()) {
+//            return;
+//        }
+//        if (deckNameText.getText().isEmpty()) {
+//            return;
+//        }
+//        PlayerCollection playerCollection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+//        OutputMessageType outputMessageType =
+//                playerCollection.addCard(cardInCollectionText.getText(), deckNameText.getText());
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
+//        alert.showAndWait();
+//    }
 //
-//        } todo
+//
+//    @FXML
+//    void createNewDeck(MouseEvent event) {
+//        if (createNewDeckText.getText().isEmpty()) {
+//            return;
+//        }
+//        OutputMessageType outputMessageType =
+//                dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(createNewDeckText.getText());
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION, outputMessageType.getMessage());
+//        alert.showAndWait();
+//    }
+    private void showDecks() {
+        deckListBox.getChildren().clear();
+        List<Deck> decks = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks();
+        for (int i = 0; i < decks.size(); i++) {
+            Label label = new Label();
+            Deck deck = decks.get(i);
+            label.setText((deck != null ? deck.getName() : "") + "    Hero : " +
+                    ((deck != null && deck.getHero() != null) ? deck.getHero().getName() : "") + "    Minions : "
+                    + ((deck != null) ? deck.calculateNumberOfMinionsOrSpells(Constants.MINION) : "")
+                    + "    Spells : " + ((deck != null) ? deck.calculateNumberOfMinionsOrSpells(Constants.SPELL) : "")
+                    + "    Item :  " + ((deck != null && deck.getItem() != null) ? deck.getItem().getName() : ""));
+            label.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00");
+            label.setPrefHeight(50);
+            label.setPrefWidth(deckListBox.getPrefWidth());
+            deckListBox.getChildren().add(label);
+            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (selectedLabel != null) {
+                        selectedLabel.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00");
+                        selectedLabel.setEffect(null);
+                    }
+                    if (label == selectedLabel) {
+                        selectedLabel = null;
+                        label.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00;");
+                        label.setEffect(null);
+                        return;
+                    }
+                    DropShadow dropShadow = new DropShadow();
+                    dropShadow.setOffsetX(2);
+                    dropShadow.setOffsetY(2);
+                    dropShadow.setColor(Color.rgb(150, 50, 50, .688));
+                    selectedLabel = label;
+                    label.setStyle("-fx-background-radius: 10; -fx-font-size: 30;-fx-border-color: #ffe700; -fx-border-radius: 10; -fx-text-fill: #e02100");
+                    label.setEffect(dropShadow);
+                }
+            });
+        }
     }
-
 
     public void main() {
         boolean didExit = false;
@@ -276,4 +402,10 @@ public class ControllerCollection {
                 .searchCardOrItemWithName(request.getCommand().split("\\s+")[1]);
         view.printList(output);
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        showDecks();
+    }
+
 }

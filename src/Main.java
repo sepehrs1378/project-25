@@ -1,5 +1,6 @@
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.media.sound.WaveFileReader;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +13,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Main extends Application {
     private DataBase dataBase = DataBase.getInstance();
@@ -160,10 +167,24 @@ public class Main extends Application {
         File file = new File("src/pics/cursors/main_cursor.png");
         Image image = new Image(file.toURI().toString());
         primaryStage.getScene().setCursor(new ImageCursor(image));
+//        playMusic();
         primaryStage.setOnCloseRequest(e->{
             DataBase.getInstance().saveAccounts();
             primaryStage.close();
         });
         primaryStage.show();
+    }
+
+    private void playMusic(){
+        try
+        {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File("src/music/music_battlemap_firesofvictory.m4a")));
+            clip.start();
+        }
+        catch (Exception exc)
+        {
+            exc.printStackTrace(System.out);
+        }
     }
 }

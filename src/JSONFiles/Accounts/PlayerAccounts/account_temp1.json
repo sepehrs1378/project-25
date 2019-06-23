@@ -1071,12 +1071,288 @@
             "name": "deck"
           }
         ],
-        "cards": [],
+        "cards": [
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 0,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 1,
+                "length": 1,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                {
+                  "@type": "WeaknessBuff",
+                  "@val": {
+                    "apMinus": 0,
+                    "hpMinus": 6,
+                    "positiveOrNegative": "negative",
+                    "startTurn": 0,
+                    "durationTurn": 2147483647,
+                    "isDispellable": true,
+                    "isContinuous": false,
+                    "isDead": false
+                  }
+                },
+                {
+                  "@type": "HolyBuff",
+                  "@val": {
+                    "armor": 2,
+                    "positiveOrNegative": "positive",
+                    "startTurn": 0,
+                    "durationTurn": 3,
+                    "isDispellable": true,
+                    "isContinuous": false,
+                    "isDead": false
+                  }
+                }
+              ],
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Unit - takes 6 hp from target(WeaknessBuff) but gives 2 HolyBuffs for duration of 3 turns",
+              "isDispeller": false,
+              "id": "temp1_healthWithProfit_1",
+              "name": "healthWithProfit",
+              "price": 2250,
+              "mana": 0
+            }
+          },
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 2,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [
+                  "hero",
+                  "minion"
+                ],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 1,
+                "length": 1,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                null
+              ],
+              "activationType": "ON_CAST",
+              "description": "Target : Friendly Unit - adds 2 values to ap of one friendly unit",
+              "isDispeller": false,
+              "id": "temp1_empower_1",
+              "name": "empower",
+              "price": 250,
+              "mana": 1
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 4,
+              "ap": 2,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 600 - mana : 1 - hp : 4 - ap : 2 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gholabSangDarToorani_1",
+              "name": "gholabSangDarToorani",
+              "price": 600,
+              "mana": 1
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 1,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "enemy"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 1,
+                    "length": 1,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "WeaknessBuff",
+                      "@val": {
+                        "apMinus": 0,
+                        "hpMinus": 6,
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_ATTACK",
+                  "description": "Contains : WeaknessBuff - Spell Activation Type : on attack - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gorg_1",
+              "name": "gorg",
+              "price": 400,
+              "mana": 3
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.3.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gorg_2",
+              "name": "gorg",
+              "price": 400,
+              "mana": 3
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.3.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gorg_3",
+              "name": "gorg",
+              "price": 400,
+              "mana": 3
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.3.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gorg_4",
+              "name": "gorg",
+              "price": 400,
+              "mana": 3
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 6,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": "@root.playerInfo.collection.cards.3.specialPowers",
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "temp1_gorg_5",
+              "name": "gorg",
+              "price": 400,
+              "mana": 3
+            }
+          }
+        ],
         "items": []
       }
     },
     "matchList": [],
     "mainDeck": "@root.playerInfo.collection.decks.0",
-    "money": 1000000
+    "money": 994900
   }
 }

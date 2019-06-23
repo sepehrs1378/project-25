@@ -1043,20 +1043,20 @@ public class DataBase {
         return null;
     }
 
-    private void addCardToDeck(Account account, Deck deck, int index, int number) {
-        Card card = cardList.get(index);
-        if (card instanceof Unit) {
-            card = ((Unit) card).clone();
-        } else if (card instanceof Spell) {
-            card = ((Spell) card).clone();
-        }
-        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
-        if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
-            deck.setHero((Unit) card);
-            return;
-        }
-        deck.addToCards(card);
-    }
+//    private void addCardToDeck(Account account, Deck deck, int index, int number) {
+//        Card card = cardList.get(index);
+//        if (card instanceof Unit) {
+//            card = ((Unit) card).clone();
+//        } else if (card instanceof Spell) {
+//            card = ((Spell) card).clone();
+//        }
+//        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
+//        if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+//            deck.setHero((Unit) card);
+//            return;
+//        }
+//        deck.addToCards(card);
+//    }
 
     public void changePlayerNameInId(Object object, Player player) {
         if (object instanceof Card) {
