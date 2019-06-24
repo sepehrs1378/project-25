@@ -78,9 +78,9 @@ public class ControllerSinglePlayerMenu implements Initializable{
 
     @FXML
     void enterLevel1(MouseEvent event) throws IOException {
-        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
+        /*Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
                 Constants.CLASSIC, 0, null, Constants.SINGLE);
-        database.setCurrentBattle(battle);
+        database.setCurrentBattle(battle);*/
         FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         ControllerMainMenu.stage.close();
     }

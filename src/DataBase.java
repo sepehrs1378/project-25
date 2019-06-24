@@ -18,6 +18,7 @@ public class DataBase {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
+    private Account temp2;
 //    private Account temp1 = new Account("temp1", "1");
 //    private Account temp2 = new Account("temp2", "2");
 
@@ -48,6 +49,7 @@ public class DataBase {
 //        makeMinions();
 //        makeItems();
         makeAccounts();
+
         System.out.println(cardList.size());
         System.out.println(collectableList.size());
         System.out.println(usableList.size());
@@ -677,7 +679,7 @@ public class DataBase {
         //10            //6
         //String descSpell10 = "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller";
         //collectableList.add(null);
-        //todo
+        //todo nefrinMarg
 
         //11            //7
         String descSpell11 = "Contains : no Buffs - Spell Activation Type : on cast - isn't dispeller";
@@ -1113,6 +1115,14 @@ public class DataBase {
         FileReader reader;
         if (fileNames != null) {
             for (String fileName : fileNames) {
+                if (fileName.equals("temp2.json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
+                        temp2 = gson.fromJson(reader, Account.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
@@ -1337,7 +1347,7 @@ public class DataBase {
 
     }
 
-    public String importDeck(String address){
+    public String importDeck(String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         if (!address.endsWith(".json")) {
             return "selected file is not a json file";
@@ -1357,16 +1367,16 @@ public class DataBase {
         }
     }
 
-    public void exportDeck(Deck deck){
+    public void exportDeck(Deck deck) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Decks");
         String[] fileNames = folder.list();
         String fileName = "deck_" + deck.getName() + "_";
-        int numberOfDecks=0;
+        int numberOfDecks = 0;
         if (fileNames != null) {
             for (String name : fileNames) {
                 if (name.contains(fileName)) {
-                    numberOfDecks=numberOfDecks+1;
+                    numberOfDecks = numberOfDecks + 1;
                 }
             }
         }
@@ -1380,5 +1390,13 @@ public class DataBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Account getTemp2() {
+        return temp2;
+    }
+
+    public void setTemp2(Account temp2) {
+        this.temp2 = temp2;
     }
 }

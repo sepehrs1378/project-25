@@ -117,6 +117,19 @@ public class Player {
         return getCollectableWithID(id) != null;
     }
 
+    public OutputMessageType selectUnit(String id) {
+        Battle currentBattle = dataBase.getCurrentBattle();
+        if (currentBattle.getBattleGround().getUnitWithID(id) == null)
+            return OutputMessageType.INVALID_COLLECTABLE_CARD;
+        Unit unit = currentBattle.getBattleGround().getUnitWithID(id);
+        if (currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
+            return OutputMessageType.ENEMY_UNIT_SELECTED;
+        if (unit.isStunned())
+            return OutputMessageType.UNIT_IS_STUNNED;
+        selectedUnit = unit;
+        return OutputMessageType.SELECTED;
+    }
+
     public OutputMessageType select(String id) {
         if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id) == null
                 && !doesHaveCollectable(id))
@@ -146,5 +159,4 @@ public class Player {
     public void setBuffs(List<Buff> buffs) {
         this.buffs = buffs;
     }
-
 }

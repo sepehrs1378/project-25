@@ -24,7 +24,7 @@ public class AI {
     private void insertNextCard(Battle battle) {
         for (Card card : battle.getPlayer2().getHand().getCards()) {
             if (card.getMana() <= battle.getPlayer2().getMana()) {
-                List<Cell> cells = getAvailabaleCells(battle, battle.getBattleGround());
+                List<Cell> cells = getAvailableCells(battle, battle.getBattleGround());
                 for (Cell cell : cells) {
                     int[] coordination = battle.getBattleGround().getCoordinationOfCell(cell);
                     if (cell.getUnit() == null && coordination != null) {
@@ -40,7 +40,7 @@ public class AI {
         }
     }
 
-    private List<Cell> getAvailabaleCells(Battle battle, BattleGround battleGround) {
+    private List<Cell> getAvailableCells(Battle battle, BattleGround battleGround) {
         List<Unit> units = battleGround.getUnitsOfPlayer(battle.getPlayer2());
         List<Cell> cells = new ArrayList<>();
         for (Unit unit : units) {
@@ -81,7 +81,7 @@ public class AI {
         }
         int counter = 0;
         while (!unit.didAttackThisTurn() && counter < unitIds.size()) {
-            unit.attackUnit(unitIds.get(counter));
+            unit.attack(unitIds.get(counter));
             counter++;
         }
     }

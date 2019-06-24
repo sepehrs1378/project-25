@@ -1,6 +1,5 @@
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,13 +16,16 @@ public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
     private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
-    private String mouseClickedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,254,0), 10, 0, 0, 0);";
-    private long attackDuration = 3000;
+    private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
+    private AnchorPane root;
+    private long attackDuration = 2000;
     private long deathDuration = 3000;
     private long spellDuration = 3000;
-    private long runDuration = 2000;
+    private long runDuration = 1000;
     private int unitViewSize = 150;
+
     private ImageView unitView = new ImageView();
+
     private Label apNumber = new Label("0");//todo relocate and reset it
     private Label hpNumber = new Label("0");//todo
     private String id;
@@ -37,8 +39,32 @@ public class UnitImage {
     }
 
     public UnitImage(String id, AnchorPane root) {
+        this.root = root;
         this.id = id;
         unitStatus = UnitStatus.stand;
+        loadUnitImage();
+        unitView.setOnMouseClicked(event -> {
+            ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
+        });
+        unitView.setOnMouseEntered(event -> {
+            if (!unitView.getStyle().equals(selectedStyle))
+                unitView.setStyle(mouseEnteredStyle);
+        });
+        unitView.setOnMouseExited(event -> {
+            if (!unitView.getStyle().equals(selectedStyle))
+                unitView.setStyle(mouseExitedStyle);
+        });
+        resetStatsPositions();
+        addToRoot();
+        //todo
+    }
+
+    public void setId(String id) {
+        this.id = id;
+        loadUnitImage();
+    }
+
+    private void loadUnitImage() {
         try {
             unitView.setImage(new Image(new FileInputStream
                     ("./src/ApProjectResources/units/" + getUnitName()
@@ -46,20 +72,10 @@ public class UnitImage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        unitView.setOnMouseClicked(event -> {
+    }
 
-            unitView.setStyle(mouseClickedStyle);
-        });
-        unitView.setOnMouseEntered(event -> {
-            unitView.setStyle(mouseEnteredStyle);
-        });
-        unitView.setOnMouseExited(event -> {
-            if (!unitView.getStyle().equals(mouseClickedStyle))
-                unitView.setStyle(mouseExitedStyle);
-        });
-        resetStatsPositions();
-        addToRoot(root);
-        //todo
+    public String getId() {
+        return id;
     }
 
     public void setUnitStatus(UnitStatus unitStatus) {
@@ -73,6 +89,14 @@ public class UnitImage {
         }
     }
 
+    public void setUnitStyleAsSelected() {
+        unitView.setStyle(selectedStyle);
+    }
+
+    public void setStyleAsNotSelected() {
+        unitView.setStyle(null);
+    }
+
     public String getUnitName() {
         return id.split("_")[1];
     }
@@ -84,8 +108,7 @@ public class UnitImage {
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
-        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow)
-                + GraphicConstants.CELL_HEIGHT / 2.0;
+        double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow);
 
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
         path.setVisible(false);
@@ -107,7 +130,6 @@ public class UnitImage {
                 if (now - lastTime > runDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
-                    System.out.println(unitView.getTranslateX() + "    " + unitView.getTranslateY());
                     this.stop();
                 } else resetStatsPositions();
             }
@@ -170,7 +192,7 @@ public class UnitImage {
         animationTimer.start();
     }
 
-    private void addToRoot(AnchorPane root) {
+    private void addToRoot() {
         root.getChildren().add(unitView);
         root.getChildren().add(apNumber);
         root.getChildren().add(hpNumber);
@@ -183,17 +205,19 @@ public class UnitImage {
         apNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
     }
 
-    public void changeApNumber(int apNumber) {
+    public void setApNumber(int apNumber) {
         this.apNumber.setText(" " + apNumber + " ");
     }
 
-    public void changeHpNumber(int hpNumber) {
+    public void setHpNumber(int hpNumber) {
         this.hpNumber.setText(" " + hpNumber + " ");
     }
 
     public void setInCell(int row, int column) {
-        relocate(ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
-                , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
+        double x = ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
+                + GraphicConstants.CELL_WIDTH / 2 - unitViewSize / 2;
+        double y = ControllerBattleCommands.getOurInstance().getCellLayoutY(row) - unitViewSize / 2;
+        relocate(x, y);
     }
 
     public void relocate(double x, double y) {
@@ -203,6 +227,22 @@ public class UnitImage {
     }
 
     public void setInHand(int ringNumber) {
-        //todo
+        ImageView handRing = ControllerBattleCommands.getOurInstance().getHandRings().get(ringNumber);
+        double x = handRing.getLayoutX() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.5;
+        double y = handRing.getLayoutY() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.75;
+        relocate(x, y);
+        resetStatsPositions();
+    }
+
+    public void setInNextCard() {
+        ImageView nextCardRing = ControllerBattleCommands.getOurInstance().getNextCardRing();
+        double x = nextCardRing.getLayoutX() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.5;
+        double y = nextCardRing.getLayoutY() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.75;
+        relocate(x, y);
+        resetStatsPositions();
+    }
+
+    public ImageView getUnitView() {
+        return unitView;
     }
 }
