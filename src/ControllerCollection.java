@@ -1,4 +1,5 @@
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,12 +66,54 @@ public class ControllerCollection implements Initializable {
     private Label createDeckLabel;
 
     @FXML
+    private Label mainDeckLabel;
+
+    @FXML
+    private ImageView mainDeckBtn;
+
+    @FXML
+    void setAsMainDeck(MouseEvent event) {
+        if(selectedLabel.getText().isEmpty()){
+            return;
+        }
+        Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
+        dataBase.getLoggedInAccount().setMainDeck(deck);
+        createDeckLabel.setText("Selected Deck Has Been Set As The Main Deck");
+        mainDeckLabel.setText("Main Deck : " + dataBase.getLoggedInAccount().getMainDeck().getName());
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(3)
+        );
+        visiblePause.setOnFinished(
+                event1 -> createDeckLabel.setText("")
+        );
+        visiblePause.play();
+    }
+
+    @FXML
+    void makeMainDeckBtnOpaque(MouseEvent event) {
+        mainDeckBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeMainDeckBtnTransparent(MouseEvent event) {
+        mainDeckBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
     void createDeck(MouseEvent event) {
         if(deckNameLabel.getText().isEmpty()){
             return;
         }
         OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(deckNameLabel.getText());
-
+        createDeckLabel.setText(outputMessageType.getMessage());
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(3)
+        );
+        visiblePause.setOnFinished(
+                event1 -> createDeckLabel.setText("")
+        );
+        visiblePause.play();
         showDecks();
     }
 
@@ -406,6 +450,7 @@ public class ControllerCollection implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showDecks();
+        mainDeckLabel.setText("Main Deck : " + dataBase.getLoggedInAccount().getMainDeck().getName());
     }
 
 }
