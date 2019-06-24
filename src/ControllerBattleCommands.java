@@ -1,12 +1,20 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import javax.swing.text.Style;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,6 +40,34 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     private AnchorPane battleGroundPane;
+
+    @FXML
+    private ImageView graveYardBtn;
+
+    @FXML
+    void enterGraveYard(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        scene.setCursor(new ImageCursor(image));
+        stage.setScene(scene);
+        ControllerGraveYard.stage = stage;
+        stage.showAndWait();
+    }
+
+    @FXML
+    void makeGraveYardBtnOpaque(MouseEvent event) {
+        graveYardBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeGraveYardBtnTransparent(MouseEvent event) {
+        graveYardBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
     void makeEndTurnMineOpaque(MouseEvent event) {

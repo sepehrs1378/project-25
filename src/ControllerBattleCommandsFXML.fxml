@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="battleGroundPane" prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
+<AnchorPane fx:id="battleGroundPane" prefHeight="819.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
     <children>
         <ImageView fitHeight="819.0" fitWidth="1500.0">
             <image>
@@ -92,5 +89,10 @@
                 <Font size="17.0" />
             </font>
         </Button>
+      <ImageView fx:id="graveYardBtn" fitHeight="54.0" fitWidth="161.0" layoutX="1280.0" layoutY="649.0" onMouseClicked="#enterGraveYard" onMouseEntered="#makeGraveYardBtnOpaque" onMouseExited="#makeGraveYardBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/in_battle_pics/enter_grave_yard_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

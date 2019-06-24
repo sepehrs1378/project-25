@@ -169,4 +169,11 @@ public class CollectionCardBackGround {
     void makeSellBtnTransparent(MouseEvent event) {
         sellBtn.setStyle("-fx-opacity: 0.6");
     }
+
+    public void disableEveryThing(){
+        cardBackGround.setStyle("-fx-opacity: 1");
+        removeBtn.setVisible(false);
+        sellBtn.setVisible(false);
+        cardBackGround.setDisable(true);
+    }
 }
