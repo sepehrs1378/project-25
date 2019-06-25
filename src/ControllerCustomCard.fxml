@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,70 +9,85 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCustomCard">
+<AnchorPane prefHeight="720.0" prefWidth="1387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerCustomCard">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="1287.0" layoutX="-4.0">
+      <ImageView fitHeight="721.0" fitWidth="1481.0" layoutX="-87.0">
          <image>
             <Image url="@pics/custom_card_menu/background.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="436.0" fitWidth="325.0" layoutX="92.0" layoutY="118.0">
+      <ImageView fitHeight="436.0" fitWidth="325.0" layoutX="64.0" layoutY="97.0">
          <image>
             <Image url="@pics/custom_card_menu/neutral_prismatic_unit@2x.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="436.0" fitWidth="315.0" layoutX="889.0" layoutY="118.0">
+      <ImageView fitHeight="436.0" fitWidth="315.0" layoutX="779.0" layoutY="97.0">
          <image>
             <Image url="@pics/custom_card_menu/neutral_spell@2x.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="436.0" fitWidth="315.0" layoutX="484.0" layoutY="118.0">
+      <ImageView fitHeight="436.0" fitWidth="315.0" layoutX="424.0" layoutY="97.0">
          <image>
             <Image url="@pics/custom_card_menu/unusable_unit@2x.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="947.0" layoutY="584.0">
+      <ImageView fx:id="createSpellBtn" fitHeight="80.0" fitWidth="200.0" layoutX="836.0" layoutY="564.0" onMouseClicked="#createSpell" onMouseEntered="#makeCreateSpellOpeque" onMouseExited="#makeCreateSpellTransparent" opacity="0.6">
          <image>
             <Image url="@pics/custom_card_menu/create_button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="540.0" layoutY="584.0">
+      <ImageView fx:id="createHeroBtn" fitHeight="80.0" fitWidth="200.0" layoutX="480.0" layoutY="563.0" onMouseClicked="#createHero" onMouseEntered="#makeCreateHeroOpeque" onMouseExited="#makeCreateHeroTransparent" opacity="0.6">
          <image>
             <Image url="@pics/custom_card_menu/create_button_hero.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="155.0" layoutY="584.0">
+      <ImageView fx:id="createMinionBtn" fitHeight="80.0" fitWidth="200.0" layoutX="127.0" layoutY="563.0" onMouseClicked="#createMinion" onMouseEntered="#makeCreateMinionOpeque" onMouseExited="#makeCreateMinionTransparent" opacity="0.6">
          <image>
             <Image url="@pics/custom_card_menu/create_button_minion.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="minionHptxt" alignment="CENTER" layoutX="322.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="minionAptxt" alignment="CENTER" layoutX="148.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="heroAPtxt" alignment="CENTER" layoutX="540.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="heroHPtxt" alignment="CENTER" layoutX="701.0" layoutY="370.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="minionName" alignment="CENTER" layoutX="177.0" layoutY="444.0" promptText="name" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="heroName" alignment="CENTER" layoutX="563.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="spellName" alignment="CENTER" layoutX="970.0" layoutY="445.0" promptText="name" unFocusColor="#c3c3c3" />
-      <JFXComboBox fx:id="minionAttackTypeBox" layoutX="199.0" layoutY="483.0" onAction="#minionComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
-      <JFXComboBox fx:id="heroAttackTypeBox" layoutX="584.0" layoutY="483.0" onAction="#heroComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
-      <ImageView fx:id="maxRangeMinion" fitHeight="55.0" fitWidth="62.0" layoutX="342.0" layoutY="471.0">
+      <JFXTextField fx:id="minionHptxt" alignment="CENTER" layoutX="295.0" layoutY="350.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="minionAptxt" alignment="CENTER" layoutX="120.0" layoutY="349.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroAPtxt" alignment="CENTER" layoutX="480.0" layoutY="349.0" prefHeight="25.0" prefWidth="39.0" promptText="AP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroHPtxt" alignment="CENTER" layoutX="641.0" layoutY="349.0" prefHeight="25.0" prefWidth="39.0" promptText="HP" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="minionName" alignment="CENTER" layoutX="149.0" layoutY="423.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroName" alignment="CENTER" layoutX="503.0" layoutY="424.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="spellName" alignment="CENTER" layoutX="859.0" layoutY="413.0" promptText="name" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="minionAttackTypeBox" layoutX="171.0" layoutY="462.0" onAction="#minionComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="heroAttackTypeBox" layoutX="524.0" layoutY="462.0" onAction="#heroComboOnAction" prefHeight="25.0" prefWidth="111.0" promptText="attack type" unFocusColor="#c3c3c3" />
+      <ImageView fx:id="maxRangeMinion" fitHeight="55.0" fitWidth="62.0" layoutX="314.0" layoutY="450.0">
          <image>
             <Image url="@pics/custom_card_menu/signature_card_ring_small.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="maxRangeHero" fitHeight="55.0" fitWidth="62.0" layoutX="721.0" layoutY="471.0">
+      <ImageView fx:id="maxRangeHero" fitHeight="55.0" fitWidth="62.0" layoutX="661.0" layoutY="450.0">
          <image>
             <Image url="@pics/custom_card_menu/signature_card_ring_small.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="minionRangetxt" alignment="CENTER" layoutX="350.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="heroRangetxt" alignment="CENTER" layoutX="729.0" layoutY="483.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
-      <JFXButton fx:id="minionAddSpecialbtn" layoutX="187.0" layoutY="270.0" onAction="#minioinEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
-      <JFXButton fx:id="heroAddSpecialbtn" layoutX="572.0" layoutY="270.0" onAction="#heroEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
-      <JFXComboBox fx:id="activationTypecombox" layoutX="198.0" layoutY="303.0" prefHeight="25.0" prefWidth="128.0" promptText="activation type" />
-      <JFXTextField fx:id="activationCoolDown" layoutX="563.0" layoutY="303.0" promptText="activation cool down" />
-      <JFXTextField fx:id="minionCosttxt" alignment="CENTER" layoutX="181.0" layoutY="219.0" promptText="cost" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="heroCosttxt" alignment="CENTER" layoutX="562.0" layoutY="219.0" promptText="cost" unFocusColor="#c3c3c3" />
-      <JFXTextField fx:id="spellCosttxt" alignment="CENTER" layoutX="969.0" layoutY="219.0" promptText="cost" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="minionRangetxt" alignment="CENTER" layoutX="322.0" layoutY="462.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroRangetxt" alignment="CENTER" layoutX="669.0" layoutY="462.0" prefHeight="25.0" prefWidth="47.0" promptText="Range" unFocusColor="#c3c3c3" />
+      <JFXButton fx:id="minionAddSpecialbtn" layoutX="159.0" layoutY="249.0" onAction="#minioinEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
+      <JFXButton fx:id="heroAddSpecialbtn" layoutX="512.0" layoutY="249.0" onAction="#heroEditSpecialPower" text="add created spell+" textFill="#0fd7dd" underline="true" />
+      <JFXComboBox fx:id="activationTypecombox" layoutX="170.0" layoutY="282.0" onAction="#activastionTypeCmbSelected" prefHeight="25.0" prefWidth="128.0" promptText="activation type" />
+      <JFXTextField fx:id="activationCoolDown" layoutX="503.0" layoutY="282.0" promptText="activation cool down" />
+      <JFXTextField fx:id="minionCosttxt" alignment="CENTER" layoutX="153.0" layoutY="198.0" promptText="cost" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="heroCosttxt" alignment="CENTER" layoutX="502.0" layoutY="198.0" promptText="cost" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="spellCosttxt" alignment="CENTER" layoutX="858.0" layoutY="199.0" promptText="cost" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="friendOrEnemyCmb" layoutX="859.0" layoutY="465.0" onAction="#friendOrEnemyCmbSelected" prefHeight="25.0" prefWidth="155.0" promptText="Firend Or Enemy" unFocusColor="#c3c3c3" />
+      <AnchorPane layoutX="1140.0" layoutY="207.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #7da8ed;">
+         <children>
+            <JFXComboBox fx:id="buffTypeCmb" focusColor="#20d338" layoutX="23.0" layoutY="46.0" prefHeight="25.0" prefWidth="155.0" promptText="Buff Type" unFocusColor="#3f3434" />
+            <JFXTextField fx:id="buffValueTxt" alignment="CENTER" focusColor="#20d338" layoutX="23.0" layoutY="91.0" promptText="Buff Effectt Value" unFocusColor="#3f3434" />
+            <JFXTextField fx:id="buffDelayTxt" alignment="CENTER" focusColor="#20d338" layoutX="23.0" layoutY="146.0" prefHeight="25.0" prefWidth="71.0" promptText="Delay" unFocusColor="#3f3434" />
+            <JFXTextField fx:id="buffLasTxt" alignment="CENTER" focusColor="#20d338" layoutX="108.0" layoutY="146.0" prefHeight="25.0" prefWidth="71.0" promptText="Last" unFocusColor="#3f3434" />
+         </children>
+      </AnchorPane>
+      <JFXButton layoutX="1213.0" layoutY="413.0" onAction="#addBuffToSpell" text="Add+" textFill="#07d7dd" underline="true" />
+      <JFXComboBox fx:id="targetClassCmb" layoutX="953.0" layoutY="259.0" onAction="#targetClassCmbSelected" prefHeight="25.0" prefWidth="111.0" promptText="Target Class" unFocusColor="#c3c3c3" />
+      <JFXComboBox fx:id="targetTypeCmb" layoutX="810.0" layoutY="259.0" onAction="#targetTypeCmbSelected" prefHeight="25.0" prefWidth="111.0" promptText="Target Type" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="targetWidthTxt" alignment="CENTER" layoutX="906.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Width" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="targetHeigthTxt" alignment="CENTER" layoutX="995.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Height" unFocusColor="#c3c3c3" />
+      <JFXTextField fx:id="manhatanTxt" alignment="CENTER" layoutX="820.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Manhatan" unFocusColor="#c3c3c3" />
    </children>
 </AnchorPane>
