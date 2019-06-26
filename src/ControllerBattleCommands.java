@@ -53,6 +53,18 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView graveYardBtn;
 
     @FXML
+    private Label player1Label;
+
+    @FXML
+    private Label player2Label;
+
+    @FXML
+    private Label specialPowerLabel;
+
+    @FXML
+    private Label collectableLabel;
+
+    @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
         Stage stage = new Stage();
@@ -130,6 +142,8 @@ public class ControllerBattleCommands implements Initializable {
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupCursor();
         Main.window.setScene(new Scene(battleGroundPane));
+        player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         updatePane();
     }
 
@@ -180,6 +194,7 @@ public class ControllerBattleCommands implements Initializable {
         unitImageList.add(playerHeroImage);
         playerHeroImage.setInCell(2, 0);
         opponentHeroImage.setInCell(2, 8);
+        opponentHeroImage.getUnitView().setScaleX(-1);
     }
 
     private void setupBattleGroundCells(AnchorPane root) {
@@ -338,6 +353,11 @@ public class ControllerBattleCommands implements Initializable {
             if (unitImage.getUnitView().equals(clickedImageView))
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
+        }
+        specialPowerLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getHero().getMainSpecialPower().getName());
+        Item item = dataBase.getLoggedInAccount().getMainDeck().getItem();
+        if (item != null){
+            collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
         }
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));

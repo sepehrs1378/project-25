@@ -103,13 +103,12 @@ public class UnitImage {
 
     public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
         setUnitStatus(UnitStatus.run);
-
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
         double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow);
-
+        changeFacingWhileRunning(endX, startX);
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
         path.setVisible(false);
         root.getChildren().add(path);
@@ -153,6 +152,23 @@ public class UnitImage {
             }
         };
         animationTimer.start();
+    }
+
+    public void changeFacing(){
+        if (unitView.getScaleX() == 1){
+            unitView.setScaleX(-1);
+        }else {
+            unitView.setScaleX(1);
+        }
+    }
+
+    public void changeFacingWhileRunning(double endX, double startX){
+        if (startX < endX){
+            unitView.setScaleX(1);
+        }
+        if (startX > endX){
+            unitView.setScaleX(-1);
+        }
     }
 
     public void showDeath() {
