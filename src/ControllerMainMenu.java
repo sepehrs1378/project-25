@@ -62,8 +62,18 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void showMatchHistory(MouseEvent event) {
-        //todo
+    void showMatchHistory(MouseEvent event) throws IOException {
+        Stage matchHistoryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMatchInfo.fxml"));
+        Scene scene = new Scene(root);
+        matchHistoryStage.setScene(scene);
+        matchHistoryStage.initModality(Modality.APPLICATION_MODAL);
+        matchHistoryStage.initStyle(StageStyle.UNDECORATED);
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        matchHistoryStage.getScene().setCursor(new ImageCursor(image));
+        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
+        matchHistoryStage.showAndWait();
     }
 
     @FXML
