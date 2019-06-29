@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerCustomCard implements Initializable {
@@ -20,6 +22,9 @@ public class ControllerCustomCard implements Initializable {
     private ObservableList<String> friendOrEnemyList = FXCollections.observableArrayList();
     private ObservableList<String> targetTypeList = FXCollections.observableArrayList();
     private ObservableList<String> targetClassList = FXCollections.observableArrayList();
+    private Spell minionSpell;
+    private Spell heroSpell;
+    private List<Buff> spellBuffs = new ArrayList<>();
 
 
     @FXML
@@ -104,6 +109,15 @@ public class ControllerCustomCard implements Initializable {
     private JFXTextField targetWidthTxt;
 
     @FXML
+    private JFXTextField spellManaTxt;
+
+    @FXML
+    private JFXTextField minionManaTxt;
+
+    @FXML
+    private JFXTextField heroManaTxt;
+
+    @FXML
     private JFXComboBox<String> targetClassCmb;
 
     @FXML
@@ -122,7 +136,53 @@ public class ControllerCustomCard implements Initializable {
     private ImageView createHeroBtn;
 
     @FXML
+    private JFXButton addBuffBtn;
+
+    @FXML
+    private JFXButton clearBuffsBtn;
+
+    @FXML
+    void clearBuffs(ActionEvent event) {
+        spellBuffs.clear();
+    }
+
+    @FXML
     void createSpell(MouseEvent event) {
+        Spell spell = makeSpell();
+        if (spell == null)
+            return;
+        DataBase.getInstance().getCardList().add(spell);
+        DataBase.getInstance().saveCutsomCard(spell);
+    }
+
+    private Spell makeSpell() {
+        if (targetTypeCmb.getValue() == null || targetClassCmb.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "please select Type and Class of targets").showAndWait();
+            return null;
+        }
+        if (manhatanTxt.getText().equals("") || targetWidthTxt.getText().equals("") || targetHeigthTxt.getText().equals("")
+                || spellCosttxt.getText().equals("") || spellName.getText().equals("") || friendOrEnemyCmb.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "you must fill all the fields!").showAndWait();
+            return null;
+        }
+        if (manhatanTxt.getText().matches("\\d+") || targetWidthTxt.getText().matches("\\d+") || targetHeigthTxt.getText().matches("\\d+")
+                || spellCosttxt.getText().matches("\\d+") || spellName.getText().matches("\\w+")) {
+            new Alert(Alert.AlertType.ERROR, "invalid input!").showAndWait();
+            return null;
+        }
+        if (!isNameUnique(spellName.getText())) {
+            new Alert(Alert.AlertType.ERROR,"choosed name already exists please select another name for this spell").showAndWait();
+            return null;
+        }
+        Target target = new Target(targetTypeCmb.getValue(), Integer.parseInt(targetWidthTxt.getText())
+                , Integer.parseInt(targetHeigthTxt.getText()), friendOrEnemyCmb.getValue(), false,
+                false, Integer.parseInt(manhatanTxt.getText()), targetClassCmb.getValue());
+        String id = "shop_" + spellName.getText() + "_0";
+        Spell spell = new Spell(id, spellName.getText(), Integer.parseInt(spellCosttxt.getText()),
+                Integer.parseInt(spellManaTxt.getText()), 0, 0, 0
+                , target, new ArrayList<>(spellBuffs), SpellActivationType.ON_CAST, "", false);
+        spellBuffs.clear();
+        return spell;
     }
 
     @FXML
@@ -137,7 +197,66 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createHero(MouseEvent event) {
-
+        if (heroCosttxt.getText().equals("") || heroAPtxt.getText().equals("") || heroHPtxt.getText().equals("")
+                || heroName.getText().equals("") || heroManaTxt.getText().equals("") || heroAttackTypeBox.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "mana, Attack Value, cost, name, HP and AP must be filled").showAndWait();
+            return;
+        }
+        if (heroSpell != null && activationCoolDown.getText().equals("")) {
+            new Alert(Alert.AlertType.ERROR, "please select an activation CoolDown for your SpecialPower").showAndWait();
+            return;
+        }
+        if (heroAttackTypeBox.getValue() != null
+                && (heroAttackTypeBox.getValue().equals(Constants.HYBRID) || heroAttackTypeBox.getValue().equals(Constants.RANGED))
+                && heroRangetxt.getText().equals("")) {
+            new Alert(Alert.AlertType.ERROR, "please select a maximum range for your minion!").showAndWait();
+            return;
+        }
+        if (!heroAPtxt.getText().matches("\\d+") || !heroHPtxt.getText().matches("\\d+")
+                || !heroCosttxt.getText().matches("\\d+") || !heroRangetxt.getText().matches("\\d*")
+                || !heroManaTxt.getText().matches("\\d+") || !activationCoolDown.getText().matches("\\w*")) {
+            new Alert(Alert.AlertType.ERROR, "invalid input in AP, mana, cooldown, HP, Range or cost").showAndWait();
+            return;
+        }
+        if (!heroName.getText().matches("[a-zA-z]+")) {
+            new Alert(Alert.AlertType.ERROR, "name box can only include a-z and A-Z").showAndWait();
+            return;
+        }
+        if (!isNameUnique(heroName.getText())) {
+            new Alert(Alert.AlertType.ERROR, "hero name already exists please select a new name").showAndWait();
+            return;
+        }
+        String id = "shop_" + heroName.getText() + "_0";
+        int minRange = 0;
+        int maxRange = 0;
+        switch (heroAttackTypeBox.getValue()) {
+            case Constants.MELEE:
+                minRange = 1;
+                maxRange = 1;
+                break;
+            case Constants.RANGED:
+                minRange = 2;
+                maxRange = Integer.parseInt(heroRangetxt.getText());
+                break;
+            case Constants.HYBRID:
+                minRange = 1;
+                maxRange = Integer.parseInt(heroRangetxt.getText());
+                break;
+        }
+        if (heroSpell != null) {
+            heroSpell.setActivationType(SpellActivationType.ON_CAST);
+            heroSpell.setCoolDown(Integer.parseInt(activationCoolDown.getText()));
+        }
+        Unit unit = new Unit(id, heroName.getText(), Integer.parseInt(heroCosttxt.getText()),
+                Integer.parseInt(heroCosttxt.getText()), Integer.parseInt(heroHPtxt.getText()),
+                Integer.parseInt(heroAPtxt.getText()), minRange, maxRange, heroSpell
+                , Constants.HERO, "", false);
+        DataBase.getInstance().getCardList().add(unit);
+        heroSpell = null;
+        spellBuffs.clear();
+        clearEveryThing();
+        DataBase.getInstance().saveCutsomCard(unit);
+        new Alert(Alert.AlertType.INFORMATION, "hero created successfully!").showAndWait();
     }
 
     @FXML
@@ -152,7 +271,75 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createMinion(MouseEvent event) {
+        if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
+                || minionAptxt.getText().equals("") || minionName.getText().equals("") || minionAttackTypeBox.getValue() == null
+                || minionManaTxt.getText().equals("")) {
+            new Alert(Alert.AlertType.ERROR, "name, mana, AP, HP, Attack Type and cost must be filled ").showAndWait();
+            return;
+        }
+        if (minionSpell != null && activationTypecombox.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "please select an activation type for created special power!").showAndWait();
+            return;
+        }
+        if (minionAttackTypeBox.getValue() != null
+                && (minionAttackTypeBox.getValue().equals(Constants.RANGED) || minionAttackTypeBox.getValue().equals(Constants.HYBRID))
+                && minionRangetxt.getText().equals("")) {
+            new Alert(Alert.AlertType.ERROR, "please select a maximum range for your minion!").showAndWait();
+            return;
+        }
+        if (!minionAptxt.getText().matches("\\d+") || !minionHptxt.getText().matches("\\d+")
+                || !minionCosttxt.getText().matches("\\d+") || !minionRangetxt.getText().matches("\\d*")
+                || !minionManaTxt.getText().matches("\\d+")) {
+            new Alert(Alert.AlertType.ERROR, "invalid input in AP, mana, HP, Range or cost").showAndWait();
+            return;
+        }
+        if (!minionName.getText().matches("[a-zA-z]+")) {
+            new Alert(Alert.AlertType.ERROR, "name box can only include a-z and A-Z").showAndWait();
+            return;
+        }
+        if (!isNameUnique(minionName.getText())) {
+            new Alert(Alert.AlertType.ERROR, "minion name already exists please select a new name").showAndWait();
+            return;
+        }
+        String id = "shop_" + minionName.getText() + "_0";
+        int minRange = 0;
+        int maxRange = 0;
+        switch (minionAttackTypeBox.getValue()) {
+            case Constants.MELEE:
+                minRange = 1;
+                maxRange = 1;
+                break;
+            case Constants.RANGED:
+                minRange = 2;
+                maxRange = Integer.parseInt(minionRangetxt.getText());
+                break;
+            case Constants.HYBRID:
+                minRange = 1;
+                maxRange = Integer.parseInt(minionRangetxt.getText());
+                break;
+        }
+        if (minionSpell != null) {
+            minionSpell.setActivationType(activationTypecombox.getValue());
+        }
+        Unit unit = new Unit(id, minionName.getText(), Integer.parseInt(minionCosttxt.getText()),
+                Integer.parseInt(minionCosttxt.getText()), Integer.parseInt(minionHptxt.getText()),
+                Integer.parseInt(minionAptxt.getText()), minRange, maxRange, minionSpell
+                , Constants.MINION, "", false);
+        DataBase.getInstance().getCardList().add(unit);
+        minionSpell = null;
+        spellBuffs.clear();
+        clearEveryThing();
+        DataBase.getInstance().saveCutsomCard(unit);
+        new Alert(Alert.AlertType.INFORMATION, "minion created successfully!").showAndWait();
+    }
 
+    private boolean isNameUnique(String name) {
+        for (Card card : DataBase.getInstance().getCardList()) {
+            if (card.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @FXML
@@ -167,7 +354,53 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void addBuffToSpell(ActionEvent event) {
-
+        if (buffTypeCmb.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "please first select a type for your buff").showAndWait();
+            return;
+        }
+        if (buffValueTxt.getText().equals("") || buffLasTxt.getText().equals("") || buffDelayTxt.getText().equals("")) {
+            new Alert(Alert.AlertType.ERROR, "you must fill Effect Value, Delay and Duration").showAndWait();
+            return;
+        }
+        if (!buffValueTxt.getText().matches("\\d+") || !buffLasTxt.getText().matches("\\d+")
+                || !buffDelayTxt.getText().matches("\\d+")) {
+            new Alert(Alert.AlertType.ERROR, "delay and duration can only contain numbers").showAndWait();
+            return;
+        }
+        switch (buffTypeCmb.getValue()) {
+            case "Holy Buff":
+                HolyBuff holyBuff = new HolyBuff(Integer.parseInt(buffLasTxt.getText()), false, false,
+                        Integer.parseInt(buffValueTxt.getText()), Integer.parseInt(buffDelayTxt.getText()));
+                spellBuffs.add(holyBuff);
+                break;
+            case "Power Buff":
+                PowerBuff powerBuff = new PowerBuff(Integer.parseInt(buffLasTxt.getText()), false, false,
+                        Integer.parseInt(buffValueTxt.getText()), Integer.parseInt(buffValueTxt.getText())
+                        , Integer.parseInt(buffDelayTxt.getText()));
+                spellBuffs.add(powerBuff);
+                break;
+            case "Poison Buff":
+                PoisonBuff poisonBuff = new PoisonBuff(Integer.parseInt(buffLasTxt.getText()), false, false,
+                        Integer.parseInt(buffValueTxt.getText()), Integer.parseInt(buffDelayTxt.getText()));
+                spellBuffs.add(poisonBuff);
+                break;
+            case "Weakness Buff":
+                WeaknessBuff weaknessBuff = new WeaknessBuff(Integer.parseInt(buffLasTxt.getText()), false, false
+                        , Integer.parseInt(buffDelayTxt.getText()), Integer.parseInt(buffValueTxt.getText())
+                        , Integer.parseInt(buffValueTxt.getText())
+                );
+                spellBuffs.add(weaknessBuff);
+                break;
+            case "Stun Buff":
+                StunBuff stunBuff = new StunBuff(Integer.parseInt(buffLasTxt.getText()), false, false,
+                        Integer.parseInt(buffDelayTxt.getText()));
+                spellBuffs.add(stunBuff);
+                break;
+            case "Disarm Buff":
+                DisarmBuff disarmBuff = new DisarmBuff(Integer.parseInt(buffLasTxt.getText()), false, false,
+                        Integer.parseInt(buffDelayTxt.getText()));
+                spellBuffs.add(disarmBuff);
+        }
     }
 
     @FXML
@@ -221,12 +454,20 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void minioinEditSpecialPower(ActionEvent event) {
-        //todo open edit page
+        Spell spell = makeSpell();
+        if (spell != null) {
+            minionSpell = spell;
+            spellBuffs.clear();
+        }
     }
 
     @FXML
     void heroEditSpecialPower(ActionEvent event) {
-        //todo open edit page
+        Spell spell = makeSpell();
+        if (spell != null) {
+            heroSpell = spell;
+            spellBuffs.clear();
+        }
     }
 
     @FXML
@@ -325,7 +566,9 @@ public class ControllerCustomCard implements Initializable {
 
         manhatanTxt.setStyle(style);
 
+    }
 
-
+    private void clearEveryThing() {
+        //todo
     }
 }

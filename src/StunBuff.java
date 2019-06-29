@@ -1,6 +1,6 @@
 public class StunBuff extends Buff {
-    public StunBuff(int durationTurn, boolean isDispellable, boolean isContinuous) {
-        super(durationTurn, isDispellable, isContinuous);
+    public StunBuff(int durationTurn, boolean isDispellable, boolean isContinuous,int startTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         setPositiveOrNegative(Constants.NEGATIVE);
     }
 
@@ -16,6 +16,6 @@ public class StunBuff extends Buff {
 
     @Override
     public StunBuff clone() {
-        return new StunBuff(getDurationTurn(), isDispellable(), isContinuous());
+        return new StunBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn());
     }
 }

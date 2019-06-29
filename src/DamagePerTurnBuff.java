@@ -3,8 +3,8 @@ public class DamagePerTurnBuff extends Buff {
     private int[] damagePerTurn = new int[1000];
 
     public DamagePerTurnBuff(int durationTurn, boolean isDispellable,
-                             boolean isContinuous, int... damagePerTurn) {
-        super(durationTurn, isDispellable, isContinuous);
+                             boolean isContinuous,int startTurn, int... damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         this.damagePerTurn = damagePerTurn;
     }
 
@@ -25,6 +25,6 @@ public class DamagePerTurnBuff extends Buff {
     @Override
     public DamagePerTurnBuff clone() {
         return new DamagePerTurnBuff(getDurationTurn(), isDispellable()
-                , isContinuous(), damagePerTurn);
+                , isContinuous(),getStartTurn(), damagePerTurn);
     }
 }

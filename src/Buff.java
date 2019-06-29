@@ -9,10 +9,11 @@ abstract public class Buff {
     private boolean isDead;
 
     public Buff(int durationTurn, boolean isDispellable
-            , boolean isContinuous) {
+            , boolean isContinuous,int startTurn) {
         this.durationTurn = durationTurn;
         this.isDispellable = isDispellable;
         this.isContinuous = isContinuous;
+        this.startTurn=startTurn;
     }
 
     public abstract void doEffect(Unit unit);

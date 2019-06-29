@@ -2,8 +2,8 @@ public class HolyBuff extends Buff {
     private int armor;
 
     public HolyBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int armor) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous, int armor,int startTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         setPositiveOrNegative(Constants.POSITIVE);
         this.armor = armor;
     }
@@ -20,7 +20,7 @@ public class HolyBuff extends Buff {
 
     @Override
     public HolyBuff clone() {
-        return new HolyBuff(getDurationTurn(), isDispellable(), isContinuous(), armor);
+        return new HolyBuff(getDurationTurn(), isDispellable(), isContinuous(), armor,getStartTurn());
     }
 
     public int getArmor() {

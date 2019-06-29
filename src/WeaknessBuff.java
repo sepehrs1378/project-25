@@ -3,8 +3,8 @@ public class WeaknessBuff extends Buff {
     private int hpMinus;
 
     public WeaknessBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int hpMinus, int apMinus) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous,int startTurn, int hpMinus, int apMinus) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         this.hpMinus = hpMinus;
         this.apMinus = apMinus;
     }
@@ -29,6 +29,6 @@ public class WeaknessBuff extends Buff {
 
     @Override
     public WeaknessBuff clone() {
-        return new WeaknessBuff(getDurationTurn(), isDispellable(), isContinuous(), hpMinus, apMinus);
+        return new WeaknessBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), hpMinus, apMinus);
     }
 }

@@ -75,19 +75,38 @@
       <JFXTextField fx:id="heroCosttxt" alignment="CENTER" layoutX="502.0" layoutY="198.0" promptText="cost" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="spellCosttxt" alignment="CENTER" layoutX="858.0" layoutY="199.0" promptText="cost" unFocusColor="#c3c3c3" />
       <JFXComboBox fx:id="friendOrEnemyCmb" layoutX="859.0" layoutY="465.0" onAction="#friendOrEnemyCmbSelected" prefHeight="25.0" prefWidth="155.0" promptText="Firend Or Enemy" unFocusColor="#c3c3c3" />
-      <AnchorPane layoutX="1140.0" layoutY="207.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #7da8ed;">
+      <AnchorPane layoutX="1142.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #7da8ed;">
          <children>
             <JFXComboBox fx:id="buffTypeCmb" focusColor="#20d338" layoutX="23.0" layoutY="46.0" prefHeight="25.0" prefWidth="155.0" promptText="Buff Type" unFocusColor="#3f3434" />
-            <JFXTextField fx:id="buffValueTxt" alignment="CENTER" focusColor="#20d338" layoutX="23.0" layoutY="91.0" promptText="Buff Effectt Value" unFocusColor="#3f3434" />
+            <JFXTextField fx:id="buffValueTxt" alignment="CENTER" focusColor="#20d338" layoutX="23.0" layoutY="91.0" promptText="Buff Effect Value" unFocusColor="#3f3434" />
             <JFXTextField fx:id="buffDelayTxt" alignment="CENTER" focusColor="#20d338" layoutX="23.0" layoutY="146.0" prefHeight="25.0" prefWidth="71.0" promptText="Delay" unFocusColor="#3f3434" />
             <JFXTextField fx:id="buffLasTxt" alignment="CENTER" focusColor="#20d338" layoutX="108.0" layoutY="146.0" prefHeight="25.0" prefWidth="71.0" promptText="Last" unFocusColor="#3f3434" />
          </children>
       </AnchorPane>
-      <JFXButton layoutX="1213.0" layoutY="413.0" onAction="#addBuffToSpell" text="Add+" textFill="#07d7dd" underline="true" />
+      <JFXButton fx:id="addBuffBtn" layoutX="1168.0" layoutY="318.0" onAction="#addBuffToSpell" text="Add+" textFill="#07d7dd" underline="true" />
       <JFXComboBox fx:id="targetClassCmb" layoutX="953.0" layoutY="259.0" onAction="#targetClassCmbSelected" prefHeight="25.0" prefWidth="111.0" promptText="Target Class" unFocusColor="#c3c3c3" />
       <JFXComboBox fx:id="targetTypeCmb" layoutX="810.0" layoutY="259.0" onAction="#targetTypeCmbSelected" prefHeight="25.0" prefWidth="111.0" promptText="Target Type" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="targetWidthTxt" alignment="CENTER" layoutX="906.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Width" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="targetHeigthTxt" alignment="CENTER" layoutX="995.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Height" unFocusColor="#c3c3c3" />
       <JFXTextField fx:id="manhatanTxt" alignment="CENTER" layoutX="820.0" layoutY="305.0" prefHeight="25.0" prefWidth="62.0" promptText="Manhatan" unFocusColor="#c3c3c3" />
+      <ImageView fitHeight="67.0" fitWidth="62.0" layoutX="33.0" layoutY="75.0">
+         <image>
+            <Image url="@pics/custom_card_menu/icon_mana.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="62.0" layoutX="393.0" layoutY="75.0">
+         <image>
+            <Image url="@pics/custom_card_menu/icon_mana.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="62.0" layoutX="748.0" layoutY="75.0">
+         <image>
+            <Image url="@pics/custom_card_menu/icon_mana.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="minionManaTxt" alignment="CENTER" layoutX="44.0" layoutY="96.0" prefHeight="25.0" prefWidth="39.0" promptText="mana" />
+      <JFXTextField fx:id="heroManaTxt" alignment="CENTER" layoutX="405.0" layoutY="96.0" prefHeight="25.0" prefWidth="39.0" promptText="mana" />
+      <JFXTextField fx:id="spellManaTxt" alignment="CENTER" layoutX="760.0" layoutY="96.0" prefHeight="25.0" prefWidth="39.0" promptText="mana" />
+      <JFXButton fx:id="clearBuffsBtn" layoutX="1223.0" layoutY="318.0" onAction="#clearBuffs" prefHeight="25.0" prefWidth="105.0" text="clear buffs" textFill="#07d7dd" underline="true" />
    </children>
 </AnchorPane>

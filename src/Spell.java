@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class   Spell extends Card {
+class Spell extends Card {
     private static transient DataBase dataBase = DataBase.getInstance();
     private int apChange;
     private int hpChange;
@@ -202,5 +202,13 @@ class   Spell extends Card {
 
     public void setTurnsToGetReady(int turnsToGetReady) {
         this.turnsToGetReady = turnsToGetReady;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
+
+    public void setActivationType(SpellActivationType activationType) {
+        this.activationType = activationType;
     }
 }

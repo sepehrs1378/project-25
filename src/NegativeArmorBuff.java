@@ -2,8 +2,8 @@ public class NegativeArmorBuff extends Buff {
     private int negativeArmorAmount;
 
     public NegativeArmorBuff(int durationTurn, boolean isContinuous
-            , boolean isDispellable, int negativeArmorAmount) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isDispellable,int startTurn, int negativeArmorAmount) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         this.negativeArmorAmount = negativeArmorAmount;
         setPositiveOrNegative(Constants.NEGATIVE);
     }
@@ -20,7 +20,7 @@ public class NegativeArmorBuff extends Buff {
 
     @Override
     public NegativeArmorBuff clone() {
-        return new NegativeArmorBuff(getDurationTurn(), isContinuous(), isDispellable(), negativeArmorAmount);
+        return new NegativeArmorBuff(getDurationTurn(), isContinuous(), isDispellable(),getStartTurn(), negativeArmorAmount);
     }
 
     public int getNegativeArmorAmount() {

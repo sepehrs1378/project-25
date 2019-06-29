@@ -23,6 +23,7 @@
           "damagePerTurn": 1,
           "startTurn": 0,
           "durationTurn": 2,
+          "delayTurn": 0,
           "isDispellable": false,
           "isContinuous": false,
           "isDead": false
