@@ -172,6 +172,7 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > deathDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
+                    removeFromRoot();
                     this.stop();
                 }
             }
@@ -266,5 +267,16 @@ public class UnitImage {
 
     public int getColumn() {
         return column;
+    }
+
+    private void removeFromRoot() {
+        List<UnitImage> unitImageList = ControllerBattleCommands.getOurInstance().getUnitImageList();
+        root.getChildren().remove(unitView);
+        root.getChildren().remove(apNumber);
+        root.getChildren().remove(hpNumber);
+        for (BuffImage buffImage : buffImageList) {
+            root.getChildren().remove(buffImage);
+        }
+        unitImageList.remove(this);
     }
 }
