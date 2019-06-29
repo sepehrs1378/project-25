@@ -167,9 +167,7 @@ public class Main extends Application {
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        File file = new File("src/pics/cursors/main_cursor.png");
-        Image image = new Image(file.toURI().toString());
-        primaryStage.getScene().setCursor(new ImageCursor(image));
+       setCursor();
         playMusic();
         primaryStage.setOnCloseRequest(e->{
             DataBase.getInstance().saveAccounts();
