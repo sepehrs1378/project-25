@@ -33,6 +33,7 @@ public class ControllerBattleCommands implements Initializable {
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
+    private List<SpellImage> spellImageList = new ArrayList<>();
     private CellImage[][] cellImageList = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     //todo next card has bug
@@ -152,7 +153,6 @@ public class ControllerBattleCommands implements Initializable {
         setupPlayersInfoViews();
         setupHeroSpecialPowerView();
         setupItemView();
-        Main.window.setScene(new Scene(battleGroundPane));
         updatePane();
     }
 
@@ -300,13 +300,21 @@ public class ControllerBattleCommands implements Initializable {
         return false;
     }
 
+    public List<SpellImage> getSpellImageList() {
+        return spellImageList;
+    }
+
     private void insertSpellView(int row, int column, Card card) {
+        SpellImage insertedSpellImage = new SpellImage(card.getId(), row, column, battleGroundPane);
+        spellImageList.add(insertedSpellImage);
+        clickedImageView = null;
+
     }
 
     private void insertUnitView(int row, int column, Card card) {
-        UnitImage insertedUnitView = new UnitImage(card.getId(), battleGroundPane);
-        unitImageList.add(insertedUnitView);
-        insertedUnitView.setInCell(row, column);
+        UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
+        unitImageList.add(insertedUnitImage);
+        insertedUnitImage.setInCell(row, column);
         clickedImageView = null;
     }
 
@@ -466,6 +474,10 @@ public class ControllerBattleCommands implements Initializable {
     private void updateUnitImages() {
         for (UnitImage unitImage : unitImageList) {
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            if (!battleGround.doesHaveUnit(unitImage.getId())) {
+                unitImage.showDeath();
+                continue;
+            }
             Unit unit = battleGround.getUnitWithID(unitImage.getId());
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
@@ -816,5 +828,9 @@ public class ControllerBattleCommands implements Initializable {
 
     public ImageView getNextCardRing() {
         return nextCardRing;
+    }
+
+    public List<UnitImage> getUnitImageList() {
+        return unitImageList;
     }
 }
