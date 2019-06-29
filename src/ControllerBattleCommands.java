@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sun.print.UnixPrintJob;
 
 import java.io.FileInputStream;
 import java.io.File;
@@ -34,7 +33,7 @@ public class ControllerBattleCommands implements Initializable {
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
-    private CellImage[][] battleGroundCells = new CellImage[5][9];
+    private CellImage[][] cellImageList = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     //todo next card has bug
 
@@ -221,7 +220,7 @@ public class ControllerBattleCommands implements Initializable {
     private void setupBattleGroundCells() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
-                battleGroundCells[row][column] = new CellImage(row, column, battleGroundPane);
+                cellImageList[row][column] = new CellImage(row, column, battleGroundPane);
             }
         }
     }
@@ -428,15 +427,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void updatePane() {
-        for (UnitImage unitImage : unitImageList) {
-            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-            Unit unit = battleGround.getUnitWithID(unitImage.getId());
-            unitImage.setApNumber(unit.getAp());
-            unitImage.setHpNumber(unit.getHp());
-            if (unitImage.getUnitView().equals(clickedImageView))
-                unitImage.setUnitStyleAsSelected();
-            else unitImage.setStyleAsNotSelected();
-        }
+        updateUnitImages();
         Collectable collectable = dataBase.getCurrentBattle().getCollectable();
         Player player1 = dataBase.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
@@ -450,12 +441,32 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
+        updatePlayersInfo();
+        updateHand();
+    }
+
+    private void updatePlayersInfo() {
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
+    }
+
+    private void updateHand() {
         List<Card> handCards = loggedInPlayer.getHand().getCards();
         for (int i = 0; i < handCards.size(); i++) {
             Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());
+        }
+    }
+
+    private void updateUnitImages() {
+        for (UnitImage unitImage : unitImageList) {
+            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            Unit unit = battleGround.getUnitWithID(unitImage.getId());
+            unitImage.setApNumber(unit.getAp());
+            unitImage.setHpNumber(unit.getHp());
+            if (unitImage.getUnitView().equals(clickedImageView))
+                unitImage.setUnitStyleAsSelected();
+            else unitImage.setStyleAsNotSelected();
         }
     }
 

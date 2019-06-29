@@ -1,6 +1,7 @@
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import sun.awt.image.BufImgSurfaceData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class CellImage {
     private int row = 0;
     private int column = 0;
     private Label cellLabel = new Label();
-    private List<ImageView> buffViewList = new ArrayList<>();
+    private List<BuffImage> buffImageList = new ArrayList<>();
 
     public CellImage(int row, int column, AnchorPane root) {
         this.root = root;
@@ -43,5 +44,13 @@ public class CellImage {
         });
     }
 
-
+    public void addBuffImage(BuffType buffType) {
+        for (BuffImage buffImage : buffImageList) {
+            if (buffImage.getBuffType().equals(buffType))
+                return;
+        }
+        BuffImage buffImage = new BuffImage(buffType, root);
+        buffImageList.add(buffImage);
+        buffImage.relocate(cellLabel.getLayoutX(), cellLabel.getLayoutY());
+    }
 }
