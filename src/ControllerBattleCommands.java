@@ -428,10 +428,6 @@ public class ControllerBattleCommands implements Initializable {
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
         }
-        specialPowerLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getHero().getMainSpecialPower().getName());
-        Item item = dataBase.getLoggedInAccount().getMainDeck().getItem();
-        if (item != null)
-            collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
         Collectable collectable = dataBase.getCurrentBattle().getCollectable();
         Player player1 = dataBase.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()){
@@ -746,6 +742,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean endGame() {
         dataBase.setCurrentBattle(null);
+
         return true;
     }
 
@@ -755,7 +752,7 @@ public class ControllerBattleCommands implements Initializable {
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             endGame();
-            throw new GoToMainMenuException("go to main menu");
+            //todo check end game
         }
         return false;
     }

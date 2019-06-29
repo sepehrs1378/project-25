@@ -1,5 +1,4 @@
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +6,8 @@ import java.util.List;
 public class AI {
     private static AI ourInstance = new AI();
     private static DataBase dataBase = DataBase.getInstance();
-    Battle battle;
+    private Battle battle;
+
     public static AI getInstance() {
         return ourInstance;
     }
@@ -17,7 +17,7 @@ public class AI {
 
     public void doNextMove(AnchorPane battleGroundPane) {
         Battle battle = dataBase.getCurrentBattle();
-        moveUnits(battle,battleGroundPane);
+        moveUnits(battle, battleGroundPane);
         for (Unit unit : battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())) {
             attackWithUnit(battle, unit);
         }
@@ -36,7 +36,7 @@ public class AI {
                         battle.insert(card, coordination[0], coordination[1]);
                         battle.getPlayer2().moveNextCardToHand();
                         battle.getPlayer2().setNextCard();
-                        ControllerBattleCommands.getOurInstance().insertUnitView(coordination[0],coordination[1],card);
+                        ControllerBattleCommands.getOurInstance().insertUnitView(coordination[0], coordination[1], card);
                         return;
                     }
                 }
@@ -63,14 +63,14 @@ public class AI {
         return cells;
     }
 
-    public void moveUnits(Battle battle,AnchorPane battleGroundPane) {
+    public void moveUnits(Battle battle, AnchorPane battleGroundPane) {
         for (Unit unit : battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())) {
             if (!unit.didMoveThisTurn()) {
                 int[] coordination = battle.getBattleGround().getRandomCellToMoveForUnit(unit);
                 battle.getPlayer2().setSelectedUnit(unit);
                 battle.getBattleGround().moveUnit(coordination[0], coordination[1]);
-                UnitImage unitImage =ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
-                unitImage.showRun(coordination[0],coordination[1]);
+                UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
+                unitImage.showRun(coordination[0], coordination[1]);
             }
         }
     }
@@ -87,7 +87,18 @@ public class AI {
         }
         int counter = 0;
         while (!unit.didAttackThisTurn() && counter < unitIds.size()) {
-            unit.attack(unitIds.get(counter));
+            OutputMessageType om = unit.attack(unitIds.get(counter));
+            if (om == OutputMessageType.UNIT_ATTACKED) {
+                UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
+                Unit unitTarget = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(unitIds.get(counter));
+                unitImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
+            } else if (om == OutputMessageType.UNIT_AND_ENEMY_ATTACKED) {
+                UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
+                UnitImage unitTargetImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unitIds.get(counter));
+                Unit unitTarget = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(unitIds.get(counter));
+                unitImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
+                unitTargetImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unit)[1]);
+            }
             counter++;
         }
     }
