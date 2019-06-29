@@ -23,6 +23,11 @@ public class NegativeArmorBuff extends Buff {
         return new NegativeArmorBuff(getDurationTurn(), isContinuous(), isDispellable(),getStartTurn(), negativeArmorAmount);
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.negativeArmorBuff;
+    }
+
     public int getNegativeArmorAmount() {
         return negativeArmorAmount;
     }

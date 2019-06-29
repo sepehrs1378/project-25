@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import sun.print.UnixPrintJob;
 
+import javax.lang.model.util.SimpleElementVisitor6;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -37,8 +38,16 @@ public class HandImage {
         this.number = number;
         this.root = root;
         cardView.setOnMouseClicked(event -> {
-            ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
-            cardView.setStyle(SELECTED_STYLE);
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+            if (controller.getClickedImageView() != null
+                    && controller.getClickedImageView().equals(cardView)) {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(null);
+                setStyleAsNotSelected();
+            } else {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
+                setStyleAsSelected();
+            }
+            ControllerBattleCommands.getOurInstance().updatePane();
         });
         cardView.setOnMouseEntered(event -> {
             if (!cardView.getStyle().equals(SELECTED_STYLE))
@@ -146,5 +155,13 @@ public class HandImage {
 
     public ImageView getCardView() {
         return cardView;
+    }
+
+    public void setStyleAsSelected() {
+        cardView.setStyle(SELECTED_STYLE);
+    }
+
+    public void setStyleAsNotSelected() {
+        cardView.setStyle(null);
     }
 }

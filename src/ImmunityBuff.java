@@ -23,6 +23,11 @@ public class ImmunityBuff extends Buff {
         return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), immunity);
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.immunityBuff;
+    }
+
     public String getImmunity() {
         return immunity;
     }

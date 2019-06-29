@@ -29,6 +29,11 @@ public class PowerBuff extends Buff {
         return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus,getStartTurn());
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.powerBuff;
+    }
+
     public int getApPlus() {
         return apPlus;
     }

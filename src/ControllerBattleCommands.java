@@ -288,16 +288,19 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case CARD_INSERTED:
-                if (card instanceof Card)
+                if (card instanceof Unit)
                     insertUnitView(row, column, card);
                 if (card instanceof Spell) {
-                    
+                    insertSpellView(row, column, card);
                 }
                 handImage.clearHandImage();
                 return true;
             default:
         }
         return false;
+    }
+
+    private void insertSpellView(int row, int column, Card card) {
     }
 
     private void insertUnitView(int row, int column, Card card) {
@@ -374,7 +377,6 @@ public class ControllerBattleCommands implements Initializable {
     private boolean handleUnitSelection(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
-        //todo fix this: if a friendly unit is selected, another unit cannot be selected
         switch (currentPlayer.selectUnit(id)) {
             case SELECTED:
                 unitImage.setUnitStyleAsSelected();
@@ -412,12 +414,6 @@ public class ControllerBattleCommands implements Initializable {
         handImageList.add(new HandImage(4, getBattleGroundPane()));
     }
 
-//    private void setupPlayerInfoViews() {
-//        todo isn't used
-//        PlayerInfoView player1InfoView = new PlayerInfoView(1);
-//        PlayerInfoView player2InfoView = new PlayerInfoView(2);
-//    }
-
     public UnitImage getUnitImageWithId(String id) {
         for (UnitImage unitImage : unitImageList) {
             if (unitImage.getId().equals(id))
@@ -441,8 +437,17 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
+        updateHandImages();
         updatePlayersInfo();
         updateHand();
+    }
+
+    private void updateHandImages() {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(clickedImageView))
+                handImage.setStyleAsSelected();
+            else handImage.setStyleAsNotSelected();
+        }
     }
 
     private void updatePlayersInfo() {
@@ -467,6 +472,10 @@ public class ControllerBattleCommands implements Initializable {
             if (unitImage.getUnitView().equals(clickedImageView))
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
+            unitImage.clearBuffImageList();
+            for (Buff buff : unit.getBuffs()) {
+                unitImage.addBuffImage(buff.getType());
+            }
         }
     }
 

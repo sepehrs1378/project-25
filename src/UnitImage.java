@@ -237,7 +237,7 @@ public class UnitImage {
         relocate(x, y);
     }
 
-    public void relocate(double x, double y) {
+    private void relocate(double x, double y) {
         unitView.setTranslateX(x);
         unitView.setTranslateY(y);
         resetStatsPositions();
@@ -250,6 +250,10 @@ public class UnitImage {
         }
         BuffImage buffImage = new BuffImage(buffType, root);
         buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
+    }
+
+    public void clearBuffImageList() {
+        buffImageList.clear();
     }
 
     public ImageView getUnitView() {
