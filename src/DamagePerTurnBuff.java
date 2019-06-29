@@ -27,4 +27,9 @@ public class DamagePerTurnBuff extends Buff {
         return new DamagePerTurnBuff(getDurationTurn(), isDispellable()
                 , isContinuous(),getStartTurn(), damagePerTurn);
     }
+
+    @Override
+    public BuffType getType() {
+        return BuffType.damagePerTurnBuff;
+    }
 }

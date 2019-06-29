@@ -32,6 +32,11 @@ public class WeaknessBuff extends Buff {
         return new WeaknessBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), hpMinus, apMinus);
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.weaknessBuff;
+    }
+
     public int getApMinus() {
         return apMinus;
     }

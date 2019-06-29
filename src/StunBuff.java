@@ -18,4 +18,9 @@ public class StunBuff extends Buff {
     public StunBuff clone() {
         return new StunBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn());
     }
+
+    @Override
+    public BuffType getType() {
+        return BuffType.stunBuff;
+    }
 }

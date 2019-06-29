@@ -26,6 +26,11 @@ public class PoisonBuff extends Buff {
         return new PoisonBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), damagePerTurn);
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.poisonBuff;
+    }
+
     public int getDamagePerTurn() {
         return damagePerTurn;
     }

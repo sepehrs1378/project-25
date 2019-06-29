@@ -2,7 +2,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import sun.print.UnixPrintJob;
 
+import javax.lang.model.util.SimpleElementVisitor6;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -36,8 +38,16 @@ public class HandImage {
         this.number = number;
         this.root = root;
         cardView.setOnMouseClicked(event -> {
-            ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
-            cardView.setStyle(SELECTED_STYLE);
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+            if (controller.getClickedImageView() != null
+                    && controller.getClickedImageView().equals(cardView)) {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(null);
+                setStyleAsNotSelected();
+            } else {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
+                setStyleAsSelected();
+            }
+            ControllerBattleCommands.getOurInstance().updatePane();
         });
         cardView.setOnMouseEntered(event -> {
             if (!cardView.getStyle().equals(SELECTED_STYLE))
@@ -52,7 +62,8 @@ public class HandImage {
 
     public void setCardImage(String id) {
         this.id = id;
-        Card card = ControllerBattleCommands.getOurInstance().getLoggedInPlayer().getHand().getCardById(id);
+        Card card = ControllerBattleCommands.getOurInstance()
+                .getLoggedInPlayer().getHand().getCardById(id);
         cardView.setVisible(true);
         manaLabel.setVisible(true);
         try {
@@ -109,30 +120,25 @@ public class HandImage {
     }
 
     private void resetStatsPositions() {
-        if (unitOrSpell.equals(UNIT)) {
-            hpLabel.setTranslateX(cardView.getTranslateX() + UNIT_VIEW_SIZE * 0.33);
-            hpLabel.setTranslateY(cardView.getTranslateY() + UNIT_VIEW_SIZE);
-            apLabel.setTranslateX(cardView.getTranslateX() + UNIT_VIEW_SIZE * 0.66);
-            apLabel.setTranslateY(cardView.getTranslateY() + UNIT_VIEW_SIZE);
-            manaLabel.setTranslateX(cardView.getTranslateX() + UNIT_VIEW_SIZE * 0.50);
-            manaLabel.setTranslateY(cardView.getTranslateY() + UNIT_VIEW_SIZE * 1.20);
-        }
-        if (unitOrSpell.equals(SPELL)) {
-            manaLabel.setTranslateX(cardView.getTranslateX() + SPELL_VIEW_SIZE * 0.50);
-            manaLabel.setTranslateY(cardView.getTranslateY() + SPELL_VIEW_SIZE * 1.20);
-        }
+        int ringSize = GraphicConstants.HAND_RING_SIZE;
+        hpLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.15);
+        hpLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.8);
+        apLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.75);
+        apLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.8);
+        manaLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.45);
+        manaLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.9);
     }
 
     private void relocateCardToHand() {
         double x = 0;
         double y = 0;
         if (unitOrSpell.equals(UNIT)) {
-            x = ringView.getLayoutX() + ringView.getFitWidth() / 2 - UNIT_VIEW_SIZE / 2;
-            y = ringView.getLayoutY() - UNIT_VIEW_SIZE / 2;
+            x = ringView.getLayoutX() + ringView.getFitWidth() * 0.5 - UNIT_VIEW_SIZE / 2;
+            y = ringView.getLayoutY() + ringView.getFitHeight() * 0.3 - UNIT_VIEW_SIZE / 2;
         }
         if (unitOrSpell.equals(SPELL)) {
-            x = ringView.getLayoutX() + ringView.getFitWidth() / 2 - SPELL_VIEW_SIZE / 2;
-            y = ringView.getLayoutY() + ringView.getFitHeight() / 2 - SPELL_VIEW_SIZE / 2;
+            x = ringView.getLayoutX() + ringView.getFitWidth() * 0.5 - SPELL_VIEW_SIZE / 2;
+            y = ringView.getLayoutY() + ringView.getFitHeight() * 0.5 - SPELL_VIEW_SIZE / 2;
         }
         cardView.setTranslateX(x);
         cardView.setTranslateY(y);
@@ -155,5 +161,13 @@ public class HandImage {
 
     public ImageView getCardView() {
         return cardView;
+    }
+
+    public void setStyleAsSelected() {
+        cardView.setStyle(SELECTED_STYLE);
+    }
+
+    public void setStyleAsNotSelected() {
+        cardView.setStyle(null);
     }
 }

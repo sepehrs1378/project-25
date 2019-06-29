@@ -9,6 +9,7 @@ public class SpellImage {
     private AnchorPane root;
     private String id;
     private ImageView spellView = new ImageView();
+    private ImageView spellEffect = new ImageView();
 
     public SpellImage(String id, AnchorPane root) {
         this.root = root;
