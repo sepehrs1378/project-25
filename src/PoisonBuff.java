@@ -25,4 +25,8 @@ public class PoisonBuff extends Buff {
     public PoisonBuff clone() {
         return new PoisonBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), damagePerTurn);
     }
+
+    public int getDamagePerTurn() {
+        return damagePerTurn;
+    }
 }

@@ -49,8 +49,15 @@ public class Constants {
     public static final String WEAKER_AP = "weaker ap";
     public static final String HOLY_BUFF = "holy buff";
 
+    public static final String WEAKNESS_BUFF = "Weakness Buff";
+    public static final String DISARM_BUFF = "Disarm Buff";
+    public static final String POISON_BUFF = "Poison Buff";
+    public static final String STUN_BUFF = "Stun Buff";
+    public static final String POWER_BUFF = "Power Buff";
+
     public static final String MULTI = "multi";
     public static final String SINGLE = "single";
 
     public static final String ID_PATTERN = "^(.+)_(.+)_(\\d+)$";
+
 }

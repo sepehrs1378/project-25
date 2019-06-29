@@ -28,4 +28,12 @@ public class PowerBuff extends Buff {
     public PowerBuff clone() {
         return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus,getStartTurn());
     }
+
+    public int getApPlus() {
+        return apPlus;
+    }
+
+    public int getHpPlus() {
+        return hpPlus;
+    }
 }
