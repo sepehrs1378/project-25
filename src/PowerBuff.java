@@ -3,8 +3,8 @@ public class PowerBuff extends Buff {
     private int hpPlus;
 
     public PowerBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int hpPlus, int apPlus) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous, int hpPlus, int apPlus,int startTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         setPositiveOrNegative(Constants.POSITIVE);
         this.hpPlus = hpPlus;
         this.apPlus = apPlus;
@@ -26,6 +26,14 @@ public class PowerBuff extends Buff {
 
     @Override
     public PowerBuff clone() {
-        return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus);
+        return new PowerBuff(getDurationTurn(), isDispellable(), isContinuous(), hpPlus, apPlus,getStartTurn());
+    }
+
+    public int getApPlus() {
+        return apPlus;
+    }
+
+    public int getHpPlus() {
+        return hpPlus;
     }
 }

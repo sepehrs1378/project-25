@@ -5,8 +5,8 @@ public class InfernoBuff extends Buff {
     private int damagePerTurn;
 
     public InfernoBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int damagePerTurn) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous,int startTurn, int damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         this.damagePerTurn = damagePerTurn;
     }
 
@@ -30,6 +30,6 @@ public class InfernoBuff extends Buff {
 
     @Override
     public InfernoBuff clone() {
-        return new InfernoBuff(getDurationTurn(), isDispellable(), isContinuous(), damagePerTurn);
+        return new InfernoBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), damagePerTurn);
     }
 }

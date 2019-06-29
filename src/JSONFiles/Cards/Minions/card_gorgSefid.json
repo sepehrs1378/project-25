@@ -35,14 +35,14 @@
             "@type": "SequentialDamageBuff",
             "@val": {
               "damagePerTurn": [
-                6,
                 4
               ],
               "positiveOrNegative": "negative",
-              "startTurn": 0,
+              "startTurn": 6,
               "durationTurn": 2,
-              "isDispellable": false,
-              "isContinuous": true,
+              "delayTurn": 0,
+              "isDispellable": true,
+              "isContinuous": false,
               "isDead": false
             }
           }

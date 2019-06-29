@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sun.audio.AudioPlayer;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 public class Main extends Application {
     private DataBase dataBase = DataBase.getInstance();
@@ -167,7 +170,7 @@ public class Main extends Application {
         File file = new File("src/pics/cursors/main_cursor.png");
         Image image = new Image(file.toURI().toString());
         primaryStage.getScene().setCursor(new ImageCursor(image));
-//        playMusic();
+        playMusic();
         primaryStage.setOnCloseRequest(e->{
             DataBase.getInstance().saveAccounts();
             primaryStage.close();
@@ -178,9 +181,11 @@ public class Main extends Application {
     private void playMusic(){
         try
         {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File("src/music/music_battlemap_firesofvictory.m4a")));
-            clip.start();
+            Media media = new Media(Paths.get("src/music/music_battlemap_firesofvictory.m4a").toUri().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(Integer.MAX_VALUE);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.play();
         }
         catch (Exception exc)
         {

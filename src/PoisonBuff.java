@@ -3,8 +3,8 @@ public class PoisonBuff extends Buff {
     private int damagePerTurn;
 
     public PoisonBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int damagePerTurn) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous,int startTurn, int damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         setPositiveOrNegative(Constants.NEGATIVE);
         this.damagePerTurn = damagePerTurn;
     }
@@ -23,6 +23,10 @@ public class PoisonBuff extends Buff {
 
     @Override
     public PoisonBuff clone() {
-        return new PoisonBuff(getDurationTurn(), isDispellable(), isContinuous(), damagePerTurn);
+        return new PoisonBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), damagePerTurn);
+    }
+
+    public int getDamagePerTurn() {
+        return damagePerTurn;
     }
 }

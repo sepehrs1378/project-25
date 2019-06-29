@@ -255,7 +255,7 @@ public class PlayerCollection {
                 cards.remove(card);
                 for (Deck deck : decks) {
                     deck.getCards().remove(card);
-                    if (deck.getHero().equals(card)) {
+                    if (deck.getHero() != null && deck.getHero().equals(card)) {
                         deck.setHero(null);
                     }
                 }
@@ -265,7 +265,7 @@ public class PlayerCollection {
                 dataBase.getLoggedInAccount().addMoney(usable.getPrice());
                 items.remove(usable);
                 for (Deck deck : decks) {
-                    if (deck.getItem().equals(usable)) {
+                    if (deck.getItem() != null && deck.getItem().equals(usable)) {
                         deck.setItem(null);
                     }
                 }

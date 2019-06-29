@@ -5,8 +5,8 @@ public class SequentialDamageBuff extends Buff {
     private List<Integer> damagePerTurn = new ArrayList<>();
 
     public SequentialDamageBuff(int durationTurn, boolean isContinuous
-            , boolean isDispellable, int... damagePerTurn) {
-        super(durationTurn, isContinuous, isDispellable);
+            , boolean isDispellable,int startTurn, int... damagePerTurn) {
+        super(durationTurn, isDispellable,isContinuous,startTurn);
         setPositiveOrNegative(Constants.NEGATIVE);
         for (int damage : damagePerTurn) {
             this.damagePerTurn.add(damage);
@@ -29,6 +29,6 @@ public class SequentialDamageBuff extends Buff {
         int[] damageArray = new int[10];
         for (int i = 0; i < damagePerTurn.size(); i++)
             damageArray[i] = damagePerTurn.get(i);
-        return new SequentialDamageBuff(getDurationTurn(), isContinuous(), isDispellable(), damageArray);
+        return new SequentialDamageBuff(getDurationTurn(),  isDispellable(),isContinuous(),getStartTurn(), damageArray);
     }
 }
