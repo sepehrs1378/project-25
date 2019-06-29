@@ -325,7 +325,7 @@ public class ControllerBattleCommands implements Initializable {
 
     }
 
-    private void insertUnitView(int row, int column, Card card) {
+    public void insertUnitView(int row, int column, Card card) {
         UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
         unitImageList.add(insertedUnitImage);
         insertedUnitImage.setInCell(row, column);
@@ -819,6 +819,7 @@ public class ControllerBattleCommands implements Initializable {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
         endTurnMineBtn.setDisable(true);
+        graveYardBtn.setDisable(true);
         KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),keyValue);
         Timeline timeline = new Timeline();

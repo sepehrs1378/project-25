@@ -33,7 +33,6 @@ public class BuffImage {
             buffView.setImage(new Image(new FileInputStream
                     ("./src/ApProjectResources/buffs/" + buffType.toString() + "/effect")));
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
