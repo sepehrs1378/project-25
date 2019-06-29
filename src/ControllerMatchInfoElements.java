@@ -24,13 +24,13 @@ public class ControllerMatchInfoElements {
         ImageView imageView;
         accountName.setText(opponentName);
         if (winOrLoss.equals("Win")){
-            file = new File("src/pics/match_history_menu_pics/win_image");
+            file = new File("src/pics/match_history_menu_pics/win_image.png");
             image = new Image(file.toURI().toString());
             imageView = new ImageView(image);
             imageView.setLayoutX(367);
             matchHistoryPane.getChildren().add(imageView);
         }else {
-            file = new File("src/pics/match_history_menu_pics/loss_image");
+            file = new File("src/pics/match_history_menu_pics/loss_image.png");
             image = new Image(file.toURI().toString());
             imageView = new ImageView(image);
             imageView.setLayoutX(367);

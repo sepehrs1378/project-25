@@ -84,6 +84,12 @@ public class HandImage {
             }
             setCardViewStyle();
             relocateCardToHand();
+//            System.out.println(manaLabel);
+//            System.out.println("card"+card);
+//            if (card==null)
+//                return;
+            //todo very important check later
+
             manaLabel.setText(card.getMana() + "");
         } catch (IOException e) {
             e.printStackTrace();
