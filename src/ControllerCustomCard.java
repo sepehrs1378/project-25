@@ -6,9 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -142,8 +146,12 @@ public class ControllerCustomCard implements Initializable {
     private JFXButton clearBuffsBtn;
 
     @FXML
+    private VBox buffBox;
+
+    @FXML
     void clearBuffs(ActionEvent event) {
         spellBuffs.clear();
+        showBuffsInBuffBox();
     }
 
     @FXML
@@ -186,7 +194,7 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void makeCreateSpellOpeque(MouseEvent event) {
+    void makeCreateSpellOpaque(MouseEvent event) {
         createSpellBtn.setOpacity(1);
     }
 
@@ -260,7 +268,7 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void makeCreateHeroOpeque(MouseEvent event) {
+    void makeCreateHeroOpaque(MouseEvent event) {
         createHeroBtn.setOpacity(1);
     }
 
@@ -343,7 +351,7 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void makeCreateMinionOpeque(MouseEvent event) {
+    void makeCreateMinionOpaque(MouseEvent event) {
         createMinionBtn.setOpacity(1);
     }
 
@@ -401,6 +409,32 @@ public class ControllerCustomCard implements Initializable {
                         Integer.parseInt(buffDelayTxt.getText()));
                 spellBuffs.add(disarmBuff);
         }
+        showBuffsInBuffBox();
+    }
+
+    private void showBuffsInBuffBox(){
+        buffBox.getChildren().clear();
+        for (int i = 0; i < spellBuffs.size(); i++) {
+            Label label = new Label();
+            label.setAlignment(Pos.CENTER);
+            label.setTextFill(Color.WHITE);
+            label.setPrefWidth(177);
+            label.setStyle("-fx-border-color: #dde0bc; -fx-font-style: italic; -fx-font-weight: bold");
+            if (spellBuffs.get(i) instanceof HolyBuff){
+                label.setText(Constants.HOLY_BUFF);
+            }else if(spellBuffs.get(i) instanceof  PowerBuff){
+                label.setText(Constants.POWER_BUFF);
+            }else if (spellBuffs.get(i) instanceof PoisonBuff){
+                label.setText(Constants.POISON_BUFF);
+            }else if(spellBuffs.get(i) instanceof DisarmBuff){
+                label.setText(Constants.DISARM_BUFF);
+            }else if (spellBuffs.get(i) instanceof WeaknessBuff){
+                label.setText(Constants.WEAKNESS_BUFF);
+            }else if(spellBuffs.get(i) instanceof StunBuff){
+                label.setText(Constants.STUN_BUFF);
+            }
+            buffBox.getChildren().add(label);
+        }
     }
 
     @FXML
@@ -453,7 +487,7 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void minioinEditSpecialPower(ActionEvent event) {
+    void minionEditSpecialPower(ActionEvent event) {
         Spell spell = makeSpell();
         if (spell != null) {
             minionSpell = spell;
@@ -471,7 +505,7 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void activastionTypeCmbSelected(ActionEvent event) {
+    void activationTypeCmbSelected(ActionEvent event) {
         activationTypecombox.setStyle("-fx-background-color: #7da8ed;");
     }
 
