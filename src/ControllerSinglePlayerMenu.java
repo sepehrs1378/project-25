@@ -81,12 +81,14 @@ public class ControllerSinglePlayerMenu implements Initializable{
         /*Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
                 Constants.CLASSIC, 0, null, Constants.SINGLE);
         database.setCurrentBattle(battle);*/
+        Main.getGlobalMediaPlayer().stop();
         FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         ControllerMainMenu.stage.close();
     }
 
     @FXML
     void enterLevel2(MouseEvent event) throws IOException {
+        Main.getGlobalMediaPlayer().stop();
         Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
                 , Constants.ONE_FLAG, 1, null, Constants.SINGLE);
         database.setCurrentBattle(battle);
@@ -96,6 +98,7 @@ public class ControllerSinglePlayerMenu implements Initializable{
 
     @FXML
     void enterLevel3(MouseEvent event) throws IOException {
+        Main.getGlobalMediaPlayer().stop();
         Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
                 , Constants.FLAGS, 7, null, Constants.SINGLE);
         database.setCurrentBattle(battle);
@@ -319,6 +322,7 @@ public class ControllerSinglePlayerMenu implements Initializable{
 
     @FXML
     void enterCustomGame(MouseEvent event) throws IOException {
+        Main.getGlobalMediaPlayer().stop();
         if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null){
             invalidDeckLabel.setVisible(true);
             invalidModeLabel.setVisible(true);
