@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
-    private String mouseEnteredStyle = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
-    private String mouseExitedStyle = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
-    private String selectedStyle = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
+    private final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
+    private final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
+    private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
     private AnchorPane root;
     private long attackDuration = 2000;
     private long deathDuration = 3000;
@@ -26,7 +26,7 @@ public class UnitImage {
 
     private ImageView unitView = new ImageView();
 
-    private Label apNumber = new Label("0");//todo relocate and reset it
+    private Label apNumber = new Label("0");//todo relocateCardView and reset it
     private Label hpNumber = new Label("0");//todo
     private String id;
     private UnitStatus unitStatus;
@@ -47,12 +47,12 @@ public class UnitImage {
             ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
         });
         unitView.setOnMouseEntered(event -> {
-            if (!unitView.getStyle().equals(selectedStyle))
-                unitView.setStyle(mouseEnteredStyle);
+            if (!unitView.getStyle().equals(SELECTED_STYLE))
+                unitView.setStyle(MOUSE_ENTERED_STYLE);
         });
         unitView.setOnMouseExited(event -> {
-            if (!unitView.getStyle().equals(selectedStyle))
-                unitView.setStyle(mouseExitedStyle);
+            if (!unitView.getStyle().equals(SELECTED_STYLE))
+                unitView.setStyle(MOUSE_EXITED_STYLE);
         });
         resetStatsPositions();
         addToRoot();
@@ -90,7 +90,7 @@ public class UnitImage {
     }
 
     public void setUnitStyleAsSelected() {
-        unitView.setStyle(selectedStyle);
+        unitView.setStyle(SELECTED_STYLE);
     }
 
     public void setStyleAsNotSelected() {
@@ -103,13 +103,12 @@ public class UnitImage {
 
     public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
         setUnitStatus(UnitStatus.run);
-
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
         double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow);
-
+        changeFacingWhileRunning(endX, startX);
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
         path.setVisible(false);
         root.getChildren().add(path);
@@ -153,6 +152,15 @@ public class UnitImage {
             }
         };
         animationTimer.start();
+    }
+
+    public void changeFacingWhileRunning(double endX, double startX){
+        if (startX < endX){
+            unitView.setScaleX(1);
+        }
+        if (startX > endX){
+            unitView.setScaleX(-1);
+        }
     }
 
     public void showDeath() {
@@ -223,22 +231,6 @@ public class UnitImage {
     public void relocate(double x, double y) {
         unitView.setTranslateX(x);
         unitView.setTranslateY(y);
-        resetStatsPositions();
-    }
-
-    public void setInHand(int ringNumber) {
-        ImageView handRing = ControllerBattleCommands.getOurInstance().getHandRings().get(ringNumber);
-        double x = handRing.getLayoutX() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.5;
-        double y = handRing.getLayoutY() + GraphicConstants.HAND_RING_SIZE / 2 - unitViewSize * 0.75;
-        relocate(x, y);
-        resetStatsPositions();
-    }
-
-    public void setInNextCard() {
-        ImageView nextCardRing = ControllerBattleCommands.getOurInstance().getNextCardRing();
-        double x = nextCardRing.getLayoutX() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.5;
-        double y = nextCardRing.getLayoutY() + GraphicConstants.NEXT_CARD_RING_SIZE / 2 - unitViewSize * 0.75;
-        relocate(x, y);
         resetStatsPositions();
     }
 

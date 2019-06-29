@@ -67,6 +67,7 @@ public class CardBackGroundController {
         Stage descStage = new Stage();
         descStage.setScene(new Scene(root));
         descStage.show();
+        //todo
     }
 
     @FXML
@@ -103,16 +104,16 @@ public class CardBackGroundController {
                 Unit unit = (Unit) newCard;
                 priceLable.setText(Integer.toString(unit.getPrice()));
                 apLabel.setText(Integer.toString(unit.getAp()));
-                hpLabel.setText(Integer.toString(unit.getHp()));
-                manaLabel.setText(Integer.toString(unit.getMana()));
                 cardName.setText(unit.getName());
+                hpLabel.setText(Integer.toString(unit.getHp()));
                 spellOrUnit.setText(unit.getHeroOrMinion());
+                manaLabel.setText(Integer.toString(unit.getMana()));
             }else if (newCard instanceof Spell){
                 Spell spell = (Spell) newCard;
-                priceLable.setText(Integer.toString(spell.getPrice()));
                 manaLabel.setText(Integer.toString(spell.getMana()));
                 cardName.setText(spell.getName());
                 spellOrUnit.setText("Spell");
+                priceLable.setText(Integer.toString(spell.getPrice()));
             }
         }
         if (object instanceof Usable){

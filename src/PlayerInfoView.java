@@ -23,18 +23,18 @@ public class PlayerInfoView {
             setManaBarDark();
         }
         manaBarView.resize(manaBarViewSize, manaBarViewSize);
-        setManaAmount(2);
+//        setManaAmount(2);
         addToRoot(root);
     }
 
-    public void setManaAmount(int mana) {
-        this.mana = mana;
-        try {
-            manaBarView.setImage(new Image(new FileInputStream("./src/ApProjectResources/ManaBar/" + mana)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void setManaAmount(int mana) {
+//        this.mana = mana;
+//        try {
+//            manaBarView.setImage(new Image(new FileInputStream("./src/ApProjectResources/ManaBar/" + mana)));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void setManaBarDark() {
         manaBarView.setStyle(manaBarDarkStyle);

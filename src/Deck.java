@@ -21,6 +21,27 @@ public class Deck {
         this.name = deck.name;
     }
 
+    public int calculateNumberOfMinionsOrSpells(String minionOrSpell){
+        int number = 0;
+        if (minionOrSpell.equals(Constants.MINION)){
+            for (int i = 0; i < this.getCards().size(); i++) {
+                Card card = this.getCards().get(i);
+                if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.MINION)){
+                    number++;
+                }
+            }
+            return number;
+        }else if (minionOrSpell.equals(Constants.SPELL)){
+            for (int i = 0; i < this.getCards().size(); i++) {
+                if (this.getCards().get(i) instanceof Spell){
+                    number++;
+                }
+            }
+            return number;
+        }
+        return number;
+    }
+
     public Deck(String name) {
         this.name = name;
     }

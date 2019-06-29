@@ -1,15 +1,20 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import javax.xml.crypto.Data;
 import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,9 +33,17 @@ public class ControllerBattleCommands implements Initializable {
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private Label[][] battleGroundCells = new Label[5][9];
-    private ImageView clickedImageView = new ImageView();
+    private ImageView clickedImageView = new ImageView();//todo
 
     //todo fix units facings
+
+    public void setClickedImageView(ImageView clickedImageView) {
+        this.clickedImageView = clickedImageView;
+    }
+
+    public ImageView getClickedImageView() {
+        return clickedImageView;
+    }
 
     @FXML
     private ImageView endTurnMineBtn;
@@ -40,6 +53,46 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     private AnchorPane battleGroundPane;
+
+    @FXML
+    private ImageView graveYardBtn;
+
+    @FXML
+    private Label player1Label;
+
+    @FXML
+    private Label player2Label;
+
+    @FXML
+    private Label specialPowerLabel;
+
+    @FXML
+    private Label collectableLabel;
+
+    @FXML
+    void enterGraveYard(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        scene.setCursor(new ImageCursor(image));
+        stage.setScene(scene);
+        ControllerGraveYard.stage = stage;
+        stage.showAndWait();
+    }
+
+    @FXML
+    void makeGraveYardBtnOpaque(MouseEvent event) {
+        graveYardBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeGraveYardBtnTransparent(MouseEvent event) {
+        graveYardBtn.setStyle("-fx-opacity: 0.6");
+    }
 
     @FXML
     void makeEndTurnMineOpaque(MouseEvent event) {
@@ -70,9 +123,17 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView nextCardRing;
 
     @FXML
+    private Label playerManaLabel;
+
+    @FXML
+    private Label computerManaLabel;
+
+
+    @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         endTurn();
+        updatePane();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
     }
@@ -81,12 +142,14 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startTempBattle();//todo remove it later
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-        setupHandRings();
         setupBattleGroundCells(battleGroundPane);
+        setupHandRings();
         setupHeroesImages(battleGroundPane);
         setupPlayerInfoViews(battleGroundPane);
         setupCursor();
         Main.window.setScene(new Scene(battleGroundPane));
+        player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         updatePane();
     }
 
@@ -108,7 +171,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
+        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getAccountWithUsername("temp2")
                 , Constants.CLASSIC, 0, null, Constants.SINGLE);
         DataBase.getInstance().setCurrentBattle(battle);
     }
@@ -122,6 +185,7 @@ public class ControllerBattleCommands implements Initializable {
         unitImageList.add(playerHeroImage);
         playerHeroImage.setInCell(2, 0);
         opponentHeroImage.setInCell(2, 8);
+        opponentHeroImage.getUnitView().setScaleX(-1);
     }
 
     private void setupBattleGroundCells(AnchorPane root) {
@@ -224,14 +288,6 @@ public class ControllerBattleCommands implements Initializable {
         return handRings;
     }
 
-    public boolean doesHandHaveCard(String id) {
-        for (HandImage handImage : handImageList) {
-            if (handImage.getId().equals(id))
-                return true;
-        }
-        return false;
-    }
-
     private void setupHandRings() {
         handRings.add(handRing1);
         handRings.add(handRing2);
@@ -281,23 +337,20 @@ public class ControllerBattleCommands implements Initializable {
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
         }
-        for (Card card : loggedInPlayer.getHand().getCards()) {
-            if (!doesHandHaveCard(card.getId())) {
-                //todo
-            }
+        specialPowerLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getHero().getMainSpecialPower().getName());
+        Item item = dataBase.getLoggedInAccount().getMainDeck().getItem();
+        if (item != null)
+            collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
+        playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
+        computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
+        for (int i = 0; i < 5; i++) {
+            Card card = loggedInPlayer.getHand().getCards().get(i);
+            handImageList.get(i).setCardImage(card.getId());
         }
     }
 
     public Player getLoggedInPlayer() {
         return loggedInPlayer;
-    }
-
-    public void setCardInHand(String id) {
-        for (HandImage handImage : handImageList) {
-            if (handImage.isEmpty()) {
-                handImage.setCardImage(id);
-            }
-        }
     }
 
     public void main() throws GoToMainMenuException {
@@ -616,6 +669,14 @@ public class ControllerBattleCommands implements Initializable {
 
     public double getCellLayoutY(int row) {
         return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
+    }
+
+    public double getHandRingLayoutX(int number) {
+        return handRings.get(number).getLayoutX();
+    }
+
+    public double getHandRingLayoutY(int number) {
+        return handRings.get(number).getLayoutX();
     }
 
     public AnchorPane getBattleGroundPane() {

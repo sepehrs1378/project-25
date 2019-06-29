@@ -18,20 +18,21 @@ public class DataBase {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
-    private Account temp1 = new Account("temp1", "1");
-    private Account temp2 = new Account("temp2", "2");
+    private Account temp2;
+//    private Account temp1 = new Account("temp1", "1");
+//    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
     }
 
-    public Account getTemp2() {
-        return temp2;
-    }
-
-    public Account getTemp1() {
-        return temp1;
-    }
+//    public Account getTemp2() {
+//        return temp2;
+//    }
+//
+//    public Account getTemp1() {
+//        return temp1;
+//    }
 
     private DataBase() {
     }
@@ -48,6 +49,7 @@ public class DataBase {
 //        makeMinions();
 //        makeItems();
         makeAccounts();
+
         System.out.println(cardList.size());
         System.out.println(collectableList.size());
         System.out.println(usableList.size());
@@ -842,7 +844,7 @@ public class DataBase {
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 60, 1);
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 63, 1);
         computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*/
-
+        /*Account temp1=new Account("temp1","1");
         Deck temp1Deck = new Deck("deck");
         addCardToDeck(temp1, temp1Deck, 0, 1);
         addCardToDeck(temp1, temp1Deck, 6, 1);
@@ -865,8 +867,10 @@ public class DataBase {
         addCardToDeck(temp1, temp1Deck, 67, 1);
         addCardToDeck(temp1, temp1Deck, 65, 1);
         addCardToDeck(temp1, temp1Deck, 69, 1);
+        temp1.getPlayerInfo().getCollection().getDecks().add(temp1Deck);
         temp1.setMainDeck(temp1Deck);
 
+        Account temp2 = new Account("temp2","2");
         Deck temp2Deck = new Deck("deck");
         addCardToDeck(temp2, temp2Deck, 0, 1);
         addCardToDeck(temp2, temp2Deck, 6, 1);
@@ -889,10 +893,11 @@ public class DataBase {
         addCardToDeck(temp2, temp2Deck, 67, 1);
         addCardToDeck(temp2, temp2Deck, 65, 1);
         addCardToDeck(temp2, temp2Deck, 69, 1);
+        temp2.getPlayerInfo().getCollection().getDecks().add(temp2Deck);
         temp2.setMainDeck(temp2Deck);
 
         accountList.add(temp1);
-        accountList.add(temp2);
+        accountList.add(temp2);*/
 
         Deck computerPlayerCostumDeck = new Deck("deck");
     }
@@ -1040,20 +1045,20 @@ public class DataBase {
         return null;
     }
 
-    private void addCardToDeck(Account account, Deck deck, int index, int number) {
-        Card card = cardList.get(index);
-        if (card instanceof Unit) {
-            card = ((Unit) card).clone();
-        } else if (card instanceof Spell) {
-            card = ((Spell) card).clone();
-        }
-        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
-        if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
-            deck.setHero((Unit) card);
-            return;
-        }
-        deck.addToCards(card);
-    }
+//    private void addCardToDeck(Account account, Deck deck, int index, int number) {
+//        Card card = cardList.get(index);
+//        if (card instanceof Unit) {
+//            card = ((Unit) card).clone();
+//        } else if (card instanceof Spell) {
+//            card = ((Spell) card).clone();
+//        }
+//        card.setId(account.getUsername() + "_" + card.getName() + "_" + number);
+//        if (card instanceof Unit && ((Unit) card).getHeroOrMinion().equals(Constants.HERO)) {
+//            deck.setHero((Unit) card);
+//            return;
+//        }
+//        deck.addToCards(card);
+//    }
 
     public void changePlayerNameInId(Object object, Player player) {
         if (object instanceof Card) {
@@ -1110,6 +1115,14 @@ public class DataBase {
         FileReader reader;
         if (fileNames != null) {
             for (String fileName : fileNames) {
+                if (fileName.equals("temp2.json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
+                        temp2 = gson.fromJson(reader, Account.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
@@ -1313,7 +1326,7 @@ public class DataBase {
         }
     }
 
-    public static void loadGame(String address) {
+    public void loadGame(String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         if (!address.endsWith(".json")) {
             System.out.println("selected file is not a json file");
@@ -1332,5 +1345,58 @@ public class DataBase {
             System.out.println("invalid file, selected file is not a saved battle");
         }
 
+    }
+
+    public String importDeck(String address) {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        if (!address.endsWith(".json")) {
+            return "selected file is not a json file";
+
+        }
+        FileReader reader = null;
+        try {
+            reader = new FileReader(new File(address));
+            Deck deck = yaGson.fromJson(reader, Deck.class);
+            loggedInAccount.getPlayerInfo().getCollection().getDecks().add(deck);
+            return "deck imported successfully!";
+        } catch (FileNotFoundException e) {
+            //todo show this message in correct place
+            return "file not found";
+        } catch (ClassCastException e) {
+            return "invalid file, selected file is not a saved battle";
+        }
+    }
+
+    public void exportDeck(Deck deck) {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Decks");
+        String[] fileNames = folder.list();
+        String fileName = "deck_" + deck.getName() + "_";
+        int numberOfDecks = 0;
+        if (fileNames != null) {
+            for (String name : fileNames) {
+                if (name.contains(fileName)) {
+                    numberOfDecks = numberOfDecks + 1;
+                }
+            }
+        }
+        fileName += numberOfDecks;
+        fileName += ".json";
+        try {
+            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Decks/" + fileName));
+            yaGson.toJson(deck, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Account getTemp2() {
+        return temp2;
+    }
+
+    public void setTemp2(Account temp2) {
+        this.temp2 = temp2;
     }
 }

@@ -25,6 +25,8 @@ public class Constants {
     public static final String WHOLE_HEROES = "whole heroes";
     public static final String WHOLE_MINIONS = "whole minions";
     public static final String CELL = "cell";
+    public static final String SPELL = "spell";
+    public static final String USABLE = "usable";
 
     public static final String MELEE = "melee";
     public static final String RANGED = "ranged";

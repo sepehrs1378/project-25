@@ -1,11 +1,21 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
@@ -16,6 +26,7 @@ public class ControllerMainMenu {
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
+    public static Stage stage;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -29,14 +40,103 @@ public class ControllerMainMenu {
     private ImageView multiPlayerBtn;
 
     @FXML
-    void enterSinglePlayer(MouseEvent event) throws IOException {
-        FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+    private ImageView backBtn;
+
+    @FXML
+    private ImageView closeBtn;
+
+    @FXML
+    private ImageView leaderBoardBtn;
+
+    @FXML
+    private ImageView matchHistoryBtn;
+
+    @FXML
+    void makeMatchHistoryBtnOpaque(MouseEvent event) {
+        matchHistoryBtn.setStyle("-fx-opacity: 1");
     }
 
-    private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
-                , Constants.CLASSIC, 0, null, Constants.SINGLE);
-        DataBase.getInstance().setCurrentBattle(battle);
+    @FXML
+    void makeMatchHistoryBtnTransparent(MouseEvent event) {
+        matchHistoryBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void showMatchHistory(MouseEvent event) throws IOException {
+        Stage matchHistoryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMatchInfo.fxml"));
+        Scene scene = new Scene(root);
+        matchHistoryStage.setScene(scene);
+        matchHistoryStage.initModality(Modality.APPLICATION_MODAL);
+        matchHistoryStage.initStyle(StageStyle.UNDECORATED);
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        matchHistoryStage.getScene().setCursor(new ImageCursor(image));
+        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
+        matchHistoryStage.showAndWait();
+    }
+
+    @FXML
+    void makeLeaderBoardBtnOpaque(MouseEvent event) {
+        leaderBoardBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeLeaderBoardBtnTransparent(MouseEvent event) {
+        leaderBoardBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void showLeaderBoard(MouseEvent event) {
+        //todo
+    }
+
+
+    @FXML
+    void close(MouseEvent event) {
+        dataBase.saveAccounts();
+        Main.window.close();
+    }
+
+    @FXML
+    void makeCloseBtnOpaque(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCloseBtnTransparent(MouseEvent event) {
+        closeBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void goBack(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
+        Main.window.setScene(new Scene(root));
+        Main.setCursor();
+    }
+
+    @FXML
+    void makeBackBtnOpaque(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeBackBtnTransparent(MouseEvent event) {
+        backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void enterSinglePlayer(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        File file = new File("src/pics/cursors/main_cursor.png");
+        Image image = new Image(file.toURI().toString());
+        stage.getScene().setCursor(new ImageCursor(image));
+        stage.showAndWait();
     }
 
     @FXML
@@ -107,6 +207,7 @@ public class ControllerMainMenu {
     void enterCollection(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
+        Main.setCursor();
     }
 
     @FXML
@@ -124,6 +225,7 @@ public class ControllerMainMenu {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
         controllerShop = ControllerShop.getOurInstance();
+        Main.setCursor();
         controllerShop.showCards();
     }
 
