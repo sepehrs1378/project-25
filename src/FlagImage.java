@@ -1,8 +1,18 @@
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class FlagImage {
     private int row = 0;
     private int column = 0;
-    private ImageView unitView = new ImageView();
+    private ImageView flagView = new ImageView(new Image("./src/ApProjectResources/flag/flag"));
     private String id;
+
+    private void drop(String id){
+
+    }
+
+    private void pickup(String id){
+
+    }
+
 }

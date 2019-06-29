@@ -479,6 +479,11 @@ public class Battle {
         int sizeMatchList1 = player1Account.getMatchList().size();
         int sizeMatchList2 = player2Account.getMatchList().size();
         if (winner == player1) {
+            if (singleOrMulti.equals(Constants.SINGLE)&&player2.getPlayerInfo().getPlayerName().equals("computer1")){
+                player1Account.getLevelsOpennessStatus()[1]=true;
+            }else if (singleOrMulti.equals(Constants.SINGLE)&&player2.getPlayerInfo().getPlayerName().equals("computer2")){
+                player1Account.getLevelsOpennessStatus()[2]=true;
+            }
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
             player1Account.addMoney(prize);
             player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account.getUsername());

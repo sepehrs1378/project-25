@@ -787,7 +787,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean endTurn() {
         OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
-        view.printOutputMessage(outputMessageType);
+//        view.printOutputMessage(outputMessageType);
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
