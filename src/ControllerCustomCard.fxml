@@ -108,10 +108,15 @@
       <JFXTextField fx:id="heroManaTxt" alignment="CENTER" layoutX="405.0" layoutY="96.0" prefHeight="25.0" prefWidth="39.0" promptText="mana" />
       <JFXTextField fx:id="spellManaTxt" alignment="CENTER" layoutX="760.0" layoutY="96.0" prefHeight="25.0" prefWidth="39.0" promptText="mana" />
       <JFXButton fx:id="clearBuffsBtn" layoutX="1223.0" layoutY="318.0" onAction="#clearBuffs" prefHeight="25.0" prefWidth="105.0" text="clear buffs" textFill="#07d7dd" underline="true" />
-      <ScrollPane layoutX="1142.0" layoutY="378.0" prefHeight="152.0" prefWidth="200.0" stylesheets="@CSS/scrollpane_style.css">
+      <ScrollPane layoutX="1123.0" layoutY="380.0" prefHeight="151.0" prefWidth="239.0" stylesheets="@CSS/scrollpane_style.css">
          <content>
-            <VBox fx:id="buffBox" prefHeight="153.0" prefWidth="177.0" style="-fx-background-color: #7da8ed;" />
+            <VBox fx:id="buffBox" prefHeight="153.0" prefWidth="217.0" style="-fx-background-color: #7da8ed;" />
          </content>
       </ScrollPane>
+      <ImageView fx:id="backBtn" fitHeight="67.0" fitWidth="92.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

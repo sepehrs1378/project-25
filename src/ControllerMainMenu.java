@@ -52,6 +52,9 @@ public class ControllerMainMenu {
     private ImageView matchHistoryBtn;
 
     @FXML
+    private ImageView customCardBtn;
+
+    @FXML
     void makeMatchHistoryBtnOpaque(MouseEvent event) {
         matchHistoryBtn.setStyle("-fx-opacity: 1");
     }
@@ -59,6 +62,23 @@ public class ControllerMainMenu {
     @FXML
     void makeMatchHistoryBtnTransparent(MouseEvent event) {
         matchHistoryBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeCustomCardBtnOpaque(MouseEvent event) {
+        customCardBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeCustomCardBtnTransparent(MouseEvent event) {
+        customCardBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void enterCustomCardMenu(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
+        Main.window.setScene(new Scene(root));
+        Main.setCursor();
     }
 
     @FXML

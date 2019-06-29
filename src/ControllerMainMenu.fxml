@@ -11,27 +11,27 @@
                 <Image url="@pics/main_menu.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="shopBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="601.0" onMouseClicked="#enterShop" onMouseEntered="#makeShopBtnOpaque" onMouseExited="#makeShopBtnTransparent" style="-fx-opacity: 0.6;">
+        <ImageView fx:id="shopBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="521.0" onMouseClicked="#enterShop" onMouseEntered="#makeShopBtnOpaque" onMouseExited="#makeShopBtnTransparent" style="-fx-opacity: 0.6;">
             <image>
                 <Image url="@pics/shop_button.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="collectionBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="521.0" onMouseClicked="#enterCollection" onMouseEntered="#makeCollectionBtnOpaque" onMouseExited="#makeCollectionBtnTransparent" style="-fx-opacity: 0.6;">
+        <ImageView fx:id="collectionBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="461.0" onMouseClicked="#enterCollection" onMouseEntered="#makeCollectionBtnOpaque" onMouseExited="#makeCollectionBtnTransparent" style="-fx-opacity: 0.6;">
             <image>
                 <Image url="@pics/collection_button.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="battleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="441.0" onMouseClicked="#customOrMulti" onMouseEntered="#makeBattleBtnOpaque" onMouseExited="#makeBattleBtnTransparent" style="-fx-opacity: 0.6;">
+        <ImageView fx:id="battleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="394.0" onMouseClicked="#customOrMulti" onMouseEntered="#makeBattleBtnOpaque" onMouseExited="#makeBattleBtnTransparent" style="-fx-opacity: 0.6;">
             <image>
                 <Image url="@pics/battle_button.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="441.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" opacity="0.6" visible="false">
+        <ImageView fx:id="multiPlayerBtn" fitHeight="80.0" fitWidth="200.0" layoutX="615.0" layoutY="394.0" onMouseClicked="#enterMultiPlayer" onMouseEntered="#makeMultiPlayerBtnOpaque" onMouseExited="#makeMultiPlayerBtnTransparent" opacity="0.6" visible="false">
             <image>
                 <Image url="@pics/multiplayer_button.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="809.0" layoutY="441.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" opacity="0.6" visible="false">
+        <ImageView fx:id="singleBtn" fitHeight="80.0" fitWidth="200.0" layoutX="815.0" layoutY="394.0" onMouseClicked="#enterSinglePlayer" onMouseEntered="#makeSingleBtnOpaque" onMouseExited="#makeSingleBtnTransparent" opacity="0.6" visible="false">
             <image>
                 <Image url="@pics/single_player_button.png" />
             </image>
@@ -56,5 +56,10 @@
                 <Image url="@pics/main_menu_pics/match_history.png" />
             </image>
         </ImageView>
+      <ImageView fx:id="customCardBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="590.0" onMouseClicked="#enterCustomCardMenu" onMouseEntered="#makeCustomCardBtnOpaque" onMouseExited="#makeCustomCardBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/main_menu_pics/custom_card_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
