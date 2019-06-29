@@ -208,37 +208,13 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
-        if (isClickedImageViewInHand()) {
-            HandImage handImage = getHandImageWithCardView(clickedImageView);
-            Card card = dataBase.getCurrentBattle()
-                    .getPlayerInTurn().getHand().getCardById(handImage.getId());
-            switch (dataBase.getCurrentBattle().insert(card, row, column)) {
-                case NO_SUCH_CARD_IN_HAND:
-                    System.out.println();
-                    //empty
-                    break;
-                case NOT_ENOUGH_MANA:
-                    //empty
-                    break;
-                case INVALID_NUMBER:
-                    //empty
-                    break;
-                case NOT_NEARBY_FRIENDLY_UNITS:
-                    //empty
-                    break;
-                case THIS_CELL_IS_FULL:
-                    //empty
-                    break;
-                case CARD_INSERTED:
-                    UnitImage insertedUnitView = new UnitImage(handImage.getId(), battleGroundPane);
-                    unitImageList.add(insertedUnitView);
-                    insertedUnitView.setInCell(row, column);
-                    handImage.clearHandImage();
-                    clickedImageView = null;
-                    break;
-                default:
-            }
-        }
+        if (isClickedImageViewInHand())
+            handleCardInsertion(row, column);
+        handleUnitMove(row, column);
+        updatePane();
+    }
+
+    private void handleUnitMove(int row, int column) {
         switch (dataBase.getCurrentBattle().getBattleGround()
                 .moveUnit(row, column)) {
             case UNIT_NOT_SELECTED:
@@ -263,7 +239,42 @@ public class ControllerBattleCommands implements Initializable {
                 break;
             default:
         }
-        updatePane();
+    }
+
+    private void handleCardInsertion(int row, int column) {
+        HandImage handImage = getHandImageWithCardView(clickedImageView);
+        Card card = dataBase.getCurrentBattle()
+                .getPlayerInTurn().getHand().getCardById(handImage.getId());
+        switch (dataBase.getCurrentBattle().insert(card, row, column)) {
+            case NO_SUCH_CARD_IN_HAND:
+                System.out.println();
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case INVALID_NUMBER:
+                //empty
+                break;
+            case NOT_NEARBY_FRIENDLY_UNITS:
+                //empty
+                break;
+            case THIS_CELL_IS_FULL:
+                //empty
+                break;
+            case CARD_INSERTED:
+                insertUnitView(row, column, card);
+                handImage.clearHandImage();
+                break;
+            default:
+        }
+    }
+
+    private void insertUnitView(int row, int column, Card card) {
+        UnitImage insertedUnitView = new UnitImage(card.getId(), battleGroundPane);
+        unitImageList.add(insertedUnitView);
+        insertedUnitView.setInCell(row, column);
+        clickedImageView = null;
     }
 
     public HandImage getHandImageWithCardView(ImageView cardView) {
@@ -285,51 +296,59 @@ public class ControllerBattleCommands implements Initializable {
     public void handleUnitClicked(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
-            UnitImage unitImage = getUnitImageWithId(id);
-            //todo fix this: if a friendly unit is selected, another unit cannot be selected
-            switch (currentPlayer.selectUnit(id)) {
-                case SELECTED:
-                    unitImage.setUnitStyleAsSelected();
-                    clickedImageView = unitImage.getUnitView();
-                    break;
-                case ENEMY_UNIT_SELECTED:
-                    //empty
-                    break;
-                case INVALID_COLLECTABLE_CARD:
-                    //empty
-                    break;
-                case UNIT_IS_STUNNED:
-                    //empty
-                    break;
-                default:
-                    System.out.println("unhandled case !!!!!!!!");
-            }
+            handleUnitSelection(id, currentPlayer);
         }
         if (currentPlayer.getSelectedUnit() != null) {
-            UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-            UnitImage targetedUnitImage = getUnitImageWithId(id);
-            //todo add this feature to unselect a unit with clicking on it if needed
-            switch (currentPlayer.getSelectedUnit().attack(id)) {
-                case UNIT_ATTACKED:
-                    selectedUnitImage.showAttack(targetedUnitImage.getColumn());
-                    break;
-                case UNIT_AND_ENEMY_ATTACKED:
-                    selectedUnitImage.showAttack(targetedUnitImage.getColumn());
-                    targetedUnitImage.showAttack(selectedUnitImage.getColumn());
-                    break;
-                case ALREADY_ATTACKED:
-                    //empty
-                    break;
-                case INVALID_CARD:
-                    //empty
-                    break;
-                case TARGET_NOT_IN_RANGE:
-                    //empty
-                    break;
-                default:
-            }
+            handleUnitAttack(id, currentPlayer);
         }
         updatePane();
+    }
+
+    private void handleUnitAttack(String id, Player currentPlayer) {
+        UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+        UnitImage targetedUnitImage = getUnitImageWithId(id);
+        //todo add this feature to unselect a unit with clicking on it if needed
+        switch (currentPlayer.getSelectedUnit().attack(id)) {
+            case UNIT_ATTACKED:
+                selectedUnitImage.showAttack(targetedUnitImage.getColumn());
+                break;
+            case UNIT_AND_ENEMY_ATTACKED:
+                selectedUnitImage.showAttack(targetedUnitImage.getColumn());
+                targetedUnitImage.showAttack(selectedUnitImage.getColumn());
+                break;
+            case ALREADY_ATTACKED:
+                //empty
+                break;
+            case INVALID_CARD:
+                //empty
+                break;
+            case TARGET_NOT_IN_RANGE:
+                //empty
+                break;
+            default:
+        }
+    }
+
+    private void handleUnitSelection(String id, Player currentPlayer) {
+        UnitImage unitImage = getUnitImageWithId(id);
+        //todo fix this: if a friendly unit is selected, another unit cannot be selected
+        switch (currentPlayer.selectUnit(id)) {
+            case SELECTED:
+                unitImage.setUnitStyleAsSelected();
+                clickedImageView = unitImage.getUnitView();
+                break;
+            case ENEMY_UNIT_SELECTED:
+                //empty
+                break;
+            case INVALID_COLLECTABLE_CARD:
+                //empty
+                break;
+            case UNIT_IS_STUNNED:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case !!!!!!!!");
+        }
     }
 
     public List<ImageView> getHandRings() {
