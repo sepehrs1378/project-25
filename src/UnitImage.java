@@ -240,6 +240,10 @@ public class UnitImage {
         resetStatsPositions();
     }
 
+    public void addBuffView(){
+
+    }
+
     public ImageView getUnitView() {
         return unitView;
     }
