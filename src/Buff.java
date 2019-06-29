@@ -3,20 +3,30 @@ abstract public class Buff {
     private String positiveOrNegative;
     private int startTurn;
     private int durationTurn;
+    private int delayTurn;
     private boolean isDispellable;
     private boolean isContinuous;
     private boolean isDead;
 
     public Buff(int durationTurn, boolean isDispellable
-            , boolean isContinuous) {
+            , boolean isContinuous,int startTurn) {
         this.durationTurn = durationTurn;
         this.isDispellable = isDispellable;
         this.isContinuous = isContinuous;
+        this.startTurn=startTurn;
     }
 
     public abstract void doEffect(Unit unit);
 
     public abstract void doEndingEffect(Unit unit);
+
+    public int getDelayTurn() {
+        return delayTurn;
+    }
+
+    public void setDelayTurn(int delayTurn) {
+        this.delayTurn = delayTurn;
+    }
 
     public void revive() {
         this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
