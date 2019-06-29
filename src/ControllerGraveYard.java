@@ -116,12 +116,13 @@ public class ControllerGraveYard implements Initializable {
         }
         int size = deadCards.size();
         FXMLLoader fxmlLoader;
-        for (int i = 0; i < size; i++) {
+        for (Card deadCard : deadCards) {
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("CollectionCardBackGround.fxml"));
             try {
                 nodes.add(fxmlLoader.load());
                 CollectionCardBackGround collectionCardBackGround = fxmlLoader.getController();
+                collectionCardBackGround.setLabelsOfCardOrItem(deadCard);
                 collectionCardBackGround.disableEveryThing();
             } catch (IOException e) {
                 e.printStackTrace();

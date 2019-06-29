@@ -819,6 +819,7 @@ public class ControllerBattleCommands implements Initializable {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
         endTurnMineBtn.setDisable(true);
+        graveYardBtn.setDisable(true);
         KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),keyValue);
         Timeline timeline = new Timeline();

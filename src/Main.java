@@ -29,6 +29,7 @@ import java.nio.file.Paths;
 public class Main extends Application {
     private DataBase dataBase = DataBase.getInstance();
     public static Stage window;
+    private static MediaPlayer globalMediaPlayer;
 
     @FXML
     private Label invalidUsername;
@@ -176,18 +177,23 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void playMusic(){
+    private static void playMusic(){
         try
         {
             Media media = new Media(Paths.get("src/music/music_battlemap_firesofvictory.m4a").toUri().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setCycleCount(Integer.MAX_VALUE);
             mediaPlayer.setAutoPlay(true);
+            globalMediaPlayer = mediaPlayer;
             mediaPlayer.play();
         }
         catch (Exception exc)
         {
             exc.printStackTrace(System.out);
         }
+    }
+
+    public static MediaPlayer getGlobalMediaPlayer() {
+        return globalMediaPlayer;
     }
 }
