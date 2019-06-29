@@ -35,8 +35,6 @@ public class ControllerBattleCommands implements Initializable {
     private Label[][] battleGroundCells = new Label[5][9];
     private ImageView clickedImageView = new ImageView();//todo
 
-    //todo fix units facings
-
     public void setClickedImageView(ImageView clickedImageView) {
         this.clickedImageView = clickedImageView;
     }
@@ -296,15 +294,16 @@ public class ControllerBattleCommands implements Initializable {
     public void handleUnitClicked(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
-            handleUnitSelection(id, currentPlayer);
+            handleUnitSelection(id);
         }
         if (currentPlayer.getSelectedUnit() != null) {
-            handleUnitAttack(id, currentPlayer);
+            handleUnitAttack(id);
         }
         updatePane();
     }
 
-    private void handleUnitAttack(String id, Player currentPlayer) {
+    private void handleUnitAttack(String id) {
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
         UnitImage targetedUnitImage = getUnitImageWithId(id);
         //todo add this feature to unselect a unit with clicking on it if needed
@@ -329,7 +328,8 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    private void handleUnitSelection(String id, Player currentPlayer) {
+    private void handleUnitSelection(String id) {
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
         //todo fix this: if a friendly unit is selected, another unit cannot be selected
         switch (currentPlayer.selectUnit(id)) {
