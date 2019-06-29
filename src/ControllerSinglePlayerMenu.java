@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControllerSinglePlayerMenu implements Initializable{
+public class ControllerSinglePlayerMenu implements Initializable {
     private static ControllerSinglePlayerMenu ourInstance;
     private Request request = Request.getInstance();
     private View view = View.getInstance();
@@ -78,11 +78,8 @@ public class ControllerSinglePlayerMenu implements Initializable{
 
     @FXML
     void enterLevel1(MouseEvent event) throws IOException {
-        /*Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
-                Constants.CLASSIC, 0, null, Constants.SINGLE);
-        database.setCurrentBattle(battle);*/
-        Main.getGlobalMediaPlayer().stop();
-        FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+        Main.window.setScene(new Scene(root));
         ControllerMainMenu.stage.close();
     }
 
@@ -286,7 +283,7 @@ public class ControllerSinglePlayerMenu implements Initializable{
         modeList.add(Constants.ONE_FLAG);
         modeList.add(Constants.FLAGS);
         selectModeBox.setItems(modeList);
-        if (database.getLoggedInAccount().getMainDeck() == null || !database.getLoggedInAccount().getMainDeck().isValid()){
+        if (database.getLoggedInAccount().getMainDeck() == null || !database.getLoggedInAccount().getMainDeck().isValid()) {
             level1Btn.setDisable(true);
             level2Btn.setDisable(true);
             level3Btn.setDisable(true);
@@ -323,12 +320,12 @@ public class ControllerSinglePlayerMenu implements Initializable{
     @FXML
     void enterCustomGame(MouseEvent event) throws IOException {
         Main.getGlobalMediaPlayer().stop();
-        if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null){
+        if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null) {
             invalidDeckLabel.setVisible(true);
             invalidModeLabel.setVisible(true);
             return;
         }
-        if (selectDeckBox.getValue() == null){
+        if (selectDeckBox.getValue() == null) {
             invalidDeckLabel.setVisible(true);
             return;
         }
@@ -337,10 +334,10 @@ public class ControllerSinglePlayerMenu implements Initializable{
             return;
         }
         if (selectModeBox.getValue().equals(Constants.FLAGS)) {
-            if (!flagNumberLabel.getText().matches("\\d*")){
+            if (!flagNumberLabel.getText().matches("\\d*")) {
                 invalidNumberLabel.setText("please enter a number");
                 return;
-            }else if (!flagNumberLabel.getText().isEmpty() && Integer.parseInt(flagNumberLabel.getText()) > 43){
+            } else if (!flagNumberLabel.getText().isEmpty() && Integer.parseInt(flagNumberLabel.getText()) > 43) {
                 invalidNumberLabel.setText("please enter a number less than 43");
                 return;
             }

@@ -172,6 +172,7 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > deathDuration * 1000000) {
                     setUnitStatus(UnitStatus.stand);
+                    removeFromRoot();
                     this.stop();
                 }
             }
@@ -237,7 +238,7 @@ public class UnitImage {
         relocate(x, y);
     }
 
-    public void relocate(double x, double y) {
+    private void relocate(double x, double y) {
         unitView.setTranslateX(x);
         unitView.setTranslateY(y);
         resetStatsPositions();
@@ -252,6 +253,10 @@ public class UnitImage {
         buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
     }
 
+    public void clearBuffImageList() {
+        buffImageList.clear();
+    }
+
     public ImageView getUnitView() {
         return unitView;
     }
@@ -262,5 +267,16 @@ public class UnitImage {
 
     public int getColumn() {
         return column;
+    }
+
+    private void removeFromRoot() {
+        List<UnitImage> unitImageList = ControllerBattleCommands.getOurInstance().getUnitImageList();
+        root.getChildren().remove(unitView);
+        root.getChildren().remove(apNumber);
+        root.getChildren().remove(hpNumber);
+        for (BuffImage buffImage : buffImageList) {
+            root.getChildren().remove(buffImage);
+        }
+        unitImageList.remove(this);
     }
 }

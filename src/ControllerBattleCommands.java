@@ -33,6 +33,7 @@ public class ControllerBattleCommands implements Initializable {
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
+    private List<SpellImage> spellImageList = new ArrayList<>();
     private CellImage[][] cellImageList = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     //todo next card has bug
@@ -152,7 +153,6 @@ public class ControllerBattleCommands implements Initializable {
         setupPlayersInfoViews();
         setupHeroSpecialPowerView();
         setupItemView();
-        Main.window.setScene(new Scene(battleGroundPane));
         updatePane();
     }
 
@@ -288,10 +288,10 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case CARD_INSERTED:
-                if (card instanceof Card)
+                if (card instanceof Unit)
                     insertUnitView(row, column, card);
                 if (card instanceof Spell) {
-                    
+                    insertSpellView(row, column, card);
                 }
                 handImage.clearHandImage();
                 return true;
@@ -300,10 +300,21 @@ public class ControllerBattleCommands implements Initializable {
         return false;
     }
 
+    public List<SpellImage> getSpellImageList() {
+        return spellImageList;
+    }
+
+    private void insertSpellView(int row, int column, Card card) {
+        SpellImage insertedSpellImage = new SpellImage(card.getId(), row, column, battleGroundPane);
+        spellImageList.add(insertedSpellImage);
+        clickedImageView = null;
+
+    }
+
     private void insertUnitView(int row, int column, Card card) {
-        UnitImage insertedUnitView = new UnitImage(card.getId(), battleGroundPane);
-        unitImageList.add(insertedUnitView);
-        insertedUnitView.setInCell(row, column);
+        UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
+        unitImageList.add(insertedUnitImage);
+        insertedUnitImage.setInCell(row, column);
         clickedImageView = null;
     }
 
@@ -374,7 +385,6 @@ public class ControllerBattleCommands implements Initializable {
     private boolean handleUnitSelection(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
-        //todo fix this: if a friendly unit is selected, another unit cannot be selected
         switch (currentPlayer.selectUnit(id)) {
             case SELECTED:
                 unitImage.setUnitStyleAsSelected();
@@ -412,12 +422,6 @@ public class ControllerBattleCommands implements Initializable {
         handImageList.add(new HandImage(4, getBattleGroundPane()));
     }
 
-//    private void setupPlayerInfoViews() {
-//        todo isn't used
-//        PlayerInfoView player1InfoView = new PlayerInfoView(1);
-//        PlayerInfoView player2InfoView = new PlayerInfoView(2);
-//    }
-
     public UnitImage getUnitImageWithId(String id) {
         for (UnitImage unitImage : unitImageList) {
             if (unitImage.getId().equals(id))
@@ -441,8 +445,17 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
+        updateHandImages();
         updatePlayersInfo();
         updateHand();
+    }
+
+    private void updateHandImages() {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(clickedImageView))
+                handImage.setStyleAsSelected();
+            else handImage.setStyleAsNotSelected();
+        }
     }
 
     private void updatePlayersInfo() {
@@ -461,12 +474,20 @@ public class ControllerBattleCommands implements Initializable {
     private void updateUnitImages() {
         for (UnitImage unitImage : unitImageList) {
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            if (!battleGround.doesHaveUnit(unitImage.getId())) {
+                unitImage.showDeath();
+                continue;
+            }
             Unit unit = battleGround.getUnitWithID(unitImage.getId());
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
             if (unitImage.getUnitView().equals(clickedImageView))
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
+            unitImage.clearBuffImageList();
+            for (Buff buff : unit.getBuffs()) {
+                unitImage.addBuffImage(buff.getType());
+            }
         }
     }
 
@@ -807,5 +828,9 @@ public class ControllerBattleCommands implements Initializable {
 
     public ImageView getNextCardRing() {
         return nextCardRing;
+    }
+
+    public List<UnitImage> getUnitImageList() {
+        return unitImageList;
     }
 }

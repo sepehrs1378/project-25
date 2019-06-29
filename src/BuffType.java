@@ -6,7 +6,11 @@ public enum BuffType {
     powerBuff,
     infernoBuff,
     disarmBuff,
-    stunBuff;
+    stunBuff,
+    immunityBuff,
+    sequentialDamageBuff,
+    manaBuff,
+    damagePerTurnBuff;
 
     public String toString() {
         switch (this) {
@@ -26,6 +30,15 @@ public enum BuffType {
                 return "disarmBuff";
             case stunBuff:
                 return "stunBuff";
+            case manaBuff:
+                return "manaBuff";
+            case immunityBuff:
+                return "immunityBuff";
+            case sequentialDamageBuff:
+                return "sequentialDamageBuff";
+            case damagePerTurnBuff:
+                return "damagePerTurnBuff";
+                default:
         }
         return null;
     }

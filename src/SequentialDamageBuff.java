@@ -31,4 +31,9 @@ public class SequentialDamageBuff extends Buff {
             damageArray[i] = damagePerTurn.get(i);
         return new SequentialDamageBuff(getDurationTurn(),  isDispellable(),isContinuous(),getStartTurn(), damageArray);
     }
+
+    @Override
+    public BuffType getType() {
+        return BuffType.sequentialDamageBuff;
+    }
 }

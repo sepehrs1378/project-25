@@ -18,4 +18,9 @@ public class DisarmBuff extends Buff {
     public DisarmBuff clone() {
         return new DisarmBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn());
     }
+
+    @Override
+    public BuffType getType() {
+        return BuffType.disarmBuff;
+    }
 }

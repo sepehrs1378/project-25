@@ -23,6 +23,11 @@ public class HolyBuff extends Buff {
         return new HolyBuff(getDurationTurn(), isDispellable(), isContinuous(), armor,getStartTurn());
     }
 
+    @Override
+    public BuffType getType() {
+        return BuffType.holyBuff;
+    }
+
     public int getArmor() {
         return armor;
     }
