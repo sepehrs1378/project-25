@@ -128,6 +128,11 @@ public class ControllerBattleCommands implements Initializable {
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         endTurn();
+        Battle battle=dataBase.getCurrentBattle();
+        if (battle.getSingleOrMulti().equals(Constants.SINGLE)&&battle.getPlayerInTurn().equals(battle.getPlayer2())){
+            AI.getInstance().doNextMove(battleGroundPane);
+            endTurn();
+        }
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
     }
@@ -237,7 +242,7 @@ public class ControllerBattleCommands implements Initializable {
             case UNIT_MOVED:
                 Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
                 UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-                movedUnitImage.showRun(row, column, battleGroundPane);
+                movedUnitImage.showRun(row, column);
                 break;
             default:
         }
@@ -373,7 +378,7 @@ public class ControllerBattleCommands implements Initializable {
             try {
                 if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)
                         && dataBase.getCurrentBattle().getPlayerInTurn() == dataBase.getCurrentBattle().getPlayer2()) {
-                    AI.getInstance().doNextMove();
+                    AI.getInstance().doNextMove(battleGroundPane);
                     endTurn();
                 }
                 dataBase.getCurrentBattle().checkForDeadUnits();

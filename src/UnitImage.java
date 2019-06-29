@@ -101,7 +101,7 @@ public class UnitImage {
         return id.split("_")[1];
     }
 
-    public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
+    public void showRun(int destinationRow, int destinationColumn) {
         setUnitStatus(UnitStatus.run);
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;

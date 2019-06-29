@@ -1,10 +1,13 @@
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AI {
-    private static final AI ourInstance = new AI();
+    private static AI ourInstance = new AI();
     private static DataBase dataBase = DataBase.getInstance();
-
+    Battle battle;
     public static AI getInstance() {
         return ourInstance;
     }
@@ -12,9 +15,9 @@ public class AI {
     private AI() {
     }
 
-    public void doNextMove() {
+    public void doNextMove(AnchorPane battleGroundPane) {
         Battle battle = dataBase.getCurrentBattle();
-        moveUnits(battle);
+        moveUnits(battle,battleGroundPane);
         for (Unit unit : battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())) {
             attackWithUnit(battle, unit);
         }
@@ -23,6 +26,8 @@ public class AI {
 
     private void insertNextCard(Battle battle) {
         for (Card card : battle.getPlayer2().getHand().getCards()) {
+            if (card instanceof Spell)
+                continue;
             if (card.getMana() <= battle.getPlayer2().getMana()) {
                 List<Cell> cells = getAvailableCells(battle, battle.getBattleGround());
                 for (Cell cell : cells) {
@@ -59,12 +64,14 @@ public class AI {
         return cells;
     }
 
-    public void moveUnits(Battle battle) {
+    public void moveUnits(Battle battle,AnchorPane battleGroundPane) {
         for (Unit unit : battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())) {
             if (!unit.didMoveThisTurn()) {
                 int[] coordination = battle.getBattleGround().getRandomCellToMoveForUnit(unit);
                 battle.getPlayer2().setSelectedUnit(unit);
                 battle.getBattleGround().moveUnit(coordination[0], coordination[1]);
+                UnitImage unitImage =ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
+                unitImage.showRun(coordination[0],coordination[1]);
             }
         }
     }
