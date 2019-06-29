@@ -32,8 +32,9 @@ public class ControllerBattleCommands implements Initializable {
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
-    private Label[][] battleGroundCells = new Label[5][9];
+    private CellImage[][] battleGroundCells = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
+    //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
         this.clickedImageView = clickedImageView;
@@ -140,10 +141,10 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startTempBattle();//todo remove it later
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-        setupBattleGroundCells(battleGroundPane);
+        setupBattleGroundCells();
         setupHandRings();
-        setupHeroesImages(battleGroundPane);
-        setupPlayerInfoViews(battleGroundPane);
+        setupHeroesImages();
+        setupPlayerInfoViews();
         setupCursor();
         Main.window.setScene(new Scene(battleGroundPane));
         player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -174,11 +175,11 @@ public class ControllerBattleCommands implements Initializable {
         DataBase.getInstance().setCurrentBattle(battle);
     }
 
-    private void setupHeroesImages(AnchorPane root) {
+    private void setupHeroesImages() {
         Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
         Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
-        UnitImage playerHeroImage = new UnitImage(playerHero.getId(), root);
-        UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), root);
+        UnitImage playerHeroImage = new UnitImage(playerHero.getId(), battleGroundPane);
+        UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), battleGroundPane);
         unitImageList.add(opponentHeroImage);
         unitImageList.add(playerHeroImage);
         playerHeroImage.setInCell(2, 0);
@@ -186,20 +187,10 @@ public class ControllerBattleCommands implements Initializable {
         opponentHeroImage.getUnitView().setScaleX(-1);
     }
 
-    private void setupBattleGroundCells(AnchorPane root) {
+    private void setupBattleGroundCells() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
-                battleGroundCells[row][column] = setLabelStyle(new Label());
-                battleGroundCells[row][column].relocate
-                        (getCellLayoutX(column), getCellLayoutY(row));
-                battleGroundCells[row][column].setMinWidth(63);
-                battleGroundCells[row][column].setMinHeight(50);
-                root.getChildren().add(battleGroundCells[row][column]);
-                final int cellRow = row;
-                final int cellColumn = column;
-                battleGroundCells[row][column].setOnMouseClicked(event -> {
-                    handleCellClicked(cellRow, cellColumn);
-                });
+                battleGroundCells[row][column] = new CellImage(row, column, battleGroundPane);
             }
         }
     }
@@ -315,6 +306,9 @@ public class ControllerBattleCommands implements Initializable {
                 selectedUnitImage.showAttack(targetedUnitImage.getColumn());
                 targetedUnitImage.showAttack(selectedUnitImage.getColumn());
                 break;
+            case ATTACKED_FRIENDLY_UNIT:
+                //empty
+                break;
             case ALREADY_ATTACKED:
                 //empty
                 break;
@@ -325,6 +319,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             default:
+                System.out.println("unhandled case");
         }
     }
 
@@ -368,22 +363,10 @@ public class ControllerBattleCommands implements Initializable {
         handImageList.add(new HandImage(4, getBattleGroundPane()));
     }
 
-    private void setupPlayerInfoViews(AnchorPane root) {
+    private void setupPlayerInfoViews() {
+        //todo isn't used
         PlayerInfoView player1InfoView = new PlayerInfoView(1);
         PlayerInfoView player2InfoView = new PlayerInfoView(2);
-    }
-
-    private Label setLabelStyle(Label label) {
-        label.setMinWidth(60);
-        label.setMinHeight(60);
-        label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        label.setOnMouseEntered(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
-        });
-        label.setOnMouseExited(e -> {
-            label.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
-        });
-        return label;
     }
 
     public UnitImage getUnitImageWithId(String id) {
