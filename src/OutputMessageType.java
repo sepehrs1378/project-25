@@ -81,6 +81,7 @@ public enum OutputMessageType {
     UNIT_ATTACKED(""),
     UNIT_AND_ENEMY_ATTACKED(""),
     UNSELECTED(""),
+    ATTACKED_FRIENDLY_UNIT(""),
     NO_ERROR("");
 
     private String message;

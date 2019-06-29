@@ -86,6 +86,9 @@ public class Unit extends Card {
         if (!isTargetUnitWithinRange(targetId))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetId);
+        if (dataBase.getCurrentBattle().getBattleGround()
+                .isUnitFriendlyOrEnemy(targetUnit).equals(Constants.FRIEND))
+            return OutputMessageType.ATTACKED_FRIENDLY_UNIT;
         this.attackUnit(targetId, false);
         if (targetUnit.canAttackTarget(this, true)) {
             targetUnit.attackUnit(this.getId(), true);
@@ -119,8 +122,9 @@ public class Unit extends Card {
         if (!isCounterAttack && dataBase.getCurrentBattle().getBattleGround().
                 isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
             return false;
-        if (this.isStunned())
-            return false;
+        if (dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+            if (this.isStunned())
+                return false;
         if (!isCounterAttack && this.didAttackThisTurn)
             return false;
         if (!isTargetUnitWithinRange(unit.getId()))

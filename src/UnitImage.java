@@ -28,7 +28,7 @@ public class UnitImage {
     private int row = 0;
     private int column = 0;
     private ImageView unitView = new ImageView();
-    private List<ImageView> buffViewList = new ArrayList<>();
+    private List<BuffImage> buffImageList = new ArrayList<>();
     private Label apNumber = new Label("0");//todo relocateCardView and reset it
     private Label hpNumber = new Label("0");//todo
     private String id;
@@ -215,6 +215,9 @@ public class UnitImage {
         hpNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
         apNumber.setTranslateX(unitView.getTranslateX() + unitViewSize * 0.66);
         apNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
+        for (BuffImage buffImage : buffImageList) {
+            buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
+        }
     }
 
     public void setApNumber(int apNumber) {
@@ -238,6 +241,15 @@ public class UnitImage {
         unitView.setTranslateX(x);
         unitView.setTranslateY(y);
         resetStatsPositions();
+    }
+
+    public void addBuffImage(BuffType buffType) {
+        for (BuffImage buffImage : buffImageList) {
+            if (buffImage.getBuffType().equals(buffType))
+                return;
+        }
+        BuffImage buffImage = new BuffImage(buffType, root);
+        buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
     }
 
     public ImageView getUnitView() {
