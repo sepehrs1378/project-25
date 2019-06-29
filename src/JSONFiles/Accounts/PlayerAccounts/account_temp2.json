@@ -1091,7 +1091,28 @@
         "items": []
       }
     },
-    "matchList": [],
+    "matchList": [
+      {
+        "opponent": "temp1",
+        "winner": "",
+        "matchDate": 1561800340520,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      },
+      {
+        "opponent": "temp1",
+        "winner": "",
+        "matchDate": 1561809185422,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      }
+    ],
     "mainDeck": "@root.playerInfo.collection.decks.0",
     "money": 1000000
   }

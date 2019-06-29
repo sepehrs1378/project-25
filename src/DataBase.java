@@ -45,6 +45,7 @@ public class DataBase {
         readMinions();
         readCollectibles();
         readUsables();
+        readCustomCards();
 //        makeCardSpells();
 //        makeHeroes();
 //        makeMinions();
@@ -1301,6 +1302,11 @@ public class DataBase {
         }
     }
 
+    public void readCustomCards(){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+
+    }
+
     public void saveGame(Battle battle) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Games");
@@ -1389,7 +1395,7 @@ public class DataBase {
             e.printStackTrace();
         }
     }
-    public void saveCutsomCard(Card card){
+    public void saveCustomCard(Card card){
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         String fileName = "cardCustom_" + card.getName() + ".json";
         FileWriter fileWriter = null;

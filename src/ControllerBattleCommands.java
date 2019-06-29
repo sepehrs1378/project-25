@@ -2,7 +2,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -14,9 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javax.xml.crypto.Data;
 import java.io.FileInputStream;
-import javax.swing.text.Style;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,9 +34,15 @@ public class ControllerBattleCommands implements Initializable {
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private Label[][] battleGroundCells = new Label[5][9];
-    private ImageView clickedImageView = new ImageView();
+    private ImageView clickedImageView = new ImageView();//todo
 
-    //todo fix units facings
+    public void setClickedImageView(ImageView clickedImageView) {
+        this.clickedImageView = clickedImageView;
+    }
+
+    public ImageView getClickedImageView() {
+        return clickedImageView;
+    }
 
     @FXML
     private ImageView endTurnMineBtn;
@@ -127,11 +130,12 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     private Label computerManaLabel;
 
-
     @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        clickedImageView = null;
         endTurn();
+        updatePane();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
     }
@@ -139,11 +143,11 @@ public class ControllerBattleCommands implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTempBattle();//todo remove it later
-        setupHandRings();
+        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupBattleGroundCells(battleGroundPane);
+        setupHandRings();
         setupHeroesImages(battleGroundPane);
         setupPlayerInfoViews(battleGroundPane);
-        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupCursor();
         Main.window.setScene(new Scene(battleGroundPane));
         player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -189,22 +193,6 @@ public class ControllerBattleCommands implements Initializable {
         DataBase.getInstance().setCurrentBattle(battle);
     }
 
-    @FXML
-    void enterSinglePlayer(MouseEvent event) throws IOException {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-        setupBattleGroundCells(root);
-//        startTempBattle();//todo remove it later
-        setupHeroesImages(root);
-        //todo units images
-        Main.window.setScene(new Scene(root));
-    }
-
-//    private void startTempBattle() {
-//        Battle battle= new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getTemp2()
-//                , Constants.CLASSIC, 0, null, Constants.SINGLE);
-//        DataBase.getInstance().setCurrentBattle(battle);
-//    }
-
     private void setupHeroesImages(AnchorPane root) {
         Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
         Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
@@ -235,8 +223,15 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    private void handleCellClicked(int row, int column) {
+    public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
+        if (isClickedImageViewInHand())
+            handleCardInsertion(row, column);
+        handleUnitMove(row, column);
+        updatePane();
+    }
+
+    private void handleUnitMove(int row, int column) {
         switch (dataBase.getCurrentBattle().getBattleGround()
                 .moveUnit(row, column)) {
             case UNIT_NOT_SELECTED:
@@ -257,72 +252,126 @@ public class ControllerBattleCommands implements Initializable {
             case UNIT_MOVED:
                 Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
                 UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-                movedUnitImage.showRun(row, column, battleGroundPane);
+                movedUnitImage.showRun(row, column);
                 break;
             default:
         }
-        updatePane();
+    }
+
+    private void handleCardInsertion(int row, int column) {
+        HandImage handImage = getHandImageWithCardView(clickedImageView);
+        Card card = dataBase.getCurrentBattle()
+                .getPlayerInTurn().getHand().getCardById(handImage.getId());
+        switch (dataBase.getCurrentBattle().insert(card, row, column)) {
+            case NO_SUCH_CARD_IN_HAND:
+                System.out.println();
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case INVALID_NUMBER:
+                //empty
+                break;
+            case NOT_NEARBY_FRIENDLY_UNITS:
+                //empty
+                break;
+            case THIS_CELL_IS_FULL:
+                //empty
+                break;
+            case CARD_INSERTED:
+                insertUnitView(row, column, card);
+                handImage.clearHandImage();
+                break;
+            default:
+        }
+    }
+
+    private void insertUnitView(int row, int column, Card card) {
+        UnitImage insertedUnitView = new UnitImage(card.getId(), battleGroundPane);
+        unitImageList.add(insertedUnitView);
+        insertedUnitView.setInCell(row, column);
+        clickedImageView = null;
+    }
+
+    public HandImage getHandImageWithCardView(ImageView cardView) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(cardView))
+                return handImage;
+        }
+        return null;
+    }
+
+    public boolean isClickedImageViewInHand() {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(clickedImageView))
+                return true;
+        }
+        return false;
     }
 
     public void handleUnitClicked(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
-            UnitImage unitImage = getUnitImageWithId(id);
-            switch (currentPlayer.selectUnit(id)) {
-                case SELECTED:
-                    unitImage.setUnitStyleAsSelected();
-                    clickedImageView = unitImage.getUnitView();
-                    break;
-                case ENEMY_UNIT_SELECTED:
-                    //empty
-                    break;
-                case INVALID_COLLECTABLE_CARD:
-                    //empty
-                    break;
-                case UNIT_IS_STUNNED:
-                    //empty
-                    break;
-                default:
-                    System.out.println("unhandled case !!!!!!!!");
-            }
+            handleUnitSelection(id);
         }
         if (currentPlayer.getSelectedUnit() != null) {
-            UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-            //todo add this feature to unselect a unit with clicking on it if needed
-            switch (currentPlayer.getSelectedUnit().attack(id)) {
-                case UNIT_ATTACKED:
-                    selectedUnitImage.showAttack();
-                    break;
-                case UNIT_AND_ENEMY_ATTACKED:
-                    UnitImage targetedUnitImage = getUnitImageWithId(id);
-                    selectedUnitImage.showAttack();
-                    targetedUnitImage.showAttack();
-                    break;
-                case ALREADY_ATTACKED:
-                    //empty
-                    break;
-                case INVALID_CARD:
-                    //empty
-                    break;
-                case TARGET_NOT_IN_RANGE:
-                    //empty
-                    break;
-                default:
-            }
+            handleUnitAttack(id);
         }
         updatePane();
     }
 
-    public List<ImageView> getHandRings() {
-        return handRings;
+    private void handleUnitAttack(String id) {
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+        UnitImage targetedUnitImage = getUnitImageWithId(id);
+        //todo add this feature to unselect a unit with clicking on it if needed
+        switch (currentPlayer.getSelectedUnit().attack(id)) {
+            case UNIT_ATTACKED:
+                selectedUnitImage.showAttack(targetedUnitImage.getColumn());
+                break;
+            case UNIT_AND_ENEMY_ATTACKED:
+                selectedUnitImage.showAttack(targetedUnitImage.getColumn());
+                targetedUnitImage.showAttack(selectedUnitImage.getColumn());
+                break;
+            case ALREADY_ATTACKED:
+                //empty
+                break;
+            case INVALID_CARD:
+                //empty
+                break;
+            case TARGET_NOT_IN_RANGE:
+                //empty
+                break;
+            default:
+        }
     }
 
-    public boolean doesHandHaveCard(String id) {
-        for (HandImage handImage : handImageList) {
-            if (handImage.getUnitImage().getId().equals(id))
-                return true;
+    private void handleUnitSelection(String id) {
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        UnitImage unitImage = getUnitImageWithId(id);
+        //todo fix this: if a friendly unit is selected, another unit cannot be selected
+        switch (currentPlayer.selectUnit(id)) {
+            case SELECTED:
+                unitImage.setUnitStyleAsSelected();
+                clickedImageView = unitImage.getUnitView();
+                break;
+            case ENEMY_UNIT_SELECTED:
+                //empty
+                break;
+            case INVALID_COLLECTABLE_CARD:
+                //empty
+                break;
+            case UNIT_IS_STUNNED:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case !!!!!!!!");
         }
-        return false;
+    }
+
+    public List<ImageView> getHandRings() {
+        return handRings;
     }
 
     private void setupHandRings() {
@@ -374,6 +423,10 @@ public class ControllerBattleCommands implements Initializable {
                 unitImage.setUnitStyleAsSelected();
             else unitImage.setStyleAsNotSelected();
         }
+        specialPowerLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getHero().getMainSpecialPower().getName());
+        Item item = dataBase.getLoggedInAccount().getMainDeck().getItem();
+        if (item != null)
+            collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
         Collectable collectable = dataBase.getCurrentBattle().getCollectable();
         Player player1 = dataBase.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()){
@@ -389,10 +442,15 @@ public class ControllerBattleCommands implements Initializable {
         }
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
-        for (Card card : loggedInPlayer.getHand().getCards()) {
-
+        List<Card> handCards = loggedInPlayer.getHand().getCards();
+        for (int i = 0; i < handCards.size(); i++) {
+            Card card = handCards.get(i);
+            handImageList.get(i).setCardImage(card.getId());
         }
-        //todo sepehr!take care of this please!
+    }
+
+    public Player getLoggedInPlayer() {
+        return loggedInPlayer;
     }
 
     public void main() throws GoToMainMenuException {
@@ -657,12 +715,13 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void insertName() {
-        String id = request.getCommand().split("[ (),]")[1];
+        /*String id = request.getCommand().split("[ (),]")[1];
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
         Card card = dataBase.getCurrentBattle().getPlayerInTurn()
                 .getHand().getCardByName(id);
         view.printOutputMessage(dataBase.getCurrentBattle().insert(card, row, column));
+   */
     }
 
     private void forfeitGame() {
@@ -711,6 +770,14 @@ public class ControllerBattleCommands implements Initializable {
 
     public double getCellLayoutY(int row) {
         return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
+    }
+
+    public double getHandRingLayoutX(int number) {
+        return handRings.get(number).getLayoutX();
+    }
+
+    public double getHandRingLayoutY(int number) {
+        return handRings.get(number).getLayoutX();
     }
 
     public AnchorPane getBattleGroundPane() {
