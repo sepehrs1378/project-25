@@ -1,9 +1,14 @@
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,9 +17,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
-import java.io.FileInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -134,11 +140,15 @@ public class ControllerBattleCommands implements Initializable {
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         clickedImageView = null;
-        endTurn();
-        Battle battle=dataBase.getCurrentBattle();
-        if (battle.getSingleOrMulti().equals(Constants.SINGLE)&&battle.getPlayerInTurn().equals(battle.getPlayer2())){
+        if (endTurn()){
+            return;
+        }
+        Battle battle = dataBase.getCurrentBattle();
+        if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
             AI.getInstance().doNextMove(battleGroundPane);
-            endTurn();
+            if (endTurn()){
+                return;
+            }
         }
         updatePane();
 //        endTurnMineBtn.setVisible(false);
@@ -194,7 +204,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void startTempBattle() {
         Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getAccountWithUsername("temp2")
-                , Constants.CLASSIC, 0, null, Constants.SINGLE);
+                , Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
         DataBase.getInstance().setCurrentBattle(battle);
     }
 
@@ -269,7 +279,6 @@ public class ControllerBattleCommands implements Initializable {
                 .getPlayerInTurn().getHand().getCardById(handImage.getId());
         switch (dataBase.getCurrentBattle().insert(card, row, column)) {
             case NO_SUCH_CARD_IN_HAND:
-                System.out.println();
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
@@ -420,8 +429,12 @@ public class ControllerBattleCommands implements Initializable {
 
     public void updatePane() {
         for (UnitImage unitImage : unitImageList) {
+            if (unitImage == null)
+                continue;
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
             Unit unit = battleGround.getUnitWithID(unitImage.getId());
+            if (unit == null)
+                continue;
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
             if (unitImage.getUnitView().equals(clickedImageView))
@@ -430,7 +443,7 @@ public class ControllerBattleCommands implements Initializable {
         }
         Collectable collectable = dataBase.getCurrentBattle().getCollectable();
         Player player1 = dataBase.getCurrentBattle().getPlayer1();
-        if (!player1.getCollectables().isEmpty()){
+        if (!player1.getCollectables().isEmpty()) {
             if (dataBase.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
                     player1.getCollectables().get(0).equals(collectable)) {
                 try {
@@ -741,17 +754,43 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endGame() {
+        System.out.println("game finished");
         dataBase.setCurrentBattle(null);
+        Alert alert=new Alert(Alert.AlertType.INFORMATION,"game has finished please press ok to exit to main menu");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
+        endTurnMineBtn.setDisable(true);
+        KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),keyValue);
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.setOnFinished(e->{
+            try {
 
+                Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+                Main.window.setScene(new Scene(root));
+            } catch (IOException ignored) {
+
+            }
+            KeyValue keyValueFinished = new KeyValue(Main.window.opacityProperty(),1);
+            KeyFrame keyFrameFinished = new KeyFrame(Duration.millis(2000),keyValueFinished);
+            Timeline timelineFinished = new Timeline();
+            timelineFinished.getKeyFrames().add(keyFrameFinished);
+            timelineFinished.play();
+        });
+        timeline.play();
+        System.out.println();
         return true;
+
+        //todo check prizes
     }
 
-    private boolean endTurn() throws GoToMainMenuException {
+    private boolean endTurn() {
         OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
         view.printOutputMessage(outputMessageType);
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
-            endGame();
+            return endGame();
             //todo check end game
         }
         return false;
