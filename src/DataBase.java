@@ -1,5 +1,6 @@
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import javafx.scene.control.Alert;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -1347,29 +1348,26 @@ public class DataBase {
 
     }
 
-    public String importDeck(String address) {
+    public Deck importDeck(String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         if (!address.endsWith(".json")) {
-            return "selected file is not a json file";
-
+            new Alert(Alert.AlertType.ERROR,"please select a valid json file!");
         }
         FileReader reader = null;
         try {
             reader = new FileReader(new File(address));
             Deck deck = yaGson.fromJson(reader, Deck.class);
-            loggedInAccount.getPlayerInfo().getCollection().getDecks().add(deck);
-            return "deck imported successfully!";
-        } catch (FileNotFoundException e) {
-            //todo show this message in correct place
-            return "file not found";
+            return deck;
+        } catch (FileNotFoundException ignored) {
         } catch (ClassCastException e) {
-            return "invalid file, selected file is not a saved battle";
+            new Alert(Alert.AlertType.ERROR,"please select a deck!").showAndWait();
         }
+        return null;
     }
 
-    public void exportDeck(Deck deck) {
+    public void exportDeck(Deck deck,String address) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        File folder = new File("src/JSONFiles/Decks");
+        File folder = new File(address);
         String[] fileNames = folder.list();
         String fileName = "deck_" + deck.getName() + "_";
         int numberOfDecks = 0;
@@ -1383,7 +1381,7 @@ public class DataBase {
         fileName += numberOfDecks;
         fileName += ".json";
         try {
-            FileWriter fileWriter = new FileWriter(new File("src/JSONFiles/Decks/" + fileName));
+            FileWriter fileWriter = new FileWriter(new File(address+"/" + fileName));
             yaGson.toJson(deck, fileWriter);
             fileWriter.flush();
             fileWriter.close();
