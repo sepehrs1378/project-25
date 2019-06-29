@@ -145,11 +145,31 @@ public class ControllerCollection implements Initializable {
         if (!hasAllCards(deck)) {
             new Alert(Alert.AlertType.ERROR, "you don't possess all the cards that you need").showAndWait();
         } else {
+            changeIDs(deck);
             dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().add(deck);
             showDecks();
         }
     }
-
+    private void changeIDs(Deck deck){
+        for (Card card:deck.getCards()){
+            String oldID = card.getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            card.setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getHero()!= null){
+            String oldID = deck.getHero().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            deck.getHero().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getItem()!=null){
+            String oldID = deck.getItem().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            deck.getItem().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+    }
     private boolean hasAllCards(Deck deck) {
         List<Card> cards = new ArrayList<>(deck.getCards());
         while (!cards.isEmpty()) {

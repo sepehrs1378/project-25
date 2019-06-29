@@ -152,7 +152,7 @@ public class ControllerCustomCard implements Initializable {
         if (spell == null)
             return;
         DataBase.getInstance().getCardList().add(spell);
-        DataBase.getInstance().saveCutsomCard(spell);
+        DataBase.getInstance().saveCustomCard(spell);
     }
 
     private Spell makeSpell() {
@@ -255,7 +255,7 @@ public class ControllerCustomCard implements Initializable {
         heroSpell = null;
         spellBuffs.clear();
         clearEveryThing();
-        DataBase.getInstance().saveCutsomCard(unit);
+        DataBase.getInstance().saveCustomCard(unit);
         new Alert(Alert.AlertType.INFORMATION, "hero created successfully!").showAndWait();
     }
 
@@ -329,7 +329,7 @@ public class ControllerCustomCard implements Initializable {
         minionSpell = null;
         spellBuffs.clear();
         clearEveryThing();
-        DataBase.getInstance().saveCutsomCard(unit);
+        DataBase.getInstance().saveCustomCard(unit);
         new Alert(Alert.AlertType.INFORMATION, "minion created successfully!").showAndWait();
     }
 
