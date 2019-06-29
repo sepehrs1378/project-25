@@ -31,6 +31,7 @@
           "positiveOrNegative": "negative",
           "startTurn": 0,
           "durationTurn": 2147483647,
+          "delayTurn": 0,
           "isDispellable": true,
           "isContinuous": false,
           "isDead": false
@@ -43,6 +44,7 @@
           "positiveOrNegative": "positive",
           "startTurn": 0,
           "durationTurn": 3,
+          "delayTurn": 0,
           "isDispellable": true,
           "isContinuous": false,
           "isDead": false

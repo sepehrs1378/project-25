@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 
 import java.io.FileInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -63,10 +64,13 @@ public class ControllerBattleCommands implements Initializable {
     private Label player2Label;
 
     @FXML
-    private Label specialPowerLabel;
+    private ImageView specialPowerView;
 
     @FXML
-    private Label collectableLabel;
+    private ImageView collectableView;
+
+    @FXML
+    private ImageView usableView;
 
     @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
@@ -149,6 +153,21 @@ public class ControllerBattleCommands implements Initializable {
         Main.window.setScene(new Scene(battleGroundPane));
         player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
         player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
+        try {
+            specialPowerView.setImage(new Image(new FileInputStream
+                    ("src/ApProjectResources/units/" + hero.getName() + "/special_power.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Usable usable = (Usable) dataBase.getLoggedInAccount().getMainDeck().getItem();
+        try {
+            if (usable != null) {
+                usableView.setImage(new Image(new FileInputStream("/src/ApProjectResources/units/" + usable.getName() + "/usable")));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         updatePane();
     }
 
@@ -391,6 +410,19 @@ public class ControllerBattleCommands implements Initializable {
         Item item = dataBase.getLoggedInAccount().getMainDeck().getItem();
         if (item != null)
             collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
+        Collectable collectable = dataBase.getCurrentBattle().getCollectable();
+        Player player1 = dataBase.getCurrentBattle().getPlayer1();
+        if (!player1.getCollectables().isEmpty()){
+            if (dataBase.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
+                    player1.getCollectables().get(0).equals(collectable)) {
+                try {
+                    collectableView.setImage(new Image(new FileInputStream("src/ApProjectResources/collectables/" +
+                            collectable.getName() + "/collectable")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         List<Card> handCards = loggedInPlayer.getHand().getCards();

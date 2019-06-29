@@ -31,6 +31,7 @@
             "manaAddedPerTurn": 1,
             "startTurn": 0,
             "durationTurn": 3,
+            "delayTurn": 0,
             "isDispellable": false,
             "isContinuous": false,
             "isDead": false

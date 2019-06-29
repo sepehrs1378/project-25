@@ -16,10 +16,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -73,7 +80,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void setAsMainDeck(MouseEvent event) {
-        if(selectedLabel.getText().isEmpty()){
+        if (selectedLabel.getText().isEmpty()) {
             return;
         }
         Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
@@ -102,7 +109,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void createDeck(MouseEvent event) {
-        if(deckNameLabel.getText().isEmpty()){
+        if (deckNameLabel.getText().isEmpty()) {
             return;
         }
         OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().createDeck(deckNameLabel.getText());
@@ -129,7 +136,85 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void importDeck(MouseEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(Main.window);
+        if (file == null) {
+            return;
+        }
+        Deck deck = dataBase.importDeck(file.getAbsolutePath());
+        if (!hasAllCards(deck)) {
+            new Alert(Alert.AlertType.ERROR, "you don't possess all the cards that you need").showAndWait();
+        } else {
+            changeIDs(deck);
+            dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+            showDecks();
+        }
+    }
+    private void changeIDs(Deck deck){
+        for (Card card:deck.getCards()){
+            String oldID = card.getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            card.setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getHero()!= null){
+            String oldID = deck.getHero().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            deck.getHero().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getItem()!=null){
+            String oldID = deck.getItem().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
+            deck.getItem().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+    }
+    private boolean hasAllCards(Deck deck) {
+        List<Card> cards = new ArrayList<>(deck.getCards());
+        while (!cards.isEmpty()) {
+            if (findNumOfSimilarCards(cards.get(0).getName(), cards) >
+                    findNumOfSimilarCards(cards.get(0).getName(), dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getCards())) {
+                return false;
+            } else {
+                removeSimilarCards(cards.get(0).getName(), cards);
+            }
+        }
+        if (deck.getHero() != null && findNumOfSimilarCards(deck.getHero().getName()
+                , dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getCards()) == 0) {
+            return false;
+        }
+        if (deck.getItem()==null){
+            return true;
+        }
+        return hasItem(deck.getItem().getName(), dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getItems());
+    }
 
+    private boolean hasItem(String name, List<Usable> items) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int findNumOfSimilarCards(String name, List<Card> cardList) {
+        int num = 0;
+        for (int i = 0; i < cardList.size(); i++) {
+            if (cardList.get(i).getName().equals(name)) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    private void removeSimilarCards(String name, List<Card> cardList) {
+        for (int i = 0; i < cardList.size(); i++) {
+            if (cardList.get(i).getName().equals(name)) {
+                cardList.remove(i--);
+            }
+        }
     }
 
     @FXML
@@ -176,7 +261,7 @@ public class ControllerCollection implements Initializable {
     void removeDeck(MouseEvent event) {
         Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
         dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
-        if (deck == dataBase.getLoggedInAccount().getMainDeck()){
+        if (deck == dataBase.getLoggedInAccount().getMainDeck()) {
             dataBase.getLoggedInAccount().setMainDeck(null);
         }
         showDecks();
@@ -185,7 +270,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void enterEditMenu(MouseEvent event) throws IOException {
-        if (selectedLabel == null){
+        if (selectedLabel == null) {
             return;
         }
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -199,7 +284,17 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void exportDeck(MouseEvent event) {
-
+        if (selectedLabel == null) {
+            new Alert(Alert.AlertType.ERROR,"please select a deck!").showAndWait();
+            return;
+        }
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File file = directoryChooser.showDialog(Main.window);
+        Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
+        if (deck == null) {
+            return;
+        }
+        DataBase.getInstance().exportDeck(deck, file.getAbsolutePath());
     }
 
     @FXML

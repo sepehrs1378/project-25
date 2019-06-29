@@ -5,8 +5,8 @@ public class ManaBuff extends Buff {
     private int manaAddedPerTurn;
 
     public ManaBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous, int manaAddedPerTurn) {
-        super(durationTurn, isDispellable, isContinuous);
+            , boolean isContinuous,int startTurn, int manaAddedPerTurn) {
+        super(durationTurn, isDispellable, isContinuous,startTurn);
         this.manaAddedPerTurn = manaAddedPerTurn;
     }
 
@@ -33,6 +33,6 @@ public class ManaBuff extends Buff {
 
     @Override
     public ManaBuff clone() {
-        return new ManaBuff(getDurationTurn(), isDispellable(), isContinuous(), manaAddedPerTurn);
+        return new ManaBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), manaAddedPerTurn);
     }
 }
