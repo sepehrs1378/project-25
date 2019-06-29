@@ -164,11 +164,8 @@ public class ControllerBattleCommands implements Initializable {
         setupHandRings();
         setupHeroesImages();
         setupCursor();
-//        Main.window.setScene(new Scene(battleGroundPane));
-        setupPlayersInfoViews();
         setupHeroSpecialPowerView();
         setupItemView();
-        Main.window.setScene(new Scene(battleGroundPane));
         updatePane();
     }
 
@@ -494,8 +491,12 @@ public class ControllerBattleCommands implements Initializable {
 
     private void updateUnitImages() {
         for (UnitImage unitImage : unitImageList) {
+            if (unitImage==null)
+                continue;
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
             Unit unit = battleGround.getUnitWithID(unitImage.getId());
+            if (unit==null)
+                continue;
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
             if (unitImage.getUnitView().equals(clickedImageView))

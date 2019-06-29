@@ -7,12 +7,4 @@ public class FlagImage {
     private ImageView flagView = new ImageView(new Image("./src/ApProjectResources/flag/flag"));
     private String id;
 
-    private void drop(String id){
-
-    }
-
-    private void pickup(String id){
-
-    }
-
 }
