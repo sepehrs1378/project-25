@@ -4,10 +4,13 @@ import javafx.scene.layout.AnchorPane;
 
 
 public class HandImage {
+    private static ControllerBattleCommands controllerBattleCommands
+            = ControllerBattleCommands.getOurInstance();
     private int number;
+    private String id = null;
     private AnchorPane root;
-    private UnitImage unitImage;
     private ImageView ringView;
+    private ImageView cardView;
     private Label manaLabel = new Label("0");
 
     public HandImage(int number, AnchorPane root) {
@@ -17,17 +20,37 @@ public class HandImage {
         addToRoot();
     }
 
-    public void setUnitImage(String id) {
-        unitImage = new UnitImage(id, root);
-        unitImage.setInHand(number);
+    public void setCardImage(String id) {
+        this.id = id;
+        Card card = controllerBattleCommands.getLoggedInPlayer().getHand().getCardById(id);
+//        if (card instanceof Unit)
+//            setUnitImage(id);
+//        if (card instanceof Spell)
+//            setSpellImage(id);
     }
 
-    public UnitImage getUnitImage() {
-        return unitImage;
-    }
+//    public void setUnitImage(String id) {
+//        spellImage = null;
+//        unitImage = new UnitImage(id, root);
+//        unitImage.setInHand(number);
+//
+//    }
+//
+//    public void setSpellImage(String id) {
+//        unitImage = null;
+//
+//        todo
+//    }
 
     public void addToRoot() {
-        root.getChildren().add(unitImage.getUnitView());
-        root.getChildren().add(manaLabel);
+        //todo IMPORTANT
+    }
+
+    public boolean isEmpty() {
+        return id == null;
+    }
+
+    public String getId() {
+        return id;
     }
 }

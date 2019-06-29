@@ -79,8 +79,8 @@ public class ControllerBattleCommands implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         startTempBattle();//todo remove it later
+        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupHandRings();
         setupBattleGroundCells(battleGroundPane);
         setupHeroesImages(battleGroundPane);
@@ -226,7 +226,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public boolean doesHandHaveCard(String id) {
         for (HandImage handImage : handImageList) {
-            if (handImage.getUnitImage().getId().equals(id))
+            if (handImage.getId().equals(id))
                 return true;
         }
         return false;
@@ -282,7 +282,21 @@ public class ControllerBattleCommands implements Initializable {
             else unitImage.setStyleAsNotSelected();
         }
         for (Card card : loggedInPlayer.getHand().getCards()) {
+            if (!doesHandHaveCard(card.getId())) {
+                //todo
+            }
+        }
+    }
 
+    public Player getLoggedInPlayer() {
+        return loggedInPlayer;
+    }
+
+    public void setCardInHand(String id) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.isEmpty()) {
+                handImage.setCardImage(id);
+            }
         }
     }
 
