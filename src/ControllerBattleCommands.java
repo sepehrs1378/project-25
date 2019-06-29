@@ -325,7 +325,7 @@ public class ControllerBattleCommands implements Initializable {
 
     }
 
-    private void insertUnitView(int row, int column, Card card) {
+    public void insertUnitView(int row, int column, Card card) {
         UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
         unitImageList.add(insertedUnitImage);
         insertedUnitImage.setInCell(row, column);

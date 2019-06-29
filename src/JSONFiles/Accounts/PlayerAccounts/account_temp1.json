@@ -1828,6 +1828,26 @@
         "diffInHours": 0,
         "diffInDays": 0,
         "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1561850098736,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1561850724161,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
       }
     ],
     "mainDeck": "@root.playerInfo.collection.decks.0",
