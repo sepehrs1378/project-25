@@ -157,14 +157,14 @@ public class ControllerBattleCommands implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startTempBattle();//todo remove it later
+//        startTempBattle();//todo remove it later
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupBattleGroundCells(battleGroundPane);
         setupHandRings();
         setupHeroesImages(battleGroundPane);
         setupPlayerInfoViews(battleGroundPane);
         setupCursor();
-        Main.window.setScene(new Scene(battleGroundPane));
+//        Main.window.setScene(new Scene(battleGroundPane));
         player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
         player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
@@ -456,7 +456,7 @@ public class ControllerBattleCommands implements Initializable {
         }
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
-        List<Card> handCards = loggedInPlayer.getHand().getCards();
+        List<Card> handCards = getLoggedInPlayer().getHand().getCards();
         for (int i = 0; i < handCards.size(); i++) {
             Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());

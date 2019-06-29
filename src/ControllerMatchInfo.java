@@ -83,11 +83,12 @@ public class ControllerMatchInfo implements Initializable {
             matchInfo.calculatePassedTime();
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("ControllerMatchInfoElements.fxml"));
-            ControllerMatchInfoElements controllerMatchInfoElements = fxmlLoader.getController();
-            controllerMatchInfoElements.setHistoryStatus(opponent, winOrLoss, matchInfo.getDiffInSeconds(),
-                    matchInfo.getDiffInMinutes(), matchInfo.getDiffInHours(), matchInfo.getDiffInDays(), matchInfo.getDiffInYears());
             try {
-                matchHistoryBox.getChildren().add(fxmlLoader.load());
+                Node node = fxmlLoader.load();
+                ControllerMatchInfoElements controllerMatchInfoElements = fxmlLoader.getController();
+                controllerMatchInfoElements.setHistoryStatus(opponent, winOrLoss, matchInfo.getDiffInSeconds(),
+                        matchInfo.getDiffInMinutes(), matchInfo.getDiffInHours(), matchInfo.getDiffInDays(), matchInfo.getDiffInYears());
+                matchHistoryBox.getChildren().add(node);
             } catch (IOException e) {
                 e.printStackTrace();
             }

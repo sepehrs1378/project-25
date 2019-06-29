@@ -8,8 +8,6 @@ import java.io.IOException;
 
 
 public class HandImage {
-    private static ControllerBattleCommands controllerBattleCommands
-            = ControllerBattleCommands.getOurInstance();
     private final String UNIT = "unit";
     private final String SPELL = "spell";
     private final int UNIT_VIEW_SIZE = 150;
@@ -54,7 +52,7 @@ public class HandImage {
 
     public void setCardImage(String id) {
         this.id = id;
-        Card card = controllerBattleCommands.getLoggedInPlayer().getHand().getCardById(id);
+        Card card = ControllerBattleCommands.getOurInstance().getLoggedInPlayer().getHand().getCardById(id);
         cardView.setVisible(true);
         manaLabel.setVisible(true);
         try {
@@ -76,6 +74,12 @@ public class HandImage {
             }
             setCardViewStyle();
             relocateCardToHand();
+//            System.out.println(manaLabel);
+//            System.out.println("card"+card);
+//            if (card==null)
+//                return;
+            //todo very important check later
+
             manaLabel.setText(card.getMana() + "");
         } catch (IOException e) {
             e.printStackTrace();

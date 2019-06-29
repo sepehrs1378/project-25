@@ -2,12 +2,11 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AI {
     private static AI ourInstance = new AI();
     private static DataBase dataBase = DataBase.getInstance();
+
     public static AI getInstance() {
         return ourInstance;
     }
