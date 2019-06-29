@@ -38,7 +38,8 @@ public class HandImage {
         this.number = number;
         this.root = root;
         cardView.setOnMouseClicked(event -> {
-
+            ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
+            cardView.setStyle(SELECTED_STYLE);
         });
         cardView.setOnMouseEntered(event -> {
             if (!cardView.getStyle().equals(SELECTED_STYLE))
@@ -54,29 +55,41 @@ public class HandImage {
     public void setCardImage(String id) {
         this.id = id;
         Card card = controllerBattleCommands.getLoggedInPlayer().getHand().getCardById(id);
+        cardView.setVisible(true);
+        manaLabel.setVisible(true);
         try {
             if (card instanceof Unit) {
                 cardView.setImage(new Image(new FileInputStream
                         ("./src/ApProjectResources/units/" + getCardName() + "/stand")));
                 unitOrSpell = UNIT;
-                cardView.setFitWidth(UNIT_VIEW_SIZE);
-                cardView.setFitHeight(UNIT_VIEW_SIZE);
                 hpLabel.setText(((Unit) card).getHp() + "");
                 apLabel.setText(((Unit) card).getAp() + "");
+                apLabel.setVisible(true);
+                hpLabel.setVisible(true);
             }
             if (card instanceof Spell) {
                 cardView.setImage(new Image(new FileInputStream
                         ("./src/ApProjectResources/spells/" + getCardName() + "/icon")));
-                cardView.setFitWidth(SPELL_VIEW_SIZE);
-                cardView.setFitHeight(SPELL_VIEW_SIZE);
                 unitOrSpell = SPELL;
                 apLabel.setVisible(false);
                 hpLabel.setVisible(false);
             }
+            setCardViewStyle();
             relocateCardToHand();
             manaLabel.setText(card.getMana() + "");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setCardViewStyle() {
+        if (unitOrSpell.equals(UNIT)) {
+            cardView.setFitWidth(UNIT_VIEW_SIZE);
+            cardView.setFitHeight(UNIT_VIEW_SIZE);
+        }
+        if (unitOrSpell.equals(SPELL)) {
+            cardView.setFitWidth(SPELL_VIEW_SIZE);
+            cardView.setFitHeight(SPELL_VIEW_SIZE);
         }
     }
 
@@ -122,7 +135,21 @@ public class HandImage {
         resetStatsPositions();
     }
 
+    public void clearHandImage() {
+        //todo maybe works incorrect because
+        // maybe the imageView remains in the hand
+        // and some methods don't work properly
+        cardView.setVisible(false);
+        apLabel.setVisible(false);
+        hpLabel.setVisible(false);
+        manaLabel.setVisible(false);
+    }
+
     public String getId() {
         return id;
+    }
+
+    public ImageView getCardView() {
+        return cardView;
     }
 }

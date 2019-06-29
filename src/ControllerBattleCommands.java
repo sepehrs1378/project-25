@@ -128,10 +128,10 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     private Label computerManaLabel;
 
-
     @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        clickedImageView = null;
         endTurn();
         updatePane();
 //        endTurnMineBtn.setVisible(false);
@@ -206,8 +206,39 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    private void handleCellClicked(int row, int column) {
+    public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
+        if (isClickedImageViewInHand()) {
+            HandImage handImage = getHandImageWithCardView(clickedImageView);
+            Card card = dataBase.getCurrentBattle()
+                    .getPlayerInTurn().getHand().getCardById(handImage.getId());
+            switch (dataBase.getCurrentBattle().insert(card, row, column)) {
+                case NO_SUCH_CARD_IN_HAND:
+                    System.out.println();
+                    //empty
+                    break;
+                case NOT_ENOUGH_MANA:
+                    //empty
+                    break;
+                case INVALID_NUMBER:
+                    //empty
+                    break;
+                case NOT_NEARBY_FRIENDLY_UNITS:
+                    //empty
+                    break;
+                case THIS_CELL_IS_FULL:
+                    //empty
+                    break;
+                case CARD_INSERTED:
+                    UnitImage insertedUnitView = new UnitImage(handImage.getId(), battleGroundPane);
+                    unitImageList.add(insertedUnitView);
+                    insertedUnitView.setInCell(row, column);
+                    handImage.clearHandImage();
+                    clickedImageView = null;
+                    break;
+                default:
+            }
+        }
         switch (dataBase.getCurrentBattle().getBattleGround()
                 .moveUnit(row, column)) {
             case UNIT_NOT_SELECTED:
@@ -228,17 +259,34 @@ public class ControllerBattleCommands implements Initializable {
             case UNIT_MOVED:
                 Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
                 UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
-                movedUnitImage.showRun(row, column, battleGroundPane);
+                movedUnitImage.showRun(row, column);
                 break;
             default:
         }
         updatePane();
     }
 
+    public HandImage getHandImageWithCardView(ImageView cardView) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(cardView))
+                return handImage;
+        }
+        return null;
+    }
+
+    public boolean isClickedImageViewInHand() {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getCardView().equals(clickedImageView))
+                return true;
+        }
+        return false;
+    }
+
     public void handleUnitClicked(String id) {
         Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedUnit() == null && currentPlayer.getSelectedCollectable() == null) {
             UnitImage unitImage = getUnitImageWithId(id);
+            //todo fix this: if a friendly unit is selected, another unit cannot be selected
             switch (currentPlayer.selectUnit(id)) {
                 case SELECTED:
                     unitImage.setUnitStyleAsSelected();
@@ -259,15 +307,15 @@ public class ControllerBattleCommands implements Initializable {
         }
         if (currentPlayer.getSelectedUnit() != null) {
             UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
+            UnitImage targetedUnitImage = getUnitImageWithId(id);
             //todo add this feature to unselect a unit with clicking on it if needed
             switch (currentPlayer.getSelectedUnit().attack(id)) {
                 case UNIT_ATTACKED:
-                    selectedUnitImage.showAttack();
+                    selectedUnitImage.showAttack(targetedUnitImage.getColumn());
                     break;
                 case UNIT_AND_ENEMY_ATTACKED:
-                    UnitImage targetedUnitImage = getUnitImageWithId(id);
-                    selectedUnitImage.showAttack();
-                    targetedUnitImage.showAttack();
+                    selectedUnitImage.showAttack(targetedUnitImage.getColumn());
+                    targetedUnitImage.showAttack(selectedUnitImage.getColumn());
                     break;
                 case ALREADY_ATTACKED:
                     //empty
@@ -343,8 +391,9 @@ public class ControllerBattleCommands implements Initializable {
             collectableLabel.setText(dataBase.getLoggedInAccount().getMainDeck().getItem().getName()); //todo is this the collectable item?!
         playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
         computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
-        for (int i = 0; i < 5; i++) {
-            Card card = loggedInPlayer.getHand().getCards().get(i);
+        List<Card> handCards = loggedInPlayer.getHand().getCards();
+        for (int i = 0; i < handCards.size(); i++) {
+            Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());
         }
     }
@@ -615,12 +664,13 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void insertName() {
-        String id = request.getCommand().split("[ (),]")[1];
+        /*String id = request.getCommand().split("[ (),]")[1];
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
         Card card = dataBase.getCurrentBattle().getPlayerInTurn()
                 .getHand().getCardByName(id);
         view.printOutputMessage(dataBase.getCurrentBattle().insert(card, row, column));
+   */
     }
 
     private void forfeitGame() {

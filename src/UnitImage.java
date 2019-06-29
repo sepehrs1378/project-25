@@ -11,6 +11,8 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
@@ -23,9 +25,10 @@ public class UnitImage {
     private long spellDuration = 3000;
     private long runDuration = 1000;
     private int unitViewSize = 150;
-
+    private int row = 0;
+    private int column = 0;
     private ImageView unitView = new ImageView();
-
+    private List<ImageView> buffViewList = new ArrayList<>();
     private Label apNumber = new Label("0");//todo relocateCardView and reset it
     private Label hpNumber = new Label("0");//todo
     private String id;
@@ -101,14 +104,17 @@ public class UnitImage {
         return id.split("_")[1];
     }
 
-    public void showRun(int destinationRow, int destinationColumn, AnchorPane root) {
+    public void showRun(int destinationRow, int destinationColumn) {
         setUnitStatus(UnitStatus.run);
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
         double endX = ControllerBattleCommands.getOurInstance().getCellLayoutX(destinationColumn)
                 + GraphicConstants.CELL_WIDTH / 2.0;
         double endY = ControllerBattleCommands.getOurInstance().getCellLayoutY(destinationRow);
-        changeFacingWhileRunning(endX, startX);
+        changeFacing(this.column, destinationColumn);
+        this.row = destinationRow;
+        this.column = destinationColumn;
+
         Path path = new Path(new MoveTo(startX, startY), new LineTo(endX, endY));
         path.setVisible(false);
         root.getChildren().add(path);
@@ -136,8 +142,9 @@ public class UnitImage {
         animationTimer.start();
     }
 
-    public void showAttack() {
+    public void showAttack(int targetColumn) {
         setUnitStatus(UnitStatus.attack);
+        changeFacing(this.column, targetColumn);
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
 
@@ -152,15 +159,6 @@ public class UnitImage {
             }
         };
         animationTimer.start();
-    }
-
-    public void changeFacingWhileRunning(double endX, double startX){
-        if (startX < endX){
-            unitView.setScaleX(1);
-        }
-        if (startX > endX){
-            unitView.setScaleX(-1);
-        }
     }
 
     public void showDeath() {
@@ -200,6 +198,12 @@ public class UnitImage {
         animationTimer.start();
     }
 
+    private void changeFacing(int currentColumn, int toColumn) {
+        if (currentColumn < toColumn)
+            unitView.setScaleX(1);
+        else unitView.setScaleX(-1);
+    }
+
     private void addToRoot() {
         root.getChildren().add(unitView);
         root.getChildren().add(apNumber);
@@ -222,6 +226,8 @@ public class UnitImage {
     }
 
     public void setInCell(int row, int column) {
+        this.row = row;
+        this.column = column;
         double x = ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
                 + GraphicConstants.CELL_WIDTH / 2 - unitViewSize / 2;
         double y = ControllerBattleCommands.getOurInstance().getCellLayoutY(row) - unitViewSize / 2;
@@ -236,5 +242,13 @@ public class UnitImage {
 
     public ImageView getUnitView() {
         return unitView;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }
