@@ -341,15 +341,18 @@ public class ControllerSinglePlayerMenu implements Initializable {
             if (!flagNumberLabel.getText().matches("\\d*")) {
                 invalidNumberLabel.setText("please enter a number");
                 return;
-            } else if (!flagNumberLabel.getText().isEmpty() && Integer.parseInt(flagNumberLabel.getText()) > 43) {
-                invalidNumberLabel.setText("please enter a number less than 43");
+            } else if (!flagNumberLabel.getText().isEmpty() && Integer.parseInt(flagNumberLabel.getText()) > 35) {
+                invalidNumberLabel.setText("please enter a number less than 35");
                 return;
             }
         }
         Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectDeckBox.getValue());
+        Deck newDeck = new Deck(deck);
+        changeIDtoCustomPlayer(newDeck);
+        database.getComputerPlayerCustom().setMainDeck(newDeck);
+
         switch (selectModeBox.getValue()) {
             case Constants.CLASSIC: {
-                database.getComputerPlayerCustom().setMainDeck(deck);
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                         Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
                 database.setCurrentBattle(battle);
@@ -359,7 +362,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 break;
             }
             case Constants.ONE_FLAG: {
-                database.getComputerPlayerCustom().setMainDeck(deck);
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                         Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
                 database.setCurrentBattle(battle);
@@ -369,7 +371,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 break;
             }
             case Constants.FLAGS:
-                database.getComputerPlayerCustom().setMainDeck(deck);
                 if (flagNumberLabel.getText().isEmpty()) {
                     Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
                             Constants.FLAGS, 7, null, Constants.SINGLE, 1000);
@@ -393,6 +394,9 @@ public class ControllerSinglePlayerMenu implements Initializable {
         }
     }
 
+    private void changeIDtoCustomPlayer(Deck deck){
+
+    }
     @FXML
     void makePlayBtnOpaque(MouseEvent event) {
         playBtn.setStyle("-fx-opacity: 1");
