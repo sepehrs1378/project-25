@@ -92,8 +92,12 @@ public class Unit extends Card {
         this.attackUnit(targetId, false);
         if (targetUnit.canAttackTarget(this, true)) {
             targetUnit.attackUnit(this.getId(), true);
+            dataBase.getCurrentBattle().checkForDeadUnits();
             return OutputMessageType.UNIT_AND_ENEMY_ATTACKED;
-        } else return OutputMessageType.UNIT_ATTACKED;
+        } else {
+            dataBase.getCurrentBattle().checkForDeadUnits();
+            return OutputMessageType.UNIT_ATTACKED;
+        }
     }
 
     public void attackUnit(String targetId, boolean isCounterAttack) {

@@ -19,12 +19,14 @@ public class UnitImage {
     private final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
     private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
+    private final int UNIT_VIEW_SIZE = 150;
+    private final int UNIT_EFFECT_SIZE = 80;
     private AnchorPane root;
     private long attackDuration = 2000;
-    private long deathDuration = 2000;
+    private long deathDuration = 1200;
     private long spellDuration = 3000;
     private long runDuration = 1000;
-    private int UNIT_VIEW_SIZE = 150;
+    private long spawnDuration = 1500;
     private int row = 0;
     private int column = 0;
     private ImageView unitView = new ImageView();
@@ -127,12 +129,13 @@ public class UnitImage {
 
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
+            private long duration = runDuration * 1000000;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0)
                     lastTime = now;
-                if (now - lastTime > runDuration * 1000000) {
+                if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
                     this.stop();
@@ -147,12 +150,13 @@ public class UnitImage {
         changeFacing(this.column, targetColumn);
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
+            private long duration = attackDuration * 1000000;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0)
                     lastTime = now;
-                if (now - lastTime > attackDuration * 1000000) {
+                if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     this.stop();
                 }
@@ -161,19 +165,48 @@ public class UnitImage {
         animationTimer.start();
     }
 
-    public void showDeath() {
-        setUnitStatus(UnitStatus.death);
+    public void showSpawn() {
+        ImageView effectView = addEffectToUnit(UnitEffectType.spawnEffect);
+
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
+            private long duration = spawnDuration * 1000000;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0)
                     lastTime = now;
-                if (now - lastTime > deathDuration * 1000000) {
+                if (now - lastTime > duration) {
+                    root.getChildren().remove(effectView);
+                    this.stop();
+                } else {
+                    unitView.setStyle("-fx-opacity: " + (now - lastTime - 0.0) / duration);
+                }
+            }
+        };
+        animationTimer.start();
+
+    }
+
+    public void showDeath() {
+        setUnitStatus(UnitStatus.death);
+        ImageView effectView = addEffectToUnit(UnitEffectType.bloodDrop);
+
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastTime = 0;
+            private long duration = deathDuration * 1000000;
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
+                    root.getChildren().remove(effectView);
                     removeFromRoot();
                     this.stop();
+                } else {
+                    unitView.setStyle("-fx-opacity: " + (1 - (now - lastTime - 0.0) / duration));
                 }
             }
         };
@@ -185,12 +218,13 @@ public class UnitImage {
         //todo show spell effects
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
+            private long duration = spellDuration * 1000000;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0)
                     lastTime = now;
-                if (now - lastTime > spellDuration * 1000000) {
+                if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     this.stop();
                 }
@@ -212,12 +246,12 @@ public class UnitImage {
     }
 
     private void resetStatsPositions() {
-        hpNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.33);
-        hpNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE);
-        apNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.66);
-        apNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE);
+        hpNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.15);
+        hpNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE * 0.15);
+        apNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.25);
+        apNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE * 0.4);
         for (BuffImage buffImage : buffImageList) {
-            buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
+            buffImage.relocate(unitView.getTranslateX(), unitView.getTranslateY());
         }
     }
 
@@ -250,7 +284,7 @@ public class UnitImage {
                 return;
         }
         BuffImage buffImage = new BuffImage(buffType, root);
-        buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
+        buffImage.relocate(unitView.getTranslateX(), unitView.getTranslateY());
     }
 
     public void clearBuffImageList() {
@@ -267,6 +301,20 @@ public class UnitImage {
 
     public int getColumn() {
         return column;
+    }
+
+    public ImageView addEffectToUnit(UnitEffectType effectType) {
+        ImageView effectView = null;
+        try {
+            effectView = new ImageView(new Image(new FileInputStream
+                    ("./src/ApProjectResources/units/unitEffects/" + effectType.toString())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().add(effectView);
+        effectView.setTranslateX(unitView.getTranslateX() - UNIT_VIEW_SIZE / 2 + UNIT_EFFECT_SIZE / 2);
+        effectView.setTranslateY(unitView.getTranslateY() - UNIT_VIEW_SIZE / 2 + UNIT_EFFECT_SIZE / 2);
+        return effectView;
     }
 
     private void removeFromRoot() {

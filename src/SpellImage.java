@@ -13,13 +13,29 @@ public class SpellImage {
     private String id;
     private ImageView spellEffect = new ImageView();
 
-    public SpellImage(String id, int row, int column, AnchorPane root) {
+    public SpellImage(String id, int row, int column, AnchorPane root, SpellType spellType) {
         ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
         this.id = id;
         this.root = root;
+        String filePath = "";
+        switch (spellType) {
+            case specialPower:
+                filePath = "./src/ApProjectResources/units/" + getName() + "/effect";
+                break;
+            case spell:
+                filePath = "./src/ApProjectResources/spells/" + getName() + "/effect";
+                break;
+            case usable:
+                //todo
+                break;
+            case collectable:
+                //todo
+                break;
+            default:
+                System.out.println("unhandled case!!!!!");
+        }
         try {
-            spellEffect.setImage(new Image(new FileInputStream
-                    ("./src/ApProjectResources/spells/" + getSpellName() + "/effect")));
+            spellEffect.setImage(new Image(new FileInputStream(filePath)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,7 +60,7 @@ public class SpellImage {
         animationTimer.start();
     }
 
-    private String getSpellName() {
+    private String getName() {
         return id.split("_")[1];
     }
 

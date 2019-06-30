@@ -4,15 +4,11 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BuffImage {
     private final int BUFF_VIEW_SIZE = 50;
     private AnchorPane root;
     private ImageView buffView = new ImageView();
-    private List<BuffImage> buffViewList = new ArrayList<>();
-    private String id;
     private BuffType buffType;
 
     public BuffImage(BuffType buffType, AnchorPane root) {
@@ -21,6 +17,11 @@ public class BuffImage {
         buffView.setFitWidth(BUFF_VIEW_SIZE);
         buffView.setFitHeight(BUFF_VIEW_SIZE);
         setImage(buffType);
+        addToRoot();
+    }
+
+    private void addToRoot() {
+        root.getChildren().add(buffView);
     }
 
     public BuffType getBuffType() {

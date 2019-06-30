@@ -44,6 +44,10 @@ public class CellImage {
         });
     }
 
+    public void clearBuffImageList() {
+        buffImageList.clear();
+    }
+
     public void addBuffImage(BuffType buffType) {
         for (BuffImage buffImage : buffImageList) {
             if (buffImage.getBuffType().equals(buffType))

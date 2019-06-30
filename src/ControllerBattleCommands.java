@@ -1,4 +1,3 @@
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -25,11 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -45,7 +42,7 @@ public class ControllerBattleCommands implements Initializable {
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private List<SpellImage> spellImageList = new ArrayList<>();
-    private CellImage[][] cellImageList = new CellImage[5][9];
+    private CellImage[][] cellsImages = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     private List<FlagImage> flagImages = new ArrayList<>();
     //todo next card has bug
@@ -169,28 +166,22 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
-        try {
-            Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.play();
-            clickedImageView = null;
+        Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
+        clickedImageView = null;
+        if (endTurn()) {
+            return;
+        }
+        /*Battle battle = dataBase.getCurrentBattle();
+        if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
+            AI.getInstance().doNextMove(battleGroundPane);
             if (endTurn()) {
                 return;
             }
-            Battle battle = dataBase.getCurrentBattle();
-            if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-                AI.getInstance().doNextMove(battleGroundPane);
-                if (endTurn()) {
-                    return;
-                }
-            }
-            updatePane();
-        } catch (Exception e) {
-
-        }
-//        endTurnMineBtn.setVisible(false);
-//        endTurnEnemyBtn.setVisible(true);
+        }*/
+        updatePane();
     }
 
     @Override
@@ -225,16 +216,36 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupHeroSpecialPowerView() {
+        final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
+        final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
+        final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
         Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
-        if (hero.getMainSpecialPower() == null) {
+        if (hero.getMainSpecialPower() == null)
             return;
-        }
         try {
             specialPowerView.setImage(new Image(new FileInputStream
                     ("src/ApProjectResources/units/" + hero.getName() + "/special_power.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        specialPowerView.setOnMouseEntered(event -> {
+            if (!specialPowerView.getStyle().equals(SELECTED_STYLE))
+                specialPowerView.setStyle(MOUSE_ENTERED_STYLE);
+        });
+        specialPowerView.setOnMouseExited(event -> {
+            if (!specialPowerView.getStyle().equals(SELECTED_STYLE))
+                specialPowerView.setStyle(MOUSE_EXITED_STYLE);
+        });
+        specialPowerView.setOnMouseClicked(event -> {
+            if (clickedImageView != null && clickedImageView == specialPowerView) {
+                clickedImageView = null;
+                specialPowerView.setStyle(null);
+            } else {
+                clickedImageView = specialPowerView;
+                specialPowerView.setStyle(SELECTED_STYLE);
+            }
+            updatePane();
+        });
     }
 
     private void setupCursor() {
@@ -275,26 +286,59 @@ public class ControllerBattleCommands implements Initializable {
     private void setupBattleGroundCells() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
-                cellImageList[row][column] = new CellImage(row, column, battleGroundPane);
+                cellsImages[row][column] = new CellImage(row, column, battleGroundPane);
             }
         }
     }
 
     public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
-        try {
-            if (isClickedImageViewInHand())
-                if (handleCardInsertion(row, column)) {
-                    updatePane();
-                    return;
-                }
-            if (handleUnitMove(row, column)) {
+        if (isClickedImageViewInHand())
+            if (handleCardInsertion(row, column)) {
                 updatePane();
                 return;
             }
-            updatePane();
-        } catch (Exception e) {
+        if (clickedImageView == specialPowerView) {
+            if (handleSpecialPowerInsertion(row, column)) {
+                updatePane();
+                return;
+            }
         }
+        if (handleUnitMove(row, column)) {
+            updatePane();
+            return;
+        }
+        updatePane();
+    }
+
+    private boolean handleSpecialPowerInsertion(int row, int column) {
+        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        UnitImage heroImage = getUnitImageWithId(hero.getId());
+        switch (dataBase.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column)) {
+            case NO_HERO:
+                //empty
+                break;
+            case HERO_HAS_NO_SPELL:
+                //empty
+                break;
+            case SPECIAL_POWER_IN_COOLDOWN:
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case SPECIAL_POWER_USED:
+                heroImage.showSpell();
+                SpellImage specialPowerImage = new SpellImage
+                        (hero.getId(), row, column, battleGroundPane, SpellType.specialPower);
+                spellImageList.add(specialPowerImage);
+                clickedImageView = null;
+                break;
+            default:
+                System.out.println("unhandled case!!!!!");
+        }
+        //todo
+        return false;
     }
 
     private boolean handleUnitMove(int row, int column) {
@@ -369,7 +413,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void insertSpellView(int row, int column, Card card) {
-        SpellImage insertedSpellImage = new SpellImage(card.getId(), row, column, battleGroundPane);
+        SpellImage insertedSpellImage = new SpellImage
+                (card.getId(), row, column, battleGroundPane, SpellType.spell);
         spellImageList.add(insertedSpellImage);
         clickedImageView = null;
 
@@ -379,6 +424,7 @@ public class ControllerBattleCommands implements Initializable {
         UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
         unitImageList.add(insertedUnitImage);
         insertedUnitImage.setInCell(row, column);
+        insertedUnitImage.showSpawn();
         clickedImageView = null;
     }
 
@@ -399,24 +445,20 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        try {
-            Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-            if (currentPlayer.getSelectedCollectable() == null) {
-                if (handleUnitSelection(id)) {
-                    updatePane();
-                    return;
-                }
+        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        if (currentPlayer.getSelectedCollectable() == null) {
+            if (handleUnitSelection(id)) {
+                updatePane();
+                return;
             }
-            if (currentPlayer.getSelectedUnit() != null) {
-                if (handleUnitAttack(id)) {
-                    updatePane();
-                    return;
-                }
-            }
-            updatePane();
-        } catch (Exception e) {
-
         }
+        if (currentPlayer.getSelectedUnit() != null) {
+            if (handleUnitAttack(id)) {
+                updatePane();
+                return;
+            }
+        }
+        updatePane();
     }
 
     private boolean handleUnitAttack(String id) {
@@ -499,20 +541,9 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void updatePane() {
-        for (UnitImage unitImage : unitImageList) {
-            if (unitImage == null)
-                continue;
-            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-            Unit unit = battleGround.getUnitWithID(unitImage.getId());
-            if (unit == null)
-                continue;
-            unitImage.setApNumber(unit.getAp());
-            unitImage.setHpNumber(unit.getHp());
-            if (unitImage.getUnitView().equals(clickedImageView))
-                unitImage.setUnitStyleAsSelected();
-            else unitImage.setStyleAsNotSelected();
-        }
         updateUnitImages();
+        updateSpecialPowerImage();
+        updateCellImages();
         Collectable collectable = dataBase.getCurrentBattle().getCollectable();
         Player player1 = dataBase.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
@@ -530,6 +561,48 @@ public class ControllerBattleCommands implements Initializable {
         updateHandImages();
         updatePlayersInfo();
         updateHand();
+    }
+
+    private void updateCellImages() {
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[row][column];
+                CellImage cellImage = cellsImages[row][column];
+                cellImage.clearBuffImageList();
+                for (Buff buff : cell.getBuffs()) {
+                    cellImage.addBuffImage(buff.getType());
+                }
+            }
+        }
+    }
+
+    private void updateUnitImages() {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage == null)
+                continue;
+            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            if (!battleGround.doesHaveUnit(unitImage.getId())) {
+                unitImage.showDeath();
+                continue;
+            }
+            Unit unit = battleGround.getUnitWithID(unitImage.getId());
+            if (unit == null)
+                continue;
+            unitImage.setApNumber(unit.getAp());
+            unitImage.setHpNumber(unit.getHp());
+            if (unitImage.getUnitView().equals(clickedImageView))
+                unitImage.setUnitStyleAsSelected();
+            else unitImage.setStyleAsNotSelected();
+            unitImage.clearBuffImageList();
+            for (Buff buff : unit.getBuffs()) {
+                unitImage.addBuffImage(buff.getType());
+            }
+        }
+    }
+
+    private void updateSpecialPowerImage() {
+        if (clickedImageView != specialPowerView)
+            specialPowerView.setStyle(null);
     }
 
     private void showFlags() {
@@ -570,30 +643,6 @@ public class ControllerBattleCommands implements Initializable {
         for (int i = 0; i < handCards.size(); i++) {
             Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());
-        }
-    }
-
-    private void updateUnitImages() {
-        for (UnitImage unitImage : unitImageList) {
-            if (unitImage == null)
-                continue;
-            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-            if (!battleGround.doesHaveUnit(unitImage.getId())) {
-                unitImage.showDeath();
-                continue;
-            }
-            Unit unit = battleGround.getUnitWithID(unitImage.getId());
-            if (unit == null)
-                continue;
-            unitImage.setApNumber(unit.getAp());
-            unitImage.setHpNumber(unit.getHp());
-            if (unitImage.getUnitView().equals(clickedImageView))
-                unitImage.setUnitStyleAsSelected();
-            else unitImage.setStyleAsNotSelected();
-            unitImage.clearBuffImageList();
-            for (Buff buff : unit.getBuffs()) {
-                unitImage.addBuffImage(buff.getType());
-            }
         }
     }
 
@@ -851,8 +900,7 @@ public class ControllerBattleCommands implements Initializable {
         int row = Integer.parseInt(request.getCommand().split("[ (),]")[4]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[5]);
         Player player = dataBase.getCurrentBattle().getPlayerInTurn();
-        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
-        view.printOutputMessage(dataBase.getCurrentBattle().useSpecialPower(hero, player, row, column));
+        view.printOutputMessage(dataBase.getCurrentBattle().useSpecialPower(player, row, column));
     }
 
     public void useCollectable() {
@@ -896,7 +944,6 @@ public class ControllerBattleCommands implements Initializable {
         alert.showAndWait();
         returnToMainMenu();
         return true;
-
         //todo check prizes
     }
 
@@ -927,7 +974,6 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean endTurn() {
         OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
-//        view.printOutputMessage(outputMessageType);
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();

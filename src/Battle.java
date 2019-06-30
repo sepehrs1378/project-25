@@ -412,7 +412,8 @@ public class Battle {
         return column >= 0 && column < Constants.BATTLE_GROUND_LENGTH;
     }
 
-    public OutputMessageType useSpecialPower(Unit hero, Player player, int row, int column) {
+    public OutputMessageType useSpecialPower(Player player, int row, int column) {
+        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
         if (hero == null)
             return OutputMessageType.NO_HERO;
         if (hero.getMainSpecialPower() == null)
