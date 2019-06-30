@@ -221,6 +221,9 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setupHeroSpecialPowerView() {
         Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
+        if (hero.getMainSpecialPower() == null){
+            return;
+        }
         try {
             specialPowerView.setImage(new Image(new FileInputStream
                     ("src/ApProjectResources/units/" + hero.getName() + "/special_power.png")));

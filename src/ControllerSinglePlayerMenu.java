@@ -352,7 +352,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Deck newDeck = new Deck(deck);
         changeIDtoCustomPlayer(newDeck);
         database.getComputerPlayerCustom().setMainDeck(newDeck);
-
         switch (selectModeBox.getValue()) {
             case Constants.CLASSIC: {
                 Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
@@ -397,7 +396,24 @@ public class ControllerSinglePlayerMenu implements Initializable {
     }
 
     private void changeIDtoCustomPlayer(Deck deck){
-
+        for (Card card:deck.getCards()){
+            String oldID = card.getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            card.setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getHero()!= null){
+            String oldID = deck.getHero().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            deck.getHero().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
+        if (deck.getItem()!=null){
+            String oldID = deck.getItem().getId();
+            String[] idSplit = oldID.split("_");
+            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            deck.getItem().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+        }
     }
     @FXML
     void makePlayBtnOpaque(MouseEvent event) {

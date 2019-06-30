@@ -7,12 +7,23 @@ public class Card {
     private String name;
     private int price;
     private int mana = 0;
+    private boolean isCustom;
+
+
+    public boolean isCustom() {
+        return isCustom;
+    }
+
+    public void setCustom(boolean custom) {
+        isCustom = custom;
+    }
 
     public Card(String id, String name, int price, int mana) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.mana = mana;
+        isCustom = false;
     }
 
     public String getId() {
