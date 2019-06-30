@@ -162,7 +162,7 @@ public class ControllerBattleCommands implements Initializable {
         //todo
         clickedImageView = null;
         endTurn();
-        /*if (endTurn()){
+        if (endTurn()){
             return;
         }
         Battle battle = dataBase.getCurrentBattle();
@@ -171,7 +171,7 @@ public class ControllerBattleCommands implements Initializable {
             if (endTurn()){
                 return;
             }
-        }*/
+        }
         updatePane();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);

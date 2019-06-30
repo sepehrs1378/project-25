@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +54,26 @@ public class ControllerMainMenu {
 
     @FXML
     private ImageView customCardBtn;
+
+    @FXML
+    private ImageView saveAccountsBtn;
+
+    @FXML
+    void makeSaveAccountsBtnTransparent(MouseEvent event) {
+        saveAccountsBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeSaveAccountsBtnOpaque(MouseEvent event) {
+        saveAccountsBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void saveAccounts(MouseEvent event) {
+        dataBase.saveAccounts();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
+        alert.showAndWait();
+    }
 
     @FXML
     void makeMatchHistoryBtnOpaque(MouseEvent event) {

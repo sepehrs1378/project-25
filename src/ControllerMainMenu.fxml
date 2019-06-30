@@ -61,5 +61,10 @@
             <Image url="@pics/main_menu_pics/custom_card_button.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="saveAccountsBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="320.0" onMouseClicked="#saveAccounts" onMouseEntered="#makeSaveAccountsBtnOpaque" onMouseExited="#makeSaveAccountsBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/main_menu_pics/save_accounts_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
