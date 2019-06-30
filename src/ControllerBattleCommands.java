@@ -96,6 +96,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void makeForfeitBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         forfeitBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -856,6 +857,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void forfeitGame() {
+        Main.getGlobalMediaPlayer().play();
         Account account = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
         Account player1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
         Account player2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
