@@ -21,7 +21,7 @@ public class Battle {
     private int prize;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
-            , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti,int prize) {
+            , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti, int prize) {
         this.prize = prize;
         this.singleOrMulti = singleOrMulti;
         dataBase.setCurrentBattle(this);
@@ -201,7 +201,7 @@ public class Battle {
     public Player checkEndBattleModeOneFlag() {
         Unit unitWithFlag = battleGround.getUnitHavingFlag();
         if (unitWithFlag != null) {
-            if (unitWithFlag.getFlags().get(0).getTurnsInUnitHand() >= 6) {
+            if (unitWithFlag.getFlags().get(0).getTurnsInUnitHand() >= 11) {
                 if (unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())) {
                     isBattleFinished = true;
                     return player1;
@@ -312,12 +312,18 @@ public class Battle {
     }
 
     public void checkSpecialPowersCooldown() {
-        Spell specialPower = battleGround.getHeroOfPlayer(player1).getMainSpecialPower();
-        if (specialPower != null)
-            specialPower.changeTurnsToGetReady(-1);
-        specialPower = battleGround.getHeroOfPlayer(player2).getMainSpecialPower();
-        if (specialPower != null)
-            specialPower.changeTurnsToGetReady(-1);
+        if (battleGround.getHeroOfPlayer(player1) != null) {
+
+            Spell specialPower = battleGround.getHeroOfPlayer(player1).getMainSpecialPower();
+            if (specialPower != null)
+                specialPower.changeTurnsToGetReady(-1);
+        }
+        if (battleGround.getHeroOfPlayer(player2) != null) {
+            Spell specialPower = battleGround.getHeroOfPlayer(player2).getMainSpecialPower();
+            if (specialPower != null)
+                specialPower.changeTurnsToGetReady(-1);
+
+        }
     }
 
     public void doBuffsEffects() {
@@ -479,10 +485,10 @@ public class Battle {
         int sizeMatchList1 = player1Account.getMatchList().size();
         int sizeMatchList2 = player2Account.getMatchList().size();
         if (winner == player1) {
-            if (singleOrMulti.equals(Constants.SINGLE)&&player2.getPlayerInfo().getPlayerName().equals("computer1")){
-                player1Account.getLevelsOpennessStatus()[1]=true;
-            }else if (singleOrMulti.equals(Constants.SINGLE)&&player2.getPlayerInfo().getPlayerName().equals("computer2")){
-                player1Account.getLevelsOpennessStatus()[2]=true;
+            if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer1")) {
+                player1Account.getLevelsOpennessStatus()[1] = true;
+            } else if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer2")) {
+                player1Account.getLevelsOpennessStatus()[2] = true;
             }
             player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
             player1Account.addMoney(prize);
