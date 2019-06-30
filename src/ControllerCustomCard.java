@@ -19,6 +19,9 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -183,6 +186,7 @@ public class ControllerCustomCard implements Initializable {
         Spell spell = makeSpell();
         if (spell == null)
             return;
+        spell.setCustom(true);
         DataBase.getInstance().getCardList().add(spell);
         DataBase.getInstance().saveCustomCard(spell);
     }
@@ -213,6 +217,23 @@ public class ControllerCustomCard implements Initializable {
         Spell spell = new Spell(id, spellName.getText(), Integer.parseInt(spellCosttxt.getText()),
                 Integer.parseInt(spellManaTxt.getText()), 0, 0, 0
                 , target, new ArrayList<>(spellBuffs), SpellActivationType.ON_CAST, "", false);
+//        try {
+//            Files.createDirectory(Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/"));
+//            Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/attack")
+//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/attack")
+//                    , StandardCopyOption.REPLACE_EXISTING);
+//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
+//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/stand")
+//                    , StandardCopyOption.REPLACE_EXISTING);
+//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
+//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/death")
+//                    , StandardCopyOption.REPLACE_EXISTING);
+//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
+//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/run")
+//                    , StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException ignored) {
+//
+//        }
         spellBuffs.clear();
         return spell;
     }
@@ -280,10 +301,28 @@ public class ControllerCustomCard implements Initializable {
             heroSpell.setCoolDown(Integer.parseInt(activationCoolDown.getText()));
         }
         Unit unit = new Unit(id, heroName.getText(), Integer.parseInt(heroCosttxt.getText()),
-                Integer.parseInt(heroCosttxt.getText()), Integer.parseInt(heroHPtxt.getText()),
+                Integer.parseInt(heroManaTxt.getText()), Integer.parseInt(heroHPtxt.getText()),
                 Integer.parseInt(heroAPtxt.getText()), minRange, maxRange, heroSpell
                 , Constants.HERO, "", false);
+        unit.setCustom(true);
         DataBase.getInstance().getCardList().add(unit);
+        try {
+            Files.createDirectory(Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/"));
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/attack")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/stand")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/death")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/run")
+                    , StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ignored) {
+
+        }
         heroSpell = null;
         spellBuffs.clear();
         clearEveryThing();
@@ -302,7 +341,8 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
-    void createMinion(MouseEvent event) {
+    void
+    createMinion(MouseEvent event) {
         if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
                 || minionAptxt.getText().equals("") || minionName.getText().equals("") || minionAttackTypeBox.getValue() == null
                 || minionManaTxt.getText().equals("")) {
@@ -354,10 +394,28 @@ public class ControllerCustomCard implements Initializable {
             minionSpell.setActivationType(activationTypecombox.getValue());
         }
         Unit unit = new Unit(id, minionName.getText(), Integer.parseInt(minionCosttxt.getText()),
-                Integer.parseInt(minionCosttxt.getText()), Integer.parseInt(minionHptxt.getText()),
+                Integer.parseInt(minionManaTxt.getText()), Integer.parseInt(minionHptxt.getText()),
                 Integer.parseInt(minionAptxt.getText()), minRange, maxRange, minionSpell
                 , Constants.MINION, "", false);
+        unit.setCustom(true);
         DataBase.getInstance().getCardList().add(unit);
+        try {
+            Files.createDirectory(Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/"));
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/attack")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/stand")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/death")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
+                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/run")
+                    , StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         minionSpell = null;
         spellBuffs.clear();
         clearEveryThing();

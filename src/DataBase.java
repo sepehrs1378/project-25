@@ -1304,6 +1304,60 @@ public class DataBase {
 
     public void readCustomCards(){
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        {
+            File folder = new File("src/JSONFiles/Cards/Custom/Heroes");
+            String[] fileNames = folder.list();
+            FileReader reader;
+            if (fileNames != null) {
+                for (String fileName : fileNames) {
+                    if (fileName.endsWith(".json")) {
+                        try {
+                            reader = new FileReader("src/JSONFiles/Cards/Custom/Heroes/" + fileName);
+                            cardList.add(yaGson.fromJson(reader, Unit.class));
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        {
+            File folder = new File("src/JSONFiles/Cards/Custom/Minions");
+            String[] fileNames = folder.list();
+            FileReader reader;
+            if (fileNames != null) {
+                for (String fileName : fileNames) {
+                    if (fileName.endsWith(".json")) {
+                        try {
+                            reader = new FileReader("src/JSONFiles/Cards/Custom/Minions/" + fileName);
+                            cardList.add(yaGson.fromJson(reader, Unit.class));
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        {
+            File folder = new File("src/JSONFiles/Cards/Custom/Spells");
+            String[] fileNames = folder.list();
+            FileReader reader;
+            if (fileNames != null) {
+                for (String fileName : fileNames) {
+                    if (fileName.endsWith(".json")) {
+                        try {
+                            reader = new FileReader("src/JSONFiles/Cards/Custom/Spells/" + fileName);
+                            cardList.add(yaGson.fromJson(reader, Spell.class));
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
 
     }
 

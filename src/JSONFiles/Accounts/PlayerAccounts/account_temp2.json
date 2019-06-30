@@ -50,7 +50,8 @@
                   "id": "temp2_allAttack_1",
                   "name": "allAttack",
                   "price": 1500,
-                  "mana": 4
+                  "mana": 4,
+                  "isCustom": false
                 }
               },
               {
@@ -89,7 +90,8 @@
                   "id": "temp2_empower_1",
                   "name": "empower",
                   "price": 250,
-                  "mana": 1
+                  "mana": 1,
+                  "isCustom": false
                 }
               },
               {
@@ -151,7 +153,8 @@
                   "id": "temp2_healthWithProfit_1",
                   "name": "healthWithProfit",
                   "price": 2250,
-                  "mana": 0
+                  "mana": 0,
+                  "isCustom": false
                 }
               },
               {
@@ -192,7 +195,8 @@
                   "id": "temp2_hellFire_1",
                   "name": "hellFire",
                   "price": 600,
-                  "mana": 3
+                  "mana": 3,
+                  "isCustom": false
                 }
               },
               {
@@ -212,7 +216,8 @@
                   "id": "temp2_kingsGuard_1",
                   "name": "kingsGuard",
                   "price": 1750,
-                  "mana": 9
+                  "mana": 9,
+                  "isCustom": false
                 }
               },
               {
@@ -262,7 +267,8 @@
                   "id": "temp2_shock_1",
                   "name": "shock",
                   "price": 1200,
-                  "mana": 1
+                  "mana": 1,
+                  "isCustom": false
                 }
               },
               {
@@ -313,7 +319,8 @@
                   "id": "temp2_weakening_1",
                   "name": "weakening",
                   "price": 1000,
-                  "mana": 1
+                  "mana": 1,
+                  "isCustom": false
                 }
               },
               {
@@ -336,7 +343,8 @@
                   "id": "temp2_arzhangDiv_1",
                   "name": "arzhangDiv",
                   "price": 600,
-                  "mana": 3
+                  "mana": 3,
+                  "isCustom": false
                 }
               },
               {
@@ -393,7 +401,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -406,7 +415,8 @@
                   "id": "temp2_gen_1",
                   "name": "gen",
                   "price": 500,
-                  "mana": 5
+                  "mana": 5,
+                  "isCustom": false
                 }
               },
               {
@@ -429,7 +439,8 @@
                   "id": "temp2_ghoolBozorg_1",
                   "name": "ghoolBozorg",
                   "price": 600,
-                  "mana": 9
+                  "mana": 9,
+                  "isCustom": false
                 }
               },
               {
@@ -450,7 +461,8 @@
                   "id": "temp2_ghoolBozorg_2",
                   "name": "ghoolBozorg",
                   "price": 600,
-                  "mana": 9
+                  "mana": 9,
+                  "isCustom": false
                 }
               },
               {
@@ -473,7 +485,8 @@
                   "id": "temp2_ghoolSangAndaz_1",
                   "name": "ghoolSangAndaz",
                   "price": 300,
-                  "mana": 9
+                  "mana": 9,
+                  "isCustom": false
                 }
               },
               {
@@ -530,7 +543,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -543,7 +557,8 @@
                   "id": "temp2_gorg_1",
                   "name": "gorg",
                   "price": 400,
-                  "mana": 3
+                  "mana": 3,
+                  "isCustom": false
                 }
               },
               {
@@ -602,7 +617,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -615,7 +631,8 @@
                   "id": "temp2_gorgSefid_1",
                   "name": "gorgSefid",
                   "price": 400,
-                  "mana": 5
+                  "mana": 5,
+                  "isCustom": false
                 }
               },
               {
@@ -686,7 +703,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -699,7 +717,8 @@
                   "id": "temp2_jadoogar_1",
                   "name": "jadoogar",
                   "price": 550,
-                  "mana": 4
+                  "mana": 4,
+                  "isCustom": false
                 }
               },
               {
@@ -769,7 +788,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -782,7 +802,8 @@
                   "id": "temp2_jadoogarAzam_1",
                   "name": "jadoogarAzam",
                   "price": 550,
-                  "mana": 6
+                  "mana": 6,
+                  "isCustom": false
                 }
               },
               {
@@ -838,7 +859,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -851,7 +873,8 @@
                   "id": "temp2_marGhoolPeikar_1",
                   "name": "marGhoolPeikar",
                   "price": 500,
-                  "mana": 8
+                  "mana": 8,
+                  "isCustom": false
                 }
               },
               {
@@ -907,7 +930,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -920,7 +944,8 @@
                   "id": "temp2_shamshirZanFars_1",
                   "name": "shamshirZanFars",
                   "price": 400,
-                  "mana": 2
+                  "mana": 2,
+                  "isCustom": false
                 }
               },
               {
@@ -943,7 +968,8 @@
                   "id": "temp2_shahGhool_1",
                   "name": "shahGhool",
                   "price": 600,
-                  "mana": 5
+                  "mana": 5,
+                  "isCustom": false
                 }
               },
               {
@@ -1000,7 +1026,8 @@
                       "id": "",
                       "name": "",
                       "price": 0,
-                      "mana": 0
+                      "mana": 0,
+                      "isCustom": false
                     }
                   ],
                   "flags": [],
@@ -1013,7 +1040,8 @@
                   "id": "temp2_siavash_1",
                   "name": "siavash",
                   "price": 350,
-                  "mana": 4
+                  "mana": 4,
+                  "isCustom": false
                 }
               }
             ],
@@ -1069,7 +1097,8 @@
                   "id": "",
                   "name": "",
                   "price": 0,
-                  "mana": 0
+                  "mana": 0,
+                  "isCustom": false
                 }
               ],
               "flags": [],
@@ -1082,7 +1111,8 @@
               "id": "temp2_zahak_1",
               "name": "zahak",
               "price": 10000,
-              "mana": 0
+              "mana": 0,
+              "isCustom": false
             },
             "name": "deck"
           }

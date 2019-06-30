@@ -65,7 +65,8 @@
                   "id": "",
                   "name": "",
                   "price": 0,
-                  "mana": 0
+                  "mana": 0,
+                  "isCustom": false
                 }
               ],
               "flags": [],
@@ -78,7 +79,8 @@
               "id": "parham_naneSarma_1",
               "name": "naneSarma",
               "price": 500,
-              "mana": 3
+              "mana": 3,
+              "isCustom": false
             }
           }
         ],
