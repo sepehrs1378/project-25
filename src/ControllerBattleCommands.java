@@ -164,7 +164,6 @@ public class ControllerBattleCommands implements Initializable {
     void  endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         clickedImageView = null;
-        endTurn();
         if (endTurn()){
             return;
         }
