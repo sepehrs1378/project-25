@@ -204,8 +204,8 @@ public class ControllerCustomCard implements Initializable {
             new Alert(Alert.AlertType.ERROR, "you must fill all the fields!").showAndWait();
             return null;
         }
-        if (manhatanTxt.getText().matches("\\d+") || targetWidthTxt.getText().matches("\\d+") || targetHeigthTxt.getText().matches("\\d+")
-                || spellCosttxt.getText().matches("\\d+") || spellName.getText().matches("\\w+")) {
+        if (!manhatanTxt.getText().matches("\\d+") || !targetWidthTxt.getText().matches("\\d+") || !targetHeigthTxt.getText().matches("\\d+")
+                || !spellCosttxt.getText().matches("\\d+") || !spellName.getText().matches("\\w+")) {
             new Alert(Alert.AlertType.ERROR, "invalid input!").showAndWait();
             return null;
         }
@@ -220,23 +220,18 @@ public class ControllerCustomCard implements Initializable {
         Spell spell = new Spell(id, spellName.getText(), Integer.parseInt(spellCosttxt.getText()),
                 Integer.parseInt(spellManaTxt.getText()), 0, 0, 0
                 , target, new ArrayList<>(spellBuffs), SpellActivationType.ON_CAST, "", false);
-//        try {
-//            Files.createDirectory(Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/"));
-//            Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/attack")
-//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/attack")
-//                    , StandardCopyOption.REPLACE_EXISTING);
-//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
-//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/stand")
-//                    , StandardCopyOption.REPLACE_EXISTING);
-//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
-//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/death")
-//                    , StandardCopyOption.REPLACE_EXISTING);
-//            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
-//                    , Paths.get("./src/ApProjectResources/units/"+spell.getName()+"/run")
-//                    , StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException ignored) {
-//
-//        }
+        try {
+            Files.createDirectory(Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/"));
+            Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/effect")
+                    , Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/effect")
+                    , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/icon")
+                    , Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/icon")
+                    , StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ignored) {
+
+        }
+        new Alert(Alert.AlertType.INFORMATION,"spell created successfully").showAndWait();
         spellBuffs.clear();
         return spell;
     }
@@ -312,18 +307,18 @@ public class ControllerCustomCard implements Initializable {
         unit.setCustom(true);
         DataBase.getInstance().getCardList().add(unit);
         try {
-            Files.createDirectory(Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/"));
+            Files.createDirectory(Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/"));
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/attack")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/attack")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/stand")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/stand")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/death")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/death")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/run")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/run")
                     , StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ignored) {
 
@@ -349,8 +344,6 @@ public class ControllerCustomCard implements Initializable {
     @FXML
     void createMinion(MouseEvent event) {
         Main.playWhenButtonClicked();
-    void
-    createMinion(MouseEvent event) {
         if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
                 || minionAptxt.getText().equals("") || minionName.getText().equals("") || minionAttackTypeBox.getValue() == null
                 || minionManaTxt.getText().equals("")) {
@@ -408,18 +401,18 @@ public class ControllerCustomCard implements Initializable {
         unit.setCustom(true);
         DataBase.getInstance().getCardList().add(unit);
         try {
-            Files.createDirectory(Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/"));
+            Files.createDirectory(Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/"));
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/attack")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/attack")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/stand")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/stand")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/stand")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/death")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/death")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
-                    , Paths.get("./src/ApProjectResources/units/"+unit.getName()+"/run")
+                    , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/run")
                     , StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -430,6 +423,7 @@ public class ControllerCustomCard implements Initializable {
         DataBase.getInstance().saveCustomCard(unit);
         new Alert(Alert.AlertType.INFORMATION, "minion created successfully!").showAndWait();
     }
+
 
     private boolean isNameUnique(String name) {
         for (Card card : DataBase.getInstance().getCardList()) {
@@ -512,7 +506,7 @@ public class ControllerCustomCard implements Initializable {
             label.setPrefWidth(buffBox.getPrefWidth());
             label.setStyle("-fx-border-color: #dde0bc; -fx-font-style: italic; -fx-font-weight: bold");
             if (spellBuffs.get(i) instanceof HolyBuff) {
-                label.setText(Constants.HOLY_BUFF + " Armor : " +((HolyBuff) spellBuffs.get(i)).getArmor());
+                label.setText(Constants.HOLY_BUFF + " Armor : " + ((HolyBuff) spellBuffs.get(i)).getArmor());
             } else if (spellBuffs.get(i) instanceof PowerBuff) {
                 PowerBuff powerBuff = (PowerBuff) spellBuffs.get(i);
                 label.setText(Constants.POWER_BUFF + " Power : " + powerBuff.getApPlus());

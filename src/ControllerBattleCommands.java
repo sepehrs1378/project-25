@@ -193,6 +193,7 @@ public class ControllerBattleCommands implements Initializable {
 //        startTempBattle();//todo remove it later
         Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
         setupHeroesImages();
