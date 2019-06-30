@@ -150,26 +150,28 @@ public class ControllerCollection implements Initializable {
             showDecks();
         }
     }
-    private void changeIDs(Deck deck){
-        for (Card card:deck.getCards()){
+
+    private void changeIDs(Deck deck) {
+        for (Card card : deck.getCards()) {
             String oldID = card.getId();
             String[] idSplit = oldID.split("_");
             idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
-            card.setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+            card.setId(idSplit[0] + "_" + idSplit[1] + "_" + idSplit[2]);
         }
-        if (deck.getHero()!= null){
+        if (deck.getHero() != null) {
             String oldID = deck.getHero().getId();
             String[] idSplit = oldID.split("_");
             idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
-            deck.getHero().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+            deck.getHero().setId(idSplit[0] + "_" + idSplit[1] + "_" + idSplit[2]);
         }
-        if (deck.getItem()!=null){
+        if (deck.getItem() != null) {
             String oldID = deck.getItem().getId();
             String[] idSplit = oldID.split("_");
             idSplit[0] = DataBase.getInstance().getLoggedInAccount().getUsername();
-            deck.getItem().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
+            deck.getItem().setId(idSplit[0] + "_" + idSplit[1] + "_" + idSplit[2]);
         }
     }
+
     private boolean hasAllCards(Deck deck) {
         List<Card> cards = new ArrayList<>(deck.getCards());
         while (!cards.isEmpty()) {
@@ -184,7 +186,7 @@ public class ControllerCollection implements Initializable {
                 , dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getCards()) == 0) {
             return false;
         }
-        if (deck.getItem()==null){
+        if (deck.getItem() == null) {
             return true;
         }
         return hasItem(deck.getItem().getName(), dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getItems());
@@ -292,7 +294,7 @@ public class ControllerCollection implements Initializable {
     void exportDeck(MouseEvent event) {
         Main.playWhenButtonClicked();
         if (selectedLabel == null) {
-            new Alert(Alert.AlertType.ERROR,"please select a deck!").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "please select a deck!").showAndWait();
             return;
         }
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -554,7 +556,8 @@ public class ControllerCollection implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showDecks();
-        mainDeckLabel.setText("Main Deck : " + dataBase.getLoggedInAccount().getMainDeck().getName());
+        if (dataBase.getLoggedInAccount().getMainDeck() != null)
+            mainDeckLabel.setText("Main Deck : " + dataBase.getLoggedInAccount().getMainDeck().getName());
     }
 
 }
