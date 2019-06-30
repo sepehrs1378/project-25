@@ -7,7 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class SpellImage {
-    private final int effectDuration = 2000;
+    private final long effectDuration = 2500;
+    private final int EFFECT_VIEW_SIZE = 250;
     private AnchorPane root;
     private String id;
     private ImageView spellEffect = new ImageView();
@@ -18,12 +19,15 @@ public class SpellImage {
         this.root = root;
         try {
             spellEffect.setImage(new Image(new FileInputStream
-                    ("./src/ApProjectResources/" + getSpellName() + "/effect")));
+                    ("./src/ApProjectResources/spells/" + getSpellName() + "/effect")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        spellEffect.setFitWidth(EFFECT_VIEW_SIZE);
+        spellEffect.setFitHeight(EFFECT_VIEW_SIZE);
         addToRoot();
-        relocate(controller.getCellLayoutX(column), controller.getCellLayoutY(row));
+        relocate(controller.getCellLayoutX(column) + GraphicConstants.CELL_WIDTH / 2 - EFFECT_VIEW_SIZE / 2
+                , controller.getCellLayoutY(row) - EFFECT_VIEW_SIZE / 2);
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
 
