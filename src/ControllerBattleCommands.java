@@ -161,7 +161,7 @@ public class ControllerBattleCommands implements Initializable {
     private Label computerManaLabel;
 
     @FXML
-    void endTurn(MouseEvent event) throws GoToMainMenuException {
+    void  endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         clickedImageView = null;
         endTurn();
@@ -517,8 +517,9 @@ public class ControllerBattleCommands implements Initializable {
             for (int j=0;j<9;j++){
                 if (battleGround.getCells()[i][j].getFlags().size()>0){
                     FlagImage flagImage = new FlagImage();
-                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j));
-                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i));
+                    flagImages.add(flagImage);
+                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j)-10);
+                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i)-10);
                     battleGroundPane.getChildren().add(flagImage.getFlagView());
                 }
             }

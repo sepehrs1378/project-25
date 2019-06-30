@@ -240,10 +240,10 @@ class BattleGround {
             flags.add(new Flag());
         int counter = flags.size();
         while (counter > 0) {
-            int column = (int) (Math.random() * Constants.BATTLE_GROUND_LENGTH);
+            int column = (int) (Math.random() * (Constants.BATTLE_GROUND_LENGTH-2));
             int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-            if (cells[row][column].getFlags().isEmpty() && cells[row][column].getUnit() == null && cells[row][column].getCollectable() == null) {
-                cells[row][column].getFlags().add(flags.get(counter - 1));
+            if (cells[row][column+1].getFlags().isEmpty() && cells[row][column+1].getUnit() == null && cells[row][column+1].getCollectable() == null) {
+                cells[row][column+1].getFlags().add(flags.get(counter - 1));
                 flags.remove(counter - 1);
                 counter--;
             }
