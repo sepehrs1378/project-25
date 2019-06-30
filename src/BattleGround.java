@@ -123,7 +123,7 @@ class BattleGround {
     public Unit getUnitHavingFlag() {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (!cell.getUnit().getFlags().isEmpty())
+                if (cell.getUnit()!=null&&!cell.getUnit().getFlags().isEmpty())
                     return cell.getUnit();
             }
         }

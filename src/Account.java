@@ -12,6 +12,8 @@ public class Account implements Comparable<Account> {
 
     {
         levelsOpennessStatus[0] = true;
+        levelsOpennessStatus[1] = true;
+        levelsOpennessStatus[2] = true;
     }
 
     public Account(String userName, String password) {
