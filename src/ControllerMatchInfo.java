@@ -71,7 +71,7 @@ public class ControllerMatchInfo implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<MatchInfo> matchList = dataBase.getLoggedInAccount().getMatchList();
-        for (int i = 0; i < matchList.size(); i++) {
+        for (int i = matchList.size() - 1; i >= 0; i--) {
             MatchInfo matchInfo = matchList.get(i);
             String opponent = matchInfo.getOpponent();
             String winOrLoss;

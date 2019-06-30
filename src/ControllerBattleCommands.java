@@ -80,6 +80,25 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView usableView;
 
     @FXML
+    private ImageView forfeitBtn;
+
+    @FXML
+    void forfeitGame(MouseEvent event) {
+        forfeitGame();
+        returnToMainMenu();
+    }
+
+    @FXML
+    void makeForfeitBtnOpaque(MouseEvent event) {
+        forfeitBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeForfeitBtnTransparent(MouseEvent event) {
+        forfeitBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
         Stage stage = new Stage();
@@ -825,7 +844,15 @@ public class ControllerBattleCommands implements Initializable {
         Alert alert=new Alert(Alert.AlertType.INFORMATION,"game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
+        returnToMainMenu();
+        return true;
+
+        //todo check prizes
+    }
+
+    private void returnToMainMenu(){
         endTurnMineBtn.setDisable(true);
+        graveYardBtn.setDisable(true);
         KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),keyValue);
         Timeline timeline = new Timeline();
@@ -835,6 +862,7 @@ public class ControllerBattleCommands implements Initializable {
 
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                 Main.window.setScene(new Scene(root));
+                Main.setCursor();
             } catch (IOException ignored) {
 
             }
@@ -845,10 +873,6 @@ public class ControllerBattleCommands implements Initializable {
             timelineFinished.play();
         });
         timeline.play();
-        System.out.println();
-        return true;
-
-        //todo check prizes
     }
 
     private boolean endTurn() {
