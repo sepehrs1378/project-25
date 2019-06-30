@@ -349,8 +349,6 @@ public class ControllerCustomCard implements Initializable {
     @FXML
     void createMinion(MouseEvent event) {
         Main.playWhenButtonClicked();
-    void
-    createMinion(MouseEvent event) {
         if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
                 || minionAptxt.getText().equals("") || minionName.getText().equals("") || minionAttackTypeBox.getValue() == null
                 || minionManaTxt.getText().equals("")) {
