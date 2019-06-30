@@ -9,24 +9,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -80,6 +75,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void setAsMainDeck(MouseEvent event) {
+        Main.playWhenButtonClicked();
         if (selectedLabel.getText().isEmpty()) {
             return;
         }
@@ -98,6 +94,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeMainDeckBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         mainDeckBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -109,6 +106,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void createDeck(MouseEvent event) {
+        Main.playWhenButtonClicked();
         if (deckNameLabel.getText().isEmpty()) {
             return;
         }
@@ -126,6 +124,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeCreateDeckBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         createDeckBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -136,6 +135,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void importDeck(MouseEvent event) {
+        Main.playWhenButtonClicked();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(Main.window);
         if (file == null) {
@@ -219,6 +219,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeEditDeckBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         editDeckBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -234,11 +235,13 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeExportBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         exportBtn.setStyle("-fx-opacity: 1");
     }
 
     @FXML
     void makeImportBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         importBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -249,6 +252,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeRemoveDeckBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         removeDeckBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -259,6 +263,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void removeDeck(MouseEvent event) {
+        Main.playWhenButtonClicked();
         Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
         dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
         if (deck == dataBase.getLoggedInAccount().getMainDeck()) {
@@ -270,6 +275,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void enterEditMenu(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         if (selectedLabel == null) {
             return;
         }
@@ -284,6 +290,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void exportDeck(MouseEvent event) {
+        Main.playWhenButtonClicked();
         if (selectedLabel == null) {
             new Alert(Alert.AlertType.ERROR,"please select a deck!").showAndWait();
             return;
@@ -302,6 +309,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -309,6 +317,7 @@ public class ControllerCollection implements Initializable {
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         backBtn.setStyle("-fx-opacity: 1");
     }
 

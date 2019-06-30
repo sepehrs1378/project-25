@@ -38,6 +38,7 @@ public class ControllerCollectionEditMenu implements Initializable {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();

@@ -25,6 +25,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
     }
@@ -140,6 +141,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void closeSinglePlayerMenu(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         ControllerMainMenu.stage.close();
     }
 

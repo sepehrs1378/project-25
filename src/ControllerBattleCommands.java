@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -118,6 +121,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void makeGraveYardBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         graveYardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -128,6 +132,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void makeEndTurnMineOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         endTurnMineBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -163,6 +168,10 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     void  endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
         clickedImageView = null;
         if (endTurn()){
             return;
@@ -182,6 +191,7 @@ public class ControllerBattleCommands implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        startTempBattle();//todo remove it later
+        Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupBattleGroundCells();
         setupHandRings();

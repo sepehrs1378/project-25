@@ -30,6 +30,7 @@ public class ControllerMatchInfo implements Initializable {
 
     @FXML
     void close(MouseEvent event) {
+        Main.playWhenButtonClicked();
         matchHistoryStage.close();
     }
 
