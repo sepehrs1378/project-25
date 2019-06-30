@@ -142,7 +142,8 @@ public class ControllerBattleCommands implements Initializable {
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         clickedImageView = null;
-        if (endTurn()){
+        endTurn();
+        /*if (endTurn()){
             return;
         }
         Battle battle = dataBase.getCurrentBattle();
@@ -151,7 +152,7 @@ public class ControllerBattleCommands implements Initializable {
             if (endTurn()){
                 return;
             }
-        }
+        }*/
         updatePane();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
@@ -287,21 +288,27 @@ public class ControllerBattleCommands implements Initializable {
                 .getPlayerInTurn().getHand().getCardById(handImage.getId());
         switch (dataBase.getCurrentBattle().insert(card, row, column)) {
             case NO_SUCH_CARD_IN_HAND:
+                System.out.println("1");
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
+                System.out.println("2");
                 //empty
                 break;
             case INVALID_NUMBER:
+                System.out.println("3");
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
+                System.out.println("4");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
+                System.out.println("5");
                 //empty
                 break;
             case CARD_INSERTED:
+                System.out.println("6");
                 if (card instanceof Unit)
                     insertUnitView(row, column, card);
                 if (card instanceof Spell) {
@@ -325,7 +332,7 @@ public class ControllerBattleCommands implements Initializable {
 
     }
 
-    private void insertUnitView(int row, int column, Card card) {
+    public void insertUnitView(int row, int column, Card card) {
         UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
         unitImageList.add(insertedUnitImage);
         insertedUnitImage.setInCell(row, column);

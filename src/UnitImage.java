@@ -21,7 +21,7 @@ public class UnitImage {
     private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
     private AnchorPane root;
     private long attackDuration = 2000;
-    private long deathDuration = 3000;
+    private long deathDuration = 2000;
     private long spellDuration = 3000;
     private long runDuration = 1000;
     private int unitViewSize = 150;
