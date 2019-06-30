@@ -53,7 +53,7 @@
             "activationType": "ON_CAST",
             "description": "Target : 2 * 2 square area - this spell removes negative buffs afflicted on friendly units and all positive buffs currently possessed by enemy units",
             "isDispeller": true,
-            "id": "computer1_areaDispel_1",
+            "id": "computer2_areaDispel_1",
             "name": "areaDispel",
             "price": 1500,
             "mana": 2
@@ -92,7 +92,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly Unit - adds 2 values to ap of one friendly unit",
             "isDispeller": false,
-            "id": "computer1_empower_1",
+            "id": "computer2_empower_1",
             "name": "empower",
             "price": 250,
             "mana": 1
@@ -130,7 +130,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly Hero - adds 4 ap",
             "isDispeller": false,
-            "id": "computer1_godStrength_1",
+            "id": "computer2_godStrength_1",
             "name": "godStrength",
             "price": 450,
             "mana": 2
@@ -171,7 +171,7 @@
             "activationType": "ON_CAST",
             "description": "Target : 3 * 3 square area - for duration of one turn adds PoisonLake effect to target",
             "isDispeller": false,
-            "id": "computer1_poisonLake_1",
+            "id": "computer2_poisonLake_1",
             "name": "poisonLake",
             "price": 900,
             "mana": 5
@@ -233,7 +233,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly Unit - for duration of three turns adds 4 damage to target(it could be disarmed)",
             "isDispeller": false,
-            "id": "computer1_madness_1",
+            "id": "computer2_madness_1",
             "name": "madness",
             "price": 650,
             "mana": 0
@@ -293,7 +293,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly Unit - takes 6 hp from target(WeaknessBuff) but gives 2 HolyBuffs for duration of 3 turns",
             "isDispeller": false,
-            "id": "computer1_healthWithProfit_1",
+            "id": "computer2_healthWithProfit_1",
             "name": "healthWithProfit",
             "price": 2250,
             "mana": 0
@@ -313,7 +313,7 @@
             "activationType": "ON_CAST",
             "description": "",
             "isDispeller": false,
-            "id": "computer1_kingsGuard_1",
+            "id": "computer2_kingsGuard_1",
             "name": "kingsGuard",
             "price": 1750,
             "mana": 9
@@ -381,7 +381,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_shamshirZanFars_1",
+            "id": "computer2_shamshirZanFars_1",
             "name": "shamshirZanFars",
             "price": 400,
             "mana": 2
@@ -404,7 +404,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_neizeDarFars_1",
+            "id": "computer2_neizeDarFars_1",
             "name": "neizeDarFars",
             "price": 500,
             "mana": 1
@@ -427,7 +427,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_pahlevanFars_1",
+            "id": "computer2_pahlevanFars_1",
             "name": "pahlevanFars",
             "price": 600,
             "mana": 9
@@ -450,7 +450,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_gholabSangDarToorani_1",
+            "id": "computer2_gholabSangDarToorani_1",
             "name": "gholabSangDarToorani",
             "price": 600,
             "mana": 1
@@ -473,7 +473,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": true,
-            "id": "computer1_shahzadehToorani_1",
+            "id": "computer2_shahzadehToorani_1",
             "name": "shahzadehToorani",
             "price": 800,
             "mana": 6
@@ -494,7 +494,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_oghab_1",
+            "id": "computer2_oghab_1",
             "name": "oghab",
             "price": 200,
             "mana": 2
@@ -515,7 +515,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_oghab_2",
+            "id": "computer2_oghab_2",
             "name": "oghab",
             "price": 200,
             "mana": 2
@@ -538,7 +538,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_ejdehaAtashAndaz_1",
+            "id": "computer2_ejdehaAtashAndaz_1",
             "name": "ejdehaAtashAndaz",
             "price": 250,
             "mana": 5
@@ -607,7 +607,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_palang_1",
+            "id": "computer2_palang_1",
             "name": "palang",
             "price": 400,
             "mana": 4
@@ -676,7 +676,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_gen_1",
+            "id": "computer2_gen_1",
             "name": "gen",
             "price": 500,
             "mana": 5
@@ -742,7 +742,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_giv_1",
+            "id": "computer2_giv_1",
             "name": "giv",
             "price": 450,
             "mana": 4
@@ -765,7 +765,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_iraj_1",
+            "id": "computer2_iraj_1",
             "name": "iraj",
             "price": 500,
             "mana": 4
@@ -788,7 +788,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": true,
-            "id": "computer1_shahGhool_1",
+            "id": "computer2_shahGhool_1",
             "name": "shahGhool",
             "price": 600,
             "mana": 5
@@ -856,7 +856,7 @@
         "didAttackThisTurn": false,
         "didMoveThisTurn": false,
         "canUseComboAttack": false,
-        "id": "computer1_zahak_1",
+        "id": "computer2_zahak_1",
         "name": "zahak",
         "price": 10000,
         "mana": 0

@@ -23,8 +23,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -42,6 +44,7 @@ public class ControllerBattleCommands implements Initializable {
     private List<SpellImage> spellImageList = new ArrayList<>();
     private CellImage[][] cellImageList = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
+    private List<FlagImage> flagImages = new ArrayList<>();
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -472,9 +475,28 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
+        showFlags();
         updateHandImages();
         updatePlayersInfo();
         updateHand();
+    }
+    private void showFlags(){
+        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+        List<ImageView> images = new ArrayList<>();
+        for (FlagImage flagImage:flagImages)
+            images.add(flagImage.getFlagView());
+        battleGroundPane.getChildren().removeAll(images);
+        flagImages.clear();
+        for (int i=0;i<5;i++){
+            for (int j=0;j<9;j++){
+                if (battleGround.getCells()[i][j].getFlags().size()>0){
+                    FlagImage flagImage = new FlagImage();
+                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j));
+                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i));
+                    battleGroundPane.getChildren().add(flagImage.getFlagView());
+                }
+            }
+        }
     }
 
     private void updateHandImages() {

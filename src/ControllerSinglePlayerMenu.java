@@ -274,7 +274,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
         if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
             level2Btn.setDisable(false);
         }
-        if (database.getLoggedInAccount().getLevelsOpennessStatus()[1]) {
+        if (database.getLoggedInAccount().getLevelsOpennessStatus()[2]) {
             level3Btn.setDisable(false);
         }
         ObservableList<String> deckList = FXCollections.observableArrayList();

@@ -62,7 +62,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Enemy Unit - disarms an enemy unit for the entirety of the current battle",
             "isDispeller": false,
-            "id": "computer1_totalDisarm_1",
+            "id": "computer3_totalDisarm_1",
             "name": "totalDisarm",
             "price": 1000,
             "mana": 0
@@ -102,7 +102,7 @@
             "activationType": "ON_CAST",
             "description": "Target : 2 * 2 square area - for duration of two turns adds HellFire effect to target",
             "isDispeller": false,
-            "id": "computer1_hellFire_1",
+            "id": "computer3_hellFire_1",
             "name": "hellFire",
             "price": 600,
             "mana": 3
@@ -140,7 +140,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Enemy Hero - applies 8 damage to target",
             "isDispeller": false,
-            "id": "computer1_lightingBolt_1",
+            "id": "computer3_lightingBolt_1",
             "name": "lightingBolt",
             "price": 1250,
             "mana": 2
@@ -189,7 +189,7 @@
             "activationType": "ON_CAST",
             "description": "Target : All Enemy Units - disarms target for the duration of one turn",
             "isDispeller": false,
-            "id": "computer1_allDisarm_1",
+            "id": "computer3_allDisarm_1",
             "name": "allDisarm",
             "price": 2000,
             "mana": 9
@@ -229,7 +229,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly or Enemy Unit - removes positive buffs currently possessed by Enemy Units and removes all negative buffs currently afflicted on Friendly Units",
             "isDispeller": true,
-            "id": "computer1_dispel_1",
+            "id": "computer3_dispel_1",
             "name": "dispel",
             "price": 2100,
             "mana": 0
@@ -280,7 +280,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Friendly Unit - applies a PowerBuff and adds two aps to target(Continuous)",
             "isDispeller": false,
-            "id": "computer1_powerUp_1",
+            "id": "computer3_powerUp_1",
             "name": "powerUp",
             "price": 2500,
             "mana": 2
@@ -331,7 +331,7 @@
             "activationType": "ON_CAST",
             "description": "Target : All Friendly Units - applies a PowerBuff that adds 2 aps to target(Continuous)",
             "isDispeller": false,
-            "id": "computer1_allPower_1",
+            "id": "computer3_allPower_1",
             "name": "allPower",
             "price": 200,
             "mana": 4
@@ -370,7 +370,7 @@
             "activationType": "ON_CAST",
             "description": "Target : Every Enemy Unit In A Column - appplies 6 damage to target",
             "isDispeller": false,
-            "id": "computer1_allAttack_1",
+            "id": "computer3_allAttack_1",
             "name": "allAttack",
             "price": 1500,
             "mana": 4
@@ -393,7 +393,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": true,
-            "id": "computer1_sepahSalarFars_1",
+            "id": "computer3_sepahSalarFars_1",
             "name": "sepahSalarFars",
             "price": 800,
             "mana": 7
@@ -416,7 +416,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_kamandarToorani_1",
+            "id": "computer3_kamandarToorani_1",
             "name": "kamandarToorani",
             "price": 500,
             "mana": 1
@@ -496,7 +496,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_jasoosToorani_1",
+            "id": "computer3_jasoosToorani_1",
             "name": "jasoosToorani",
             "price": 700,
             "mana": 4
@@ -519,7 +519,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_ghoolSangAndaz_1",
+            "id": "computer3_ghoolSangAndaz_1",
             "name": "ghoolSangAndaz",
             "price": 300,
             "mana": 9
@@ -542,7 +542,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_divGorazSavar_1",
+            "id": "computer3_divGorazSavar_1",
             "name": "divGorazSavar",
             "price": 300,
             "mana": 6
@@ -563,7 +563,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_divGorazSavar_2",
+            "id": "computer3_divGorazSavar_2",
             "name": "divGorazSavar",
             "price": 300,
             "mana": 6
@@ -629,7 +629,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_shirDarande_1",
+            "id": "computer3_shirDarande_1",
             "name": "shirDarande",
             "price": 600,
             "mana": 2
@@ -698,7 +698,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_gorg_1",
+            "id": "computer3_gorg_1",
             "name": "gorg",
             "price": 400,
             "mana": 3
@@ -780,7 +780,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_jadoogar_1",
+            "id": "computer3_jadoogar_1",
             "name": "jadoogar",
             "price": 550,
             "mana": 4
@@ -846,7 +846,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_gorazVahshi_1",
+            "id": "computer3_gorazVahshi_1",
             "name": "gorazVahshi",
             "price": 500,
             "mana": 6
@@ -912,7 +912,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_piran_1",
+            "id": "computer3_piran_1",
             "name": "piran",
             "price": 400,
             "mana": 8
@@ -969,7 +969,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_bahman_1",
+            "id": "computer3_bahman_1",
             "name": "bahman",
             "price": 450,
             "mana": 8
@@ -992,7 +992,7 @@
             "didAttackThisTurn": false,
             "didMoveThisTurn": false,
             "canUseComboAttack": false,
-            "id": "computer1_ghoolBozorg_1",
+            "id": "computer3_ghoolBozorg_1",
             "name": "ghoolBozorg",
             "price": 600,
             "mana": 9
@@ -1049,7 +1049,7 @@
         "didAttackThisTurn": false,
         "didMoveThisTurn": false,
         "canUseComboAttack": false,
-        "id": "computer1_arash_1",
+        "id": "computer3_arash_1",
         "name": "arash",
         "price": 10000,
         "mana": 0
