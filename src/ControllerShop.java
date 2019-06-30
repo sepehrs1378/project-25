@@ -106,6 +106,7 @@ public class ControllerShop {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -113,6 +114,7 @@ public class ControllerShop {
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         backBtn.setStyle("-fx-opacity: 1");
     }
 

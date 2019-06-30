@@ -35,6 +35,7 @@ public class CollectionCardBackGround {
 
     @FXML
     void makeCardBackGroundOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         cardBackGround.setStyle("-fx-opacity: 1");
     }
 

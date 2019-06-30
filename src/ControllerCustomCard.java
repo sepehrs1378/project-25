@@ -160,6 +160,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         backBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -170,6 +171,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -183,6 +185,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createSpell(MouseEvent event) {
+        Main.playWhenButtonClicked();
         Spell spell = makeSpell();
         if (spell == null)
             return;
@@ -240,6 +243,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeCreateSpellOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         createSpellBtn.setOpacity(1);
     }
 
@@ -250,6 +254,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createHero(MouseEvent event) {
+        Main.playWhenButtonClicked();
         if (heroCosttxt.getText().equals("") || heroAPtxt.getText().equals("") || heroHPtxt.getText().equals("")
                 || heroName.getText().equals("") || heroManaTxt.getText().equals("") || heroAttackTypeBox.getValue() == null) {
             new Alert(Alert.AlertType.ERROR, "mana, Attack Value, cost, name, HP and AP must be filled").showAndWait();
@@ -332,6 +337,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeCreateHeroOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         createHeroBtn.setOpacity(1);
     }
 
@@ -341,6 +347,8 @@ public class ControllerCustomCard implements Initializable {
     }
 
     @FXML
+    void createMinion(MouseEvent event) {
+        Main.playWhenButtonClicked();
     void
     createMinion(MouseEvent event) {
         if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
@@ -434,6 +442,7 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeCreateMinionOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         createMinionBtn.setOpacity(1);
     }
 

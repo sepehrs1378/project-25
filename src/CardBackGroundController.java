@@ -88,6 +88,7 @@ public class CardBackGroundController {
 
     @FXML
     void makeCardOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         card.setStyle("-fx-opacity: 1");
     }
 

@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,6 +86,25 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView usableView;
 
     @FXML
+    private ImageView forfeitBtn;
+
+    @FXML
+    void forfeitGame(MouseEvent event) {
+        forfeitGame();
+        returnToMainMenu();
+    }
+
+    @FXML
+    void makeForfeitBtnOpaque(MouseEvent event) {
+        forfeitBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeForfeitBtnTransparent(MouseEvent event) {
+        forfeitBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
         Stage stage = new Stage();
@@ -99,6 +121,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void makeGraveYardBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         graveYardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -109,6 +132,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void makeEndTurnMineOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         endTurnMineBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -144,6 +168,10 @@ public class ControllerBattleCommands implements Initializable {
     @FXML
     void  endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
         clickedImageView = null;
         if (endTurn()){
             return;
@@ -163,6 +191,7 @@ public class ControllerBattleCommands implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        startTempBattle();//todo remove it later
+        Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupBattleGroundCells();
         setupHandRings();
@@ -293,21 +322,27 @@ public class ControllerBattleCommands implements Initializable {
                 .getPlayerInTurn().getHand().getCardById(handImage.getId());
         switch (dataBase.getCurrentBattle().insert(card, row, column)) {
             case NO_SUCH_CARD_IN_HAND:
+                System.out.println("1");
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
+                System.out.println("2");
                 //empty
                 break;
             case INVALID_NUMBER:
+                System.out.println("3");
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
+                System.out.println("4");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
+                System.out.println("5");
                 //empty
                 break;
             case CARD_INSERTED:
+                System.out.println("6");
                 if (card instanceof Unit)
                     insertUnitView(row, column, card);
                 if (card instanceof Spell) {
@@ -844,6 +879,13 @@ public class ControllerBattleCommands implements Initializable {
         Alert alert=new Alert(Alert.AlertType.INFORMATION,"game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
+        returnToMainMenu();
+        return true;
+
+        //todo check prizes
+    }
+
+    private void returnToMainMenu(){
         endTurnMineBtn.setDisable(true);
         graveYardBtn.setDisable(true);
         KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
@@ -855,6 +897,7 @@ public class ControllerBattleCommands implements Initializable {
 
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                 Main.window.setScene(new Scene(root));
+                Main.setCursor();
             } catch (IOException ignored) {
 
             }
@@ -865,10 +908,6 @@ public class ControllerBattleCommands implements Initializable {
             timelineFinished.play();
         });
         timeline.play();
-        System.out.println();
-        return true;
-
-        //todo check prizes
     }
 
     private boolean endTurn() {

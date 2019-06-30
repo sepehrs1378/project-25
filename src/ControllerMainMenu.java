@@ -3,19 +3,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
@@ -55,7 +52,30 @@ public class ControllerMainMenu {
     private ImageView customCardBtn;
 
     @FXML
+    private ImageView saveAccountsBtn;
+
+    @FXML
+    void makeSaveAccountsBtnTransparent(MouseEvent event) {
+        saveAccountsBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void makeSaveAccountsBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
+        saveAccountsBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void saveAccounts(MouseEvent event) {
+        Main.playWhenButtonClicked();
+        dataBase.saveAccounts();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
+        alert.showAndWait();
+    }
+
+    @FXML
     void makeMatchHistoryBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         matchHistoryBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -66,6 +86,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeCustomCardBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         customCardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -76,6 +97,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterCustomCardMenu(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -83,6 +105,7 @@ public class ControllerMainMenu {
 
     @FXML
     void showMatchHistory(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Stage matchHistoryStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMatchInfo.fxml"));
         Scene scene = new Scene(root);
@@ -98,6 +121,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeLeaderBoardBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         leaderBoardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -108,18 +132,21 @@ public class ControllerMainMenu {
 
     @FXML
     void showLeaderBoard(MouseEvent event) {
+        Main.playWhenButtonClicked();
         //todo
     }
 
 
     @FXML
     void close(MouseEvent event) {
+        Main.playWhenButtonClicked();
         dataBase.saveAccounts();
         Main.window.close();
     }
 
     @FXML
     void makeCloseBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         closeBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -130,6 +157,7 @@ public class ControllerMainMenu {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -137,6 +165,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         backBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -148,6 +177,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterSinglePlayer(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -161,11 +191,13 @@ public class ControllerMainMenu {
 
     @FXML
     void enterMultiPlayer(MouseEvent event) {
+        Main.playWhenButtonClicked();
         //todo not needed for phase 2
     }
 
     @FXML
     void makeMultiPlayerBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         multiPlayerBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -182,6 +214,7 @@ public class ControllerMainMenu {
 
     @FXML
     void customOrMulti(MouseEvent event) {
+        Main.playWhenButtonClicked();
         battleBtn.setStyle("-fx-opacity: 1");
         changeOpacity = false;
         multiPlayerBtn.setVisible(true);
@@ -197,6 +230,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeSingleBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         singleBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -207,6 +241,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeBattleBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         battleBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -225,6 +260,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterCollection(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor();
@@ -232,6 +268,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeCollectionBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         collectionBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -242,6 +279,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
         controllerShop = ControllerShop.getOurInstance();
@@ -251,6 +289,7 @@ public class ControllerMainMenu {
 
     @FXML
     void makeShopBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         shopBtn.setStyle("-fx-opacity: 1");
     }
 

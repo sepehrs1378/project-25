@@ -1,6 +1,5 @@
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.media.sound.WaveFileReader;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,15 +14,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main extends Application {
@@ -59,6 +53,7 @@ public class Main extends Application {
 
     @FXML
     void makeCloseBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         closeBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -69,6 +64,7 @@ public class Main extends Application {
 
     @FXML
     void makeSignUpOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         signUpBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -79,6 +75,7 @@ public class Main extends Application {
 
     @FXML
     void signUp(MouseEvent event) throws IOException {
+        playWhenButtonClicked();
         invalidPassword.setText("");
         invalidUsername.setText("");
         if (username.getText().isEmpty()){
@@ -110,6 +107,7 @@ public class Main extends Application {
 
     @FXML
     void login(MouseEvent event) throws IOException {
+        playWhenButtonClicked();
         if (emptyInvalidUsername()) return;
         int index = findIndexOfAccount(username.getText());
         if (index == -1){
@@ -147,6 +145,7 @@ public class Main extends Application {
 
     @FXML
     void makeLoginOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
         loginBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -191,6 +190,18 @@ public class Main extends Application {
         {
             exc.printStackTrace(System.out);
         }
+    }
+
+    public static void playWhenButtonClicked(){
+        Media media = new Media(Paths.get("src/music/button_clicked.m4a").toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+    }
+
+    public static void playWhenMouseEntered(){
+        Media media = new Media(Paths.get("src/music/mouse_entered.m4a").toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     public static MediaPlayer getGlobalMediaPlayer() {

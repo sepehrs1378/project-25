@@ -21,10 +21,10 @@ public class UnitImage {
     private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
     private AnchorPane root;
     private long attackDuration = 2000;
-    private long deathDuration = 3000;
+    private long deathDuration = 2000;
     private long spellDuration = 3000;
     private long runDuration = 1000;
-    private int unitViewSize = 150;
+    private int UNIT_VIEW_SIZE = 150;
     private int row = 0;
     private int column = 0;
     private ImageView unitView = new ImageView();
@@ -37,8 +37,8 @@ public class UnitImage {
     {
         apNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #fff700;-fx-background-radius: 100;-fx-font-size: 18");
         hpNumber.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #ff0003;-fx-background-radius: 100;-fx-font-size: 18");
-        unitView.setFitWidth(unitViewSize);
-        unitView.setFitHeight(unitViewSize);
+        unitView.setFitWidth(UNIT_VIEW_SIZE);
+        unitView.setFitHeight(UNIT_VIEW_SIZE);
     }
 
     public UnitImage(String id, AnchorPane root) {
@@ -212,10 +212,10 @@ public class UnitImage {
     }
 
     private void resetStatsPositions() {
-        hpNumber.setTranslateX(unitView.getTranslateX() + unitViewSize * 0.33);
-        hpNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
-        apNumber.setTranslateX(unitView.getTranslateX() + unitViewSize * 0.66);
-        apNumber.setTranslateY(unitView.getTranslateY() + unitViewSize);
+        hpNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.33);
+        hpNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE);
+        apNumber.setTranslateX(unitView.getTranslateX() + UNIT_VIEW_SIZE * 0.66);
+        apNumber.setTranslateY(unitView.getTranslateY() + UNIT_VIEW_SIZE);
         for (BuffImage buffImage : buffImageList) {
             buffImage.relocate(unitView.getLayoutX(), unitView.getLayoutY());
         }
@@ -233,8 +233,8 @@ public class UnitImage {
         this.row = row;
         this.column = column;
         double x = ControllerBattleCommands.getOurInstance().getCellLayoutX(column)
-                + GraphicConstants.CELL_WIDTH / 2 - unitViewSize / 2;
-        double y = ControllerBattleCommands.getOurInstance().getCellLayoutY(row) - unitViewSize / 2;
+                + GraphicConstants.CELL_WIDTH / 2 - UNIT_VIEW_SIZE / 2;
+        double y = ControllerBattleCommands.getOurInstance().getCellLayoutY(row) - UNIT_VIEW_SIZE / 2;
         relocate(x, y);
     }
 
