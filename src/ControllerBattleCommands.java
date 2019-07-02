@@ -168,23 +168,29 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void  endTurn(MouseEvent event) throws GoToMainMenuException {
-        //todo
-        Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.play();
-        clickedImageView = null;
-        if (endTurn()){
-            return;
-        }
-        Battle battle = dataBase.getCurrentBattle();
-        if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-            AI.getInstance().doNextMove(battleGroundPane);
-            if (endTurn()){
+        try {
+
+
+            //todo
+            Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.play();
+            clickedImageView = null;
+            if (endTurn()) {
                 return;
             }
+            Battle battle = dataBase.getCurrentBattle();
+            if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
+                AI.getInstance().doNextMove(battleGroundPane);
+                if (endTurn()) {
+                    return;
+                }
+            }
+            updatePane();
+        }catch (Exception ignored){
+
         }
-        updatePane();
 //        endTurnMineBtn.setVisible(false);
 //        endTurnEnemyBtn.setVisible(true);
     }
@@ -278,16 +284,22 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
-        if (isClickedImageViewInHand())
-            if (handleCardInsertion(row, column)) {
+        try {
+
+
+            if (isClickedImageViewInHand())
+                if (handleCardInsertion(row, column)) {
+                    updatePane();
+                    return;
+                }
+            if (handleUnitMove(row, column)) {
                 updatePane();
                 return;
             }
-        if (handleUnitMove(row, column)) {
             updatePane();
-            return;
+        }catch (Exception ignored){
+
         }
-        updatePane();
     }
 
     private boolean handleUnitMove(int row, int column) {
@@ -392,20 +404,26 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-        if (currentPlayer.getSelectedCollectable() == null) {
-            if (handleUnitSelection(id)) {
-                updatePane();
-                return;
+        try {
+
+
+            Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+            if (currentPlayer.getSelectedCollectable() == null) {
+                if (handleUnitSelection(id)) {
+                    updatePane();
+                    return;
+                }
             }
-        }
-        if (currentPlayer.getSelectedUnit() != null) {
-            if (handleUnitAttack(id)) {
-                updatePane();
-                return;
+            if (currentPlayer.getSelectedUnit() != null) {
+                if (handleUnitAttack(id)) {
+                    updatePane();
+                    return;
+                }
             }
+            updatePane();
+        }catch (Exception ignored){
+
         }
-        updatePane();
     }
 
     private boolean handleUnitAttack(String id) {
