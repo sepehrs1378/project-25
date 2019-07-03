@@ -66,5 +66,10 @@
             <Image url="@pics/main_menu_pics/save_accounts_button.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="settingsBtn" fitHeight="57.0" fitWidth="49.0" layoutX="1215.0" layoutY="657.0" onMouseClicked="#openSettingsMenu" onMouseEntered="#makeSettingsBtnOpaque" onMouseExited="#makeSettingsBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@pics/main_menu_pics/settings_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

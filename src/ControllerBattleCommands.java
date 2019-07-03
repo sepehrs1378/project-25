@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +42,7 @@ public class ControllerBattleCommands implements Initializable {
     private CellImage[][] cellsImages = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     private List<FlagImage> flagImages = new ArrayList<>();
+    Timeline timeline = new Timeline();
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -160,8 +162,17 @@ public class ControllerBattleCommands implements Initializable {
     private Label computerManaLabel;
 
     @FXML
+    private ProgressBar timeBar;
+
+    @FXML
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        endTurnWhenClicked();
+//        endTurnMineBtn.setVisible(false);
+//        endTurnEnemyBtn.setVisible(true);
+    }
+
+    private void endTurnWhenClicked() {
         Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
@@ -177,12 +188,15 @@ public class ControllerBattleCommands implements Initializable {
                 return;
             }
         }*/
+        setTimeBar();
+
         updatePane();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        startTempBattle();//todo remove it later
+        setTimeBar();
         Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupPlayersInfoViews();
@@ -193,6 +207,25 @@ public class ControllerBattleCommands implements Initializable {
         setupHeroSpecialPowerView();
         setupItemView();
         updatePane();
+    }
+
+    private void setTimeBar() {
+        String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
+        if (!turnDuration.equals(Constants.NO_LIMIT)) {
+            timeline.stop();
+            timeline.getKeyFrames().clear();
+            timeBar.setProgress(0);
+            timeBar.setVisible(true);
+            double seconds = Integer.parseInt(turnDuration);
+            KeyValue keyValue = new KeyValue(timeBar.progressProperty(), 1);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(seconds), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.play();
+            timeline.setOnFinished(e -> {
+                timeBar.setProgress(0);
+                endTurnWhenClicked();
+            });
+        }
     }
 
     private void setupPlayersInfoViews() {
@@ -216,8 +249,9 @@ public class ControllerBattleCommands implements Initializable {
         final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
         final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
         Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
-        if (hero.getMainSpecialPower() == null)
+        if (hero.getMainSpecialPower() == null) {
             return;
+        }
         try {
             specialPowerView.setImage(new Image(new FileInputStream
                     ("src/ApProjectResources/units/" + hero.getName() + "/special_power.png")));
@@ -706,7 +740,6 @@ public class ControllerBattleCommands implements Initializable {
         timeline.getKeyFrames().add(keyFrame);
         timeline.setOnFinished(e -> {
             try {
-
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                 Main.window.setScene(new Scene(root));
                 Main.setCursor();
