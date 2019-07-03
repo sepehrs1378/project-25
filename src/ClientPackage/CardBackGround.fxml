@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="cardPane" prefHeight="286.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.CardBackGroundController">
+   <children>
+      <ImageView fx:id="card" fitHeight="351.0" fitWidth="284.0" layoutX="14.0" layoutY="20.0" onMouseClicked="#buyCard" onMouseEntered="#makeCardOpaque" onMouseExited="#makeCardTransparent" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@../pics/card_background.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="125.0" fitWidth="141.0" layoutX="-29.0" layoutY="-25.0">
+         <image>
+            <Image url="@../pics/number_of_bought_cards.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="297.0" layoutX="5.0" layoutY="308.0">
+         <image>
+            <Image url="@../pics/description_box.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="numberBoughtLabel" alignment="CENTER" layoutX="15.0" layoutY="16.0" prefHeight="43.0" prefWidth="54.0" textFill="#eede31">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="manaLabel" alignment="CENTER" layoutX="17.0" layoutY="315.0" prefHeight="43.0" prefWidth="25.0" textFill="#31238d">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="315.0" prefHeight="43.0" prefWidth="240.0" />
+      <ImageView fitHeight="66.0" fitWidth="111.0" layoutX="190.0" layoutY="304.0" preserveRatio="true">
+         <image>
+            <Image url="@../pics/hp_desc.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="66.0" fitWidth="96.0" layoutX="52.0" layoutY="303.0" preserveRatio="true">
+         <image>
+            <Image url="@../pics/ap_desc.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="descBtn" fitHeight="56.0" fitWidth="82.0" layoutX="134.0" layoutY="308.0" onMouseClicked="#showDescription" onMouseEntered="#makeDescBtnOpaque" onMouseExited="#makeDescBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@../pics/description_button.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="apLabel" alignment="CENTER" layoutX="75.0" layoutY="315.0" prefHeight="43.0" prefWidth="35.0" textFill="#eede31">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="hpLabel" alignment="CENTER" layoutX="220.0" layoutY="315.0" prefHeight="43.0" prefWidth="35.0" textFill="#b93a10">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="cardName" alignment="CENTER" layoutX="48.0" layoutY="269.0" prefHeight="34.0" prefWidth="227.0" textFill="#001eff">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="43.0" fitWidth="45.0" layoutX="162.0" layoutY="16.0">
+         <image>
+            <Image url="@../pics/price.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="priceLable" layoutX="207.0" layoutY="20.0" prefHeight="34.0" prefWidth="82.0" textFill="#fbff00">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="spellOrUnit" alignment="CENTER" layoutX="75.0" layoutY="115.0" prefHeight="66.0" prefWidth="155.0" textFill="#6829e4">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
