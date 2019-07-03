@@ -22,20 +22,10 @@ public class DataBase {
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
     private Account temp2;
-//    private Account temp1 = new Account("temp1", "1");
-//    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
     }
-
-//    public Account getTemp2() {
-//        return temp2;
-//    }
-//
-//    public Account getTemp1() {
-//        return temp1;
-//    }
 
     private DataBase() {
     }
@@ -1262,7 +1252,7 @@ public class DataBase {
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Cards/Spells/" + fileName);
-                        cardList.add(gson.fromJson(reader, Spell.class));
+                        cardList.add(gson.fromJson(reader,Spell.class));
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
