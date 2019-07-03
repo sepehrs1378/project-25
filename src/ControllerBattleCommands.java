@@ -308,16 +308,22 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
-        if (isClickedImageViewInHand())
-            if (handleCardInsertion(row, column)) {
+        try {
+
+
+            if (isClickedImageViewInHand())
+                if (handleCardInsertion(row, column)) {
+                    updatePane();
+                    return;
+                }
+            if (handleUnitMove(row, column)) {
                 updatePane();
                 return;
             }
-        if (handleUnitMove(row, column)) {
             updatePane();
-            return;
+        }catch (Exception ignored){
+
         }
-        updatePane();
     }
 
     private boolean handleUnitMove(int row, int column) {
@@ -422,20 +428,26 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-        if (currentPlayer.getSelectedCollectable() == null) {
-            if (handleUnitSelection(id)) {
-                updatePane();
-                return;
+        try {
+
+
+            Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+            if (currentPlayer.getSelectedCollectable() == null) {
+                if (handleUnitSelection(id)) {
+                    updatePane();
+                    return;
+                }
             }
-        }
-        if (currentPlayer.getSelectedUnit() != null) {
-            if (handleUnitAttack(id)) {
-                updatePane();
-                return;
+            if (currentPlayer.getSelectedUnit() != null) {
+                if (handleUnitAttack(id)) {
+                    updatePane();
+                    return;
+                }
             }
+            updatePane();
+        }catch (Exception ignored){
+
         }
-        updatePane();
     }
 
     private boolean handleUnitAttack(String id) {
