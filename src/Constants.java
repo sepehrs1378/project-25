@@ -60,4 +60,6 @@ public class Constants {
 
     public static final String ID_PATTERN = "^(.+)_(.+)_(\\d+)$";
 
+    public static final String NO_LIMIT = "No Time Limit";
+
 }

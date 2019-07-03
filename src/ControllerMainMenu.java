@@ -55,6 +55,28 @@ public class ControllerMainMenu {
     private ImageView saveAccountsBtn;
 
     @FXML
+    private ImageView settingsBtn;
+
+    @FXML
+    void makeSettingsBtnOpaque(MouseEvent event) {
+        settingsBtn.setStyle("-fx-opacity: 1");
+        Main.playWhenMouseEntered();
+    }
+
+    @FXML
+    void makeSettingsBtnTransparent(MouseEvent event) {
+        settingsBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @FXML
+    void openSettingsMenu(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerSettingsMenu.fxml"));
+        Main.window.setScene(new Scene(root));
+        Main.setCursor();
+    }
+
+    @FXML
     void makeSaveAccountsBtnTransparent(MouseEvent event) {
         saveAccountsBtn.setStyle("-fx-opacity: 0.6");
     }

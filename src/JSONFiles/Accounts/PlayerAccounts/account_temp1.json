@@ -2041,9 +2041,30 @@
         "diffInHours": 0,
         "diffInDays": 0,
         "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "computer1",
+        "matchDate": 1562079883740,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "temp1",
+        "matchDate": 1562131070679,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
       }
     ],
     "mainDeck": "@root.playerInfo.collection.decks.0",
-    "money": 1007500
+    "money": 1008500,
+    "turnDuration": "30"
   }
 }

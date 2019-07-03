@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +49,7 @@ public class ControllerBattleCommands implements Initializable {
     private CellImage[][] cellImageList = new CellImage[5][9];
     private ImageView clickedImageView = new ImageView();//todo
     private List<FlagImage> flagImages = new ArrayList<>();
+    Timeline timeline = new Timeline();
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -167,31 +169,40 @@ public class ControllerBattleCommands implements Initializable {
     private Label computerManaLabel;
 
     @FXML
-    void  endTurn(MouseEvent event) throws GoToMainMenuException {
+    private ProgressBar timeBar;
+
+    @FXML
+    void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
+        endTurnWhenClicked();
+//        endTurnMineBtn.setVisible(false);
+//        endTurnEnemyBtn.setVisible(true);
+    }
+
+    private void endTurnWhenClicked() {
         Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         clickedImageView = null;
-        if (endTurn()){
+        if (endTurn()) {
             return;
         }
         Battle battle = dataBase.getCurrentBattle();
         if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
             AI.getInstance().doNextMove(battleGroundPane);
-            if (endTurn()){
+            if (endTurn()) {
                 return;
             }
         }
+        setTimeBar();
         updatePane();
-//        endTurnMineBtn.setVisible(false);
-//        endTurnEnemyBtn.setVisible(true);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        startTempBattle();//todo remove it later
+        setTimeBar();
         Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupPlayersInfoViews();
@@ -202,6 +213,25 @@ public class ControllerBattleCommands implements Initializable {
         setupHeroSpecialPowerView();
         setupItemView();
         updatePane();
+    }
+
+    private void setTimeBar() {
+        String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
+        if (!turnDuration.equals(Constants.NO_LIMIT)) {
+            timeline.stop();
+            timeline.getKeyFrames().clear();
+            timeBar.setProgress(0);
+            timeBar.setVisible(true);
+            double seconds = Integer.parseInt(turnDuration);
+            KeyValue keyValue = new KeyValue(timeBar.progressProperty(), 1);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(seconds), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.play();
+            timeline.setOnFinished(e -> {
+                timeBar.setProgress(0);
+                endTurnWhenClicked();
+            });
+        }
     }
 
     private void setupPlayersInfoViews() {
@@ -222,7 +252,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setupHeroSpecialPowerView() {
         Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
-        if (hero.getMainSpecialPower() == null){
+        if (hero.getMainSpecialPower() == null) {
             return;
         }
         try {
@@ -520,20 +550,21 @@ public class ControllerBattleCommands implements Initializable {
         updatePlayersInfo();
         updateHand();
     }
-    private void showFlags(){
+
+    private void showFlags() {
         BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
         List<ImageView> images = new ArrayList<>();
-        for (FlagImage flagImage:flagImages)
+        for (FlagImage flagImage : flagImages)
             images.add(flagImage.getFlagView());
         battleGroundPane.getChildren().removeAll(images);
         flagImages.clear();
-        for (int i=0;i<5;i++){
-            for (int j=0;j<9;j++){
-                if (battleGround.getCells()[i][j].getFlags().size()>0){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (battleGround.getCells()[i][j].getFlags().size() > 0) {
                     FlagImage flagImage = new FlagImage();
                     flagImages.add(flagImage);
-                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j)-10);
-                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i)-10);
+                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j) - 10);
+                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i) - 10);
                     battleGroundPane.getChildren().add(flagImage.getFlagView());
                 }
             }
@@ -563,7 +594,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void updateUnitImages() {
         for (UnitImage unitImage : unitImageList) {
-            if (unitImage==null)
+            if (unitImage == null)
                 continue;
             BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
             if (!battleGround.doesHaveUnit(unitImage.getId())) {
@@ -571,7 +602,7 @@ public class ControllerBattleCommands implements Initializable {
                 continue;
             }
             Unit unit = battleGround.getUnitWithID(unitImage.getId());
-            if (unit==null)
+            if (unit == null)
                 continue;
             unitImage.setApNumber(unit.getAp());
             unitImage.setHpNumber(unit.getHp());
@@ -879,7 +910,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean endGame() {
         System.out.println("game finished");
         dataBase.setCurrentBattle(null);
-        Alert alert=new Alert(Alert.AlertType.INFORMATION,"game has finished please press ok to exit to main menu");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
         returnToMainMenu();
@@ -888,24 +919,23 @@ public class ControllerBattleCommands implements Initializable {
         //todo check prizes
     }
 
-    private void returnToMainMenu(){
+    private void returnToMainMenu() {
         endTurnMineBtn.setDisable(true);
         graveYardBtn.setDisable(true);
-        KeyValue keyValue = new KeyValue(Main.window.opacityProperty(),0);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000),keyValue);
+        KeyValue keyValue = new KeyValue(Main.window.opacityProperty(), 0);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), keyValue);
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(keyFrame);
-        timeline.setOnFinished(e->{
+        timeline.setOnFinished(e -> {
             try {
-
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                 Main.window.setScene(new Scene(root));
                 Main.setCursor();
             } catch (IOException ignored) {
 
             }
-            KeyValue keyValueFinished = new KeyValue(Main.window.opacityProperty(),1);
-            KeyFrame keyFrameFinished = new KeyFrame(Duration.millis(2000),keyValueFinished);
+            KeyValue keyValueFinished = new KeyValue(Main.window.opacityProperty(), 1);
+            KeyFrame keyFrameFinished = new KeyFrame(Duration.millis(2000), keyValueFinished);
             Timeline timelineFinished = new Timeline();
             timelineFinished.getKeyFrames().add(keyFrameFinished);
             timelineFinished.play();

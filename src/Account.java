@@ -9,6 +9,7 @@ public class Account implements Comparable<Account> {
     private List<MatchInfo> matchList = new ArrayList<>();
     private Deck mainDeck;
     private int money;
+    private String turnDuration = Constants.NO_LIMIT;
 
     {
         levelsOpennessStatus[0] = true;
@@ -104,5 +105,13 @@ public class Account implements Comparable<Account> {
 
     public int getMoney() {
         return money;
+    }
+
+    public String getTurnDuration() {
+        return turnDuration;
+    }
+
+    public void setTurnDuration(String turnDuration) {
+        this.turnDuration = turnDuration;
     }
 }
