@@ -13,6 +13,8 @@ public enum RequestType {
 
     buy,
     sell,
+
     sendMessage,
 
+    close
 }

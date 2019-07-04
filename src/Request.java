@@ -1,21 +1,23 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-public class Request {
+public class Request implements Serializable {
     private RequestType requestType;
-    private List<String> messages;
+    private String message;
     private List<Integer> integers;
     private List<Object> objects;
     private HashMap<Object, Class> objectClassHashMap = new HashMap<>();
 
-    public Request(RequestType requestType, List<String> messages, List<Integer> integers
+    public Request(RequestType requestType, String message, List<Integer> integers
             , List<Object> objects) {
         this.requestType = requestType;
-        this.messages = messages;
+        this.message = message;
         this.integers = integers;
         this.objects = objects;
-        for (Object object : objects) {
-            objectClassHashMap.put(object, object.getClass());
+        if (objects != null) {
+            for (Object object : objects)
+                objectClassHashMap.put(object, object.getClass());
         }
     }
 
@@ -23,8 +25,8 @@ public class Request {
         return requestType;
     }
 
-    public List<String> getMessages() {
-        return messages;
+    public String getMessage() {
+        return message;
     }
 
     public List<Integer> getIntegers() {

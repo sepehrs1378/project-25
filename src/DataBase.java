@@ -3,6 +3,7 @@ import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.control.Alert;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1250,7 +1251,7 @@ public class DataBase {
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Cards/Spells/" + fileName);
-                        cardList.add(gson.fromJson(reader,Spell.class));
+                        cardList.add(gson.fromJson(reader, Spell.class));
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();

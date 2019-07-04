@@ -15,6 +15,7 @@ public class ServerHandler extends Thread {
     public void run() {
         try {
             Socket socket = new Socket(address, port);
+            ClientDB.getInstance().setSocket(socket);
         } catch (IOException e) {
             e.printStackTrace();
         }

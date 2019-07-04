@@ -99,8 +99,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        String address = "localhost";
         DataBase.getInstance().makeEveryThing();
-        ServerHandler serverHandler = new ServerHandler("localhost", 5555);
+        ClientDB.getInstance();
+        ServerHandler serverHandler = new ServerHandler(address, 5555);
         serverHandler.start();
         launch(args);
     }
@@ -114,6 +116,7 @@ public class Main extends Application {
     @FXML
     void login(MouseEvent event) throws IOException {
         playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.sendMessage, "hello", null, null)).start();
         if (emptyInvalidUsername()) return;
         int index = findIndexOfAccount(username.getText());
         if (index == -1) {
@@ -206,5 +209,3 @@ public class Main extends Application {
         return globalMediaPlayer;
     }
 }
-
-

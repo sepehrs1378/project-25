@@ -1,11 +1,12 @@
-import java.sql.Connection;
-import java.util.HashSet;
-import java.util.Set;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NetWorkDB {
-    private Set<Account> onlineAccountList = new HashSet<>();
-    private Set<Account> playingAccountList = new HashSet<>();
-    private Set<Connection> connectionList = new HashSet<>();
+    private List<Connection> connectionList = new ArrayList<>();
+    private Map<Account, AccountStatus> accountStatusMap = new HashMap<>();
 
     private static NetWorkDB ourInstance = new NetWorkDB();
 
@@ -16,27 +17,29 @@ public class NetWorkDB {
     private NetWorkDB() {
     }
 
-    public Set<Account> getOnlineAccountList() {
-        return onlineAccountList;
-    }
-
-    public Set<Account> getPlayingAccountList() {
-        return playingAccountList;
-    }
-
-    public Set<Connection> getConnectionList() {
-        return connectionList;
-    }
-
-    public void setAccountOnline(Account account) {
-        onlineAccountList.add(account);
-    }
-
-    public void setAccountPlaying(Account account) {
-        playingAccountList.add(account);
-    }
-
     public void addConnection(Connection connection) {
         connectionList.add(connection);
+    }
+
+    public void setAccountStatus(Account account, AccountStatus status) {
+        accountStatusMap.put(account, status);
+    }
+
+    public Map<Account, AccountStatus> getAccountStatusMap() {
+        return accountStatusMap;
+    }
+
+    public Connection getConnectionWithSocket(Socket socket) {
+        for (Connection connection : connectionList) {
+            if (connection.getSocket() == socket)
+                return connection;
+        }
+        return null;
+    }
+
+    public void closeConnection(Socket socket) {
+        Connection connection = getConnectionWithSocket(socket);
+        connection.close();
+        connectionList.remove(connection);
     }
 }
