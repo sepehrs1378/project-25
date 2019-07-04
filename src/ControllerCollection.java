@@ -74,7 +74,7 @@ public class ControllerCollection implements Initializable {
     @FXML
     void setAsMainDeck(MouseEvent event) {
         Main.playWhenButtonClicked();
-        if (selectedLabel.getText().isEmpty()) {
+        if (selectedLabel == null) {
             return;
         }
         Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
@@ -268,6 +268,7 @@ public class ControllerCollection implements Initializable {
         dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
         if (deck == dataBase.getLoggedInAccount().getMainDeck()) {
             dataBase.getLoggedInAccount().setMainDeck(null);
+            mainDeckLabel.setText("Main Deck Not Selected");
         }
         showDecks();
     }
