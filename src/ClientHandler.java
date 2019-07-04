@@ -15,26 +15,22 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-        try {
-            Connection connection = new Connection(socket);
-            NetWorkDB.getInstance().addConnection(connection);
-            yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-            JsonStreamParser parser = new JsonStreamParser(connection.getInput());
-            while (true) {
-                System.out.println("*");
-                Request request = yaGson.fromJson(connection.getInput(), Request.class);
-                switch (request.getRequestType()) {
-                    case sendMessage:
-                        System.out.println("**");
-                        System.out.println(request.getMessage());
-                        break;
-                }
-                if (request.getRequestType().equals(RequestType.close))
+        Connection connection = new Connection(socket);
+        NetWorkDB.getInstance().addConnection(connection);
+        yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        JsonStreamParser parser = new JsonStreamParser(connection.getInput());
+        while (true) {
+            System.out.println("*");
+            Request request = yaGson.fromJson(connection.getInput(), Request.class);
+            switch (request.getRequestType()) {
+                case sendMessage:
+                    System.out.println("**");
+                    System.out.println(request.getMessage());
                     break;
             }
-            NetWorkDB.getInstance().closeConnection(socket);
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (request.getRequestType().equals(RequestType.close))
+                break;
         }
+        NetWorkDB.getInstance().closeConnection(socket);
     }
 }
