@@ -11,6 +11,54 @@ public class ClientDB {
     private InputStreamReader input;
     private OutputStreamWriter output;
     private JsonStreamParser parser;
+    private Account loggedInAccount;
+    private Player loggedInPlayer;
+    private Battle currentBattle;
+    private Account computerPlayerLevel1;
+    private Account computerPlayerLevel2;
+    private Account computerPlayerLevel3;
+    private Account computerPlayerCustom;
+//    private Account temp2;
+
+    public void setLoggedInAccount(Account loggedInAccount) {
+        this.loggedInAccount = loggedInAccount;
+    }
+
+    public void setLoggedInPlayer(Player loggedInPlayer) {
+        this.loggedInPlayer = loggedInPlayer;
+    }
+
+    public void setCurrentBattle(Battle currentBattle) {
+        this.currentBattle = currentBattle;
+    }
+
+    public Account getLoggedInAccount() {
+        return loggedInAccount;
+    }
+
+    public Player getLoggedInPlayer() {
+        return loggedInPlayer;
+    }
+
+    public Battle getCurrentBattle() {
+        return currentBattle;
+    }
+
+    public Account getComputerPlayerLevel1() {
+        return computerPlayerLevel1;
+    }
+
+    public Account getComputerPlayerLevel2() {
+        return computerPlayerLevel2;
+    }
+
+    public Account getComputerPlayerLevel3() {
+        return computerPlayerLevel3;
+    }
+
+    public Account getComputerPlayerCustom() {
+        return computerPlayerCustom;
+    }
 
     public static ClientDB getInstance() {
         return ourInstance;
@@ -43,6 +91,34 @@ public class ClientDB {
             this.parser = new JsonStreamParser(input);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public Account getComputerAccount(int level) {
+        switch (level) {
+            case 1:
+                return computerPlayerLevel1;
+            case 2:
+                return computerPlayerLevel2;
+            case 3:
+                return computerPlayerLevel3;
+            default:
+                throw new RuntimeException("level out of bounds");
+        }
+    }
+
+    public void setNewIdsForCustomPlayer() {
+        Deck deck = computerPlayerCustom.getMainDeck();
+        if (deck != null) {
+            for (Card card : deck.getCards()) {
+                card.setId(computerPlayerCustom.getUsername() + "_" + card.getId().split("_")[1] + "_"
+                        + card.getId().split("_")[2]);
+            }
+            deck.getHero().setId(computerPlayerCustom.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
+                    + deck.getHero().getId().split("_")[2]);
+            deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
+                    + deck.getItem().getId().split("_")[2]);
+
         }
     }
 }

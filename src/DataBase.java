@@ -14,13 +14,14 @@ public class DataBase {
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
     private List<Account> accountList = new ArrayList<>();
-    private Account loggedInAccount;
-    private Battle currentBattle;
-    private Account computerPlayerLevel1;
-    private Account computerPlayerLevel2;
-    private Account computerPlayerLevel3;
-    private Account computerPlayerCustom;
-    private Account temp2;
+    private List<Battle> battleList = new ArrayList<>();
+//    private Account loggedInAccount;
+//    private Battle currentBattle;
+//    private Account computerPlayerLevel1;
+//    private Account computerPlayerLevel2;
+//    private Account computerPlayerLevel3;
+//    private Account computerPlayerCustom;
+//    private Account temp2;
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -30,7 +31,7 @@ public class DataBase {
     }
 
     public void makeEveryThing() {
-        computerPlayerCustom = new Account("computerCustom", "custom");
+//        computerPlayerCustom = new Account("computerCustom", "custom");
         readSpells();
         readHeroes();
         readMinions();
@@ -760,9 +761,9 @@ public class DataBase {
     }
 
     private void makeAccounts() {
-        computerPlayerLevel1 = new Account("computer1", "1");
-        computerPlayerLevel2 = new Account("computer2", "2");
-        computerPlayerLevel3 = new Account("computer3", "3");
+//        computerPlayerLevel1 = new Account("computer1", "1");
+//        computerPlayerLevel2 = new Account("computer2", "2");
+//        computerPlayerLevel3 = new Account("computer3", "3");
 
         //todo add usables to deck
         /*Deck computerPlayer1Deck = new Deck("Deck");
@@ -892,7 +893,7 @@ public class DataBase {
         accountList.add(temp1);
         accountList.add(temp2);*/
 
-        Deck computerPlayerCostumDeck = new Deck("deck");
+//        Deck computerPlayerCostumDeck = new Deck("deck");
     }
 
     public List<Card> getCardList() {
@@ -905,38 +906,6 @@ public class DataBase {
 
     public List<Collectable> getCollectableList() {
         return collectableList;
-    }
-
-    public Account getComputerPlayerLevel1() {
-        return computerPlayerLevel1;
-    }
-
-    public Account getComputerPlayerLevel2() {
-        return computerPlayerLevel2;
-    }
-
-    public Account getComputerPlayerLevel3() {
-        return computerPlayerLevel3;
-    }
-
-    public Account getComputerPlayerCustom() {
-        return computerPlayerCustom;
-    }
-
-    public Account getLoggedInAccount() {
-        return loggedInAccount;
-    }
-
-    public void setLoggedInAccount(Account loggedInAccount) {
-        this.loggedInAccount = loggedInAccount;
-    }
-
-    public Battle getCurrentBattle() {
-        return currentBattle;
-    }
-
-    public void setCurrentBattle(Battle currentBattle) {
-        this.currentBattle = currentBattle;
     }
 
     public List<Account> getAccounts() {
@@ -992,6 +961,7 @@ public class DataBase {
             if (account.getUsername().equals(username))
                 return account;
         }
+/*
         if (computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(username))
             return computerPlayerLevel3;
         else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(username))
@@ -1000,6 +970,7 @@ public class DataBase {
             return computerPlayerLevel1;
         if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(username))
             return computerPlayerCustom;
+*/
         return null;
     }
 
@@ -1035,6 +1006,7 @@ public class DataBase {
     }
 
     public void setNewIdsForCustomPlayer() {
+/*
         Deck deck = computerPlayerCustom.getMainDeck();
         if (deck != null) {
             for (Card card : deck.getCards()) {
@@ -1045,7 +1017,8 @@ public class DataBase {
                     + deck.getHero().getId().split("_")[2]);
             deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
                     + deck.getItem().getId().split("_")[2]);
-        }
+
+        }*/
     }
 
     boolean doesAccountExist(String username) {
@@ -1076,7 +1049,7 @@ public class DataBase {
         FileReader reader;
         if (fileNames != null) {
             for (String fileName : fileNames) {
-                if (fileName.equals("temp2.json")) {
+                /*if (fileName.equals("temp2.json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
                         temp2 = gson.fromJson(reader, Account.class);
@@ -1084,6 +1057,7 @@ public class DataBase {
                         e.printStackTrace();
                     }
                 }
+                */
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
@@ -1095,8 +1069,7 @@ public class DataBase {
                 }
             }
         }
-        try {
-            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
+            /*reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
 
             computerPlayerLevel1 = gson.fromJson(reader, Account.class);
 
@@ -1105,10 +1078,7 @@ public class DataBase {
 
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
             computerPlayerLevel3 = gson.fromJson(reader, Account.class);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+*/
     }
 
     public void savaCards() {
@@ -1360,8 +1330,10 @@ public class DataBase {
             System.out.println(battle.getPlayer1().getPlayerInfo().getPlayerName());
         } catch (FileNotFoundException e) {
             //todo show this message in correct place
+            e.printStackTrace();
             System.out.println("file not found");
         } catch (ClassCastException e) {
+            e.printStackTrace();
             System.out.println("invalid file, selected file is not a saved battle");
         }
 
@@ -1431,13 +1403,5 @@ public class DataBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Account getTemp2() {
-        return temp2;
-    }
-
-    public void setTemp2(Account temp2) {
-        this.temp2 = temp2;
     }
 }
