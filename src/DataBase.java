@@ -3,6 +3,7 @@ import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.control.Alert;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,20 +21,10 @@ public class DataBase {
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
     private Account temp2;
-//    private Account temp1 = new Account("temp1", "1");
-//    private Account temp2 = new Account("temp2", "2");
 
     public static DataBase getInstance() {
         return ourInstance;
     }
-
-//    public Account getTemp2() {
-//        return temp2;
-//    }
-//
-//    public Account getTemp1() {
-//        return temp1;
-//    }
 
     private DataBase() {
     }

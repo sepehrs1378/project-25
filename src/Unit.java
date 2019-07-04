@@ -131,9 +131,7 @@ public class Unit extends Card {
                 return false;
         if (!isCounterAttack && this.didAttackThisTurn)
             return false;
-        if (!isTargetUnitWithinRange(unit.getId()))
-            return false;
-        return true;
+        return isTargetUnitWithinRange(unit.getId());
     }
 
     public static OutputMessageType attackCombo(String targetId, String[] attackersIds) {
