@@ -3030,10 +3030,19 @@
         "diffInHours": 0,
         "diffInDays": 0,
         "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1562216642997,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
       }
     ],
     "mainDeck": "@root.playerInfo.collection.decks.1",
-    "money": 1000960,
-    "turnDuration": "30"
+    "money": 1000960
   }
 }

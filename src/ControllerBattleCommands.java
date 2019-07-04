@@ -211,7 +211,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setTimeBar() {
         String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
-        if (!turnDuration.equals(Constants.NO_LIMIT)) {
+        if (turnDuration != null && !turnDuration.equals(Constants.NO_LIMIT)) {
             timeline.stop();
             timeline.getKeyFrames().clear();
             timeBar.setProgress(0);
@@ -686,7 +686,8 @@ public class ControllerBattleCommands implements Initializable {
         } else if (card instanceof Unit) {
             view.showCardInfoMinion((Unit) card);
         }
-    */}
+    */
+    }
 
     private void attackCombo() {
       /*  String[] orderPieces = request.getCommand().split(" ");
@@ -695,14 +696,16 @@ public class ControllerBattleCommands implements Initializable {
             System.arraycopy(orderPieces, 3, attackers, 0
                     , orderPieces.length - 3);
         view.printOutputMessage(Unit.attackCombo(orderPieces[2], attackers));
-    */}
+    */
+    }
 
     public void useCollectable() {
         /*int row = Integer.parseInt(request.getCommand().split("[ (),]")[2]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
         Collectable collectable = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
         view.printOutputMessage(dataBase.getCurrentBattle().useCollectable(collectable, row, column));
-    */}
+    */
+    }
 
     private void forfeitGame() {
         Main.getGlobalMediaPlayer().play();
@@ -721,14 +724,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endGame() {
-        System.out.println("game finished");
         dataBase.setCurrentBattle(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
         returnToMainMenu();
         return true;
-        //todo check prizes
     }
 
     private void returnToMainMenu() {
