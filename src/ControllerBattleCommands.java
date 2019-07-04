@@ -211,7 +211,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setTimeBar() {
         String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
-        if (!turnDuration.equals(Constants.NO_LIMIT)) {
+        if (turnDuration != null && !turnDuration.equals(Constants.NO_LIMIT)) {
             timeline.stop();
             timeline.getKeyFrames().clear();
             timeBar.setProgress(0);
@@ -721,7 +721,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endGame() {
-        System.out.println("game finished");
+        timeBar.setDisable(true);
         dataBase.setCurrentBattle(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
