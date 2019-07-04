@@ -31,6 +31,10 @@ public class ClientDB {
         return socket;
     }
 
+    public JsonStreamParser getParser() {
+        return parser;
+    }
+
     public void setSocket(Socket socket) {
         try {
             this.socket = socket;

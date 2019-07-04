@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ControllerGlobalChat"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="715.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerGlobalChat">
+   <children>
+      <ImageView fitHeight="715.0" fitWidth="1280.0" layoutX="-1.0">
+         <image>
+            <Image url="@pics/globalchat_menu/background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="85.0" fitWidth="80.0">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
+      <ScrollPane layoutX="458.0" layoutY="64.0" prefHeight="502.0" prefWidth="580.0">
+         <content>
+            <VBox prefHeight="497.0" prefWidth="576.0" />
+         </content>
+         <stylesheets>
+            <URL value="@CSS/scrollbar.css" />
+            <URL value="@CSS/scrollpane_style.css" />
+         </stylesheets>
+      </ScrollPane>
+      <TextField layoutX="458.0" layoutY="578.0" prefHeight="29.0" prefWidth="550.0" />
+   </children>
 </AnchorPane>

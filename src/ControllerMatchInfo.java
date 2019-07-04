@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 
 public class ControllerMatchInfo implements Initializable {
     private static ControllerMatchInfo ourInstance = new ControllerMatchInfo();
-    private View view = View.getInstance();
     private DataBase dataBase = DataBase.getInstance();
     public static Stage matchHistoryStage = null;
 

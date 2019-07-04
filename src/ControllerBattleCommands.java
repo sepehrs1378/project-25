@@ -686,7 +686,8 @@ public class ControllerBattleCommands implements Initializable {
         } else if (card instanceof Unit) {
             view.showCardInfoMinion((Unit) card);
         }
-    */}
+    */
+    }
 
     private void attackCombo() {
       /*  String[] orderPieces = request.getCommand().split(" ");
@@ -695,14 +696,16 @@ public class ControllerBattleCommands implements Initializable {
             System.arraycopy(orderPieces, 3, attackers, 0
                     , orderPieces.length - 3);
         view.printOutputMessage(Unit.attackCombo(orderPieces[2], attackers));
-    */}
+    */
+    }
 
     public void useCollectable() {
         /*int row = Integer.parseInt(request.getCommand().split("[ (),]")[2]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
         Collectable collectable = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
         view.printOutputMessage(dataBase.getCurrentBattle().useCollectable(collectable, row, column));
-    */}
+    */
+    }
 
     private void forfeitGame() {
         Main.getGlobalMediaPlayer().play();
@@ -728,7 +731,6 @@ public class ControllerBattleCommands implements Initializable {
         alert.showAndWait();
         returnToMainMenu();
         return true;
-        //todo check prizes
     }
 
     private void returnToMainMenu() {
