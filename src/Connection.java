@@ -1,20 +1,23 @@
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonStreamParser;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Connection {
     private Socket socket;
+    private Account account;
     private InputStreamReader input;
     private OutputStreamWriter output;
-    private Account account;
+    private JsonStreamParser parser;
 
     public Connection(Socket socket) {
         this.socket = socket;
         try {
             input = new InputStreamReader(socket.getInputStream());
             output = new OutputStreamWriter(socket.getOutputStream());
+            parser = new JsonStreamParser(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,6 +25,10 @@ public class Connection {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public JsonStreamParser getParser() {
+        return parser;
     }
 
     public Socket getSocket() {
@@ -43,6 +50,8 @@ public class Connection {
     public void close() {
         try {
             socket.close();
+            input.close();
+            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

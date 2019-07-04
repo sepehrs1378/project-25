@@ -1,3 +1,8 @@
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,5 +46,24 @@ public class NetWorkDB {
         Connection connection = getConnectionWithSocket(socket);
         connection.close();
         connectionList.remove(connection);
+    }
+
+    public void sendResponseToClinet(Response response, Connection connection) {
+        try {
+            OutputStreamWriter output = connection.getOutput();
+            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+            yaGson.toJson(response, output);
+            output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnectionWithAccount(Account account) {
+        for (Connection connection : connectionList) {
+            if (connection.getAccount() == account)
+                return connection;
+        }
+        return null;
     }
 }
