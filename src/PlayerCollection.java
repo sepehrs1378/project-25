@@ -147,6 +147,9 @@ public class PlayerCollection {
     }
 
     public OutputMessageType createDeck(String deckName) {
+        if(deckName.contains(" ")){
+            return OutputMessageType.NO_SPACES;
+        }
         if (doesHaveDeck(deckName))
             return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);

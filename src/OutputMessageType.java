@@ -82,7 +82,8 @@ public enum OutputMessageType {
     UNIT_AND_ENEMY_ATTACKED(""),
     UNSELECTED(""),
     ATTACKED_FRIENDLY_UNIT(""),
-    NO_ERROR("");
+    NO_ERROR(""),
+    NO_SPACES("deck name should not contain spaces");
 
     private String message;
 

@@ -724,6 +724,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endGame() {
+        timeBar.setDisable(true);
         dataBase.setCurrentBattle(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
