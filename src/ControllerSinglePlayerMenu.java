@@ -5,13 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -216,7 +219,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void enterCustomGame(MouseEvent event) throws IOException {
-        Main.getGlobalMediaPlayer().stop();
         if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null) {
             invalidDeckLabel.setVisible(true);
             invalidModeLabel.setVisible(true);
@@ -239,6 +241,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 return;
             }
         }
+        Main.getGlobalMediaPlayer().stop();
         Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectDeckBox.getValue());
         Deck newDeck = new Deck(deck);
         changeIDtoCustomPlayer(newDeck);

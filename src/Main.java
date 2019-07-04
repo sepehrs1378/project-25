@@ -95,7 +95,7 @@ public class Main extends Application {
         dataBase.addAccount(account);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         window.setScene(new Scene(root));
-        setCursor();
+        setCursor(window);
     }
 
     public static void main(String[] args) {
@@ -107,10 +107,10 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void setCursor() {
+    public static void setCursor(Stage stage) {
         File file = new File("src/pics/mouse_icon");
         Image image = new Image(file.toURI().toString());
-        window.getScene().setCursor(new ImageCursor(image));
+        stage.getScene().setCursor(new ImageCursor(image));
     }
 
     @FXML
@@ -130,7 +130,7 @@ public class Main extends Application {
         dataBase.setLoggedInAccount(dataBase.getAccounts().get(index));
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         window.setScene(new Scene(root));
-        setCursor();
+        setCursor(window);
     }
 
     private boolean emptyInvalidUsername() {
@@ -171,7 +171,7 @@ public class Main extends Application {
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        setCursor();
+        setCursor(primaryStage);
         playMusic();
         primaryStage.setOnCloseRequest(e -> {
             DataBase.getInstance().saveAccounts();

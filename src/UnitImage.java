@@ -4,6 +4,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -11,6 +13,7 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,6 +149,8 @@ public class UnitImage {
     }
 
     public void showAttack(int targetColumn) {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/" + getUnitName() + "/attack.m4a").toUri().toString()));
+        mediaPlayer.play();
         setUnitStatus(UnitStatus.attack);
         changeFacing(this.column, targetColumn);
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -189,6 +194,8 @@ public class UnitImage {
     }
 
     public void showDeath() {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/"+ getUnitName() +"/death.m4a").toUri().toString()));
+        mediaPlayer.play();
         setUnitStatus(UnitStatus.death);
         ImageView effectView = addEffectToUnit(UnitEffectType.bloodDrop);
 

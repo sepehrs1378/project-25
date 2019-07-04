@@ -107,7 +107,7 @@ public class ControllerShop {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML

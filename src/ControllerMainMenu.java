@@ -71,7 +71,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerSettingsMenu.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -120,7 +120,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -132,10 +132,10 @@ public class ControllerMainMenu {
         matchHistoryStage.setScene(scene);
         matchHistoryStage.initModality(Modality.APPLICATION_MODAL);
         matchHistoryStage.initStyle(StageStyle.UNDECORATED);
-        File file = new File("src/pics/cursors/main_cursor.png");
+        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
+        File file = new File("src/pics/cursor.png");
         Image image = new Image(file.toURI().toString());
         matchHistoryStage.getScene().setCursor(new ImageCursor(image));
-        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
         matchHistoryStage.showAndWait();
     }
 
@@ -180,7 +180,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -203,7 +203,7 @@ public class ControllerMainMenu {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
-        File file = new File("src/pics/cursors/main_cursor.png");
+        File file = new File("src/pics/cursor.png");
         Image image = new Image(file.toURI().toString());
         stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
@@ -283,7 +283,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -303,7 +303,7 @@ public class ControllerMainMenu {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
         controllerShop = ControllerShop.getOurInstance();
-        Main.setCursor();
+        Main.setCursor(Main.window);
         controllerShop.showCards();
     }
 
