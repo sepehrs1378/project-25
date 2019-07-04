@@ -21,17 +21,36 @@ public class ClientHandler extends Thread {
         while (true) {
             JsonObject obj = parser.next().getAsJsonObject();
             Request request = yaGson.fromJson(obj.toString(), Request.class);
-            switch (request.getRequestType()) {
-                case sendMessage:
-                    System.out.println(request.getMessage());
-                    NetWorkDB.getInstance().sendResponseToClinet
-                            (new Response(ResponseType.sendMessage, "hi again", null, null)
-                                    , NetWorkDB.getInstance().getConnectionWithSocket(socket));
-                    break;
-            }
+            handleMultiPlayerCase(request);
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
         NetWorkDB.getInstance().closeConnection(socket);
+    }
+
+    private void handleMultiPlayerCase(Request request) {
+        switch (request.getRequestType()) {
+            case moveUnit:
+                break;
+            case attackUnit:
+                break;
+            case endTurn:
+                break;
+            case insertCard:
+                break;
+            case useSpecialPower:
+                break;
+            case useCollectable:
+                break;
+            case selectUnit:
+                break;
+            case enterGraveYard:
+                break;
+            case forfeit:
+                break;
+        }
+    }
+
+    public void handleMultiPlayerCase(){
     }
 }

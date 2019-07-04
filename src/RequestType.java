@@ -10,6 +10,8 @@ public enum RequestType {
     insertCard,
     endTurn,
     enterGraveYard,
+    forfeit,
+    selectUnit,
 
     buy,
     sell,

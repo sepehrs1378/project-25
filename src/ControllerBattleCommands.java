@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerBattleCommands implements Initializable {
-    private static DataBase dataBase = DataBase.getInstance();
+    private static ClientDB dataBase = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
     private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
@@ -40,9 +40,9 @@ public class ControllerBattleCommands implements Initializable {
     private List<HandImage> handImageList = new ArrayList<>();
     private List<SpellImage> spellImageList = new ArrayList<>();
     private CellImage[][] cellsImages = new CellImage[5][9];
-    private ImageView clickedImageView = new ImageView();//todo
+    private ImageView clickedImageView = new ImageView();
     private List<FlagImage> flagImages = new ArrayList<>();
-    Timeline timeline = new Timeline();
+    private Timeline timeline = new Timeline();
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -168,8 +168,8 @@ public class ControllerBattleCommands implements Initializable {
     void endTurn(MouseEvent event) throws GoToMainMenuException {
         //todo
         endTurnWhenClicked();
-//        endTurnMineBtn.setVisible(false);
-//        endTurnEnemyBtn.setVisible(true);
+        endTurnMineBtn.setVisible(false);
+        endTurnEnemyBtn.setVisible(true);
     }
 
     private void endTurnWhenClicked() {
@@ -178,9 +178,15 @@ public class ControllerBattleCommands implements Initializable {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         clickedImageView = null;
-        if (endTurn()) {
-            return;
+        if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            new ServerRequestSender(new Request(RequestType.endTurn, null, null, null));
+            endTurnMineBtn.setVisible(false);
+            endTurnEnemyBtn.setVisible(true);
         }
+        if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
+            if (endTurn()) {
+                return;
+            }
         /*Battle battle = dataBase.getCurrentBattle();
         if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
             AI.getInstance().doNextMove(battleGroundPane);
@@ -188,8 +194,9 @@ public class ControllerBattleCommands implements Initializable {
                 return;
             }
         }*/
+            //todo turn it on
+        }
         setTimeBar();
-
         updatePane();
     }
 
@@ -293,12 +300,6 @@ public class ControllerBattleCommands implements Initializable {
 
     public ControllerBattleCommands() {
         ourInstance = this;
-    }
-
-    private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getAccountWithUsername("temp2")
-                , Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
-        DataBase.getInstance().setCurrentBattle(battle);
     }
 
     private void setupHeroesImages() {
@@ -773,14 +774,6 @@ public class ControllerBattleCommands implements Initializable {
 
     public double getCellLayoutY(int row) {
         return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
-    }
-
-    public double getHandRingLayoutX(int number) {
-        return handRings.get(number).getLayoutX();
-    }
-
-    public double getHandRingLayoutY(int number) {
-        return handRings.get(number).getLayoutX();
     }
 
     public AnchorPane getBattleGroundPane() {

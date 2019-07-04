@@ -4,14 +4,12 @@ import com.gilecode.yagson.YaGsonBuilder;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class NetWorkDB {
     private List<Connection> connectionList = new ArrayList<>();
     private Map<Account, AccountStatus> accountStatusMap = new HashMap<>();
+    private List<Account> accountsWaitingForBattleList = new LinkedList<>();
 
     private static NetWorkDB ourInstance = new NetWorkDB();
 
@@ -22,11 +20,11 @@ public class NetWorkDB {
     private NetWorkDB() {
     }
 
-    public void addConnection(Connection connection) {
+    public synchronized void addConnection(Connection connection) {
         connectionList.add(connection);
     }
 
-    public void setAccountStatus(Account account, AccountStatus status) {
+    public synchronized void setAccountStatus(Account account, AccountStatus status) {
         accountStatusMap.put(account, status);
     }
 
@@ -42,13 +40,13 @@ public class NetWorkDB {
         return null;
     }
 
-    public void closeConnection(Socket socket) {
+    public synchronized void closeConnection(Socket socket) {
         Connection connection = getConnectionWithSocket(socket);
         connection.close();
         connectionList.remove(connection);
     }
 
-    public void sendResponseToClinet(Response response, Connection connection) {
+    public synchronized void sendResponseToClient(Response response, Connection connection) {
         try {
             OutputStreamWriter output = connection.getOutput();
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
@@ -65,5 +63,19 @@ public class NetWorkDB {
                 return connection;
         }
         return null;
+    }
+
+    public synchronized void addAccountWaitingForBattle(Account account) {
+        accountsWaitingForBattleList.add(account);
+        pairAccountsForBattle();
+    }
+
+    public synchronized void pairAccountsForBattle() {
+        if (accountsWaitingForBattleList.size() >= 2) {
+            Account account1 = accountsWaitingForBattleList.get(0);
+            Account account2 = accountsWaitingForBattleList.get(1);
+            accountsWaitingForBattleList.remove(0);
+            accountsWaitingForBattleList.remove(1);
+        }
     }
 }
