@@ -3,7 +3,6 @@ import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.control.Alert;
 
 import java.io.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +12,7 @@ public class DataBase {
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
-    private List<Account> accountList = new ArrayList<>();
+    private List<Account> accountList = new ArrayList<>();//todo will be removed
     private List<Battle> battleList = new ArrayList<>();
 //    private Account loggedInAccount;
 //    private Battle currentBattle;
@@ -43,7 +42,7 @@ public class DataBase {
 //        makeMinions();
 //        makeItems();
 //        makeAccounts();
-//        savaCards();
+//        saveCards();
         System.out.println(cardList.size());
         System.out.println(collectableList.size());
         System.out.println(usableList.size());
@@ -1081,7 +1080,7 @@ public class DataBase {
 */
     }
 
-    public void savaCards() {
+    public void saveCards() {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         for (Card card : cardList) {
             String fileName = "card_" + card.getName() + ".json";

@@ -1,12 +1,75 @@
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+
+
 public class ControllerMultiPlayerMenu {
     private static ControllerMultiPlayerMenu ourInstance = new ControllerMultiPlayerMenu();
     private DataBase database = DataBase.getInstance();
+    private boolean isScreenLocked = false;
 
     public static ControllerMultiPlayerMenu getInstance() {
         return ourInstance;
     }
 
     private ControllerMultiPlayerMenu() {
+    }
+
+    @FXML
+    private ImageView loadingIcon;
+
+    @FXML
+    public void findClassicMatch() {
+        if (isScreenLocked)
+            return;
+        new ServerRequestSender
+                (new Request(RequestType.findClassicMatch, null, null, null));
+        lockScreen();
+    }
+
+    @FXML
+    public void findOneFlagMatch() {
+        if (isScreenLocked)
+            return;
+        new ServerRequestSender(
+                new Request(RequestType.findOneFlagMatch, null, null, null));
+        lockScreen();
+    }
+
+    @FXML
+    public void findMultiFlagsMatch() {
+        if (isScreenLocked)
+            return;
+        new ServerRequestSender
+                (new Request(RequestType.findMultiFlagsMatch, null, null, null));
+        lockScreen();
+    }
+
+    @FXML
+    public void cancelMatchFinding() {
+        if (!isScreenLocked)
+            return;
+        new ServerRequestSender
+                (new Request(RequestType.cancelMatchFinding, null, null, null));
+        unlockScreen();
+    }
+
+    @FXML
+    public void exitMultiPlayerMenu() {
+        if (isScreenLocked)
+            return;
+        //todo
+    }
+
+    private void lockScreen() {
+        isScreenLocked = true;
+        loadingIcon.setVisible(true);
+        //todo
+    }
+
+    private void unlockScreen() {
+        isScreenLocked = false;
+        loadingIcon.setVisible(false);
+        //todo
     }
 
     private void selectUser() throws GoToMainMenuException {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMultiPlayerMenu">
+   <children>
+      <Button layoutX="97.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findClassicMatch" text="Classic" />
+      <Button layoutX="269.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findOneFlagMatch" text="OneFlag" />
+      <Button layoutX="442.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findMultiFlagsMatch" text="MultiFlags" />
+      <Button layoutX="230.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#cancelMatchFinding" text="CancelFindingMatch" />
+      <Label layoutX="251.0" layoutY="48.0" text="MultiPlayerMenu" textFill="#f50202" />
+      <Button layoutX="26.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#exitMultiPlayerMenu" text="Back" />
+      <ImageView fx:id="loadingIcon" fitHeight="76.0" fitWidth="108.0" layoutX="251.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pics/loading_icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

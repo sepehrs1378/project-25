@@ -285,8 +285,7 @@ public class ControllerCollection implements Initializable {
         ControllerCollectionEditMenu.setDeckName(selectedLabel.getText().split("\\s+")[0]);
         Parent root = fxmlLoader.load();
         Main.window.setScene(new Scene(root));
-
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -313,7 +312,7 @@ public class ControllerCollection implements Initializable {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML

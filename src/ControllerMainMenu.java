@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +12,7 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
@@ -47,12 +47,6 @@ public class ControllerMainMenu {
     private ImageView matchHistoryBtn;
 
     @FXML
-    private ImageView customCardBtn;
-
-    @FXML
-    private ImageView saveAccountsBtn;
-
-    @FXML
     private ImageView settingsBtn;
 
     @FXML
@@ -71,26 +65,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerSettingsMenu.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
-    }
-
-    @FXML
-    void makeSaveAccountsBtnTransparent(MouseEvent event) {
-        saveAccountsBtn.setStyle("-fx-opacity: 0.6");
-    }
-
-    @FXML
-    void makeSaveAccountsBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
-        saveAccountsBtn.setStyle("-fx-opacity: 1");
-    }
-
-    @FXML
-    void saveAccounts(MouseEvent event) {
-        Main.playWhenButtonClicked();
-        dataBase.saveAccounts();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
-        alert.showAndWait();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -105,25 +80,6 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void makeCustomCardBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
-        customCardBtn.setStyle("-fx-opacity: 1");
-    }
-
-    @FXML
-    void makeCustomCardBtnTransparent(MouseEvent event) {
-        customCardBtn.setStyle("-fx-opacity: 0.6");
-    }
-
-    @FXML
-    void enterCustomCardMenu(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor();
-    }
-
-    @FXML
     void showMatchHistory(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
         Stage matchHistoryStage = new Stage();
@@ -132,10 +88,10 @@ public class ControllerMainMenu {
         matchHistoryStage.setScene(scene);
         matchHistoryStage.initModality(Modality.APPLICATION_MODAL);
         matchHistoryStage.initStyle(StageStyle.UNDECORATED);
-        File file = new File("src/pics/cursors/main_cursor.png");
+        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
+        File file = new File("src/pics/cursor.png");
         Image image = new Image(file.toURI().toString());
         matchHistoryStage.getScene().setCursor(new ImageCursor(image));
-        ControllerMatchInfo.matchHistoryStage = matchHistoryStage;
         matchHistoryStage.showAndWait();
     }
 
@@ -160,7 +116,8 @@ public class ControllerMainMenu {
     @FXML
     void close(MouseEvent event) {
         Main.playWhenButtonClicked();
-        dataBase.saveAccounts();
+        new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
+                , null, null)).start();
         Main.window.close();
     }
 
@@ -176,11 +133,9 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void goBack(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor();
+    void logout(MouseEvent event) throws IOException {
+        new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
+                , null, null)).start();
     }
 
     @FXML
@@ -203,16 +158,24 @@ public class ControllerMainMenu {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
-        File file = new File("src/pics/cursors/main_cursor.png");
+        File file = new File("src/pics/cursor.png");
         Image image = new Image(file.toURI().toString());
         stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 
     @FXML
-    void enterMultiPlayer(MouseEvent event) {
+    void enterMultiPlayer(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        //todo not needed for phase 2
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMultiPlayerMenu.fxml"));
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        File file = new File("src/pics/cursor.png");
+        Image image = new Image(file.toURI().toString());
+        stage.getScene().setCursor(new ImageCursor(image));
+        stage.showAndWait();
     }
 
     @FXML
@@ -283,7 +246,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -303,7 +266,7 @@ public class ControllerMainMenu {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
         controllerShop = ControllerShop.getOurInstance();
-        Main.setCursor();
+        Main.setCursor(Main.window);
         controllerShop.showCards();
     }
 

@@ -13,6 +13,11 @@ public enum RequestType {
     forfeit,
     selectUnit,
 
+    findClassicMatch,
+    findOneFlagMatch,
+    findMultiFlagsMatch,
+    cancelMatchFinding,
+
     buy,
     sell,
 

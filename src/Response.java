@@ -15,8 +15,9 @@ public class Response {
         this.integers = integers;
         this.objectList = objectList;
         if (objectList != null) {
-            for (Object object : objectList)
+            for (Object object : objectList){
                 objectClassMap.put(object, object.getClass());
+            }
         }
     }
 

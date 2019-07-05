@@ -5,13 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -75,7 +78,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void enterLevel1(MouseEvent event) throws IOException {
-        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel1(),
+        Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel1(),
                 Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
         database.setCurrentBattle(battle);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
@@ -86,7 +89,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
     @FXML
     void enterLevel2(MouseEvent event) throws IOException {
         Main.getGlobalMediaPlayer().stop();
-        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel2()
+        Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel2()
                 , Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
         database.setCurrentBattle(battle);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
@@ -97,7 +100,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
     @FXML
     void enterLevel3(MouseEvent event) throws IOException {
         Main.getGlobalMediaPlayer().stop();
-        Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerLevel3()
+        Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel3()
                 , Constants.FLAGS, 7, null, Constants.SINGLE, 1500);
         database.setCurrentBattle(battle);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
@@ -216,7 +219,6 @@ public class ControllerSinglePlayerMenu implements Initializable {
 
     @FXML
     void enterCustomGame(MouseEvent event) throws IOException {
-        Main.getGlobalMediaPlayer().stop();
         if (selectDeckBox.getValue() == null && selectModeBox.getValue() == null) {
             invalidDeckLabel.setVisible(true);
             invalidModeLabel.setVisible(true);
@@ -239,13 +241,14 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 return;
             }
         }
+        Main.getGlobalMediaPlayer().stop();
         Deck deck = database.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectDeckBox.getValue());
         Deck newDeck = new Deck(deck);
         changeIDtoCustomPlayer(newDeck);
-        database.getComputerPlayerCustom().setMainDeck(newDeck);
+        ClientDB.getInstance().getComputerPlayerCustom().setMainDeck(newDeck);
         switch (selectModeBox.getValue()) {
             case Constants.CLASSIC: {
-                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
                 database.setCurrentBattle(battle);
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
@@ -254,7 +257,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 break;
             }
             case Constants.ONE_FLAG: {
-                Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
                 database.setCurrentBattle(battle);
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
@@ -264,14 +267,14 @@ public class ControllerSinglePlayerMenu implements Initializable {
             }
             case Constants.FLAGS:
                 if (flagNumberLabel.getText().isEmpty()) {
-                    Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                    Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                             Constants.FLAGS, 7, null, Constants.SINGLE, 1000);
                     database.setCurrentBattle(battle);
                     Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
                     Main.window.setScene(new Scene(root));
                     ControllerMainMenu.stage.close();
                 } else {
-                    Battle battle = new Battle(database.getLoggedInAccount(), database.getComputerPlayerCustom(),
+                    Battle battle = new Battle(database.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                             Constants.FLAGS, Integer.parseInt(flagNumberLabel.getText()), null,
                             Constants.SINGLE, 1000);
                     database.setCurrentBattle(battle);
@@ -289,19 +292,19 @@ public class ControllerSinglePlayerMenu implements Initializable {
         for (Card card:deck.getCards()){
             String oldID = card.getId();
             String[] idSplit = oldID.split("_");
-            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            idSplit[0] = ClientDB.getInstance().getComputerPlayerCustom().getUsername();
             card.setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
         }
         if (deck.getHero()!= null){
             String oldID = deck.getHero().getId();
             String[] idSplit = oldID.split("_");
-            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            idSplit[0] = ClientDB.getInstance().getComputerPlayerCustom().getUsername();
             deck.getHero().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
         }
         if (deck.getItem()!=null){
             String oldID = deck.getItem().getId();
             String[] idSplit = oldID.split("_");
-            idSplit[0] = DataBase.getInstance().getComputerPlayerCustom().getUsername();
+            idSplit[0] = ClientDB.getInstance().getComputerPlayerCustom().getUsername();
             deck.getItem().setId(idSplit[0]+"_"+idSplit[1]+"_"+idSplit[2]);
         }
     }

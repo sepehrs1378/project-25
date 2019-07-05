@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0">
+         <image>
+            <Image url="@pics/sever_menu/server_menu_back_ground_pic.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="saveAccountsBtn" fitHeight="80.0" fitWidth="200.0" layoutX="586.0" layoutY="506.0" onMouseClicked="#saveAccounts" onMouseEntered="#makeSaveAccountsBtnOpaque" onMouseExited="#makeSaveAccountsBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/main_menu_pics/save_accounts_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="customCardBtn" fitHeight="80.0" fitWidth="200.0" layoutX="586.0" layoutY="439.0" onMouseClicked="#enterCustomCardMenu" onMouseEntered="#makeCustomCardBtnOpaque" onMouseExited="#makeCustomCardBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/main_menu_pics/custom_card_button.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

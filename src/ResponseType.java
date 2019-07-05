@@ -1,4 +1,7 @@
 public enum ResponseType {
     sendMessage,
-    close
+    close,
+    signUp,
+    login,
+    logout
 }

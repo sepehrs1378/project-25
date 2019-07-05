@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -22,15 +23,23 @@
             <Image url="@pics/back_button.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="256.0" layoutY="25.0" prefHeight="354.0" prefWidth="849.0" stylesheets="@CSS/scrollpane_style.css">
+      <ScrollPane layoutX="256.0" layoutY="25.0" prefHeight="354.0" prefWidth="849.0">
          <content>
             <HBox fx:id="deckBox" prefHeight="330.0" prefWidth="855.0" />
          </content>
+         <stylesheets>
+            <URL value="@CSS/scrollpane_style.css" />
+            <URL value="@CSS/scrollbar.css" />
+         </stylesheets>
       </ScrollPane>
-      <ScrollPane layoutX="256.0" layoutY="401.0" prefHeight="354.0" prefWidth="849.0" stylesheets="@CSS/scrollpane_style.css">
+      <ScrollPane layoutX="256.0" layoutY="401.0" prefHeight="354.0" prefWidth="849.0">
          <content>
             <HBox fx:id="collectionBox" prefHeight="334.0" prefWidth="852.0" />
          </content>
+         <stylesheets>
+            <URL value="@CSS/scrollpane_style.css" />
+            <URL value="@CSS/scrollbar.css" />
+         </stylesheets>
       </ScrollPane>
       <ImageView fitHeight="60.0" fitWidth="200.0" layoutX="17.0" layoutY="172.0">
          <image>

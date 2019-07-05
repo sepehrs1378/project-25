@@ -41,7 +41,7 @@
                 <Image url="@pics/close_button.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="backBtn" fitHeight="69.0" fitWidth="75.0" layoutX="21.0" layoutY="641.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+        <ImageView fx:id="backBtn" fitHeight="69.0" fitWidth="75.0" layoutX="21.0" layoutY="641.0" onMouseClicked="#logout" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
             <image>
                 <Image url="@pics/main_menu_pics/logout_button.png" />
             </image>
@@ -56,16 +56,6 @@
                 <Image url="@pics/main_menu_pics/match_history.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="customCardBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="590.0" onMouseClicked="#enterCustomCardMenu" onMouseEntered="#makeCustomCardBtnOpaque" onMouseExited="#makeCustomCardBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/main_menu_pics/custom_card_button.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="saveAccountsBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="320.0" onMouseClicked="#saveAccounts" onMouseEntered="#makeSaveAccountsBtnOpaque" onMouseExited="#makeSaveAccountsBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
-         <image>
-            <Image url="@pics/main_menu_pics/save_accounts_button.png" />
-         </image>
-      </ImageView>
       <ImageView fx:id="settingsBtn" fitHeight="57.0" fitWidth="49.0" layoutX="1215.0" layoutY="657.0" onMouseClicked="#openSettingsMenu" onMouseEntered="#makeSettingsBtnOpaque" onMouseExited="#makeSettingsBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
          <image>
             <Image url="@pics/main_menu_pics/settings_button.png" />

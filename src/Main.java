@@ -1,6 +1,7 @@
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -21,8 +23,14 @@ import java.nio.file.Paths;
 
 public class Main extends Application {
     private DataBase dataBase = DataBase.getInstance();
+    private ClientDB clientDB = ClientDB.getInstance();
     public static Stage window;
     private static MediaPlayer globalMediaPlayer;
+    private static double xOffset = 0;
+    private static double yOffset = 0;
+
+    @FXML
+    private AnchorPane loginPane;
 
     @FXML
     private Label invalidUsername;
@@ -81,21 +89,14 @@ public class Main extends Application {
             invalidUsername.setText("username is empty");
             return;
         }
-        int index = findIndexOfAccount(username.getText());
-        if (index != -1) {
-            invalidUsername.setText("username already exists");
-            return;
-        }
         if (password.getText().isEmpty()) {
             invalidPassword.setText("password is empty");
             return;
         }
-        Account account = new Account(username.getText(), password.getText());
-        dataBase.setLoggedInAccount(account);
-        dataBase.addAccount(account);
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
-        window.setScene(new Scene(root));
-        setCursor();
+        new ServerRequestSender(new Request(RequestType.signUp, "userName:" + username.getText() + "password:"
+                + password.getText(), null, null)).start();
+        System.out.println("sent");
+
     }
 
     public static void main(String[] args) {
@@ -107,30 +108,18 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void setCursor() {
+    public static void setCursor(Stage stage) {
         File file = new File("src/pics/mouse_icon");
         Image image = new Image(file.toURI().toString());
-        window.getScene().setCursor(new ImageCursor(image));
+        stage.getScene().setCursor(new ImageCursor(image));
     }
 
     @FXML
     void login(MouseEvent event) throws IOException {
         playWhenButtonClicked();
-        new ServerRequestSender(new Request(RequestType.sendMessage, "hello", null, null)).start();
         if (emptyInvalidUsername()) return;
-        int index = findIndexOfAccount(username.getText());
-        if (index == -1) {
-            invalidUsername.setText("account does not exist");
-            return;
-        }
-        if (!dataBase.getAccounts().get(index).getPassword().equals(password.getText())) {
-            invalidPassword.setText("incorrect password");
-            return;
-        }
-        dataBase.setLoggedInAccount(dataBase.getAccounts().get(index));
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
-        window.setScene(new Scene(root));
-        setCursor();
+        new ServerRequestSender(new Request(RequestType.login, "userName:" + username.getText() + "password:"
+                + password.getText() , null, null)).start();
     }
 
     private boolean emptyInvalidUsername() {
@@ -138,6 +127,10 @@ public class Main extends Application {
         invalidPassword.setText("");
         if (username.getText().isEmpty()) {
             invalidUsername.setText("username is empty");
+            return true;
+        }
+        if (password.getText().isEmpty()){
+            invalidPassword.setText("password is empty");
             return true;
         }
         return false;
@@ -165,19 +158,31 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DataBase.getInstance().readAccounts();
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
         primaryStage.setTitle("Duelyst");
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        setCursor();
+        setCursor(primaryStage);
         playMusic();
+        dragAbilityForScenes(primaryStage, root);
         primaryStage.setOnCloseRequest(e -> {
-            DataBase.getInstance().saveAccounts();
+            new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
+                    , null, null)).start();
             primaryStage.close();
         });
         primaryStage.show();
+    }
+
+    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+        root.setOnMousePressed(event -> {
+            xOffset = primaryStage.getX() - event.getScreenX();
+            yOffset = primaryStage.getY() - event.getScreenY();
+        });
+        root.setOnMouseDragged(event -> {
+            primaryStage.setX(event.getScreenX() + xOffset);
+            primaryStage.setY(event.getScreenY() + yOffset);
+        });
     }
 
     private static void playMusic() {

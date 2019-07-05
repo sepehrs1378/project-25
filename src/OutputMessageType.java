@@ -68,7 +68,7 @@ public enum OutputMessageType {
     PASSWORD_CANT_BE_EMPTY("password can't be empty please enter a correct password"),
     CARD_INSERTED("Card Inserted"),
     BAD_PASSWORD("Please enter a correct password"),
-    ACCOUNT_DOESNT_EXIST("The account doesn't exist"),
+    ACCOUNT_DOESNT_EXIST("This account doesn't exist"),
     SPECIAL_POWER_USED("Special power has been used"),
     TURN_CHANGED("Turn changed"),
     NOT_ENOUGH_MANA("Not enough mana"),
@@ -83,7 +83,9 @@ public enum OutputMessageType {
     UNSELECTED(""),
     ATTACKED_FRIENDLY_UNIT(""),
     NO_ERROR(""),
-    NO_SPACES("deck name should not contain spaces");
+    NO_SPACES("deck name should not contain spaces"),
+    ALREADY_LOGGED_IN("someone already logged in with current identification"),
+    LOGGED_OUT_SUCCESSFULLY("logged out successfully");
 
     private String message;
 

@@ -1,8 +1,8 @@
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.JsonStreamParser;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientDB {
@@ -65,6 +65,8 @@ public class ClientDB {
     }
 
     private ClientDB() {
+        computerPlayerCustom = new Account("computerCustom", "custom");
+        readComputerAccounts();
     }
 
     public InputStreamReader getInput() {
@@ -119,6 +121,21 @@ public class ClientDB {
             deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
                     + deck.getItem().getId().split("_")[2]);
 
+        }
+    }
+
+    public void readComputerAccounts(){
+        Reader reader = null;
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        try {
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
+            computerPlayerLevel1 = gson.fromJson(reader, Account.class);
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
+            computerPlayerLevel2 = gson.fromJson(reader, Account.class);
+            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
+            computerPlayerLevel3 = gson.fromJson(reader, Account.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
