@@ -295,12 +295,6 @@ public class ControllerBattleCommands implements Initializable {
         ourInstance = this;
     }
 
-    private void startTempBattle() {
-        Battle battle = new Battle(DataBase.getInstance().getLoggedInAccount(), DataBase.getInstance().getAccountWithUsername("temp2")
-                , Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
-        DataBase.getInstance().setCurrentBattle(battle);
-    }
-
     private void setupHeroesImages() {
         Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
         Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
@@ -709,9 +703,9 @@ public class ControllerBattleCommands implements Initializable {
 
     private void forfeitGame() {
         Main.getGlobalMediaPlayer().play();
-        Account account = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        Account player1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account player2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        Account account = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
@@ -744,7 +738,7 @@ public class ControllerBattleCommands implements Initializable {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                 Main.window.setScene(new Scene(root));
-                Main.setCursor();
+                Main.setCursor(Main.window);
             } catch (IOException ignored) {
 
             }

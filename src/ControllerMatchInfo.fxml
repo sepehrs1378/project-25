@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -47,10 +48,14 @@
             <Image url="@pics/close_button.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="66.0" layoutY="99.0" prefHeight="401.0" prefWidth="766.0" stylesheets="@CSS/scrollpane_style.css">
+      <ScrollPane layoutX="66.0" layoutY="99.0" prefHeight="401.0" prefWidth="766.0">
          <content>
             <VBox fx:id="matchHistoryBox" prefHeight="400.0" prefWidth="747.0" />
          </content>
+         <stylesheets>
+            <URL value="@CSS/scrollpane_style.css" />
+            <URL value="@CSS/scrollbar.css" />
+         </stylesheets>
       </ScrollPane>
    </children>
 </AnchorPane>

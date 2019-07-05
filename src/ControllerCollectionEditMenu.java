@@ -41,7 +41,7 @@ public class ControllerCollectionEditMenu implements Initializable {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
-        Main.setCursor();
+        Main.setCursor(Main.window);
     }
 
     @FXML

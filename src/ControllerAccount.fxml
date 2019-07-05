@@ -14,7 +14,7 @@
                 <Image url="@pics/ControllerAccountBackground.png" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="725.0" layoutY="105.0" prefHeight="443.0" prefWidth="469.0">
+        <AnchorPane fx:id="loginPane" layoutX="725.0" layoutY="105.0" prefHeight="443.0" prefWidth="469.0">
             <children>
                 <JFXTextField fx:id="username" layoutX="84.0" layoutY="63.0" prefHeight="40.0" prefWidth="316.0" promptText="username" />
                 <JFXPasswordField fx:id="password" layoutX="85.0" layoutY="182.0" prefHeight="31.0" prefWidth="316.0" promptText="password" />

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -37,7 +38,7 @@
             <Image url="@pics/back_button.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="75.0" layoutY="19.0" prefHeight="765.0" prefWidth="964.0" stylesheets="@CSS/scrollpane_style.css">
+      <ScrollPane layoutX="75.0" layoutY="19.0" prefHeight="765.0" prefWidth="964.0">
          <content>
             <AnchorPane prefHeight="743.0" prefWidth="965.0">
                <children>
@@ -46,6 +47,10 @@
                </children>
             </AnchorPane>
          </content>
+         <stylesheets>
+            <URL value="@CSS/scrollpane_style.css" />
+            <URL value="@CSS/scrollbar.css" />
+         </stylesheets>
       </ScrollPane>
       <ImageView fitHeight="55.0" fitWidth="65.0" layoutX="1065.0" layoutY="566.0">
          <image>
