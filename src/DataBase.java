@@ -16,11 +16,6 @@ public class DataBase {
     private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
-    private Account computerPlayerLevel1;
-    private Account computerPlayerLevel2;
-    private Account computerPlayerLevel3;
-    private Account computerPlayerCustom;
-    private Account temp2;
 
     public static DataBase getInstance() {
         return ourInstance;
@@ -30,7 +25,6 @@ public class DataBase {
     }
 
     public void makeEveryThing() {
-        computerPlayerCustom = new Account("computerCustom", "custom");
         readSpells();
         readHeroes();
         readMinions();
@@ -760,9 +754,6 @@ public class DataBase {
     }
 
     private void makeAccounts() {
-        computerPlayerLevel1 = new Account("computer1", "1");
-        computerPlayerLevel2 = new Account("computer2", "2");
-        computerPlayerLevel3 = new Account("computer3", "3");
 
         //todo add usables to deck
         /*Deck computerPlayer1Deck = new Deck("Deck");
@@ -907,22 +898,6 @@ public class DataBase {
         return collectableList;
     }
 
-    public Account getComputerPlayerLevel1() {
-        return computerPlayerLevel1;
-    }
-
-    public Account getComputerPlayerLevel2() {
-        return computerPlayerLevel2;
-    }
-
-    public Account getComputerPlayerLevel3() {
-        return computerPlayerLevel3;
-    }
-
-    public Account getComputerPlayerCustom() {
-        return computerPlayerCustom;
-    }
-
     public Account getLoggedInAccount() {
         return loggedInAccount;
     }
@@ -992,14 +967,6 @@ public class DataBase {
             if (account.getUsername().equals(username))
                 return account;
         }
-        if (computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerLevel3;
-        else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerLevel2;
-        if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerLevel1;
-        if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(username))
-            return computerPlayerCustom;
         return null;
     }
 
@@ -1034,82 +1001,13 @@ public class DataBase {
         }
     }
 
-    public void setNewIdsForCustomPlayer() {
-        Deck deck = computerPlayerCustom.getMainDeck();
-        if (deck != null) {
-            for (Card card : deck.getCards()) {
-                card.setId(computerPlayerCustom.getUsername() + "_" + card.getId().split("_")[1] + "_"
-                        + card.getId().split("_")[2]);
-            }
-            deck.getHero().setId(computerPlayerCustom.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
-                    + deck.getHero().getId().split("_")[2]);
-            deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
-                    + deck.getItem().getId().split("_")[2]);
-        }
-    }
 
     boolean doesAccountExist(String username) {
         return getAccountWithUsername(username) != null;
     }
 
 
-    public void saveAccounts() {
-        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
-        for (Account account : accountList) {
-            String fileName = "account_" + account.getUsername() + ".json";
-            FileWriter fileWriter;
-            try {
-                fileWriter = new FileWriter(new File("src/JSONFiles/Accounts/PlayerAccounts/" + fileName));
-                gson.toJson(account, fileWriter);
-                fileWriter.flush();
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    public void readAccounts() {
-        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
-        File folder = new File("src/JSONFiles/Accounts/PlayerAccounts");
-        String[] fileNames = folder.list();
-        FileReader reader;
-        if (fileNames != null) {
-            for (String fileName : fileNames) {
-                if (fileName.equals("temp2.json")) {
-                    try {
-                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
-                        temp2 = gson.fromJson(reader, Account.class);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (fileName.endsWith(".json")) {
-                    try {
-                        reader = new FileReader("src/JSONFiles/Accounts/PlayerAccounts/" + fileName);
-                        accountList.add(gson.fromJson(reader, Account.class));
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        try {
-            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer1.json");
-
-            computerPlayerLevel1 = gson.fromJson(reader, Account.class);
-
-            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer2.json");
-            computerPlayerLevel2 = gson.fromJson(reader, Account.class);
-
-            reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
-            computerPlayerLevel3 = gson.fromJson(reader, Account.class);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void savaCards() {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
@@ -1431,13 +1329,5 @@ public class DataBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Account getTemp2() {
-        return temp2;
-    }
-
-    public void setTemp2(Account temp2) {
-        this.temp2 = temp2;
     }
 }

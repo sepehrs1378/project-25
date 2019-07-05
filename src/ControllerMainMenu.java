@@ -47,12 +47,6 @@ public class ControllerMainMenu {
     private ImageView matchHistoryBtn;
 
     @FXML
-    private ImageView customCardBtn;
-
-    @FXML
-    private ImageView saveAccountsBtn;
-
-    @FXML
     private ImageView settingsBtn;
 
     @FXML
@@ -75,25 +69,6 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void makeSaveAccountsBtnTransparent(MouseEvent event) {
-        saveAccountsBtn.setStyle("-fx-opacity: 0.6");
-    }
-
-    @FXML
-    void makeSaveAccountsBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
-        saveAccountsBtn.setStyle("-fx-opacity: 1");
-    }
-
-    @FXML
-    void saveAccounts(MouseEvent event) {
-        Main.playWhenButtonClicked();
-        dataBase.saveAccounts();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
-        alert.showAndWait();
-    }
-
-    @FXML
     void makeMatchHistoryBtnOpaque(MouseEvent event) {
         Main.playWhenMouseEntered();
         matchHistoryBtn.setStyle("-fx-opacity: 1");
@@ -102,25 +77,6 @@ public class ControllerMainMenu {
     @FXML
     void makeMatchHistoryBtnTransparent(MouseEvent event) {
         matchHistoryBtn.setStyle("-fx-opacity: 0.6");
-    }
-
-    @FXML
-    void makeCustomCardBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
-        customCardBtn.setStyle("-fx-opacity: 1");
-    }
-
-    @FXML
-    void makeCustomCardBtnTransparent(MouseEvent event) {
-        customCardBtn.setStyle("-fx-opacity: 0.6");
-    }
-
-    @FXML
-    void enterCustomCardMenu(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
     }
 
     @FXML
@@ -160,7 +116,8 @@ public class ControllerMainMenu {
     @FXML
     void close(MouseEvent event) {
         Main.playWhenButtonClicked();
-        dataBase.saveAccounts();
+        new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
+                , null, null)).start();
         Main.window.close();
     }
 
@@ -176,11 +133,9 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void goBack(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
+    void logout(MouseEvent event) throws IOException {
+        new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
+        , null, null)).start();
     }
 
     @FXML

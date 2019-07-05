@@ -1,5 +1,6 @@
 public enum AccountStatus {
     online,
     offline,
-    playing;
+    playing,
+    chatting;
 }
