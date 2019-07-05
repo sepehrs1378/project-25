@@ -113,6 +113,7 @@ public class ClientHandler extends Thread {
     private void handleMultiPlayerCase(Request request) {
         switch (request.getRequestType()) {
             case moveUnit:
+                connection.getCurrentBattle().
                 break;
             case attackUnit:
                 break;

@@ -8,6 +8,7 @@ import java.net.Socket;
 public class Connection {
     private Socket socket;
     private Account account;
+    private Battle currentBattle;
     private InputStreamReader input;
     private OutputStreamWriter output;
     private JsonStreamParser parser;
@@ -55,5 +56,13 @@ public class Connection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCurrentBattle(Battle currentBattle) {
+        this.currentBattle = currentBattle;
+    }
+
+    public Battle getCurrentBattle() {
+        return currentBattle;
     }
 }

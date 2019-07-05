@@ -12,6 +12,7 @@ public class NetworkDB {
     private List<Account> accountsWaitingForClassic = new LinkedList<>();
     private List<Account> accountsWaitingForOneFlag = new LinkedList<>();
     private List<Account> accountsWaitingForMultiFlags = new LinkedList<>();
+    private List<Battle> currentBattlesList = new ArrayList<>();
 
     public List<Account> getAccountsWaitingForClassic() {
         return accountsWaitingForClassic;
@@ -25,7 +26,7 @@ public class NetworkDB {
         return accountsWaitingForMultiFlags;
     }
 
-    public void addAccountWaitingForClassic(Account account) {
+    public synchronized void addAccountWaitingForClassic(Account account) {
         accountsWaitingForClassic.add(account);
         pairAccountsForBattle();
     }
@@ -34,7 +35,7 @@ public class NetworkDB {
         return ourInstance;
     }
 
-    public void addAccountWaitingForOneFlag(Account account) {
+    public synchronized void addAccountWaitingForOneFlag(Account account) {
         accountsWaitingForOneFlag.add(account);
         pairAccountsForBattle();
     }
@@ -79,7 +80,7 @@ public class NetworkDB {
         }
     }
 
-    public void saveAccounts() {
+    public synchronized void saveAccounts() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         for (Account account : accountStatusMap.keySet()) {
             String fileName = "account_" + account.getUsername() + ".json";
@@ -121,6 +122,10 @@ public class NetworkDB {
         connectionList.remove(connection);
     }
 
+    public List<Battle> getCurrentBattlesList() {
+        return currentBattlesList;
+    }
+
     public synchronized void sendResponseToClient(Response response, Connection connection) {
         try {
             OutputStreamWriter output = connection.getOutput();
@@ -147,19 +152,8 @@ public class NetworkDB {
             account2 = accountsWaitingForClassic.get(1);
             accountsWaitingForClassic.remove(0);
             accountsWaitingForClassic.remove(1);
+
         }
-        if (accountsWaitingForOneFlag.size() >= 2) {
-            account1 = accountsWaitingForOneFlag.get(0);
-            account2 = accountsWaitingForOneFlag.get(1);
-            accountsWaitingForOneFlag.remove(0);
-            accountsWaitingForOneFlag.remove(1);
-        }
-        if (accountsWaitingForMultiFlags.size() >= 2) {
-            account1 = accountsWaitingForMultiFlags.get(0);
-            account2 = accountsWaitingForMultiFlags.get(1);
-            accountsWaitingForMultiFlags.remove(0);
-            accountsWaitingForMultiFlags.remove(1);
-        }
-        //todo
+        //todo complete it for other modes too...
     }
 }

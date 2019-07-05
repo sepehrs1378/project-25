@@ -187,14 +187,13 @@ public class ControllerBattleCommands implements Initializable {
             if (endTurn()) {
                 return;
             }
-        /*Battle battle = dataBase.getCurrentBattle();
-        if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-            AI.getInstance().doNextMove(battleGroundPane);
-            if (endTurn()) {
-                return;
+            Battle battle = dataBase.getCurrentBattle();
+            if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
+                AI.getInstance().doNextMove(battleGroundPane);
+                if (endTurn()) {
+                    return;
+                }
             }
-        }*/
-            //todo turn it on
         }
         setTimeBar();
         updatePane();
@@ -202,7 +201,6 @@ public class ControllerBattleCommands implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        startTempBattle();//todo remove it later
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
         this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
@@ -287,7 +285,8 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setupCursor() {
         try {
-            ImageCursor cursor = new ImageCursor(new Image(new FileInputStream("./src/pics/mouse_icon")));
+            ImageCursor cursor = new ImageCursor(new Image
+                    (new FileInputStream("src/pics/mouse_icon")));
             battleGroundPane.setCursor(cursor);
         } catch (IOException e) {
             e.printStackTrace();
@@ -324,11 +323,12 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleCellClicked(int row, int column) {
         //todo complete it for other purposes too
-        if (isClickedImageViewInHand())
+        if (isClickedImageViewInHand()) {
             if (handleCardInsertion(row, column)) {
                 updatePane();
                 return;
             }
+        }
         if (clickedImageView == specialPowerView) {
             if (handleSpecialPowerInsertion(row, column)) {
                 updatePane();

@@ -18,7 +18,6 @@ public class ClientDB {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
-//    private Account temp2;
 
     public void setLoggedInAccount(Account loggedInAccount) {
         this.loggedInAccount = loggedInAccount;

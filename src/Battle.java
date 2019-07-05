@@ -13,11 +13,6 @@ public class Battle {
     private boolean isBattleFinished = false;
     private int numberOfFlags;
     private String singleOrMulti;
-
-    public int getPrize() {
-        return prize;
-    }
-
     private int prize;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
@@ -95,6 +90,10 @@ public class Battle {
 
     public String getMode() {
         return mode;
+    }
+
+    public int getPrize() {
+        return prize;
     }
 
     public int getTurnNumber() {
