@@ -136,15 +136,6 @@ public class Main extends Application {
         return false;
     }
 
-    private int findIndexOfAccount(String userName) {
-        for (int i = 0; i < dataBase.getAccounts().size(); i++) {
-            if (dataBase.getAccounts().get(i).getUsername().equals(userName)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     @FXML
     void makeLoginOpaque(MouseEvent event) {
         Main.playWhenMouseEntered();

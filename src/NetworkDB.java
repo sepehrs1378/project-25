@@ -109,4 +109,13 @@ public class NetworkDB {
             }
         }
     }
+
+    public Account getAccounWithUserName(String username){
+        for(Account account:accountStatusMap.keySet()){
+            if (account.getUsername().equals(username))
+                return account;
+        }
+        return null;
+    }
+
 }

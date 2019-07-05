@@ -13,7 +13,6 @@ public class DataBase {
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
-    private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
 
@@ -914,17 +913,17 @@ public class DataBase {
         this.currentBattle = currentBattle;
     }
 
-    public List<Account> getAccounts() {
-        return accountList;
-    }
-
-    public void addAccount(Account account) {
-        accountList.add(account);
-    }
-
-    public void sortAccountsByWins() {
-        Collections.sort(accountList);
-    }
+//    public List<Account> getAccounts() {
+//        return accountList;
+//    }
+//
+//    public void addAccount(Account account) {
+//        accountList.add(account);
+//    }
+//
+//    public void sortAccountsByWins() {
+//        Collections.sort(accountList);
+//    }
 
     public Card getCardWithName(String cardName) {
         for (Card card : cardList) {
@@ -962,14 +961,6 @@ public class DataBase {
         return getCollectableWithName(collectableName) != null;
     }
 
-    public Account getAccountWithUsername(String username) {
-        for (Account account : accountList) {
-            if (account.getUsername().equals(username))
-                return account;
-        }
-        return null;
-    }
-
     public Card findCardInShop(String cardName) {
         for (Card card : cardList) {
             if (card.getName().equals(cardName)) {
@@ -1000,14 +991,6 @@ public class DataBase {
             item.setId(player.getPlayerInfo().getPlayerName() + "_" + idPieces[1] + "_" + idPieces[2]);
         }
     }
-
-
-    boolean doesAccountExist(String username) {
-        return getAccountWithUsername(username) != null;
-    }
-
-
-
 
     public void savaCards() {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
