@@ -703,9 +703,9 @@ public class ControllerBattleCommands implements Initializable {
 
     private void forfeitGame() {
         Main.getGlobalMediaPlayer().play();
-        Account account = NetworkDB.getInstance().getAccounWithUserName(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        Account player1 = NetworkDB.getInstance().getAccounWithUserName(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account player2 = NetworkDB.getInstance().getAccounWithUserName(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        Account account = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {

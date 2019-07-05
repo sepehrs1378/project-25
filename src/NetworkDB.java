@@ -38,6 +38,14 @@ public class NetworkDB {
         return null;
     }
 
+    public Connection getConnectionWithAccount(Account account) {
+        for (Connection connection : connectionList) {
+            if (connection.getAccount() == account)
+                return connection;
+        }
+        return null;
+    }
+
     public void closeConnection(Socket socket) {
         Connection connection = getConnectionWithSocket(socket);
         connection.close();
@@ -53,14 +61,6 @@ public class NetworkDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Connection getConnectionWithAccount(Account account) {
-        for (Connection connection : connectionList) {
-            if (connection.getAccount() == account)
-                return connection;
-        }
-        return null;
     }
 
     public Account getAccount(String userName){
@@ -110,7 +110,7 @@ public class NetworkDB {
         }
     }
 
-    public Account getAccounWithUserName(String username){
+    public Account getAccountWithUserName(String username){
         for(Account account:accountStatusMap.keySet()){
             if (account.getUsername().equals(username))
                 return account;

@@ -61,7 +61,7 @@ public class Card {
     public Account getOwner() {
         Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
         Matcher matcher = pattern.matcher(id);
-        return NetworkDB.getInstance().getAccounWithUserName(matcher.group(1));
+        return NetworkDB.getInstance().getAccountWithUserName(matcher.group(1));
     }
 
     public Card clone() {
