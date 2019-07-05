@@ -3040,9 +3040,29 @@
         "diffInHours": 0,
         "diffInDays": 0,
         "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1562256904677,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
+      },
+      {
+        "opponent": "computer1",
+        "winner": "",
+        "matchDate": 1562256961737,
+        "diffInSeconds": 0,
+        "diffInMinutes": 0,
+        "diffInHours": 0,
+        "diffInDays": 0,
+        "diffInYears": 0
       }
     ],
-    "mainDeck": "@root.playerInfo.collection.decks.1",
+    "mainDeck": "@root.playerInfo.collection.decks.0",
     "money": 1000960
   }
 }
