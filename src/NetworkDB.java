@@ -30,6 +30,10 @@ public class NetworkDB {
         pairAccountsForBattle();
     }
 
+    public static NetworkDB getInstance() {
+        return ourInstance;
+    }
+
     public void addAccountWaitingForOneFlag(Account account) {
         accountsWaitingForOneFlag.add(account);
         pairAccountsForBattle();

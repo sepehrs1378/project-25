@@ -6,13 +6,12 @@ import com.google.gson.JsonStreamParser;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientHandler extends Thread {
     private Socket socket;
-    private NetworkDB netWorkDB = NetworkDB.getInstance();
+    private Connection connection;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -20,22 +19,38 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-        Connection connection = new Connection(socket);
+        connection = new Connection(socket);
         NetworkDB.getInstance().addConnection(connection);
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         JsonStreamParser parser = connection.getParser();
         while (true) {
             JsonObject obj = parser.next().getAsJsonObject();
             Request request = yaGson.fromJson(obj.toString(), Request.class);
+            handleAccountCase(request);
+            handleMatchFindingCase(request);
             handleMultiPlayerCase(request);
-            handleAccountCase(connection, request);
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
         NetworkDB.getInstance().closeConnection(socket);
     }
 
-    private void handleAccountCase(Connection connection, Request request) {
+    private void handleMatchFindingCase(Request request) {
+        switch (request.getRequestType()) {
+            case findClassicMatch:
+                NetworkDB.getInstance().addAccountWaitingForClassic(connection.getAccount());
+                break;
+            case findOneFlagMatch:
+                NetworkDB.getInstance().addAccountWaitingForOneFlag(connection.getAccount());
+                break;
+            case findMultiFlagsMatch:
+                NetworkDB.getInstance().addAccountWaitingForMultiFlags(connection.getAccount());
+                break;
+            default:
+        }
+    }
+
+    private void handleAccountCase(Request request) {
         Pattern pattern;
         Matcher matcher;
         Account account;
