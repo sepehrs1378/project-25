@@ -14,6 +14,7 @@ public enum RequestType {
     buy,
     sell,
 
+    //global chat
     sendMessage,
 
     close

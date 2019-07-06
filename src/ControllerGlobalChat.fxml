@@ -16,7 +16,7 @@
             <Image url="@pics/globalchat_menu/background.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="85.0" fitWidth="80.0">
+      <ImageView fx:id="backBtn" fitHeight="85.0" fitWidth="80.0" onMouseClicked="#back" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" opacity="0.6">
          <image>
             <Image url="@pics/back_button.png" />
          </image>
@@ -30,6 +30,11 @@
             <URL value="@CSS/scrollpane_style.css" />
          </stylesheets>
       </ScrollPane>
-      <TextField layoutX="458.0" layoutY="578.0" prefHeight="29.0" prefWidth="550.0" />
+      <TextField fx:id="messageBoxTxt" layoutX="458.0" layoutY="578.0" prefHeight="29.0" prefWidth="550.0" promptText="enter message here" />
+      <ImageView fx:id="sendBtn" fitHeight="36.0" fitWidth="33.0" layoutX="1016.0" layoutY="574.0" onMouseClicked="#send" onMouseEntered="#makeSendBtnOpaque" onMouseExited="#makeSendBtnTransparent" opacity="0.6">
+         <image>
+            <Image url="@pics/globalchat_menu/send-button.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
