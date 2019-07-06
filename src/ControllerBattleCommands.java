@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerBattleCommands implements Initializable {
-    private static ClientDB dataBase = ClientDB.getInstance();
+    private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
     private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
@@ -178,16 +178,16 @@ public class ControllerBattleCommands implements Initializable {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         clickedImageView = null;
-        if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request(RequestType.endTurn, null, null, null));
             endTurnMineBtn.setVisible(false);
             endTurnEnemyBtn.setVisible(true);
         }
-        if (dataBase.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
             if (endTurn()) {
                 return;
             }
-            Battle battle = dataBase.getCurrentBattle();
+            Battle battle = clientDB.getCurrentBattle();
             if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
                 AI.getInstance().doNextMove(battleGroundPane);
                 if (endTurn()) {
@@ -214,7 +214,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setTimeBar() {
-        String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
+        String turnDuration = clientDB.getLoggedInAccount().getTurnDuration();
         if (turnDuration != null && !turnDuration.equals(Constants.NO_LIMIT)) {
             timeline.stop();
             timeline.getKeyFrames().clear();
@@ -233,12 +233,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupPlayersInfoViews() {
-        player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        player1Label.setText(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        player2Label.setText(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
     }
 
     private void setupItemView() {
-        Usable usable = (Usable) dataBase.getLoggedInAccount().getMainDeck().getItem();
+        Usable usable = (Usable) clientDB.getLoggedInAccount().getMainDeck().getItem();
         try {
             if (usable != null) {
                 usableView.setImage(new Image(new FileInputStream("/src/ApProjectResources/units/" + usable.getName() + "/usable")));
@@ -252,7 +252,7 @@ public class ControllerBattleCommands implements Initializable {
         final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
         final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
         final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
-        Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
+        Unit hero = clientDB.getLoggedInAccount().getMainDeck().getHero();
         if (hero.getMainSpecialPower() == null) {
             return;
         }
@@ -301,8 +301,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupHeroesImages() {
-        Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
-        Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
+        Unit playerHero = clientDB.getCurrentBattle().getPlayer1().getDeck().getHero();
+        Unit opponentHero = clientDB.getCurrentBattle().getPlayer2().getDeck().getHero();
         UnitImage playerHeroImage = new UnitImage(playerHero.getId(), battleGroundPane);
         UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), battleGroundPane);
         unitImageList.add(opponentHeroImage);
@@ -320,31 +320,59 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    public void handleCellClicked(int row, int column) {
-        //todo complete it for other purposes too
-        if (isClickedImageViewInHand()) {
-            if (handleCardInsertion(row, column)) {
-                updatePane();
-                return;
+    public void handleCellClicked(Integer row, Integer column) {
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            if (isClickedImageViewInHand()) {
+                new ServerRequestSender(
+                        new Request(RequestType.insertCard
+                                , getHandImageWithCardView(clickedImageView).getId()
+                                , null, row, column));
             }
-        }
-        if (clickedImageView == specialPowerView) {
-            if (handleSpecialPowerInsertion(row, column)) {
-                updatePane();
-                return;
+            if (clickedImageView == specialPowerView) {
+                new ServerRequestSender(
+                        new Request(RequestType.useSpecialPower
+                                ,)
+                )
             }
-        }
-        if (handleUnitMove(row, column)) {
+            if (isClickedImageViewUnit()) {
+
+            }
+        } else {
+            //todo complete it for other purposes too
+            if (isClickedImageViewInHand()) {
+                if (handleCardInsertion(row, column)) {
+                    updatePane();
+                    return;
+                }
+            }
+            if (clickedImageView.equals(specialPowerView)) {
+                if (handleSpecialPowerInsertion(row, column)) {
+                    updatePane();
+                    return;
+                }
+            }
+            if (isClickedImageViewUnit()) {
+                if (handleUnitMove(row, column)) {
+                    updatePane();
+                    return;
+                }
+            }
             updatePane();
-            return;
         }
-        updatePane();
+    }
+
+    private boolean isClickedImageViewUnit() {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage.getUnitView().equals(clickedImageView))
+                return true;
+        }
+        return false;
     }
 
     private boolean handleSpecialPowerInsertion(int row, int column) {
-        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
         UnitImage heroImage = getUnitImageWithId(hero.getId());
-        switch (dataBase.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column)) {
+        switch (clientDB.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column)) {
             case NO_HERO:
                 //empty
                 break;
@@ -372,8 +400,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleUnitMove(int row, int column) {
-        switch (dataBase.getCurrentBattle().getBattleGround()
-                .moveUnit(row, column)) {
+        switch (clientDB.getCurrentBattle().getBattleGround()
+                .moveUnit(row, column, )) {
             case UNIT_NOT_SELECTED:
                 //empty
                 break;
@@ -390,7 +418,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case UNIT_MOVED:
-                Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+                Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
                 UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
                 movedUnitImage.showRun(row, column);
                 return true;
@@ -401,9 +429,9 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean handleCardInsertion(int row, int column) {
         HandImage handImage = getHandImageWithCardView(clickedImageView);
-        Card card = dataBase.getCurrentBattle()
+        Card card = clientDB.getCurrentBattle()
                 .getPlayerInTurn().getHand().getCardById(handImage.getId());
-        switch (dataBase.getCurrentBattle().insert(card, row, column)) {
+        switch (clientDB.getCurrentBattle().insert(card, row, column)) {
             case NO_SUCH_CARD_IN_HAND:
                 System.out.println("1");
                 //empty
@@ -474,7 +502,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         if (currentPlayer.getSelectedCollectable() == null) {
             if (handleUnitSelection(id)) {
                 updatePane();
@@ -491,7 +519,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleUnitAttack(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
         UnitImage targetedUnitImage = getUnitImageWithId(id);
         //todo add this feature to unselect a unit with clicking on it if needed
@@ -522,7 +550,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleUnitSelection(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
         switch (currentPlayer.selectUnit(id)) {
             case SELECTED:
@@ -573,10 +601,10 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
-        Collectable collectable = dataBase.getCurrentBattle().getCollectable();
-        Player player1 = dataBase.getCurrentBattle().getPlayer1();
+        Collectable collectable = clientDB.getCurrentBattle().getCollectable();
+        Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
-            if (dataBase.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
+            if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
                     player1.getCollectables().get(0).equals(collectable)) {
                 try {
                     collectableView.setImage(new Image(new FileInputStream("src/ApProjectResources/collectables/" +
@@ -595,7 +623,7 @@ public class ControllerBattleCommands implements Initializable {
     private void updateCellImages() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[row][column];
+                Cell cell = clientDB.getCurrentBattle().getBattleGround().getCells()[row][column];
                 CellImage cellImage = cellsImages[row][column];
                 cellImage.clearBuffImageList();
                 for (Buff buff : cell.getBuffs()) {
@@ -609,7 +637,7 @@ public class ControllerBattleCommands implements Initializable {
         for (UnitImage unitImage : unitImageList) {
             if (unitImage == null)
                 continue;
-            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
             if (!battleGround.doesHaveUnit(unitImage.getId())) {
                 unitImage.showDeath();
                 continue;
@@ -635,7 +663,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showFlags() {
-        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+        BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
         List<ImageView> images = new ArrayList<>();
         for (FlagImage flagImage : flagImages)
             images.add(flagImage.getFlagView());
@@ -663,8 +691,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updatePlayersInfo() {
-        playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
-        computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
+        playerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
+        computerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
     }
 
     private void updateHand() {
@@ -680,7 +708,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showNextCard() {
-    /*    Card card = dataBase.getCurrentBattle().getPlayerInTurn().getNextCard();
+    /*    Card card = clientDB.getCurrentBattle().getPlayerInTurn().getNextCard();
         if (card instanceof Spell) {
             view.showCardInfoSpell((Spell) card);
         } else if (card instanceof Unit) {
@@ -702,16 +730,16 @@ public class ControllerBattleCommands implements Initializable {
     public void useCollectable() {
         /*int row = Integer.parseInt(request.getCommand().split("[ (),]")[2]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
-        Collectable collectable = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
-        view.printOutputMessage(dataBase.getCurrentBattle().useCollectable(collectable, row, column));
+        Collectable collectable = clientDB.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
+        view.printOutputMessage(clientDB.getCurrentBattle().useCollectable(collectable, row, column));
     */
     }
 
     private void forfeitGame() {
         Main.getGlobalMediaPlayer().play();
-        Account account = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        Account player1 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account player2 = dataBase.getAccountWithUsername(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
@@ -725,7 +753,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean endGame() {
         timeBar.setDisable(true);
-        dataBase.setCurrentBattle(null);
+        clientDB.setCurrentBattle(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
@@ -758,7 +786,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endTurn() {
-        OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
+        OutputMessageType outputMessageType = clientDB.getCurrentBattle().nextTurn();
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();

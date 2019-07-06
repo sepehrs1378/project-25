@@ -15,8 +15,10 @@ public class Response {
         this.message = message;
         this.integers = integers;
         this.objectList.addAll(Arrays.asList(objectList));
-        for (Object object : objectList) {
-            objectClassMap.put(object, object.getClass());
+        if (objectList != null) {
+            for (Object object : objectList) {
+                objectClassMap.put(object, object.getClass());
+            }
         }
     }
 

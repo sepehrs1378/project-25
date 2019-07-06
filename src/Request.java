@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,15 +11,13 @@ public class Request implements Serializable {
     private HashMap<Object, Class> objectClassHashMap = new HashMap<>();
 
     public Request(RequestType requestType, String message, List<Integer> integers
-            , List<Object> objects) {
+            , Object... objectList) {
         this.requestType = requestType;
         this.message = message;
         this.integers = integers;
-        this.objects = objects;
-        if (objects != null) {
-            for (Object object : objects)
-                objectClassHashMap.put(object, object.getClass());
-        }
+        this.objects.addAll(Arrays.asList(objectList));
+        for (Object object : objects)
+            objectClassHashMap.put(object, object.getClass());
     }
 
     public RequestType getRequestType() {

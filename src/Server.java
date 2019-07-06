@@ -66,6 +66,7 @@ public class Server extends Application {
     }
 
     public static void main(String[] args) {
+        NetworkDB.getInstance();
         new Thread(() -> {
             try {
                 NetworkDB.getInstance().readAccounts();

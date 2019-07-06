@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ServerHandler extends Thread {
+    private static ClientDB clientDB = ClientDB.getInstance();
     private String address;
     private int port;
 
@@ -26,7 +27,7 @@ public class ServerHandler extends Thread {
     public void run() {
         try {
             Socket socket = new Socket(address, port);
-            ClientDB.getInstance().setSocket(socket);
+            clientDB.setSocket(socket);
             JsonStreamParser parser = ClientDB.getInstance().getParser();
             JsonObject obj;
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
@@ -45,13 +46,13 @@ public class ServerHandler extends Thread {
     private void handleMultiPlayerCase(Response response) {
         switch (response.getResponseType()) {
             case unitMoved:
+                clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
                 break;
             default:
         }
     }
 
     private void handleMatchFoundCase(Response response) {
-        ClientDB clientDB = ClientDB.getInstance();
         if (response.getResponseType().equals(ResponseType.matchFound)) {
             clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
             Player player1 = clientDB.getCurrentBattle().getPlayer1();

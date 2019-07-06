@@ -161,10 +161,25 @@ public class NetworkDB {
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
             sendResponseToClient(new Response
-                    (ResponseType.classicMatchFound, null, null, battle), connection1);
+                    (ResponseType.matchFound, null, null, battle), connection1);
             sendResponseToClient(new Response
-                    (ResponseType.classicMatchFound, null, null, battle), connection2);
+                    (ResponseType.matchFound, null, null, battle), connection2);
         }
         //todo complete it for other modes too...
+    }
+
+    public Connection getOpponentConnection(Connection connection) {
+        for (Connection tempConnection : connectionList) {
+            if (!tempConnection.equals(connection)
+                    && tempConnection.getCurrentBattle().equals(connection.getCurrentBattle())) {
+                return tempConnection;
+            }
+        }
+        return null;
+    }
+
+    public void sendResponeToPlayerAndOpponent(Response response, Connection connection) {
+        sendResponseToClient(response, connection);
+        sendResponseToClient(response, getOpponentConnection(connection));
     }
 }

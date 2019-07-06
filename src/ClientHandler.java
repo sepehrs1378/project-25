@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientHandler extends Thread {
+    private static NetworkDB networkDB = NetworkDB.getInstance();
     private Socket socket;
     private Connection connection;
 
@@ -32,19 +33,19 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
-        NetworkDB.getInstance().closeConnection(socket);
+        networkDB.closeConnection(socket);
     }
 
     private void handleMatchFindingCase(Request request) {
         switch (request.getRequestType()) {
             case findClassicMatch:
-                NetworkDB.getInstance().addAccountWaitingForClassic(connection.getAccount());
+                networkDB.addAccountWaitingForClassic(connection.getAccount());
                 break;
             case findOneFlagMatch:
-                NetworkDB.getInstance().addAccountWaitingForOneFlag(connection.getAccount());
+                networkDB.addAccountWaitingForOneFlag(connection.getAccount());
                 break;
             case findMultiFlagsMatch:
-                NetworkDB.getInstance().addAccountWaitingForMultiFlags(connection.getAccount());
+                networkDB.addAccountWaitingForMultiFlags(connection.getAccount());
                 break;
             default:
         }
@@ -111,10 +112,9 @@ public class ClientHandler extends Thread {
     }
 
     private void handleMultiPlayerCase(Request request) {
-        Battle battle = connection.getCurrentBattle();
         switch (request.getRequestType()) {
             case moveUnit:
-                handleUnitMoveCase(request, battle);
+                handleUnitMoveCase(request);
                 break;
             case attackUnit:
                 break;
@@ -135,13 +135,16 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleUnitMoveCase(Request request, Battle battle) {
-        int destinationRow = request.getIntegers().get(0);
-        int destinationColumn = request.getIntegers().get(1);
+    private void handleUnitMoveCase(Request request) {
+        Battle battle = connection.getCurrentBattle();
+        Integer destinationRow = (Integer) request.getObjects().get(0);
+        Integer destinationColumn = (Integer) request.getObjects().get(1);
         switch (battle.getBattleGround().moveUnit(destinationRow, destinationColumn, battle)) {
             case UNIT_MOVED:
-                Response response=new Response(ResponseType.unitMoved,)
-                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.unitMoved,));
+                Unit selectedUnit = battle.getPlayerInTurn().getSelectedUnit();
+                Response response = new Response(ResponseType.unitMoved, selectedUnit.getId()
+                        , null, destinationRow, destinationColumn, battle);
+                networkDB.sendResponeToPlayerAndOpponent(response, connection);
                 break;
             case OUT_OF_BOUNDARIES:
                 //empty
