@@ -70,7 +70,6 @@ public class NetworkDB {
             if (account.getUsername().equals(userName)){
                 return account;
             }
-
         }
         return null;
     }

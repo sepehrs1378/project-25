@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerLeaderBoard">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="911.0">
+         <image>
+            <Image url="@pics/leader_board_pics/background.png" />
+         </image>
+      </ImageView>
+      <ScrollPane layoutX="99.0" layoutY="121.0" prefHeight="471.0" prefWidth="733.0">
+         <stylesheets>
+            <URL value="@CSS/scrollpane_style.css" />
+            <URL value="@CSS/scrollbar.css" />
+         </stylesheets>
+         <content>
+            <VBox fx:id="leaderBoardBox" prefHeight="379.0" prefWidth="716.0" />
+         </content>
+      </ScrollPane>
+      <ImageView fx:id="backBtn" fitHeight="93.0" fitWidth="94.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="107.0" layoutY="36.0" prefHeight="93.0" prefWidth="718.0">
+         <children>
+            <Line endX="-152.0" endY="-3.0" layoutX="403.0" startX="-152.0" startY="89.0" />
+            <Label alignment="CENTER" layoutY="-3.0" prefHeight="110.0" prefWidth="251.0" text="User Name">
+               <font>
+                  <Font name="System Bold Italic" size="38.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="241.0" prefHeight="110.0" prefWidth="163.0" text="wins">
+               <font>
+                  <Font name="System Bold Italic" size="38.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="403.0" layoutY="4.0" prefHeight="106.0" prefWidth="163.0" text="Losses">
+               <font>
+                  <Font name="System Bold Italic" size="38.0" />
+               </font>
+            </Label>
+            <Line endX="-112.0" endY="-2.0" layoutX="526.0" layoutY="1.0" startX="-112.0" startY="85.0" />
+            <Line endX="14.0" endY="83.0" layoutX="566.0" layoutY="5.0" startX="14.0" startY="-11.0" />
+            <Label alignment="CENTER" layoutX="567.0" prefHeight="114.0" prefWidth="150.0" text="Status">
+               <font>
+                  <Font name="System Bold Italic" size="38.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

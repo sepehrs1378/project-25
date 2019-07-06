@@ -160,7 +160,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeBackBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         backBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -171,10 +170,10 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void goBack(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
+        Parent root = FXMLLoader.load(getClass().getResource("Server.fxml"));
+        Server.dragAbilityForScenes(Server.window, root);
+        Server.window.setScene(new Scene(root));
+        Server.setCursor(Server.window);
     }
 
     @FXML
@@ -185,7 +184,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createSpell(MouseEvent event) {
-        Main.playWhenButtonClicked();
         Spell spell = makeSpell();
         if (spell == null)
             return;
@@ -221,24 +219,23 @@ public class ControllerCustomCard implements Initializable {
                 Integer.parseInt(spellManaTxt.getText()), 0, 0, 0
                 , target, new ArrayList<>(spellBuffs), SpellActivationType.ON_CAST, "", false);
         try {
-            Files.createDirectory(Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/"));
+            Files.createDirectory(Paths.get("./src/ApProjectResources/spells/" + spell.getName() + "/"));
             Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/effect")
-                    , Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/effect")
+                    , Paths.get("./src/ApProjectResources/spells/" + spell.getName() + "/effect")
                     , StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get("./src/ApProjectResources/spells/custom_cards/default/icon")
-                    , Paths.get("./src/ApProjectResources/spells/"+spell.getName()+"/icon")
+                    , Paths.get("./src/ApProjectResources/spells/" + spell.getName() + "/icon")
                     , StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ignored) {
 
         }
-        new Alert(Alert.AlertType.INFORMATION,"spell created successfully").showAndWait();
+        new Alert(Alert.AlertType.INFORMATION, "spell created successfully").showAndWait();
         spellBuffs.clear();
         return spell;
     }
 
     @FXML
     void makeCreateSpellOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         createSpellBtn.setOpacity(1);
     }
 
@@ -249,7 +246,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createHero(MouseEvent event) {
-        Main.playWhenButtonClicked();
         if (heroCosttxt.getText().equals("") || heroAPtxt.getText().equals("") || heroHPtxt.getText().equals("")
                 || heroName.getText().equals("") || heroManaTxt.getText().equals("") || heroAttackTypeBox.getValue() == null) {
             new Alert(Alert.AlertType.ERROR, "mana, Attack Value, cost, name, HP and AP must be filled").showAndWait();
@@ -320,6 +316,10 @@ public class ControllerCustomCard implements Initializable {
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
                     , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/run")
                     , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death.m4a"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/death.m4a"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            //todo remember to copy sound effects!
         } catch (IOException ignored) {
 
         }
@@ -332,7 +332,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeCreateHeroOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         createHeroBtn.setOpacity(1);
     }
 
@@ -343,7 +342,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void createMinion(MouseEvent event) {
-        Main.playWhenButtonClicked();
         if (minionCosttxt.getText().equals("") || minionHptxt.getText().equals("")
                 || minionAptxt.getText().equals("") || minionName.getText().equals("") || minionAttackTypeBox.getValue() == null
                 || minionManaTxt.getText().equals("")) {

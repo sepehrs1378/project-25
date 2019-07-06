@@ -34,13 +34,11 @@ public class Server extends Application {
 
     @FXML
     void makeSaveAccountsBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         saveAccountsBtn.setStyle("-fx-opacity: 1");
     }
 
     @FXML
     void saveAccounts(MouseEvent event) {
-        Main.playWhenButtonClicked();
         NetworkDB.getInstance().saveAccounts();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
         alert.showAndWait();
@@ -48,7 +46,6 @@ public class Server extends Application {
 
     @FXML
     void makeCustomCardBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         customCardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -59,10 +56,10 @@ public class Server extends Application {
 
     @FXML
     void enterCustomCardMenu(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
+        dragAbilityForScenes(window, root);
+        window.setScene(new Scene(root));
+        setCursor(window);
     }
 
     public static void main(String[] args) {
@@ -93,7 +90,7 @@ public class Server extends Application {
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             yOffset = primaryStage.getY() - event.getScreenY();
             xOffset = primaryStage.getX() - event.getScreenX();

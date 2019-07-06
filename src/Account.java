@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Account implements Comparable<Account> {
@@ -69,6 +70,15 @@ public class Account implements Comparable<Account> {
         return numberOfWins;
     }
 
+    public int getNumberOfLosses() {
+        int numberOfLosses = 0;
+        for (MatchInfo matchInfo : matchList) {
+            if (!matchInfo.getWinner().equals(this.getUsername()))
+                numberOfLosses++;
+        }
+        return numberOfLosses;
+    }
+
     public void setPlayerInfo(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
     }
@@ -99,10 +109,6 @@ public class Account implements Comparable<Account> {
         return decks;
     }
 
-    public int compareTo(Account compareAccount) {
-        return compareAccount.getNumberOfWins() - getNumberOfWins();
-    }
-
     public int getMoney() {
         return money;
     }
@@ -113,5 +119,20 @@ public class Account implements Comparable<Account> {
 
     public void setTurnDuration(String turnDuration) {
         this.turnDuration = turnDuration;
+    }
+
+    @Override
+    public int compareTo(Account o) {
+        int numberOfWins1 = o.getNumberOfWins();
+        int numberOfWins2 = this.getNumberOfWins();
+        int numberOfLosses1 = o.getNumberOfLosses();
+        int numberOfLosses2 = this.getNumberOfLosses();
+        if (numberOfWins1 > numberOfWins2) {
+            return 1;
+        }
+        if (numberOfWins1 < numberOfWins2) {
+            return -1;
+        }
+        return Integer.compare(numberOfLosses2, numberOfLosses1);
     }
 }

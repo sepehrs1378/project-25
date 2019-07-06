@@ -174,7 +174,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             xOffset = primaryStage.getX() - event.getScreenX();
             yOffset = primaryStage.getY() - event.getScreenY();

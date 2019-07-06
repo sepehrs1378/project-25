@@ -5,9 +5,7 @@ import com.google.gson.JsonStreamParser;
 import sun.nio.ch.Net;
 
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,7 +59,7 @@ public class ClientHandler extends Thread {
                         NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage(), null, null), connection);
                     } else {
                         AccountStatus accountStatus = NetworkDB.getInstance().getAccountStatusMap().get(account);
-                        if (!matcher.group(2).equals(account.getPassword())){
+                        if (!matcher.group(2).equals(account.getPassword())) {
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.INVALID_PASSWORD.getMessage(), null, null), connection);
                             break;
                         }
@@ -71,23 +69,37 @@ public class ClientHandler extends Thread {
                             NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.online);
                             connection.setAccount(account);
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage(), null, accountList), connection);
-                        }else {
+                        } else {
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ALREADY_LOGGED_IN.getMessage(), null, null), connection);
                         }
                     }
+                    break;
                 }
-                case logout:{
+                case logout: {
                     Pattern pattern = Pattern.compile("userName:(\\w+)");
                     Matcher matcher = pattern.matcher(request.getMessage());
-                    if (matcher.find()){
+                    if (matcher.find()) {
                         Account account = NetworkDB.getInstance().getAccount(matcher.group(1));
                         if (account != null) {
                             connection.setAccount(null);
                             NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.offline);
-                            NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage(), null, null), connection);
+                            NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.logout, OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage(), null, null), connection);
                         }
                     }
-
+                    break;
+                }
+                case leaderBoard: {
+                    List<Object> accountList = new ArrayList<>(NetworkDB.getInstance().getAccountStatusMap().keySet());
+                    List<Integer> integerList = new ArrayList<>();
+                    for (Object object : accountList) {
+                        Account account = (Account) object;
+                        if (NetworkDB.getInstance().getAccountStatusMap().get(account).equals(AccountStatus.offline)) {
+                            integerList.add(0);
+                        } else {
+                            integerList.add(1);
+                        }
+                    }
+                    NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.leaderBoard, null, integerList, accountList), connection);
                 }
             }
             if (request.getRequestType().equals(RequestType.close))

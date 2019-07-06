@@ -62,4 +62,6 @@ public class Constants {
 
     public static final String NO_LIMIT = "No Time Limit";
 
+    public static final String OFFLINE = "offline";
+    public static final String ONLINE = "online";
 }

@@ -3,5 +3,6 @@ public enum ResponseType {
     close,
     signUp,
     login,
-    logout
+    logout,
+    leaderBoard
 }

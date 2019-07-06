@@ -922,9 +922,9 @@ public class DataBase {
         accountList.add(account);
     }
 
-    public void sortAccountsByWins() {
-        Collections.sort(accountList);
-    }
+//    public void sortAccountsByWins() {
+//        Collections.sort(accountList);
+//    }
 
     public Card getCardWithName(String cardName) {
         for (Card card : cardList) {

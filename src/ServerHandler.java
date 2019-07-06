@@ -4,15 +4,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.List;
+import java.util.*;
 
 public class ServerHandler extends Thread {
     private String address;
@@ -50,6 +53,7 @@ public class ServerHandler extends Thread {
                                 Platform.runLater(() -> label.setText(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage()));
                             }
                         }
+                        break;
                     }
                     case login:{
                         if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())){
@@ -72,6 +76,7 @@ public class ServerHandler extends Thread {
                                 Platform.runLater(() -> label.setText(OutputMessageType.ALREADY_LOGGED_IN.getMessage()));
                             }
                         }
+                        break;
                     }
                     case logout:{
                         if (response.getMessage().equals(OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage())){
@@ -83,6 +88,7 @@ public class ServerHandler extends Thread {
                                     try {
                                         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
                                         Main.window.setScene(new Scene(root));
+                                        Main.dragAbilityForScenes(Main.window, root);
                                         Main.setCursor(Main.window);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -90,12 +96,53 @@ public class ServerHandler extends Thread {
                                 }
                             });
                         }
+                        break;
+                    }
+                    case leaderBoard:{
+                        List<Account> accountList = new ArrayList(response.getObjectList());
+                        List<Integer> integerList = new ArrayList<>(response.getIntegers());
+                        Map<Account, Integer> accountIntegerMap = new HashMap<>();
+                        for (int i = 0; i < accountList.size(); i++) {
+                            accountIntegerMap.put(accountList.get(i), integerList.get(i));
+                        }
+                        Collections.sort(accountList);
+                        Platform.runLater(new Runnable() {
+                            FXMLLoader fxmlLoader;
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < accountList.size(); i++) {
+                                    fxmlLoader = new FXMLLoader();
+                                    fxmlLoader.setLocation(getClass().getResource("ControllerLeaderBoardAccount.fxml"));
+                                    try {
+                                        Node node = fxmlLoader.load();
+                                        ControllerLeaderBoardAccount controllerLeaderBoardAccount = fxmlLoader.getController();
+                                        controllerLeaderBoardAccount.setAccountLabels(accountList.get(i), accountIntegerMap.get(accountList.get(i)));
+                                        VBox vBox = findVBoxInLeaderBoard(ControllerMainMenu.stage);
+                                        vBox.getChildren().add(node);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        });
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private VBox findVBoxInLeaderBoard(Stage stage){
+        Parent root = stage.getScene().getRoot();
+        ScrollPane scrollPane = null;
+        for (int i = 0; i < root.getChildrenUnmodifiable().size(); i++) {
+            if (root.getChildrenUnmodifiable().get(i) instanceof ScrollPane){
+                scrollPane = (ScrollPane) root.getChildrenUnmodifiable().get(i);
+            }
+        }
+        return (VBox) scrollPane.getContent();
     }
 
     private void openMainMenu() {

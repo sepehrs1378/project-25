@@ -16,5 +16,7 @@ public enum RequestType {
 
     sendMessage,
 
+    leaderBoard,
+
     close
 }

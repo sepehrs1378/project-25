@@ -107,9 +107,17 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void showLeaderBoard(MouseEvent event) {
+    void showLeaderBoard(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        //todo
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerLeaderBoard.fxml"));
+        stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        Main.setCursor(stage);
+        Main.dragAbilityForScenes(stage, root);
+        stage.showAndWait();
     }
 
 
