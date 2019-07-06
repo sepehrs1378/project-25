@@ -21,9 +21,9 @@
             <Image url="@pics/back_button.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="458.0" layoutY="64.0" prefHeight="502.0" prefWidth="580.0">
+      <ScrollPane fx:id="chatScrollPane" layoutX="458.0" layoutY="64.0" prefHeight="502.0" prefWidth="580.0">
          <content>
-            <VBox prefHeight="497.0" prefWidth="576.0" />
+            <VBox fx:id="chatVBox" prefHeight="497.0" prefWidth="576.0" />
          </content>
          <stylesheets>
             <URL value="@CSS/scrollbar.css" />

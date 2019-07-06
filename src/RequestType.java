@@ -16,6 +16,8 @@ public enum RequestType {
 
     //global chat
     sendMessage,
+    enterGlobalChat,
+    exitGlobalChat,
 
     close
 }
