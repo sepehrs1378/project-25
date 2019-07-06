@@ -28,24 +28,24 @@ abstract public class Buff {
         this.delayTurn = delayTurn;
     }
 
-    public void revive() {
-        this.startTurn = dataBase.getCurrentBattle().getTurnNumber();
+    public void revive(Battle battle) {
+        this.startTurn = battle.getTurnNumber();
         this.setDead(false);
         //todo maybe not completed
     }
 
-    public boolean isActive() {
-        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+    public boolean isActive(Battle battle) {
+        int currentTurn = battle.getTurnNumber();
         return currentTurn >= startTurn;
     }
 
-    public boolean isInFirstActivationTurn() {
-        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+    public boolean isInFirstActivationTurn(Battle battle) {
+        int currentTurn = battle.getTurnNumber();
         return currentTurn == startTurn;
     }
 
-    public boolean isExpired() {
-        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
+    public boolean isExpired(Battle battle) {
+        int currentTurn = battle.getTurnNumber();
         return currentTurn > startTurn + durationTurn;
     }
 

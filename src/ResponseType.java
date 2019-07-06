@@ -1,7 +1,5 @@
 public enum ResponseType {
-    classicMatchFound,
-    oneFlagMatchFound,
-    multiFlagsMatchFound,
+    matchFound,
     unitMoved,
     cardInserted,
     specialPowerUsed,

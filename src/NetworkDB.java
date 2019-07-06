@@ -147,12 +147,23 @@ public class NetworkDB {
 
     public synchronized void pairAccountsForBattle() {
         Account account1, account2;
+        Connection connection1, connection2;
         if (accountsWaitingForClassic.size() >= 2) {
             account1 = accountsWaitingForClassic.get(0);
             account2 = accountsWaitingForClassic.get(1);
+            connection1 = getConnectionWithAccount(account1);
+            connection2 = getConnectionWithAccount(account2);
             accountsWaitingForClassic.remove(0);
             accountsWaitingForClassic.remove(1);
-
+            Battle battle = new Battle(account1, account2, Constants.CLASSIC
+                    , 0, null, Constants.MULTI, 2000);
+            currentBattlesList.add(battle);
+            connection1.setCurrentBattle(battle);
+            connection2.setCurrentBattle(battle);
+            sendResponseToClient(new Response
+                    (ResponseType.classicMatchFound, null, null, battle), connection1);
+            sendResponseToClient(new Response
+                    (ResponseType.classicMatchFound, null, null, battle), connection2);
         }
         //todo complete it for other modes too...
     }

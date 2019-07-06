@@ -21,7 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class Main extends Application {
+public class
+
+Main extends Application {
     private DataBase dataBase = DataBase.getInstance();
     private ClientDB clientDB = ClientDB.getInstance();
     public static Stage window;
@@ -119,7 +121,7 @@ public class Main extends Application {
         playWhenButtonClicked();
         if (emptyInvalidUsername()) return;
         new ServerRequestSender(new Request(RequestType.login, "userName:" + username.getText() + "password:"
-                + password.getText() , null, null)).start();
+                + password.getText(), null, null)).start();
     }
 
     private boolean emptyInvalidUsername() {
@@ -129,7 +131,7 @@ public class Main extends Application {
             invalidUsername.setText("username is empty");
             return true;
         }
-        if (password.getText().isEmpty()){
+        if (password.getText().isEmpty()) {
             invalidPassword.setText("password is empty");
             return true;
         }

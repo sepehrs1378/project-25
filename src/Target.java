@@ -90,7 +90,7 @@ class Target {
 //        return new Target()
 //    }
 
-    public List<Cell> getTargetCells(int insertionRow, int insertionColumn) {
+    public List<Cell> getTargetCells(int insertionRow, int insertionColumn,Battle battle) {
         List<Cell> targetCells = new ArrayList<>();
         if (!typeOfTarget.equals(Constants.CELL))
             return targetCells;
@@ -99,13 +99,13 @@ class Target {
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 if (isCoordinationValid(i, j, insertionRow, insertionColumn))
-                    targetCells.add(dataBase.getCurrentBattle().getBattleGround().getCells()[i][j]);
+                    targetCells.add(battle.getBattleGround().getCells()[i][j]);
             }
         }
         return targetCells;
     }
 
-    public List<Unit> getTargetUnits(int insertionRow, int insertionColumn) {
+    public List<Unit> getTargetUnits(int insertionRow, int insertionColumn,Battle battle) {
         List<Unit> targetUnits = new ArrayList<>();
         if (typeOfTarget.equals(Constants.CELL))
             return targetUnits;
@@ -114,10 +114,10 @@ class Target {
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                unit = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j].getUnit();
+                unit = battle.getBattleGround().getCells()[i][j].getUnit();
                 if (unit != null) {
                     if (typeOfTarget.contains(unit.getHeroOrMinion())
-                            && friendlyOrEnemy.contains(dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit))
+                            && friendlyOrEnemy.contains(battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle))
                             && isCoordinationValid(i, j, insertionRow, insertionColumn))
                         targetUnits.add(unit);
                 }

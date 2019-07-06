@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,15 +10,13 @@ public class Response {
     private List<Object> objectList;
     private Map<Object, Class> objectClassMap = new HashMap<>();
 
-    public Response(ResponseType responseType, String message, List<Integer> integers, List<Object> objectList) {
+    public Response(ResponseType responseType, String message, List<Integer> integers, Object... objectList) {
         this.responseType = responseType;
         this.message = message;
         this.integers = integers;
-        this.objectList = objectList;
-        if (objectList != null) {
-            for (Object object : objectList){
-                objectClassMap.put(object, object.getClass());
-            }
+        this.objectList.addAll(Arrays.asList(objectList));
+        for (Object object : objectList) {
+            objectClassMap.put(object, object.getClass());
         }
     }
 

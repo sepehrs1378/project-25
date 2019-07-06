@@ -203,7 +203,6 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
-        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();

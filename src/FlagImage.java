@@ -15,7 +15,6 @@ public class FlagImage {
             flagView = new ImageView(new Image(new FileInputStream("./src/ApProjectResources/flag/flag")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println(flagView);
         }
     }
     public void setRow(int row) {

@@ -143,13 +143,13 @@ class BattleGround {
         return minions;
     }
 
-    public OutputMessageType moveUnit(int destinationRow, int destinationColumn) {
+    public OutputMessageType moveUnit(int destinationRow, int destinationColumn,Battle battle) {
         if (destinationRow >= Constants.BATTLE_GROUND_WIDTH
                 || destinationColumn >= Constants.BATTLE_GROUND_LENGTH)
             return OutputMessageType.OUT_OF_BOUNDARIES;
-        if (dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit() == null)
+        if (battle.getPlayerInTurn().getSelectedUnit() == null)
             return OutputMessageType.UNIT_NOT_SELECTED;
-        Unit selectedUnit = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedUnit();
+        Unit selectedUnit = battle.getPlayerInTurn().getSelectedUnit();
         if (selectedUnit.didMoveThisTurn())
             return OutputMessageType.UNIT_ALREADY_MOVED;
         if (cells[destinationRow][destinationColumn].getUnit() != null)
@@ -161,14 +161,14 @@ class BattleGround {
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
-        gatherCollectable(destinationRow, destinationColumn);
-        gatherFlags(selectedUnit, destinationRow, destinationColumn);
+        gatherCollectable(destinationRow, destinationColumn,battle);
+        gatherFlags(selectedUnit, destinationRow, destinationColumn,battle);
         selectedUnit.setDidMoveThisTurn(true);
         return OutputMessageType.UNIT_MOVED;
     }
 
-    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn) {
-        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
+    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn,Battle battle) {
+        Cell cell = battle.getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
         for (Flag flag : flags) {
             unit.addFlag(flag);
@@ -176,12 +176,12 @@ class BattleGround {
         cell.getFlags().removeAll(flags);
     }
 
-    public void gatherCollectable(int destinationRow, int destinationColumn) {
-        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[destinationRow][destinationColumn];
+    public void gatherCollectable(int destinationRow, int destinationColumn,Battle battle) {
+        Cell cell = battle.getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
         if (collectable != null) {
-            dataBase.changePlayerNameInId(collectable, dataBase.getCurrentBattle().getPlayerInTurn());
-            dataBase.getCurrentBattle().getPlayerInTurn().getCollectables().add(collectable);
+            dataBase.changePlayerNameInId(collectable, battle.getPlayerInTurn());
+            battle.getPlayerInTurn().getCollectables().add(collectable);
             cell.setCollectable(null);
         }
     }
@@ -190,7 +190,7 @@ class BattleGround {
         return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 
-    public String isUnitFriendlyOrEnemy(Unit unit) {
+    public String isUnitFriendlyOrEnemy(Unit unit,Battle battle) {
         Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
         Matcher matcher = pattern.matcher(unit.getId());
         String username = "";
@@ -200,7 +200,7 @@ class BattleGround {
         if (username.isEmpty()) {
             return "";
         }
-        String playerName = dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName();
+        String playerName = battle.getPlayerInTurn().getPlayerInfo().getPlayerName();
         if (playerName.equals(username))
             return Constants.FRIEND;
         return Constants.ENEMY;

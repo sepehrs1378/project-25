@@ -111,9 +111,10 @@ public class ClientHandler extends Thread {
     }
 
     private void handleMultiPlayerCase(Request request) {
+        Battle battle = connection.getCurrentBattle();
         switch (request.getRequestType()) {
             case moveUnit:
-                connection.getCurrentBattle().
+                handleUnitMoveCase(request, battle);
                 break;
             case attackUnit:
                 break;
@@ -131,6 +132,34 @@ public class ClientHandler extends Thread {
                 break;
             case forfeit:
                 break;
+        }
+    }
+
+    private void handleUnitMoveCase(Request request, Battle battle) {
+        int destinationRow = request.getIntegers().get(0);
+        int destinationColumn = request.getIntegers().get(1);
+        switch (battle.getBattleGround().moveUnit(destinationRow, destinationColumn, battle)) {
+            case UNIT_MOVED:
+                Response response=new Response(ResponseType.unitMoved,)
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.unitMoved,));
+                break;
+            case OUT_OF_BOUNDARIES:
+                //empty
+                break;
+            case UNIT_NOT_SELECTED:
+                //empty
+                break;
+            case UNIT_ALREADY_MOVED:
+                //empty
+                break;
+            case CELL_IS_FULL:
+                //empty
+                break;
+            case CELL_OUT_OF_RANGE:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case!!!");
         }
     }
 }

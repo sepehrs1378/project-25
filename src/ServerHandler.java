@@ -34,7 +34,7 @@ public class ServerHandler extends Thread {
                 obj = parser.next().getAsJsonObject();
                 Response response = yaGson.fromJson(obj.toString(), Response.class);
                 handleAccountCase(response);
-                handleMatchFindingCase(response);
+                handleMatchFoundCase(response);
                 handleMultiPlayerCase(response);
             }
         } catch (IOException e) {
@@ -50,18 +50,27 @@ public class ServerHandler extends Thread {
         }
     }
 
-    private void handleMatchFindingCase(Response response) {
-        switch (response.getResponseType()) {
-            case classicMatchFound:
-                ClientDB.getInstance().setCurrentBattle((Battle) response.getObjectList().get(0));
-                break;
-            case oneFlagMatchFound:
-                ClientDB.getInstance().setCurrentBattle((Battle) response.getObjectList().get(0));
-                break;
-            case multiFlagsMatchFound:
-                ClientDB.getInstance().setCurrentBattle((Battle) response.getObjectList().get(0));
-                break;
-            default:
+    private void handleMatchFoundCase(Response response) {
+        ClientDB clientDB = ClientDB.getInstance();
+        if (response.getResponseType().equals(ResponseType.matchFound)) {
+            clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
+            Player player1 = clientDB.getCurrentBattle().getPlayer1();
+            if (clientDB.getLoggedInAccount().getUsername().equals(player1.getPlayerInfo().getPlayerName()))
+                clientDB.setLoggedInPlayer(player1);
+            else clientDB.setLoggedInPlayer(clientDB.getCurrentBattle().getPlayer2());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Main.playWhenButtonClicked();
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                        Main.window.setScene(new Scene(root));
+                        Main.setCursor(Main.window);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 
