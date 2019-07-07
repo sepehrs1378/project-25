@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerGraveYard implements Initializable {
+    private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerGraveYard ourInstance = new ControllerGraveYard();
     private DataBase dataBase = DataBase.getInstance();
     public static Stage stage = null;
@@ -54,11 +55,11 @@ public class ControllerGraveYard implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         List<Node> nodes = new ArrayList<>();
         List<Card> deadCards;
-        PlayerInfo playerInfo1 = dataBase.getCurrentBattle().getPlayer1().getPlayerInfo();
-        if (dataBase.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(playerInfo1.getPlayerName())){
-            deadCards = dataBase.getCurrentBattle().getPlayer1().getGraveYard().getDeadCards();
-        }else {
-            deadCards = dataBase.getCurrentBattle().getPlayer2().getGraveYard().getDeadCards();
+        PlayerInfo playerInfo1 = clientDB.getCurrentBattle().getPlayer1().getPlayerInfo();
+        if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(playerInfo1.getPlayerName())) {
+            deadCards = clientDB.getCurrentBattle().getPlayer1().getGraveYard().getDeadCards();
+        } else {
+            deadCards = clientDB.getCurrentBattle().getPlayer2().getGraveYard().getDeadCards();
         }
         int size = deadCards.size();
         FXMLLoader fxmlLoader;

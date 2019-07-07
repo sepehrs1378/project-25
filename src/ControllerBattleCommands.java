@@ -102,6 +102,9 @@ public class ControllerBattleCommands implements Initializable {
         forfeitBtn.setStyle("-fx-opacity: 0.6");
     }
 
+    //todo grave yard doesn't get any resource from server and does the work
+    // with the current resources : clientDB.getCurrentBattle....
+    // maybe it's better to send currentBattle to client every time we enter grave yard
     @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
@@ -534,6 +537,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleUnitClicked(String id) {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            //todo
             new ServerRequestSender(new Request(RequestType.selectUnit
                     , getUnitImageWithUnitView(clickedImageView).getId(), null));
         }
@@ -639,6 +643,15 @@ public class ControllerBattleCommands implements Initializable {
         updateSpecialPowerImage();
         updateCellImages();
         updateNextCardImage();
+        updateCollectableIcon();//todo
+        updateFlags();
+        updateCollectable();
+        updateHandImages();
+        updatePlayersInfo();
+        updateHand();
+    }
+
+    private void updateCollectableIcon() {
         Collectable collectable = clientDB.getCurrentBattle().getCollectable();
         Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
@@ -652,11 +665,6 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
-        updateFlags();
-        updateCollectable();
-        updateHandImages();
-        updatePlayersInfo();
-        updateHand();
     }
 
     private void updateNextCardImage() {

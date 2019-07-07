@@ -126,41 +126,56 @@ public class ClientHandler extends Thread {
     private void handleMultiPlayerCase(Request request) {
         switch (request.getRequestType()) {
             case moveUnit:
-                handleUnitMoveCase(request);
+                handleMoveUnit(request);
                 break;
             case attackUnit:
-                handleAttackUnitCase(request);
+                handleAttackUnit(request);
                 break;
             case endTurn:
-                handleEndTurnCase(request);
+                handleEndTurn(request);
                 break;
             case insertCard:
+                handleInsertCard(request);
                 break;
             case useSpecialPower:
+                handleUseSpecialPower(request);
                 break;
             case useCollectable:
+                handleUseCollectable(request);
                 break;
             case selectUnit:
-                handleUnitSelectingCase(request);
+                handleSelectUnit(request);
                 break;
             case enterGraveYard:
                 handleEnterGraveYard(request);
                 break;
             case forfeit:
-                handleForfeitCase(request);
+                handleForfeit(request);
                 break;
         }
     }
 
-    private void handleEndTurnCase(Request request) {
-
-    }
-
-    private void handleForfeitCase(Request request) {
+    private void handleUseCollectable(Request request) {
         //todo
     }
 
-    private void handleAttackUnitCase(Request request) {
+    private void handleUseSpecialPower(Request request) {
+        //todo
+    }
+
+    private void handleInsertCard(Request request) {
+        //todo
+    }
+
+    private void handleEndTurn(Request request) {
+        //todo
+    }
+
+    private void handleForfeit(Request request) {
+        //todo
+    }
+
+    private void handleAttackUnit(Request request) {
         //todo
     }
 
@@ -168,7 +183,7 @@ public class ClientHandler extends Thread {
         //todo
     }
 
-    private void handleUnitSelectingCase(Request request) {
+    private void handleSelectUnit(Request request) {
         Battle battle = connection.getCurrentBattle();
         String id = request.getMessage();
         switch (battle.getPlayerInTurn().selectUnit(id, battle)) {
@@ -189,7 +204,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleUnitMoveCase(Request request) {
+    private void handleMoveUnit(Request request) {
         Battle battle = connection.getCurrentBattle();
         Integer destinationRow = (Integer) request.getObjects().get(0);
         Integer destinationColumn = (Integer) request.getObjects().get(1);
