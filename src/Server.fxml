@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server">
    <children>
       <ImageView fitHeight="600.0" fitWidth="800.0">
          <image>
@@ -22,5 +25,9 @@
             <Image url="@pics/main_menu_pics/custom_card_button.png" />
          </image>
       </ImageView>
+      <ListView fx:id="userList" layoutX="117.0" layoutY="43.0" prefHeight="200.0" prefWidth="435.0" />
+      <ListView fx:id="cardList" layoutX="117.0" layoutY="291.0" prefHeight="200.0" prefWidth="435.0" />
+      <Label layoutX="41.0" layoutY="43.0" text="Users:" textFill="WHITE" />
+      <Label layoutX="44.0" layoutY="293.0" text="Cards:" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -2,10 +2,10 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
-import sun.nio.ch.Net;
 
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,9 +28,24 @@ public class ClientHandler extends Thread {
             Request request = yaGson.fromJson(obj.toString(), Request.class);
             switch (request.getRequestType()) {
                 case sendMessage: {
-                    System.out.println(request.getMessage());
-                    NetworkDB.getInstance().sendResponseToClient
-                            (new Response(ResponseType.sendMessage, "hi again", null, null), connection);
+                    ChatMessage chatMessage = (ChatMessage) request.getObjects().get(0);
+                    for (Account account : netWorkDB.getAccountStatusMap().keySet()) {
+                        if (netWorkDB.getAccountStatusMap().get(account) == AccountStatus.chatting
+                                && !account.getUsername().equals(chatMessage.getSender())) {
+                            Connection receiver = netWorkDB.getConnectionWithAccount(account);
+                            netWorkDB.sendResponseToClient(new Response(ResponseType.sendMessage, null, null, request.getObjects()), receiver);
+                        }
+                    }
+                    break;
+                }
+                case enterGlobalChat: {
+                    Account account = netWorkDB.getAccountWithUserName(request.getMessage());
+                    netWorkDB.getAccountStatusMap().put(account, AccountStatus.chatting);
+                    break;
+                }
+                case exitGlobalChat: {
+                    Account account = netWorkDB.getAccountWithUserName(request.getMessage());
+                    netWorkDB.getAccountStatusMap().put(account,AccountStatus.online);
                     break;
                 }
                 case signUp: {

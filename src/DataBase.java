@@ -13,7 +13,6 @@ public class DataBase {
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
-    private List<Account> accountList = new ArrayList<>();
     private Account loggedInAccount;
     private Battle currentBattle;
 
@@ -914,14 +913,14 @@ public class DataBase {
         this.currentBattle = currentBattle;
     }
 
-    public List<Account> getAccounts() {
-        return accountList;
-    }
-
-    public void addAccount(Account account) {
-        accountList.add(account);
-    }
-
+//    public List<Account> getAccounts() {
+//        return accountList;
+//    }
+//
+//    public void addAccount(Account account) {
+//        accountList.add(account);
+//    }
+//
 //    public void sortAccountsByWins() {
 //        Collections.sort(accountList);
 //    }
@@ -1000,14 +999,6 @@ public class DataBase {
             item.setId(player.getPlayerInfo().getPlayerName() + "_" + idPieces[1] + "_" + idPieces[2]);
         }
     }
-
-
-    boolean doesAccountExist(String username) {
-        return getAccountWithUsername(username) != null;
-    }
-
-
-
 
     public void savaCards() {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();

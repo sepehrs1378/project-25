@@ -5,11 +5,14 @@ import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,12 +21,15 @@ import java.net.Socket;
 import java.util.*;
 
 public class ServerHandler extends Thread {
+    private static ServerHandler instance;
+
     private String address;
     private int port;
 
     public ServerHandler(String address, int port) {
         this.address = address;
         this.port = port;
+        instance = this;
     }
 
     @Override
@@ -39,7 +45,21 @@ public class ServerHandler extends Thread {
                 Response response = yaGson.fromJson(obj.toString(), Response.class);
                 switch (response.getResponseType()) {
                     case sendMessage:{
-                        System.out.println(response.getMessage());
+                        ChatMessage chatMessage = (ChatMessage) response.getObjectList().get(0);
+                        Platform.runLater(()->{
+                            AnchorPane chatBox = null;
+                            try {
+                                chatBox = FXMLLoader.load(getClass().getResource("ChatStyle.fxml"));
+                                ControllerGlobalChat.setChatBox(chatMessage,chatBox,"#1919f7");
+                                HBox hBox = new HBox();
+                                hBox.setPrefWidth(ControllerGlobalChat.getInstance().getChatVBox().getPrefWidth()-30);
+                                hBox.setAlignment(Pos.BASELINE_LEFT);
+                                hBox.getChildren().add(chatBox);
+                                ControllerGlobalChat.getInstance().getChatVBox().getChildren().add(hBox);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        });
                         break;
                     }
                     case signUp:{
@@ -189,5 +209,9 @@ public class ServerHandler extends Thread {
             }
         }
         return null;
+    }
+
+    public static ServerHandler getInstance() {
+        return instance;
     }
 }
