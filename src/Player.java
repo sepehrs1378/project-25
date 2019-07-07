@@ -42,7 +42,6 @@ public class Player {
             hand.addCard(deck.getCards().get(randomNumber));
             deck.getCards().remove(randomNumber);
         }
-
     }
 
     public void setMana(int mana) {

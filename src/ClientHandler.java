@@ -152,7 +152,7 @@ public class ClientHandler extends Thread {
     }
 
     private void handleForfeitCase(Request request) {
-        connection.getCurrentBattle()
+        connection.getCurrentBattle().
     }
 
     private void handleAttackUnitCase(Request request) {

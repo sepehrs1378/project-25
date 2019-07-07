@@ -40,9 +40,10 @@ public class ControllerBattleCommands implements Initializable {
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private List<SpellImage> spellImageList = new ArrayList<>();
-    private CellImage[][] cellsImages = new CellImage[5][9];
-    private ImageView clickedImageView = new ImageView();
     private List<FlagImage> flagImages = new ArrayList<>();
+    private CellImage[][] cellsImages = new CellImage[5][9];
+    private NextCardImage nextCardImage;
+    private ImageView clickedImageView = new ImageView();
     private Timeline timeline = new Timeline();
     //todo next card has bug
 
@@ -211,7 +212,12 @@ public class ControllerBattleCommands implements Initializable {
         setupCursor();
         setupHeroSpecialPowerView();
         setupItemView();
+        setupNextCardImage();
         updatePane();
+    }
+
+    private void setupNextCardImage() {
+        nextCardImage = new NextCardImage(battleGroundPane);
     }
 
     private void setTimeBar() {
@@ -549,7 +555,7 @@ public class ControllerBattleCommands implements Initializable {
         UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
         UnitImage targetedUnitImage = getUnitImageWithId(id);
         //todo add this feature to unselect a unit with clicking on it if needed
-        switch (currentPlayer.getSelectedUnit().attack(id)) {
+        switch (currentPlayer.getSelectedUnit().attack(iddictionary, clientDB.getCurrentBattle())) {
             case UNIT_ATTACKED:
                 selectedUnitImage.showAttack(targetedUnitImage.getColumn());
                 return true;
@@ -578,7 +584,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean handleUnitSelection(String id) {
         Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
-        switch (currentPlayer.selectUnit(id)) {
+        switch (currentPlayer.selectUnit(id, clientDB.getCurrentBattle())) {
             case SELECTED:
                 unitImage.setUnitStyleAsSelected();
                 clickedImageView = unitImage.getUnitView();
@@ -627,6 +633,7 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
+        updateNextCardImage();
         Collectable collectable = clientDB.getCurrentBattle().getCollectable();
         Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
@@ -641,9 +648,19 @@ public class ControllerBattleCommands implements Initializable {
             }
         }
         showFlags();
+        showCollectables();
         updateHandImages();
         updatePlayersInfo();
         updateHand();
+    }
+
+    private void showCollectables() {
+        //todo
+    }
+
+    private void updateNextCardImage() {
+        Card card = loggedInPlayer.getNextCard();
+        nextCardImage.setCardImage(card.getId());
     }
 
     private void updateCellImages() {
@@ -734,13 +751,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showNextCard() {
-    /*    Card card = clientDB.getCurrentBattle().getPlayerInTurn().getNextCard();
+        Card card = clientDB.getCurrentBattle().getPlayerInTurn().getNextCard();
         if (card instanceof Spell) {
             view.showCardInfoSpell((Spell) card);
         } else if (card instanceof Unit) {
             view.showCardInfoMinion((Unit) card);
         }
-    */
     }
 
     private void attackCombo() {
