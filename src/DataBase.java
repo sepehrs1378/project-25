@@ -24,21 +24,21 @@ public class DataBase {
     }
 
     public void makeEveryThing() {
-        readSpells();
-        readHeroes();
-        readMinions();
-        readCollectibles();
-        readUsables();
-        readCustomCards();
+//        readSpells();
+//        readHeroes();
+//        readMinions();
+//        readCollectibles();
+//        readUsables();
+//        readCustomCards();
 //        makeCardSpells();
 //        makeHeroes();
 //        makeMinions();
 //        makeItems();
 //        makeAccounts();
 //        savaCards();
-        System.out.println(cardList.size());
-        System.out.println(collectableList.size());
-        System.out.println(usableList.size());
+//        System.out.println(cardList.size());
+//        System.out.println(collectableList.size());
+//        System.out.println(usableList.size());
     }
 
     private void makeCardSpells() {

@@ -123,7 +123,9 @@ public class ControllerShop {
     }
 
     public void showCards(List<Card> cardList, List<Usable> usableList) throws IOException {
-        moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney()));
+        upperBox.getChildren().clear();
+        lowerBox.getChildren().clear();
+        moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney())); //todo everybody wants money money!
         List<Node> nodeList = new ArrayList<>();
         for (int i = 0; i < cardList.size(); i++){
             addCardToBox(nodeList, cardList, i);
@@ -133,7 +135,7 @@ public class ControllerShop {
         }
         for (int i = 0; i < nodeList.size() - 1; i += 2) {
             upperBox.getChildren().add(nodeList.get(i));
-            lowerBox.getChildren().add(nodeList.get(i));
+            lowerBox.getChildren().add(nodeList.get(i + 1));
         }
     }
 

@@ -22,6 +22,7 @@ import java.util.*;
 
 public class ServerHandler extends Thread {
     private static ServerHandler instance;
+    private ClientDB clientDB = ClientDB.getInstance();
 
     private String address;
     private int port;
@@ -133,6 +134,8 @@ public class ServerHandler extends Thread {
                         for (int i = 0; i < response.getIntegers().get(1); i++) {
                             usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
                         }
+                        clientDB.getCardList().addAll(cardList);
+                        clientDB.getUsableList().addAll(usableList);
                         Platform.runLater(() -> {
                             try {
                                 ControllerShop.getOurInstance().showCards(cardList, usableList);
