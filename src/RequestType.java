@@ -19,5 +19,8 @@ public enum RequestType {
     enterGlobalChat,
     exitGlobalChat,
 
+    leaderBoard,
+    shop,
+
     close
 }

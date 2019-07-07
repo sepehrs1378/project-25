@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -110,9 +109,17 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void showLeaderBoard(MouseEvent event) {
+    void showLeaderBoard(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        //todo
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerLeaderBoard.fxml"));
+        stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        Main.setCursor(stage);
+        Main.dragAbilityForScenes(stage, root);
+        stage.showAndWait();
     }
 
 
@@ -257,12 +264,13 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
+        new ServerRequestSender(new Request(RequestType.shop, null , null, null)).start();
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
+        Main.dragAbilityForScenes(Main.window, root);
         controllerShop = ControllerShop.getOurInstance();
         Main.setCursor(Main.window);
-        controllerShop.showCards();
     }
 
     @FXML

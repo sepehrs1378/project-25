@@ -63,7 +63,6 @@ public class Server extends Application implements Initializable {
 
     @FXML
     void makeCustomCardBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         customCardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -74,10 +73,10 @@ public class Server extends Application implements Initializable {
 
     @FXML
     void enterCustomCardMenu(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Server.window.setScene(new Scene(root));
-        Server.setCursor(Server.window);
+        dragAbilityForScenes(window, root);
+        window.setScene(new Scene(root));
+        setCursor(window);
     }
 
     public static void main(String[] args) {
@@ -112,7 +111,7 @@ public class Server extends Application implements Initializable {
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             yOffset = primaryStage.getY() - event.getScreenY();
             xOffset = primaryStage.getX() - event.getScreenX();

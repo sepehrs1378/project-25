@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="accountPane" onMouseEntered="#makeAccountPaneOpaque" onMouseExited="#makeAccountPaneTransparent" prefHeight="83.0" prefWidth="718.0" style="-fx-background-color: #04006b; -fx-opacity: 0.9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerLeaderBoardAccount">
+   <children>
+      <Label fx:id="usernameLabel" alignment="CENTER" layoutY="-1.0" prefHeight="83.0" prefWidth="251.0" text="User Name" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Label>
+      <Line endX="-43.0" endY="59.0" layoutX="294.0" layoutY="23.0" startX="-43.0" startY="-23.000015258789062" />
+      <Label fx:id="winsLabel" alignment="CENTER" layoutX="252.0" layoutY="1.0" prefHeight="86.0" prefWidth="163.0" text="Wins" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Label>
+      <Line endX="-174.0" endY="72.0" layoutX="589.0" layoutY="15.0" startX="-174.0" startY="-14.0" />
+      <Label fx:id="lossesLabel" alignment="CENTER" layoutX="416.0" layoutY="1.0" prefHeight="87.0" prefWidth="163.0" text="Losses" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Label>
+      <Line endY="74.0" layoutX="579.0" layoutY="14.0" startY="-13.0" />
+      <Label fx:id="statusLabel" alignment="CENTER" layoutX="579.0" layoutY="4.0" prefHeight="86.0" prefWidth="139.0" text="Status" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

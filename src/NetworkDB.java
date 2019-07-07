@@ -72,6 +72,7 @@ public class NetworkDB {
 
     public void closeConnection(Socket socket) {
         Connection connection = getConnectionWithSocket(socket);
+        getAccountStatusMap().put(connection.getAccount(), AccountStatus.offline);
         connection.close();
         connectionList.remove(connection);
     }
@@ -94,7 +95,6 @@ public class NetworkDB {
             if (account.getUsername().equals(userName)){
                 return account;
             }
-
         }
         return null;
     }

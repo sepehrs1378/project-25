@@ -64,6 +64,7 @@ public class ClientDB {
     }
 
     public void setLoggedInAccount(Account loggedInAccount) {
+        DataBase.getInstance().setLoggedInAccount(loggedInAccount);
         this.loggedInAccount = loggedInAccount;
     }
 

@@ -96,7 +96,6 @@ public class Main extends Application {
         new ServerRequestSender(new Request(RequestType.signUp, "userName:" + username.getText() + "password:"
                 + password.getText(), null, null)).start();
         System.out.println("sent");
-
     }
 
     public static void main(String[] args) {
@@ -165,7 +164,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             xOffset = primaryStage.getX() - event.getScreenX();
             yOffset = primaryStage.getY() - event.getScreenY();

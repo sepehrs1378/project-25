@@ -4,24 +4,29 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.*;
 
 public class ServerHandler extends Thread {
     private static ServerHandler instance;
+    private ClientDB clientDB = ClientDB.getInstance();
 
     private String address;
     private int port;
+
     public ServerHandler(String address, int port) {
         this.address = address;
         this.port = port;
@@ -104,6 +109,7 @@ public class ServerHandler extends Thread {
                                     try {
                                         Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
                                         Main.window.setScene(new Scene(root));
+                                        Main.dragAbilityForScenes(Main.window, root);
                                         Main.setCursor(Main.window);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -113,11 +119,78 @@ public class ServerHandler extends Thread {
                         }
                         break;
                     }
+                    case leaderBoard:
+                        showAccountsInLeaderBoard(response);
+                        break;
+                    case updateLeaderBoard:
+                        showAccountsInLeaderBoard(response);
+                        break;
+                    case shop:{
+                        List<Card> cardList = new ArrayList<>();
+                        List<Usable> usableList = new ArrayList<>();
+                        for (int i = 0; i < response.getIntegers().get(0); i++) {
+                            cardList.add((Card) response.getObjectList().get(i));
+                        }
+                        for (int i = 0; i < response.getIntegers().get(1); i++) {
+                            usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
+                        }
+                        clientDB.getCardList().addAll(cardList);
+                        clientDB.getUsableList().addAll(usableList);
+                        Platform.runLater(() -> {
+                            try {
+                                ControllerShop.getOurInstance().showCards(cardList, usableList);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAccountsInLeaderBoard(Response response) {
+        List<Account> accountList = new ArrayList(response.getObjectList());
+        List<Integer> integerList = new ArrayList<>(response.getIntegers());
+        Map<Account, Integer> accountIntegerMap = new HashMap<>();
+        for (int i = 0; i < accountList.size(); i++) {
+            accountIntegerMap.put(accountList.get(i), integerList.get(i));
+        }
+        Collections.sort(accountList);
+        Platform.runLater(new Runnable() {
+            FXMLLoader fxmlLoader;
+            @Override
+            public void run() {
+                VBox vBox = findVBoxInLeaderBoard(ControllerMainMenu.stage);
+                vBox.getChildren().clear();
+                for (int i = 0; i < accountList.size(); i++) {
+                    fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("ControllerLeaderBoardAccount.fxml"));
+                    try {
+                        Node node = fxmlLoader.load();
+                        ControllerLeaderBoardAccount controllerLeaderBoardAccount = fxmlLoader.getController();
+                        controllerLeaderBoardAccount.setAccountLabels(accountList.get(i), accountIntegerMap.get(accountList.get(i)));
+                        vBox.getChildren().add(node);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+    }
+
+    private VBox findVBoxInLeaderBoard(Stage stage){
+        Parent root = stage.getScene().getRoot();
+        ScrollPane scrollPane = null;
+        for (int i = 0; i < root.getChildrenUnmodifiable().size(); i++) {
+            if (root.getChildrenUnmodifiable().get(i) instanceof ScrollPane){
+                scrollPane = (ScrollPane) root.getChildrenUnmodifiable().get(i);
+            }
+        }
+        return (VBox) scrollPane.getContent();
     }
 
     private void openMainMenu() {
@@ -127,6 +200,7 @@ public class ServerHandler extends Thread {
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                     Main.window.setScene(new Scene(root));
+                    Main.dragAbilityForScenes(Main.window, root);
                     Main.setCursor(Main.window);
                 } catch (IOException e) {
                     e.printStackTrace();
