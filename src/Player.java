@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private static final DataBase dataBase = DataBase.getInstance();
     private List<Collectable> collectables = new ArrayList<>();
     private PlayerInfo playerInfo;
     private Hand hand = new Hand();
@@ -127,28 +126,6 @@ public class Player {
         selectedUnit = unit;
         return OutputMessageType.SELECTED;
     }
-
-    /*public OutputMessageType select(String id,Battle battle) {
-        if (battle.getBattleGround().getUnitWithID(id) == null
-                && !doesHaveCollectable(id))
-            return OutputMessageType.INVALID_COLLECTABLE_CARD;
-        if (doesHaveCollectable(id)) {
-            selectedUnit = null;
-            selectedCollectable = getCollectableWithID(id);
-            return OutputMessageType.SELECTED;
-        }
-        if (battle.getBattleGround().getUnitWithID(id).isStunned()) {
-            return OutputMessageType.UNIT_IS_STUNNED;
-        }
-        if (battle.getBattleGround().doesHaveUnit(id)) {
-            selectedUnit = battle.getBattleGround().getUnitWithID(id);
-            if (selectedUnit.getId().split("_")[0].matches
-                    (battle.getPlayerInTurn().getPlayerInfo().getPlayerName())) {
-                return OutputMessageType.SELECTED;
-            }
-        }
-        return OutputMessageType.INVALID_COLLECTABLE_CARD;
-    }*/
 
     public List<Buff> getBuffs() {
         return buffs;

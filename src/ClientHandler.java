@@ -132,6 +132,7 @@ public class ClientHandler extends Thread {
                 handleAttackUnitCase(request);
                 break;
             case endTurn:
+                handleEndTurnCase(request);
                 break;
             case insertCard:
                 break;
@@ -151,8 +152,12 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void handleEndTurnCase(Request request) {
+
+    }
+
     private void handleForfeitCase(Request request) {
-        connection.getCurrentBattle().
+        //todo
     }
 
     private void handleAttackUnitCase(Request request) {

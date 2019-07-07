@@ -166,7 +166,7 @@ Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         setCursor(primaryStage);
-        playMusic();
+        playMusic("src/music/mainMenu.mp3");
         dragAbilityForScenes(primaryStage, root);
         primaryStage.setOnCloseRequest(e -> {
             new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
@@ -187,9 +187,9 @@ Main extends Application {
         });
     }
 
-    private static void playMusic() {
+    public static void playMusic(String filePath) {
         try {
-            Media media = new Media(Paths.get("src/music/mainMenu.mp3").toUri().toString());
+            Media media = new Media(Paths.get(filePath).toUri().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setCycleCount(Integer.MAX_VALUE);
             mediaPlayer.setAutoPlay(true);

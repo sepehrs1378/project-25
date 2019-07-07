@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class BuffImage {
-    private final int BUFF_VIEW_SIZE = 50;
+    private static final int BUFF_VIEW_SIZE = 50;
     private AnchorPane root;
     private ImageView buffView = new ImageView();
     private BuffType buffType;
