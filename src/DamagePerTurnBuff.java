@@ -1,17 +1,17 @@
 public class DamagePerTurnBuff extends Buff {
     public static final DataBase dataBase = DataBase.getInstance();
-    private int[] damagePerTurn = new int[1000];
+    private int[] damagePerTurn;
 
     public DamagePerTurnBuff(int durationTurn, boolean isDispellable,
-                             boolean isContinuous,int startTurn, int... damagePerTurn) {
-        super(durationTurn, isDispellable, isContinuous,startTurn);
+                             boolean isContinuous, int startTurn, int... damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous, startTurn);
         this.damagePerTurn = damagePerTurn;
     }
 
     @Override
-    public void doEffect(Unit unit) {
-        int currentTurn = dataBase.getCurrentBattle().getTurnNumber();
-        if (isActive()) {
+    public void doEffect(Unit unit, Battle battle) {
+        int currentTurn = battle.getTurnNumber();
+        if (isActive(battle)) {
             int damage = damagePerTurn[currentTurn - (getStartTurn())];
             unit.changeHp(damage);
         }
@@ -25,7 +25,7 @@ public class DamagePerTurnBuff extends Buff {
     @Override
     public DamagePerTurnBuff clone() {
         return new DamagePerTurnBuff(getDurationTurn(), isDispellable()
-                , isContinuous(),getStartTurn(), damagePerTurn);
+                , isContinuous(), getStartTurn(), damagePerTurn);
     }
 
     @Override

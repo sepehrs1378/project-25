@@ -28,7 +28,7 @@ public class ClientHandler extends Thread {
             JsonObject obj = parser.next().getAsJsonObject();
             Request request = yaGson.fromJson(obj.toString(), Request.class);
             handleAccountCase(request);
-            handleMatchFindingCase(request);
+            handleMatchFinding(request);
             handleMultiPlayerCase(request);
             if (request.getRequestType().equals(RequestType.close))
                 break;
@@ -36,7 +36,7 @@ public class ClientHandler extends Thread {
         networkDB.closeConnection(socket);
     }
 
-    private void handleMatchFindingCase(Request request) {
+    private void handleMatchFinding(Request request) {
         switch (request.getRequestType()) {
             case findClassicMatch:
                 networkDB.addAccountWaitingForClassic(connection.getAccount());

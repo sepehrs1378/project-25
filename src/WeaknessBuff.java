@@ -14,8 +14,8 @@ public class WeaknessBuff extends Buff {
     }
 
     @Override
-    public void doEffect(Unit unit) {
-        if (isInFirstActivationTurn()) {
+    public void doEffect(Unit unit,Battle battle) {
+        if (isInFirstActivationTurn(battle)) {
             unit.changeHp(-hpMinus);
             unit.changeAp(-apMinus);
         }

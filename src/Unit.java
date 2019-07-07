@@ -86,15 +86,15 @@ public class Unit extends Card {
         if (!isTargetUnitWithinRange(targetId,battle))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
         Unit targetUnit = battle.getBattleGround().getUnitWithID(targetId);
-        if (battle.getBattleGround().isUnitFriendlyOrEnemy(targetUnit).equals(Constants.FRIEND))
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(targetUnit,battle).equals(Constants.FRIEND))
             return OutputMessageType.ATTACKED_FRIENDLY_UNIT;
         this.attackUnit(targetId, false,battle);
         if (targetUnit.canAttackTarget(this, true,battle)) {
             targetUnit.attackUnit(this.getId(), true,battle);
-            battle.checkForDeadUnits();
+            battle.checkForDeadUnits(battle);
             return OutputMessageType.UNIT_AND_ENEMY_ATTACKED;
         } else {
-            battle.checkForDeadUnits();
+            battle.checkForDeadUnits(battle);
             return OutputMessageType.UNIT_ATTACKED;
         }
     }
@@ -117,15 +117,15 @@ public class Unit extends Card {
         for (Spell specialPower : specialPowers) {
             if (specialPower != null
                     && specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
-                specialPower.doSpell(targetedUnit);
+                specialPower.doSpell(targetedUnit,battle);
         }
     }
 
     public boolean canAttackTarget(Unit unit, boolean isCounterAttack,Battle battle) {
         if (!isCounterAttack && battle.getBattleGround().
-                isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+                isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND))
             return false;
-        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND))
             if (this.isStunned())
                 return false;
         if (!isCounterAttack && this.didAttackThisTurn)

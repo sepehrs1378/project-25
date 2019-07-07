@@ -16,7 +16,7 @@ abstract public class Buff {
         this.startTurn = startTurn;
     }
 
-    public abstract void doEffect(Unit unit);
+    public abstract void doEffect(Unit unit,Battle battle);
 
     public abstract void doEndingEffect(Unit unit);
 

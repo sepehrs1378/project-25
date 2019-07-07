@@ -85,7 +85,7 @@ class Spell extends Card {
     }
 
     private void doSpellEffectOnCells(int insertionRow, int insertionColumn,Battle battle) {
-        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn);
+        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn,battle);
         for (Cell cell : targetCells) {
             for (Buff buff : getAddedBuffs()) {
                 Buff cloneBuff = buff.clone();
@@ -97,7 +97,7 @@ class Spell extends Card {
     }
 
     private void doSpellEffectOnUnits(int insertionRow, int insertionColumn,Battle battle) {
-        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn);
+        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn,battle);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
                     && battle.getBattleGround().

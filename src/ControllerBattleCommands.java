@@ -192,7 +192,7 @@ public class ControllerBattleCommands implements Initializable {
                 return;
             }
             if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-                AI.getInstance().doNextMove(battleGroundPane);
+                AI.getInstance().doNextMove(battleGroundPane,battle);
                 if (endTurn(battle)) {
                     return;
                 }
@@ -404,8 +404,6 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleSpecialPowerInsertion(int row, int column, Battle battle) {
-        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
-        UnitImage heroImage = getUnitImageWithId(hero.getId());
         switch (clientDB.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column, battle)) {
             case NO_HERO:
                 //empty
@@ -420,17 +418,23 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case SPECIAL_POWER_USED:
-                heroImage.showSpell();
-                SpellImage specialPowerImage = new SpellImage
-                        (hero.getId(), row, column, battleGroundPane, SpellType.specialPower);
-                spellImageList.add(specialPowerImage);
-                clickedImageView = null;
+                showSpecialPowerUse(row, column);
                 break;
             default:
                 System.out.println("unhandled case!!!!!");
         }
         //todo
         return false;
+    }
+
+    public void showSpecialPowerUse(int row, int column) {
+        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        UnitImage heroImage = getUnitImageWithId(hero.getId());
+        heroImage.showSpell();
+        SpellImage specialPowerImage = new SpellImage
+                (hero.getId(), row, column, battleGroundPane, SpellType.specialPower);
+        spellImageList.add(specialPowerImage);
+        clickedImageView = null;
     }
 
     private boolean handleUnitMove(int row, int column) {
@@ -463,8 +467,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean handleCardInsertion(int row, int column, Battle battle) {
         HandImage handImage = getHandImageWithCardView(clickedImageView);
-        Card card = clientDB.getCurrentBattle()
-                .getPlayerInTurn().getHand().getCardById(handImage.getId());
+        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(handImage.getId());
         switch (clientDB.getCurrentBattle().insert(card, row, column, battle)) {
             case NO_SUCH_CARD_IN_HAND:
                 System.out.println("1");
@@ -479,7 +482,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
-                System.out.println("4");
+                System.out.println("not nearby friendly units");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
@@ -487,17 +490,20 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case CARD_INSERTED:
-                System.out.println("6");
-                if (card instanceof Unit)
-                    insertUnitView(row, column, card);
-                if (card instanceof Spell) {
-                    insertSpellView(row, column, card);
-                }
-                handImage.clearHandImage();
+                showCardInsertion(row, column, handImage, card);
                 return true;
             default:
         }
         return false;
+    }
+
+    private void showCardInsertion(int row, int column, HandImage handImage, Card card) {
+        if (card instanceof Unit)
+            insertUnitView(row, column, card);
+        if (card instanceof Spell) {
+            insertSpellView(row, column, card);
+        }
+        handImage.clearHandImage();
     }
 
     public List<SpellImage> getSpellImageList() {

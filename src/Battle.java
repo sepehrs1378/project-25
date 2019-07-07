@@ -19,7 +19,7 @@ public class Battle {
             , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti, int prize) {
         this.prize = prize;
         this.singleOrMulti = singleOrMulti;
-        dataBase.setCurrentBattle(this);
+//        dataBase.setCurrentBattle(this);todo IMPORTANT seting battle is ignored
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;
@@ -337,17 +337,17 @@ public class Battle {
                 if (cell.isEmptyOfUnit())
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
-                    buff.doEffect(cell.getUnit());
+                    buff.doEffect(cell.getUnit(),battle);
                 }
             }
         }
         for (Buff buff : player1.getBuffs()) {
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player1);
+                ((ManaBuff) buff).doEffect(player1,battle);
         }
         for (Buff buff : player2.getBuffs()) {
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player2);
+                ((ManaBuff) buff).doEffect(player2,battle);
         }
     }
 

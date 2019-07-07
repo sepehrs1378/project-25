@@ -46,22 +46,49 @@ public class ServerHandler extends Thread {
     private void handleMultiPlayerCase(Response response) {
         switch (response.getResponseType()) {
             case unitMoved:
-                handleUnitMovedCase(response);
+                handleUnitMoved(response);
             case unitSelected:
-                UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
-                ControllerBattleCommands.getOurInstance().setClickedImageView();
+                handleUnitSelected(response);
+                break;
+            case specialPowerUsed:
+                handleSpecialPowerUsed(response);
                 break;
             default:
         }
     }
 
-    private void handleUnitMovedCase(Response response) {
+    private void handleSpecialPowerUsed(Response response) {
+        Integer row = (Integer) response.getObjectList().get(0);
+        Integer column = (Integer) response.getObjectList().get(1);
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ControllerBattleCommands.getOurInstance().showSpecialPowerUse(row, column);
+            }
+        });
+    }
+
+    private void handleUnitSelected(Response response) {
+        UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(selectedUnit.getUnitView());
+                ControllerBattleCommands.getOurInstance().updatePane();
+            }
+        });
+    }
+
+    private void handleUnitMoved(Response response) {
         clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
         String id = response.getMessage();
         Integer row = (Integer) response.getObjectList().get(0);
         Integer column = (Integer) response.getObjectList().get(1);
         UnitImage movedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(id);
         movedUnit.showRun(row, column);
+        ControllerBattleCommands.getOurInstance().updatePane();
     }
 
     private void handleMatchFoundCase(Response response) {

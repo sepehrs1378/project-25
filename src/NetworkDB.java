@@ -165,7 +165,7 @@ public class NetworkDB {
             sendResponseToClient(new Response
                     (ResponseType.matchFound, null, null, battle), connection2);
         }
-        //todo complete it for other modes too...
+        //todo IMPORTANT complete it for other modes too...
     }
 
     public Connection getOpponentConnection(Connection connection) {
