@@ -47,6 +47,7 @@ public class ClientHandler extends Thread {
                         NetworkDB.getInstance().getAccountStatusMap().put(newAccount, AccountStatus.online);
                         accountList.add(newAccount);
                         NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.signUp, OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage(), null, accountList), connection);
+                        updateAccountsInLeaderBoard(newAccount);
                     }
                     break;
                 }
@@ -69,6 +70,7 @@ public class ClientHandler extends Thread {
                             NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.online);
                             connection.setAccount(account);
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage(), null, accountList), connection);
+                            updateAccountsInLeaderBoard(account);
                         } else {
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ALREADY_LOGGED_IN.getMessage(), null, null), connection);
                         }
@@ -84,21 +86,16 @@ public class ClientHandler extends Thread {
                             connection.setAccount(null);
                             NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.offline);
                             NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.logout, OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage(), null, null), connection);
+                            updateAccountsInLeaderBoard(account);
                         }
                     }
                     break;
                 }
                 case leaderBoard: {
+                    NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.leaderBoard);
                     List<Object> accountList = new ArrayList<>(NetworkDB.getInstance().getAccountStatusMap().keySet());
                     List<Integer> integerList = new ArrayList<>();
-                    for (Object object : accountList) {
-                        Account account = (Account) object;
-                        if (NetworkDB.getInstance().getAccountStatusMap().get(account).equals(AccountStatus.offline)) {
-                            integerList.add(0);
-                        } else {
-                            integerList.add(1);
-                        }
-                    }
+                    setIntegerList(accountList, integerList);
                     NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.leaderBoard, null, integerList, accountList), connection);
                 }
             }
@@ -106,5 +103,28 @@ public class ClientHandler extends Thread {
                 break;
         }
         NetworkDB.getInstance().closeConnection(socket);
+    }
+
+    private void setIntegerList(List<Object> accountList, List<Integer> integerList) {
+        for (Object object : accountList) {
+            Account account = (Account) object;
+            if (NetworkDB.getInstance().getAccountStatusMap().get(account).equals(AccountStatus.offline)) {
+                integerList.add(0);
+            } else {
+                integerList.add(1);
+            }
+        }
+    }
+
+    private synchronized void updateAccountsInLeaderBoard(Account account){
+        List<Object> accountList = new ArrayList<>(NetworkDB.getInstance().getAccountStatusMap().keySet());
+        List<Integer> integerList = new ArrayList<>();
+        setIntegerList(accountList, integerList);
+        for (Object object : accountList){
+            Account account1 = (Account) object;
+            if (NetworkDB.getInstance().getAccountStatusMap().get(account1).equals(AccountStatus.leaderBoard)){
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.updateLeaderBoard, null, integerList, accountList), NetworkDB.getInstance().getConnectionWithAccount(account1));
+            }
+        }
     }
 }

@@ -22,6 +22,7 @@ public class ControllerShop {
     public ControllerShop() {
         ourInstance = this;
     }
+
     @FXML
     private HBox upperBox;
 
@@ -47,58 +48,58 @@ public class ControllerShop {
     void displayAppropriateCards(ActionEvent event) throws IOException {
         lowerBox.getChildren().clear();
         upperBox.getChildren().clear();
-        if (addCardText.getText().isEmpty()){
+        if (addCardText.getText().isEmpty()) {
             showCards();
             return;
         }
         List<Card> cardList = new ArrayList<>();
         for (int i = 0; i < dataBase.getCardList().size(); i++) {
-            if(dataBase.getCardList().get(i).getName().contains(addCardText.getText())){
+            if (dataBase.getCardList().get(i).getName().contains(addCardText.getText())) {
                 cardList.add(dataBase.getCardList().get(i));
             }
         }
         List<Usable> usableList = new ArrayList<>();
         for (int i = 0; i < dataBase.getUsableList().size(); i++) {
-            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())){
+            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())) {
                 usableList.add(dataBase.getUsableList().get(i));
             }
         }
-        if(usableList.isEmpty() && cardList.isEmpty()){
+        if (usableList.isEmpty() && cardList.isEmpty()) {
             return;
         }
         int size = (usableList.size() + cardList.size());
         int originalSize = size;
         Node[] nodes = new Node[size];
         for (int i = 0; i < cardList.size(); i++) {
-            addCardToBox(nodes, cardList, i , i);
+            addCardToBox(nodes, cardList, i, i);
         }
         for (int i = 0; i < usableList.size(); i++) {
             addUsableToBox(nodes, usableList, i, i + cardList.size());
         }
-        if (size % 2 == 0){
+        if (size % 2 == 0) {
             size /= 2;
-        }else {
+        } else {
             size = size / 2 + 1;
         }
         for (int i = 0; i < size; i++) {
             upperBox.getChildren().add(nodes[i]);
         }
-        if (originalSize % 2 == 0){
+        if (originalSize % 2 == 0) {
             for (int i = size; i < size * 2; i++) {
                 lowerBox.getChildren().add(nodes[i]);
             }
-        }else {
+        } else {
             for (int i = size; i < size * 2 - 1; i++) {
                 lowerBox.getChildren().add(nodes[i]);
             }
         }
     }
 
-    public Label getBuyMessage(){
+    public Label getBuyMessage() {
         return buyMessage;
     }
 
-    public Label getMoneyLabel(){
+    public Label getMoneyLabel() {
         return moneyLabel;
     }
 
@@ -176,5 +177,6 @@ public class ControllerShop {
         } else {
             view.showCardOrItemDoesNotExist();
         }
-    */}
+    */
+    }
 }

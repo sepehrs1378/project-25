@@ -98,40 +98,48 @@ public class ServerHandler extends Thread {
                         }
                         break;
                     }
-                    case leaderBoard:{
-                        List<Account> accountList = new ArrayList(response.getObjectList());
-                        List<Integer> integerList = new ArrayList<>(response.getIntegers());
-                        Map<Account, Integer> accountIntegerMap = new HashMap<>();
-                        for (int i = 0; i < accountList.size(); i++) {
-                            accountIntegerMap.put(accountList.get(i), integerList.get(i));
-                        }
-                        Collections.sort(accountList);
-                        Platform.runLater(new Runnable() {
-                            FXMLLoader fxmlLoader;
-                            @Override
-                            public void run() {
-                                for (int i = 0; i < accountList.size(); i++) {
-                                    fxmlLoader = new FXMLLoader();
-                                    fxmlLoader.setLocation(getClass().getResource("ControllerLeaderBoardAccount.fxml"));
-                                    try {
-                                        Node node = fxmlLoader.load();
-                                        ControllerLeaderBoardAccount controllerLeaderBoardAccount = fxmlLoader.getController();
-                                        controllerLeaderBoardAccount.setAccountLabels(accountList.get(i), accountIntegerMap.get(accountList.get(i)));
-                                        VBox vBox = findVBoxInLeaderBoard(ControllerMainMenu.stage);
-                                        vBox.getChildren().add(node);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        });
-                    }
+                    case leaderBoard:
+                        showAccountsInLeaderBoard(response);
+                        break;
+                    case updateLeaderBoard:
+                        showAccountsInLeaderBoard(response);
+                        break;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAccountsInLeaderBoard(Response response) {
+        List<Account> accountList = new ArrayList(response.getObjectList());
+        List<Integer> integerList = new ArrayList<>(response.getIntegers());
+        Map<Account, Integer> accountIntegerMap = new HashMap<>();
+        for (int i = 0; i < accountList.size(); i++) {
+            accountIntegerMap.put(accountList.get(i), integerList.get(i));
+        }
+        Collections.sort(accountList);
+        Platform.runLater(new Runnable() {
+            FXMLLoader fxmlLoader;
+            @Override
+            public void run() {
+                VBox vBox = findVBoxInLeaderBoard(ControllerMainMenu.stage);
+                vBox.getChildren().clear();
+                for (int i = 0; i < accountList.size(); i++) {
+                    fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("ControllerLeaderBoardAccount.fxml"));
+                    try {
+                        Node node = fxmlLoader.load();
+                        ControllerLeaderBoardAccount controllerLeaderBoardAccount = fxmlLoader.getController();
+                        controllerLeaderBoardAccount.setAccountLabels(accountList.get(i), accountIntegerMap.get(accountList.get(i)));
+                        vBox.getChildren().add(node);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
 
     private VBox findVBoxInLeaderBoard(Stage stage){
