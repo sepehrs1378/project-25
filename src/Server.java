@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sun.nio.ch.Net;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.BiConsumer;
 
 public class Server extends Application implements Initializable {
     public static Stage window = null;
@@ -103,6 +101,10 @@ public class Server extends Application implements Initializable {
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("Server.fxml"));
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(e->{
+            NetworkDB.getInstance().saveAccounts();
+            NetworkDB.getInstance().saveNumberCardMap();
+        });
         primaryStage.initStyle(StageStyle.UNDECORATED);
         dragAbilityForScenes(primaryStage, root);
         setCursor(primaryStage);

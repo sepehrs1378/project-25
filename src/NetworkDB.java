@@ -1,5 +1,6 @@
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,17 +29,17 @@ public class NetworkDB {
         readCollectibles();
         readUsables();
         readCustomCards();
-        readCardNumberMap();
+        readNumberCardMap();
     }
     public Map<String, Integer> getNumberOfCards() {
         return numberOfCards;
     }
 
-    private void readCardNumberMap() {
-        cardList.forEach(e->{
-           numberOfCards.put(e.getName(),10);
-        });
-    }
+//    private void readCardNumberMap() {
+//        cardList.forEach(e->{
+//           numberOfCards.put(e.getName(),10);
+//        });
+//    }
 
     public void addConnection(Connection connection) {
         connectionList.add(connection);
@@ -495,6 +496,44 @@ public class NetworkDB {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void saveNumberCardMap(){
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        numberOfCards.forEach((name , number)->{
+            FileWriter fileWriter = null;
+            try {
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Numbers/"+name+".json"));
+                JsonObject obj = new JsonObject();
+                obj.addProperty("cardName", name);
+                obj.addProperty("number" , number);
+                yaGson.toJson(obj,fileWriter);
+                fileWriter.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void readNumberCardMap(){
+        YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File("src/JSONFiles/Cards/Numbers");
+        String[] fileNames = folder.list();
+        FileReader reader;
+        if (fileNames != null) {
+            for (String fileName : fileNames) {
+                if (fileName.endsWith(".json")) {
+                    try {
+                        reader = new FileReader("src/JSONFiles/Cards/Numbers/" + fileName);
+                        JsonObject object=gson.fromJson(reader, JsonObject.class);
+                        numberOfCards.put(object.get("cardName").getAsString(),object.get("number").getAsInt());
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
