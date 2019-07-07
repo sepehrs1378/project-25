@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,17 +12,27 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sun.nio.ch.Net;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 
-public class Server extends Application {
+public class Server extends Application implements Initializable {
     public static Stage window = null;
     private static double xOffset = 0;
     private static double yOffset = 0;
+    private static Server instance;
+    public Server(){
+        instance = this;
+    }
+    public static Server getInstance(){
+        return instance;
+    }
 
     @FXML
     private ListView<String> cardList;
@@ -124,5 +135,15 @@ public class Server extends Application {
 
     public void updateCardList(){
         cardList.getItems().clear();
+        NetworkDB.getInstance().getNumberOfCards().forEach((s, integer) -> {
+            cardList.getItems().add(s+"    "+integer);
+        });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        NetworkDB.getInstance().makeEveryThing();
+        updateCardList();
+        updateUserList();
     }
 }
