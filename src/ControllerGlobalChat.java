@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ControllerGlobalChat {
@@ -49,7 +48,7 @@ public class ControllerGlobalChat {
     @FXML
     void back(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        new ServerRequestSender(new Request(RequestType.exitGlobalChat,ClientDB.getInstance().getLoggedInAccount().getUsername(),null,null)).start();
+        new ServerRequestSender(new Request(RequestType.exitGlobalChat, ClientDB.getInstance().getLoggedInAccount().getUsername(), null, null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
@@ -78,7 +77,7 @@ public class ControllerGlobalChat {
             AnchorPane chatBox = FXMLLoader.load(getClass().getResource("ChatStyle.fxml"));
             setChatBox(chatMessage, chatBox, "#18f527");
             HBox hBox = new HBox();
-            hBox.setPrefWidth(chatVBox.getPrefWidth()-30);
+            hBox.setPrefWidth(chatVBox.getPrefWidth() - 30);
             hBox.setAlignment(Pos.BASELINE_RIGHT);
             hBox.getChildren().add(chatBox);
             chatVBox.getChildren().add(hBox);

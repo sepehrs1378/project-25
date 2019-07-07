@@ -5,6 +5,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,11 +16,18 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.function.BiConsumer;
 
 public class Server extends Application {
     public static Stage window = null;
     private static double xOffset = 0;
     private static double yOffset = 0;
+
+    @FXML
+    private ListView<String> cardList;
+
+    @FXML
+    private ListView<String> userList;
 
     @FXML
     private ImageView customCardBtn;
@@ -61,8 +69,8 @@ public class Server extends Application {
     void enterCustomCardMenu(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
+        Server.window.setScene(new Scene(root));
+        Server.setCursor(Server.window);
     }
 
     public static void main(String[] args) {
@@ -108,5 +116,16 @@ public class Server extends Application {
         File file = new File("src/pics/mouse_icon");
         Image image = new Image(file.toURI().toString());
         stage.getScene().setCursor(new ImageCursor(image));
+    }
+
+    public void updateUserList(){
+        userList.getItems().clear();
+        NetworkDB.getInstance().getAccountStatusMap().forEach((account, accountStatus) -> {
+            userList.getItems().add(account.getUsername()+"     "+accountStatus.toString());
+        });
+    }
+
+    public void updateCardList(){
+        cardList.getItems().clear();
     }
 }

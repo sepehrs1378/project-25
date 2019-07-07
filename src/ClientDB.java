@@ -1,10 +1,13 @@
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.JsonStreamParser;
+import javafx.scene.control.Alert;
 
 import java.io.*;
 import java.net.Socket;
-
+import java.util.ArrayList;
+import java.util.List;
+@SuppressWarnings("ALL")
 public class ClientDB {
     private static ClientDB ourInstance = new ClientDB();
     private Socket socket;
@@ -16,6 +19,9 @@ public class ClientDB {
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
     private Account computerPlayerCustom;
+    private List<Usable> usableList = new ArrayList<>();
+    private List<Collectable> collectableList = new ArrayList<>();
+    private List<Card> cardList = new ArrayList<>();
 
     public static ClientDB getInstance() {
         return ourInstance;
@@ -88,6 +94,59 @@ public class ClientDB {
             reader = new FileReader("src/JSONFiles/Accounts/ComputerPlayers/account_computer3.json");
             computerPlayerLevel3 = gson.fromJson(reader, Account.class);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public List<Card> getCardList() {
+        return cardList;
+    }
+
+    public List<Usable> getUsableList() {
+        return usableList;
+    }
+
+    public List<Collectable> getCollectableList() {
+        return collectableList;
+    }
+
+    public Deck importDeck(String address) {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        if (!address.endsWith(".json")) {
+            new Alert(Alert.AlertType.ERROR, "please select a valid json file!");
+        }
+        FileReader reader = null;
+        try {
+            reader = new FileReader(new File(address));
+            Deck deck = yaGson.fromJson(reader, Deck.class);
+            return deck;
+        } catch (FileNotFoundException ignored) {
+        } catch (ClassCastException e) {
+            new Alert(Alert.AlertType.ERROR, "please select a deck!").showAndWait();
+        }
+        return null;
+    }
+
+    public void exportDeck(Deck deck, String address) {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        File folder = new File(address);
+        String[] fileNames = folder.list();
+        String fileName = "deck_" + deck.getName() + "_";
+        int numberOfDecks = 0;
+        if (fileNames != null) {
+            for (String name : fileNames) {
+                if (name.contains(fileName)) {
+                    numberOfDecks = numberOfDecks + 1;
+                }
+            }
+        }
+        fileName += numberOfDecks;
+        fileName += ".json";
+        try {
+            FileWriter fileWriter = new FileWriter(new File(address + "/" + fileName));
+            yaGson.toJson(deck, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
