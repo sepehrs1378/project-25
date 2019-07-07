@@ -246,6 +246,7 @@ public class ControllerMainMenu {
     @FXML
     void enterCollection(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.enterCollectoin,null,null,null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
@@ -284,7 +285,6 @@ public class ControllerMainMenu {
         shopBtn.setStyle("-fx-opacity: 0.6");
     }
 
-
     @FXML
     void enterGlobalChat(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
@@ -303,6 +303,5 @@ public class ControllerMainMenu {
     @FXML
     void makeGlobalChatBtnTransparent(MouseEvent event) {
         enterGlobalChatBtn.setOpacity(.6);
-
     }
 }

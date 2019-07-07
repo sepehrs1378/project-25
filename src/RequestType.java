@@ -11,15 +11,22 @@ public enum RequestType {
     endTurn,
     enterGraveYard,
 
-    buy,
+    enterCollectoin,
+    exitCollection,
     sell,
+    createDeck,
+    removeDeck,
+    importDeck,
+    setMainDeck,
 
-    //global chat
+
     sendMessage,
     enterGlobalChat,
     exitGlobalChat,
 
     leaderBoard,
+
+    buy,
     shop,
 
     close

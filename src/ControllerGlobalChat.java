@@ -73,7 +73,6 @@ public class ControllerGlobalChat {
             chatMessages.add(chatMessage);
             new ServerRequestSender(new Request(RequestType.sendMessage, null, null, chatMessages)).start();
             messageBoxTxt.setText("");
-            AnchorPane anchorPane = (AnchorPane) Main.window.getScene().getRoot();
             AnchorPane chatBox = FXMLLoader.load(getClass().getResource("ChatStyle.fxml"));
             setChatBox(chatMessage, chatBox, "#18f527");
             HBox hBox = new HBox();

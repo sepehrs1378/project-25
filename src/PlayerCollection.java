@@ -153,6 +153,7 @@ public class PlayerCollection {
         if (doesHaveDeck(deckName))
             return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
+        new ServerRequestSender(new Request(RequestType.createDeck,deckName,null,null)).start();
         decks.add(newDeck);
         return OutputMessageType.DECK_CREATED;
     }
