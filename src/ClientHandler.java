@@ -130,6 +130,13 @@ public class ClientHandler extends Thread {
                         NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.shop, null, integerList, cardsAndUsables), connection);
                         break;
                     }
+                    case buy:{
+                        OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
+                        List<Object> accountList = new ArrayList<>();
+                        accountList.add(connection.getAccount());
+                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.buy, outputMessageType.getMessage(), null, accountList), connection);
+                        break;
+                    }
                 }
                 Platform.runLater(()->{
                     Server.getInstance().updateCardList();

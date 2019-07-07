@@ -9,7 +9,6 @@ public class NetworkDB {
     private static NetworkDB ourInstance = new NetworkDB();
     private List<Connection> connectionList = new ArrayList<>();
     private Map<Account, AccountStatus> accountStatusMap = new HashMap<>();
-
     private Map<String, Integer> numberOfCards = new HashMap<>();
 
     private List<Usable> usableList = new ArrayList<>();

@@ -2,6 +2,7 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -45,15 +47,15 @@ public class ServerHandler extends Thread {
                 obj = parser.next().getAsJsonObject();
                 Response response = yaGson.fromJson(obj.toString(), Response.class);
                 switch (response.getResponseType()) {
-                    case sendMessage:{
+                    case sendMessage: {
                         ChatMessage chatMessage = (ChatMessage) response.getObjectList().get(0);
-                        Platform.runLater(()->{
+                        Platform.runLater(() -> {
                             AnchorPane chatBox = null;
                             try {
                                 chatBox = FXMLLoader.load(getClass().getResource("ChatStyle.fxml"));
-                                ControllerGlobalChat.setChatBox(chatMessage,chatBox,"#1919f7");
+                                ControllerGlobalChat.setChatBox(chatMessage, chatBox, "#1919f7");
                                 HBox hBox = new HBox();
-                                hBox.setPrefWidth(ControllerGlobalChat.getInstance().getChatVBox().getPrefWidth()-30);
+                                hBox.setPrefWidth(ControllerGlobalChat.getInstance().getChatVBox().getPrefWidth() - 30);
                                 hBox.setAlignment(Pos.BASELINE_LEFT);
                                 hBox.getChildren().add(chatBox);
                                 ControllerGlobalChat.getInstance().getChatVBox().getChildren().add(hBox);
@@ -63,44 +65,44 @@ public class ServerHandler extends Thread {
                         });
                         break;
                     }
-                    case signUp:{
-                        if (response.getMessage().equals(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage())){
+                    case signUp: {
+                        if (response.getMessage().equals(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage())) {
                             Account account = (Account) response.getObjectList().get(0);
                             ClientDB.getInstance().setLoggedInAccount(account);
                             openMainMenu();
-                        }else if (response.getMessage().equals(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage())){
+                        } else if (response.getMessage().equals(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage())) {
                             Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                            if (label != null){
+                            if (label != null) {
                                 Platform.runLater(() -> label.setText(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage()));
                             }
                         }
                         break;
                     }
-                    case login:{
-                        if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())){
+                    case login: {
+                        if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())) {
                             Account account = (Account) response.getObjectList().get(0);
                             ClientDB.getInstance().setLoggedInAccount(account);
                             openMainMenu();
-                        }else if(response.getMessage().equals(OutputMessageType.INVALID_PASSWORD.getMessage())){
+                        } else if (response.getMessage().equals(OutputMessageType.INVALID_PASSWORD.getMessage())) {
                             Label label = findInvalidUserName(Main.window, "loginPane", "invalidPassword");
-                            if (label != null){
+                            if (label != null) {
                                 Platform.runLater(() -> label.setText(OutputMessageType.INVALID_PASSWORD.getMessage()));
                             }
-                        }else if (response.getMessage().equals(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage())){
+                        } else if (response.getMessage().equals(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage())) {
                             Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                            if (label != null){
+                            if (label != null) {
                                 Platform.runLater(() -> label.setText(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage()));
                             }
-                        }else if (response.getMessage().equals(OutputMessageType.ALREADY_LOGGED_IN.getMessage())){
+                        } else if (response.getMessage().equals(OutputMessageType.ALREADY_LOGGED_IN.getMessage())) {
                             Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                            if (label != null){
+                            if (label != null) {
                                 Platform.runLater(() -> label.setText(OutputMessageType.ALREADY_LOGGED_IN.getMessage()));
                             }
                         }
                         break;
                     }
-                    case logout:{
-                        if (response.getMessage().equals(OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage())){
+                    case logout: {
+                        if (response.getMessage().equals(OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage())) {
                             ClientDB.getInstance().setLoggedInAccount(null);
                             Platform.runLater(new Runnable() {
                                 @Override
@@ -125,17 +127,10 @@ public class ServerHandler extends Thread {
                     case updateLeaderBoard:
                         showAccountsInLeaderBoard(response);
                         break;
-                    case shop:{
+                    case shop: {
                         List<Card> cardList = new ArrayList<>();
                         List<Usable> usableList = new ArrayList<>();
-                        for (int i = 0; i < response.getIntegers().get(0); i++) {
-                            cardList.add((Card) response.getObjectList().get(i));
-                        }
-                        for (int i = 0; i < response.getIntegers().get(1); i++) {
-                            usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
-                        }
-                        clientDB.getCardList().addAll(cardList);
-                        clientDB.getUsableList().addAll(usableList);
+                        separateCardsUsables(response, cardList, usableList);
                         Platform.runLater(() -> {
                             try {
                                 ControllerShop.getOurInstance().showCards(cardList, usableList);
@@ -143,12 +138,41 @@ public class ServerHandler extends Thread {
                                 e.printStackTrace();
                             }
                         });
+                        break;
+                    }
+                    case buy: {
+                        clientDB.setLoggedInAccount((Account) response.getObjectList().get(0));
+                        System.out.println("here");
+                        System.out.println(clientDB.getLoggedInAccount().getMoney());
+                        Platform.runLater(() -> {
+                            ControllerShop.getOurInstance().getMoneyLabel().setText(Integer.toString(clientDB.getLoggedInAccount().getMoney()));
+                            ControllerShop.getOurInstance().getBuyMessage().setText(response.getMessage());
+                            PauseTransition visiblePause = new PauseTransition(
+                                    Duration.seconds(1)
+                            );
+                            visiblePause.setOnFinished(
+                                    event1 -> ControllerShop.getOurInstance().getBuyMessage().setText("")
+                            );
+                            visiblePause.play();
+                        });
+                        break;
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void separateCardsUsables(Response response, List<Card> cardList, List<Usable> usableList) {
+        for (int i = 0; i < response.getIntegers().get(0); i++) {
+            cardList.add((Card) response.getObjectList().get(i));
+        }
+        for (int i = 0; i < response.getIntegers().get(1); i++) {
+            usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
+        }
+        clientDB.getCardList().addAll(cardList);
+        clientDB.getUsableList().addAll(usableList);
     }
 
     private void showAccountsInLeaderBoard(Response response) {
@@ -161,6 +185,7 @@ public class ServerHandler extends Thread {
         Collections.sort(accountList);
         Platform.runLater(new Runnable() {
             FXMLLoader fxmlLoader;
+
             @Override
             public void run() {
                 VBox vBox = findVBoxInLeaderBoard(ControllerMainMenu.stage);
@@ -182,11 +207,11 @@ public class ServerHandler extends Thread {
         });
     }
 
-    private VBox findVBoxInLeaderBoard(Stage stage){
+    private VBox findVBoxInLeaderBoard(Stage stage) {
         Parent root = stage.getScene().getRoot();
         ScrollPane scrollPane = null;
         for (int i = 0; i < root.getChildrenUnmodifiable().size(); i++) {
-            if (root.getChildrenUnmodifiable().get(i) instanceof ScrollPane){
+            if (root.getChildrenUnmodifiable().get(i) instanceof ScrollPane) {
                 scrollPane = (ScrollPane) root.getChildrenUnmodifiable().get(i);
             }
         }
@@ -209,21 +234,21 @@ public class ServerHandler extends Thread {
         });
     }
 
-    private Label findInvalidUserName(Stage stage, String paneID, String labelID){
+    private Label findInvalidUserName(Stage stage, String paneID, String labelID) {
         AnchorPane anchorPane = null;
-        for (Object object : stage.getScene().getRoot().getChildrenUnmodifiable()){
-            if (object instanceof AnchorPane){
+        for (Object object : stage.getScene().getRoot().getChildrenUnmodifiable()) {
+            if (object instanceof AnchorPane) {
                 anchorPane = (AnchorPane) object;
-                if (anchorPane.getId().equals(paneID)){
+                if (anchorPane.getId().equals(paneID)) {
                     break;
                 }
             }
         }
-        if (anchorPane != null){
-            for (Object object : anchorPane.getChildren()){
-                if (object instanceof Label){
+        if (anchorPane != null) {
+            for (Object object : anchorPane.getChildren()) {
+                if (object instanceof Label) {
                     Label label = (Label) object;
-                    if (label.getId().equals(labelID)){
+                    if (label.getId().equals(labelID)) {
                         return label;
                     }
                 }
