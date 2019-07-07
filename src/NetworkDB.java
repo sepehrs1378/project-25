@@ -9,17 +9,19 @@ public class NetworkDB {
     private static NetworkDB ourInstance = new NetworkDB();
     private List<Connection> connectionList = new ArrayList<>();
     private Map<Account, AccountStatus> accountStatusMap = new HashMap<>();
+
     private Map<String, Integer> numberOfCards = new HashMap<>();
+
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
-
     public static NetworkDB getInstance() {
         return ourInstance;
     }
 
     private NetworkDB() {
     }
+
     public void makeEveryThing() {
         readSpells();
         readHeroes();
@@ -28,6 +30,9 @@ public class NetworkDB {
         readUsables();
         readCustomCards();
         readCardNumberMap();
+    }
+    public Map<String, Integer> getNumberOfCards() {
+        return numberOfCards;
     }
 
     private void readCardNumberMap() {

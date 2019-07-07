@@ -2,6 +2,7 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
+import javafx.application.Platform;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -103,6 +104,10 @@ public class ClientHandler extends Thread {
 
                 }
             }
+            Platform.runLater(()->{
+                Server.getInstance().updateCardList();
+                Server.getInstance().updateUserList();
+            });
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
