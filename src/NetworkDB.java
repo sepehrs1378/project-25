@@ -66,6 +66,7 @@ public class NetworkDB {
 
     public void closeConnection(Socket socket) {
         Connection connection = getConnectionWithSocket(socket);
+        getAccountStatusMap().put(connection.getAccount(), AccountStatus.offline);
         connection.close();
         connectionList.remove(connection);
     }

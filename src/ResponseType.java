@@ -7,5 +7,6 @@ public enum ResponseType {
     login,
     logout,
     leaderBoard,
-    updateLeaderBoard
+    updateLeaderBoard,
+    shop
 }

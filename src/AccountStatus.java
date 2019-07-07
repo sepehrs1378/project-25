@@ -4,5 +4,5 @@ public enum AccountStatus {
     playing,
     chatting,
     leaderBoard,
-    InShop
+    shop
 }

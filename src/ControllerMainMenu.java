@@ -264,12 +264,13 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
+        new ServerRequestSender(new Request(RequestType.shop, null , null, null)).start();
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
+        Main.dragAbilityForScenes(Main.window, root);
         controllerShop = ControllerShop.getOurInstance();
         Main.setCursor(Main.window);
-        controllerShop.showCards();
     }
 
     @FXML

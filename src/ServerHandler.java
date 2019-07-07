@@ -124,6 +124,23 @@ public class ServerHandler extends Thread {
                     case updateLeaderBoard:
                         showAccountsInLeaderBoard(response);
                         break;
+                    case shop:{
+                        List<Card> cardList = new ArrayList<>();
+                        List<Usable> usableList = new ArrayList<>();
+                        for (int i = 0; i < response.getIntegers().get(0); i++) {
+                            cardList.add((Card) response.getObjectList().get(i));
+                        }
+                        for (int i = 0; i < response.getIntegers().get(1); i++) {
+                            usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
+                        }
+                        Platform.runLater(() -> {
+                            try {
+                                ControllerShop.getOurInstance().showCards(cardList, usableList);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                 }
             }
         } catch (IOException e) {
@@ -180,6 +197,7 @@ public class ServerHandler extends Thread {
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
                     Main.window.setScene(new Scene(root));
+                    Main.dragAbilityForScenes(Main.window, root);
                     Main.setCursor(Main.window);
                 } catch (IOException e) {
                     e.printStackTrace();

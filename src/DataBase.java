@@ -961,14 +961,6 @@ public class DataBase {
         return getCollectableWithName(collectableName) != null;
     }
 
-    public Account getAccountWithUsername(String username) {
-        for (Account account : accountList) {
-            if (account.getUsername().equals(username))
-                return account;
-        }
-        return null;
-    }
-
     public Card findCardInShop(String cardName) {
         for (Card card : cardList) {
             if (card.getName().equals(cardName)) {

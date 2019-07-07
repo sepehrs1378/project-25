@@ -20,6 +20,7 @@ public enum RequestType {
     exitGlobalChat,
 
     leaderBoard,
+    shop,
 
     close
 }
