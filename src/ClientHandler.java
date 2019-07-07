@@ -52,62 +52,74 @@ public class ClientHandler extends Thread {
     }
 
     private void handleAccountCase(Request request) {
+        switch (request.getRequestType()) {
+            case signUp:
+                handleSignUpCase(request);
+                break;
+            case login:
+                handleLoginCase(request);
+                break;
+            case logout:
+                handleLogoutCase(request);
+                break;
+        }
+    }
+
+    private void handleSignUpCase(Request request) {
+        Pattern pattern = Pattern.compile("userName:(\\w+)password:(\\w+)");
+        Matcher matcher = pattern.matcher(request.getMessage());
+        matcher.find();
+        Account account = NetworkDB.getInstance().getAccount(matcher.group(1));
+        if (account != null) {
+            NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.signUp, OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage(), null, null), connection);
+        } else {
+            List<Object> accountList = new ArrayList<>();
+            Account newAccount = new Account(matcher.group(1), matcher.group(2));
+            connection.setAccount(newAccount);
+            NetworkDB.getInstance().getAccountStatusMap().put(newAccount, AccountStatus.online);
+            accountList.add(newAccount);
+            NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.signUp, OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage(), null, accountList), connection);
+        }
+    }
+
+    private void handleLoginCase(Request request) {
+        Pattern pattern = Pattern.compile("userName:(\\w+)password:(\\w+)");
+        Matcher matcher = pattern.matcher(request.getMessage());
+        matcher.find();
+        Account account = NetworkDB.getInstance().getAccount(matcher.group(1));
+        if (account == null) {
+            NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage(), null, null), connection);
+        } else {
+            AccountStatus accountStatus = NetworkDB.getInstance().getAccountStatusMap().get(account);
+            if (!matcher.group(2).equals(account.getPassword())) {
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.INVALID_PASSWORD.getMessage(), null, null), connection);
+                return;
+            }
+            if (accountStatus == AccountStatus.offline) {
+                List<Object> accountList = new ArrayList<>();
+                accountList.add(account);
+                NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.online);
+                connection.setAccount(account);
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage(), null, accountList), connection);
+            } else {
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ALREADY_LOGGED_IN.getMessage(), null, null), connection);
+            }
+        }
+    }
+
+    private void handleLogoutCase(Request request) {
         Pattern pattern;
         Matcher matcher;
         Account account;
-        switch (request.getRequestType()) {
-            case signUp:
-                pattern = Pattern.compile("userName:(\\w+)password:(\\w+)");
-                matcher = pattern.matcher(request.getMessage());
-                matcher.find();
-                account = NetworkDB.getInstance().getAccount(matcher.group(1));
-                if (account != null) {
-                    NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.signUp, OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage(), null, null), connection);
-                } else {
-                    List<Object> accountList = new ArrayList<>();
-                    Account newAccount = new Account(matcher.group(1), matcher.group(2));
-                    connection.setAccount(newAccount);
-                    NetworkDB.getInstance().getAccountStatusMap().put(newAccount, AccountStatus.online);
-                    accountList.add(newAccount);
-                    NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.signUp, OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage(), null, accountList), connection);
-                }
-                break;
-            case login:
-                pattern = Pattern.compile("userName:(\\w+)password:(\\w+)");
-                matcher = pattern.matcher(request.getMessage());
-                matcher.find();
-                account = NetworkDB.getInstance().getAccount(matcher.group(1));
-                if (account == null) {
-                    NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage(), null, null), connection);
-                } else {
-                    AccountStatus accountStatus = NetworkDB.getInstance().getAccountStatusMap().get(account);
-                    if (!matcher.group(2).equals(account.getPassword())) {
-                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.INVALID_PASSWORD.getMessage(), null, null), connection);
-                        break;
-                    }
-                    if (accountStatus == AccountStatus.offline) {
-                        List<Object> accountList = new ArrayList<>();
-                        accountList.add(account);
-                        NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.online);
-                        connection.setAccount(account);
-                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage(), null, accountList), connection);
-                    } else {
-                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.ALREADY_LOGGED_IN.getMessage(), null, null), connection);
-                    }
-                }
-                break;
-            case logout:
-                pattern = Pattern.compile("userName:(\\w+)");
-                matcher = pattern.matcher(request.getMessage());
-                if (matcher.find()) {
-                    account = NetworkDB.getInstance().getAccount(matcher.group(1));
-                    if (account != null) {
-                        connection.setAccount(null);
-                        NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.offline);
-                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage(), null, null), connection);
-                    }
-                }
-                break;
+        pattern = Pattern.compile("userName:(\\w+)");
+        matcher = pattern.matcher(request.getMessage());
+        if (matcher.find()) {
+            account = NetworkDB.getInstance().getAccount(matcher.group(1));
+            if (account != null) {
+                connection.setAccount(null);
+                NetworkDB.getInstance().getAccountStatusMap().put(account, AccountStatus.offline);
+                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.login, OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage(), null, null), connection);
+            }
         }
     }
 
@@ -117,6 +129,7 @@ public class ClientHandler extends Thread {
                 handleUnitMoveCase(request);
                 break;
             case attackUnit:
+                handleAttackUnitCase(request);
                 break;
             case endTurn:
                 break;
@@ -127,11 +140,47 @@ public class ClientHandler extends Thread {
             case useCollectable:
                 break;
             case selectUnit:
+                handleUnitSelectingCase(request);
                 break;
             case enterGraveYard:
+                handleEnterGraveYard(request);
                 break;
             case forfeit:
+                handleForfeitCase(request);
                 break;
+        }
+    }
+
+    private void handleForfeitCase(Request request) {
+        connection.getCurrentBattle()
+    }
+
+    private void handleAttackUnitCase(Request request) {
+        //todo
+    }
+
+    private void handleEnterGraveYard(Request request) {
+        //todo
+    }
+
+    private void handleUnitSelectingCase(Request request) {
+        Battle battle = connection.getCurrentBattle();
+        String id = request.getMessage();
+        switch (battle.getPlayerInTurn().selectUnit(id, battle)) {
+            case SELECTED:
+                Response response = new Response(ResponseType.unitSelected, id, null, battle);
+                networkDB.sendResponseToClient(response, connection);
+                break;
+            case INVALID_COLLECTABLE_CARD:
+                //empty
+                break;
+            case ENEMY_UNIT_SELECTED:
+                //empty
+                break;
+            case UNIT_IS_STUNNED:
+                //empty
+                break;
+            default:
         }
     }
 

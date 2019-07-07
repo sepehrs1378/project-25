@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import sun.net.ConnectionResetException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -165,7 +166,7 @@ public class ControllerBattleCommands implements Initializable {
     private ProgressBar timeBar;
 
     @FXML
-    void endTurn(MouseEvent event) throws GoToMainMenuException {
+    void endTurn(MouseEvent event) {
         //todo
         endTurnWhenClicked();
         endTurnMineBtn.setVisible(false);
@@ -328,16 +329,24 @@ public class ControllerBattleCommands implements Initializable {
                                 , getHandImageWithCardView(clickedImageView).getId()
                                 , null, row, column));
             }
-            if (clickedImageView == specialPowerView) {
+            if (clickedImageView.equals(specialPowerView)) {
                 new ServerRequestSender(
-                        new Request(RequestType.useSpecialPower
-                                ,)
-                )
+                        new Request(RequestType.useSpecialPower, null
+                                , null, row, column));
+            }
+            if (clickedImageView.equals(collectableView)) {
+                new ServerRequestSender(
+                        new Request(RequestType.useCollectable, null,
+                                null, row, column));
             }
             if (isClickedImageViewUnit()) {
-
+                new ServerRequestSender(
+                        new Request(RequestType.moveUnit
+                                , getUnitImageWithUnitView(clickedImageView).getId()
+                                , null, row, column));
             }
-        } else {
+        }
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
             //todo complete it for other purposes too
             if (isClickedImageViewInHand()) {
                 if (handleCardInsertion(row, column)) {
@@ -350,6 +359,9 @@ public class ControllerBattleCommands implements Initializable {
                     updatePane();
                     return;
                 }
+            }
+            if (clickedImageView.equals(collectableView)) {
+
             }
             if (isClickedImageViewUnit()) {
                 if (handleUnitMove(row, column)) {
@@ -367,6 +379,14 @@ public class ControllerBattleCommands implements Initializable {
                 return true;
         }
         return false;
+    }
+
+    private UnitImage getUnitImageWithUnitView(ImageView unitView) {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage.getUnitView().equals(unitView))
+                return unitImage;
+        }
+        return null;
     }
 
     private boolean handleSpecialPowerInsertion(int row, int column) {
@@ -502,20 +522,26 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
-        if (currentPlayer.getSelectedCollectable() == null) {
-            if (handleUnitSelection(id)) {
-                updatePane();
-                return;
-            }
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            new ServerRequestSender(new Request(RequestType.selectUnit
+                    , getUnitImageWithUnitView(clickedImageView).getId(), null));
         }
-        if (currentPlayer.getSelectedUnit() != null) {
-            if (handleUnitAttack(id)) {
-                updatePane();
-                return;
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
+            Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
+            if (currentPlayer.getSelectedCollectable() == null) {
+                if (handleUnitSelection(id)) {
+                    updatePane();
+                    return;
+                }
             }
+            if (currentPlayer.getSelectedUnit() != null) {
+                if (handleUnitAttack(id)) {
+                    updatePane();
+                    return;
+                }
+            }
+            updatePane();
         }
-        updatePane();
     }
 
     private boolean handleUnitAttack(String id) {

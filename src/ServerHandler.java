@@ -46,10 +46,22 @@ public class ServerHandler extends Thread {
     private void handleMultiPlayerCase(Response response) {
         switch (response.getResponseType()) {
             case unitMoved:
-                clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
+                handleUnitMovedCase(response);
+            case unitSelected:
+                UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
+                ControllerBattleCommands.getOurInstance().setClickedImageView();
                 break;
             default:
         }
+    }
+
+    private void handleUnitMovedCase(Response response) {
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
+        String id = response.getMessage();
+        Integer row = (Integer) response.getObjectList().get(0);
+        Integer column = (Integer) response.getObjectList().get(1);
+        UnitImage movedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(id);
+        movedUnit.showRun(row, column);
     }
 
     private void handleMatchFoundCase(Response response) {
