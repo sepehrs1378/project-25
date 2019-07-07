@@ -48,7 +48,7 @@ public class PlayerCollection {
         }
     }
 
-    public OutputMessageType removeCard(String id, String fromDeck) { //todo Parham!fix this!
+    public OutputMessageType removeCard(String id, String fromDeck) {
         Deck deck = getDeckByName(fromDeck);
         if (deck == null) {
             return OutputMessageType.DECK_DOESNT_EXIST;

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 
 import java.io.File;
 import java.io.IOException;
@@ -320,6 +321,7 @@ public class ControllerCollection implements Initializable {
     @FXML
     void goBack(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.exitCollection,null,null,null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);

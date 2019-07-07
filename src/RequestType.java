@@ -18,6 +18,9 @@ public enum RequestType {
     removeDeck,
     importDeck,
     setMainDeck,
+    moveCardToDeck,
+    removeCardFromDeck,
+    sellCard,
 
 
     sendMessage,

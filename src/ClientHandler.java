@@ -162,6 +162,24 @@ public class ClientHandler extends Thread {
                         connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
                         break;
                     }
+                    case exitCollection:{
+                        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(),AccountStatus.online);
+                        break;
+                    }
+                    case moveCardToDeck:{
+                        JsonObject jsonObject =(JsonObject) request.getObjects().get(0);
+                        String deckName = jsonObject.get("deckName").getAsString();
+                        String cardId = jsonObject.get("cardID").getAsString();
+                        connection.getAccount().getPlayerInfo().getCollection().addCard(cardId,deckName);
+                        break;
+                    }
+                    case removeCardFromDeck:{
+                        JsonObject jsonObject = (JsonObject)request.getObjects().get(0);
+                        String deckName = jsonObject.get("deck").getAsString();
+                        String id = jsonObject.get("id").getAsString();
+                        connection.getAccount().getPlayerInfo().getCollection().removeCard(id,deckName);
+                        break;
+                    }
                 }
                 Platform.runLater(() -> {
                     Server.getInstance().updateCardList();
