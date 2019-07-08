@@ -18,15 +18,25 @@ public enum RequestType {
     findMultiFlagsMatch,
     cancelMatchFinding,
 
-    buy,
+    enterCollectoin,
+    exitCollection,
     sell,
+    createDeck,
+    removeDeck,
+    importDeck,
+    setMainDeck,
+    moveCardToDeck,
+    removeCardFromDeck,
+    sellCard,
 
-    //global chat
+
     sendMessage,
     enterGlobalChat,
     exitGlobalChat,
 
     leaderBoard,
+
+    buy,
     shop,
 
     close

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerCollectionEditMenu implements Initializable {
-    private DataBase dataBase = DataBase.getInstance();
+    private ClientDB dataBase = ClientDB.getInstance();
     private static ControllerCollectionEditMenu ourInstance;
 
     public ControllerCollectionEditMenu(){

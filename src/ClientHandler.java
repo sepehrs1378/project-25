@@ -26,7 +26,7 @@ public class ClientHandler extends Thread {
         NetworkDB.getInstance().addConnection(connection);
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         JsonStreamParser parser = connection.getParser();
-        try{
+        try {
             while (true) {
                 JsonObject obj = parser.next().getAsJsonObject();
                 Request request = yaGson.fromJson(obj.toString(), Request.class);
@@ -49,7 +49,7 @@ public class ClientHandler extends Thread {
                     }
                     case exitGlobalChat: {
                         Account account = netWorkDB.getAccountWithUserName(request.getMessage());
-                        netWorkDB.getAccountStatusMap().put(account,AccountStatus.online);
+                        netWorkDB.getAccountStatusMap().put(account, AccountStatus.online);
                         break;
                     }
                     case signUp: {
@@ -118,7 +118,7 @@ public class ClientHandler extends Thread {
                         NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.leaderBoard, null, integerList, accountList), connection);
                         break;
                     }
-                    case shop:{
+                    case shop: {
                         NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.shop);
                         List<Object> cardList = new ArrayList<>(NetworkDB.getInstance().getCardList());
                         List<Object> usableList = new ArrayList<>(NetworkDB.getInstance().getUsableList());
@@ -131,6 +131,57 @@ public class ClientHandler extends Thread {
                         NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.shop, null, integerList, cardsAndUsables), connection);
                         break;
                     }
+                    case enterCollectoin: {
+                        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.collection);
+                        break;
+                    }
+                    case createDeck: {
+                        Deck deck = new Deck(request.getMessage());
+                        connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+                        break;
+                    }
+                    case removeDeck: {
+                        String deckName = request.getMessage();
+                        for (Deck deck : connection.getAccount().getPlayerInfo().getCollection().getDecks()) {
+                            if (deck.getName().equals(deckName)) {
+                                connection.getAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
+                                if (connection.getAccount().getMainDeck().getName().equals(deckName)) {
+                                    connection.getAccount().setMainDeck(null);
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case setMainDeck: {
+                        String deckName = request.getMessage();
+                        Deck deck = connection.getAccount().getPlayerInfo().getCollection().getDeckByName(deckName);
+                        connection.getAccount().setMainDeck(deck);
+                        break;
+                    }
+                    case importDeck:{
+                        Deck deck = (Deck) request.getObjects().get(0);
+                        connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+                        break;
+                    }
+                    case exitCollection:{
+                        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(),AccountStatus.online);
+                        break;
+                    }
+                    case moveCardToDeck:{
+                        JsonObject jsonObject =(JsonObject) request.getObjects().get(0);
+                        String deckName = jsonObject.get("deckName").getAsString();
+                        String cardId = jsonObject.get("cardID").getAsString();
+                        connection.getAccount().getPlayerInfo().getCollection().addCard(cardId,deckName);
+                        break;
+                    }
+                    case removeCardFromDeck:{
+                        JsonObject jsonObject = (JsonObject)request.getObjects().get(0);
+                        String deckName = jsonObject.get("deck").getAsString();
+                        String id = jsonObject.get("id").getAsString();
+                        connection.getAccount().getPlayerInfo().getCollection().removeCard(id,deckName);
+                        break;
+                    }
                     case buy:{
                         OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
                         List<Object> accountList = new ArrayList<>();
@@ -139,14 +190,14 @@ public class ClientHandler extends Thread {
                         break;
                     }
                 }
-                Platform.runLater(()->{
+                Platform.runLater(() -> {
                     Server.getInstance().updateCardList();
                     Server.getInstance().updateUserList();
                 });
                 if (request.getRequestType().equals(RequestType.close))
                     break;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             NetworkDB.getInstance().closeConnection(socket);
             updateAccountsInLeaderBoard();
         }
@@ -163,13 +214,13 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void updateAccountsInLeaderBoard(){
+    private void updateAccountsInLeaderBoard() {
         List<Object> accountList = new ArrayList<>(NetworkDB.getInstance().getAccountStatusMap().keySet());
         List<Integer> integerList = new ArrayList<>();
         setIntegerList(accountList, integerList);
-        for (Object object : accountList){
+        for (Object object : accountList) {
             Account account = (Account) object;
-            if (NetworkDB.getInstance().getAccountStatusMap().get(account).equals(AccountStatus.leaderBoard)){
+            if (NetworkDB.getInstance().getAccountStatusMap().get(account).equals(AccountStatus.leaderBoard)) {
                 NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.updateLeaderBoard, null, integerList, accountList), NetworkDB.getInstance().getConnectionWithAccount(account));
             }
         }

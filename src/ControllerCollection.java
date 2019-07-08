@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class ControllerCollection implements Initializable {
     private static ControllerCollection ourInstance = new ControllerCollection();
-    private DataBase dataBase = DataBase.getInstance();
+    private ClientDB dataBase = ClientDB.getInstance();
     private Label selectedLabel = null;
 
     public ControllerCollection() {
@@ -79,6 +80,7 @@ public class ControllerCollection implements Initializable {
         }
         Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
         dataBase.getLoggedInAccount().setMainDeck(deck);
+        new ServerRequestSender(new Request(RequestType.setMainDeck,deck.getName(),null,null)).start();
         createDeckLabel.setText("Selected Deck Has Been Set As The Main Deck");
         mainDeckLabel.setText("Main Deck : " + dataBase.getLoggedInAccount().getMainDeck().getName());
         PauseTransition visiblePause = new PauseTransition(
@@ -140,11 +142,18 @@ public class ControllerCollection implements Initializable {
             return;
         }
         Deck deck = dataBase.importDeck(file.getAbsolutePath());
+        if (dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(deck.getName())!=null){
+            new Alert(Alert.AlertType.ERROR,"a deck with this name already exists!").showAndWait();
+            return;
+        }
         if (!hasAllCards(deck)) {
             new Alert(Alert.AlertType.ERROR, "you don't possess all the cards that you need").showAndWait();
         } else {
             changeIDs(deck);
             dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+            List<Object> objectList = new ArrayList<>();
+            objectList.add(deck);
+            new ServerRequestSender(new Request(RequestType.importDeck,null,null,objectList)).start();
             showDecks();
         }
     }
@@ -264,7 +273,9 @@ public class ControllerCollection implements Initializable {
     @FXML
     void removeDeck(MouseEvent event) {
         Main.playWhenButtonClicked();
-        Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(selectedLabel.getText().split("\\s+")[0]);
+        String deckName = selectedLabel.getText().split("\\s+")[0];
+        Deck deck = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDeckByName(deckName);
+        new ServerRequestSender(new Request(RequestType.removeDeck,deckName,null,null)).start();
         dataBase.getLoggedInAccount().getPlayerInfo().getCollection().getDecks().remove(deck);
         if (deck == dataBase.getLoggedInAccount().getMainDeck()) {
             dataBase.getLoggedInAccount().setMainDeck(null);
@@ -310,6 +321,7 @@ public class ControllerCollection implements Initializable {
     @FXML
     void goBack(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.exitCollection,null,null,null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);

@@ -48,7 +48,7 @@ public class PlayerCollection {
         }
     }
 
-    public OutputMessageType removeCard(String id, String fromDeck) { //todo Parham!fix this!
+    public OutputMessageType removeCard(String id, String fromDeck) {
         Deck deck = getDeckByName(fromDeck);
         if (deck == null) {
             return OutputMessageType.DECK_DOESNT_EXIST;
@@ -153,6 +153,7 @@ public class PlayerCollection {
         if (doesHaveDeck(deckName))
             return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
+        new ServerRequestSender(new Request(RequestType.createDeck,deckName,null,null)).start();
         decks.add(newDeck);
         return OutputMessageType.DECK_CREATED;
     }
