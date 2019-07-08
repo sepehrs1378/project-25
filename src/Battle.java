@@ -385,7 +385,7 @@ public class Battle {
     public boolean isCellNearbyFriendlyUnits(int row, int column, Battle battle) {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
-                if (!isCoordinationValid(i, j) || i == j)
+                if (!isCoordinationValid(i, j)||(i==row && column == j))
                     continue;
                 Cell cell = battle.getBattleGround().getCells()[i][j];
                 if (cell.isEmptyOfUnit())

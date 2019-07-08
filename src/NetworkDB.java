@@ -215,6 +215,7 @@ public class NetworkDB {
 
     public void sendResponseToPlayerAndOpponent(Response response, Connection connection) {
         sendResponseToClient(response, connection);
+        System.out.println(getOpponentConnection(connection));
         sendResponseToClient(response, getOpponentConnection(connection));
     }
 

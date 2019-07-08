@@ -1,6 +1,7 @@
 //import com.teamdev.jxcapture.Codec;
 //import com.teamdev.jxcapture.EncodingParameters;
 //import com.teamdev.jxcapture.VideoCapture;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -24,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -501,12 +501,23 @@ public class ControllerBattleCommands implements Initializable {
 
     public void showCardInsertion(int row, int column, String id) {
         Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
+        if (card == null) {
+            if (clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName().equals(
+                    clientDB.getLoggedInAccount().getUsername()
+            )){
+                card = clientDB.getCurrentBattle().getPlayer2().getHand().getCardById(id);
+            }else{
+                card = clientDB.getCurrentBattle().getPlayer1().getHand().getCardById(id);
+            }
+        }
         HandImage handImage = getHandImageWithId(id);
         if (card instanceof Unit)
             insertUnitView(row, column, card);
         if (card instanceof Spell)
             insertSpellView(row, column, card);
-        handImage.clearHandImage();
+        if (handImage != null) {
+            handImage.clearHandImage();
+        }
     }
 
     public List<SpellImage> getSpellImageList() {
