@@ -402,6 +402,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private UnitImage getUnitImageWithUnitView(ImageView unitView) {
+        System.out.println(unitView.getId());
         for (UnitImage unitImage : unitImageList) {
             if (unitImage.getUnitView().equals(unitView))
                 return unitImage;
@@ -553,7 +554,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleUnitClicked(String id) {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI))
-            handleUnitClickedForMulti();
+            handleUnitClickedForMulti(id);
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE))
             handleUnitClickedForSingle(id);
     }
@@ -573,19 +574,19 @@ public class ControllerBattleCommands implements Initializable {
         updatePane();
     }
 
-    private void handleUnitClickedForMulti() {
+    private void handleUnitClickedForMulti(String id) {
         //todo other cases select and attack
         Battle battle = clientDB.getCurrentBattle();
-        UnitImage clickedUnit = getUnitImageWithUnitView(clickedImageView);
+        UnitImage clickedUnit = getUnitImageWithId(id);
         if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
                 .equals(Constants.FRIEND)) {
             new ServerRequestSender(new Request(RequestType.selectUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
+                    , id, null, null)).start();
         }
         if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
                 .equals(Constants.ENEMY)) {
             new ServerRequestSender(new Request(RequestType.attackUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
+                    , id, null, null)).start();
         }
     }
 
