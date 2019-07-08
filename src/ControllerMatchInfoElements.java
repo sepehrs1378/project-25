@@ -2,7 +2,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
@@ -15,6 +18,26 @@ public class ControllerMatchInfoElements {
 
     @FXML
     private AnchorPane matchHistoryPane;
+
+    @FXML
+    private ImageView replayBtn;
+
+    @FXML
+    void makeReplayBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
+        replayBtn.setStyle("-fx-opacity: 1");
+    }
+
+    @FXML
+    void makeReplayBtnTransparent(MouseEvent event) {
+        replayBtn.setStyle("-fx-opacity: 0.8");
+    }
+
+    @FXML
+    void replayGame(MouseEvent event) {
+//        Media media = new Media();
+//        MediaPlayer mediaPlayer = new MediaPlayer();
+    }
 
 
     public void setHistoryStatus(String opponentName, String winOrLoss, long seconds,

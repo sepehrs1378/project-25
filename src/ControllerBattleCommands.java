@@ -1,3 +1,6 @@
+import com.teamdev.jxcapture.Codec;
+import com.teamdev.jxcapture.EncodingParameters;
+import com.teamdev.jxcapture.VideoCapture;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -21,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -787,5 +791,25 @@ public class ControllerBattleCommands implements Initializable {
 
     public List<UnitImage> getUnitImageList() {
         return unitImageList;
+    }
+
+    public void recordVideo() {
+        final VideoCapture videoCapture = VideoCapture.create();
+        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
+
+        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+        Codec videoCodec = videoCodecs.get(1);
+
+        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
+        encodingParameters.setSize(new Dimension(640, 480));
+        encodingParameters.setBitrate(500000);
+        encodingParameters.setFramerate(30);
+        encodingParameters.setCodec(videoCodec);
+
+        videoCapture.setEncodingParameters(encodingParameters);
+        videoCapture.start();
+
+//        videoCapture.stop();
+//        System.out.println("Done.");
     }
 }
