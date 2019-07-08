@@ -1,0 +1,23 @@
+{
+  "@type": "Account",
+  "@val": {
+    "levelsOpennessStatus": [
+      true,
+      true,
+      true
+    ],
+    "password": "parham",
+    "username": "parham",
+    "playerInfo": {
+      "playerName": "parham",
+      "collection": {
+        "decks": [],
+        "cards": [],
+        "items": []
+      }
+    },
+    "matchList": [],
+    "money": 1000000,
+    "turnDuration": "No Time Limit"
+  }
+}
