@@ -145,22 +145,22 @@ public class CollectionCardBackGround {
 
     @FXML
     void sellCard(MouseEvent event) {
-        ControllerCollectionEditMenu controllerCollectionEditMenu = ControllerCollectionEditMenu.getOurInstance();
-        OutputMessageType outputMessageType = null;
-        if (object instanceof Card) {
-            Card card = (Card) object;
-            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(card.getId());
-        }
-        if (object instanceof Usable) {
-            Usable usable = (Usable) object;
-            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(usable.getId());
-        }
-        if (outputMessageType != null) {
-            controllerCollectionEditMenu.getMessageLabel().setText(outputMessageType.getMessage());
-            removeMessage();
-        }
-        controllerCollectionEditMenu.showCardsInCollection();
-        controllerCollectionEditMenu.showCardsInDeck();
+//        ControllerCollectionEditMenu controllerCollectionEditMenu = ControllerCollectionEditMenu.getOurInstance();
+//        OutputMessageType outputMessageType = null;
+//        if (object instanceof Card) {
+//            Card card = (Card) object;
+//            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(card.getId());
+//        }
+//        if (object instanceof Usable) {
+//            Usable usable = (Usable) object;
+//            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(usable.getId());
+//        }
+//        if (outputMessageType != null) {
+//            controllerCollectionEditMenu.getMessageLabel().setText(outputMessageType.getMessage());
+//            removeMessage();
+//        }
+//        controllerCollectionEditMenu.showCardsInCollection();
+//        controllerCollectionEditMenu.showCardsInDeck();
     }
 
     @FXML

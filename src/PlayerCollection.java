@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCollection {
-    private static transient DataBase dataBase = DataBase.getInstance();
+    private static transient NetworkDB dataBase = NetworkDB.getInstance();
     private List<Deck> decks = new ArrayList<>();
     private List<Card> cards = new ArrayList<>();
     private List<Usable> items = new ArrayList<>();
@@ -116,15 +116,15 @@ public class PlayerCollection {
         return getCardWithID(id) != null;
     }
 
-    public OutputMessageType deleteDeck(String deckName) {
-        if (!doesHaveDeck(deckName))
-            return OutputMessageType.DECK_DOESNT_EXIST;
-        Deck deck = getDeckByName(deckName);
-        decks.remove(deck);
-        if (dataBase.getLoggedInAccount().getMainDeck() == deck)
-            dataBase.getLoggedInAccount().setMainDeck(null);
-        return OutputMessageType.DECK_DELETED;
-    }
+//    public OutputMessageType deleteDeck(String deckName) {
+//        if (!doesHaveDeck(deckName))
+//            return OutputMessageType.DECK_DOESNT_EXIST;
+//        Deck deck = getDeckByName(deckName);
+//        decks.remove(deck);
+//        if (dataBase.getLoggedInAccount().getMainDeck() == deck)
+//            dataBase.getLoggedInAccount().setMainDeck(null);
+//        return OutputMessageType.DECK_DELETED;
+//    }
 
     public Deck getDeckByName(String deckName) {
         for (Deck deck : decks) {
@@ -157,69 +157,72 @@ public class PlayerCollection {
         return OutputMessageType.DECK_CREATED;
     }
 
-    public OutputMessageType buy(String name) {
-        dataBase = DataBase.getInstance();
+    public OutputMessageType buy(Account account, String name) {
         if (dataBase.doesCardExist(name)) {
             Card card = dataBase.getCardWithName(name);
-            if (dataBase.getLoggedInAccount().getMoney() < card.getPrice())
+            if (account.getMoney() < card.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
-            else {
-                buySuccessful(name);
+            else if (dataBase.getNumberOfCards().get(name) == 0){
+                return OutputMessageType.NO_MORE_IN_SHOP;
+            } else {
+                buySuccessful(account, name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         } else if (dataBase.doesUsableExist(name)) {
             Usable usable = dataBase.getUsableWithName(name);
-            if (dataBase.getLoggedInAccount().getMoney() < usable.getPrice())
+            if (account.getMoney() < usable.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
             if (items.size() == 3)
                 return OutputMessageType.CANT_HAVE_MORE_ITEMS;
             else {
-                buySuccessful(name);
+                buySuccessful(account, name);
                 return OutputMessageType.BOUGHT_SUCCESSFULLY;
             }
         }
         return OutputMessageType.NOT_IN_SHOP;
     }
 
-    public void buySuccessful(String name) {
+    public void buySuccessful(Account account, String name) {
         Card card = dataBase.findCardInShop(name);
         if (card != null) {
+            Integer num = dataBase.getNumberOfCards().get(name);
+            dataBase.getNumberOfCards().put(name, num - 1);
             Card cloneCard = card.clone();
-            dataBase.getLoggedInAccount().takeAwayMoney(card.getPrice());
-            defineNewId(cloneCard);
+            account.takeAwayMoney(card.getPrice());
+            defineNewId(account, cloneCard);
             if (cloneCard instanceof Unit) {
                 Unit unit = ((Unit) cloneCard).clone();
-                dataBase.getLoggedInAccount().getPlayerInfo().addCardToCollection(unit);
+                account.getPlayerInfo().addCardToCollection(unit);
             } else if (cloneCard instanceof Spell) {
                 Spell spell = ((Spell) cloneCard).clone();
-                dataBase.getLoggedInAccount().getPlayerInfo().addCardToCollection(spell);
+                account.getPlayerInfo().addCardToCollection(spell);
             }
             return;
         }
         Usable usable = dataBase.findUsableInShop(name);
         if (usable != null) {
             Usable cloneUsable = usable.clone();
-            dataBase.getLoggedInAccount().getPlayerInfo().addUsableToCollection(cloneUsable);
-            dataBase.getLoggedInAccount().takeAwayMoney(usable.getPrice());
-            defineNewId(cloneUsable);
+            account.getPlayerInfo().addUsableToCollection(cloneUsable);
+            account.takeAwayMoney(usable.getPrice());
+            defineNewId(account, cloneUsable);
         }
     }
 
-    private void defineNewId(Object obj) {
-        PlayerCollection collection = dataBase.getLoggedInAccount().getPlayerInfo().getCollection();
+    private void defineNewId(Account account, Object obj) {
+        PlayerCollection collection = account.getPlayerInfo().getCollection();
         boolean didExit = false;
         int counter = 1;
         String id = "";
         if (obj instanceof Card) {
             while (!didExit) {
-                id = dataBase.getLoggedInAccount().getUsername() + "_" + ((Card) obj).getName() + "_" + counter;
+                id = account.getUsername() + "_" + ((Card) obj).getName() + "_" + counter;
                 didExit = isIdUnique(collection.getCards(), id);
                 counter++;
             }
             ((Card) obj).setId(id);
         } else if (obj instanceof Usable) {
             while (!didExit) {
-                id = dataBase.getLoggedInAccount().getUsername() + "_" + ((Usable) obj).getName() + "_" + counter;
+                id = account.getUsername() + "_" + ((Usable) obj).getName() + "_" + counter;
                 didExit = isIdUnique(id, collection.getItems());
                 counter++;
             }
@@ -249,12 +252,12 @@ public class PlayerCollection {
         return isUnique;
     }
 
-    public OutputMessageType sell(String id) {
+    public OutputMessageType sell(Account account, String id) {
         Object obj = searchCardOrItemWithId(id);
         if (obj != null) {
             if (obj instanceof Card) {
                 Card card = (Card) obj;
-                dataBase.getLoggedInAccount().addMoney(card.getPrice());
+                account.addMoney(card.getPrice());
                 cards.remove(card);
                 for (Deck deck : decks) {
                     deck.getCards().remove(card);
@@ -265,7 +268,7 @@ public class PlayerCollection {
             }
             if (obj instanceof Usable) {
                 Usable usable = (Usable) obj;
-                dataBase.getLoggedInAccount().addMoney(usable.getPrice());
+                account.addMoney(usable.getPrice());
                 items.remove(usable);
                 for (Deck deck : decks) {
                     if (deck.getItem() != null && deck.getItem().equals(usable)) {
@@ -278,10 +281,10 @@ public class PlayerCollection {
         return OutputMessageType.NOT_IN_COLLECTION;
     }
 
-    public OutputMessageType selectDeckAsMain(String deckName) {
+    public OutputMessageType selectDeckAsMain(Account account, String deckName) {
         if (!doesHaveDeck(deckName))
             return OutputMessageType.DECK_DOESNT_EXIST;
-        dataBase.getLoggedInAccount().setMainDeck(getDeckByName(deckName));
+        account.setMainDeck(getDeckByName(deckName));
         return OutputMessageType.DECK_SELECTED;
     }
 

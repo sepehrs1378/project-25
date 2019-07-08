@@ -1,0 +1,22 @@
+{
+  "@type": "com.google.gson.JsonObject",
+  "@val": {
+    "members": {
+      "cardName": {
+        "@type": "com.google.gson.JsonPrimitive",
+        "@val": {
+          "value": "sacrifice"
+        }
+      },
+      "number": {
+        "@type": "com.google.gson.JsonPrimitive",
+        "@val": {
+          "value": {
+            "@type": "java.lang.Integer",
+            "@val": 10
+          }
+        }
+      }
+    }
+  }
+}

@@ -480,8 +480,8 @@ public class Battle {
     }
 
     private OutputMessageType endBattle(Player winner) {
-        Account player1Account = dataBase.getAccountWithUsername(player1.getPlayerInfo().getPlayerName());
-        Account player2Account = dataBase.getAccountWithUsername(player2.getPlayerInfo().getPlayerName());
+        Account player1Account = NetworkDB.getInstance().getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
+        Account player2Account = NetworkDB.getInstance().getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
         int sizeMatchList1 = player1Account.getMatchList().size();
         int sizeMatchList2 = player2Account.getMatchList().size();
         if (winner == player1) {

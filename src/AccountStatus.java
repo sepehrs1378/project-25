@@ -2,5 +2,7 @@ public enum AccountStatus {
     online,
     offline,
     playing,
-    chatting;
+    chatting,
+    leaderBoard,
+    shop
 }

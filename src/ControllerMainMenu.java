@@ -41,6 +41,9 @@ public class ControllerMainMenu {
     private ImageView closeBtn;
 
     @FXML
+    private ImageView enterGlobalChatBtn;
+
+    @FXML
     private ImageView leaderBoardBtn;
 
     @FXML
@@ -107,9 +110,17 @@ public class ControllerMainMenu {
     }
 
     @FXML
-    void showLeaderBoard(MouseEvent event) {
+    void showLeaderBoard(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        //todo
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerLeaderBoard.fxml"));
+        stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        Main.setCursor(stage);
+        Main.dragAbilityForScenes(stage, root);
+        stage.showAndWait();
     }
 
 
@@ -262,12 +273,13 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
+        new ServerRequestSender(new Request(RequestType.shop, null , null, null)).start();
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
+        Main.dragAbilityForScenes(Main.window, root);
         controllerShop = ControllerShop.getOurInstance();
         Main.setCursor(Main.window);
-        controllerShop.showCards();
     }
 
     @FXML
@@ -279,5 +291,27 @@ public class ControllerMainMenu {
     @FXML
     void makeShopBtnTransparent(MouseEvent event) {
         shopBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+
+    @FXML
+    void enterGlobalChat(MouseEvent event) throws IOException {
+        Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.enterGlobalChat,ClientDB.getInstance().getLoggedInAccount().getUsername(),null,null)).start();
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerGlobalChat.fxml"));
+        Main.window.setScene(new Scene(root));
+        Main.setCursor(Main.window);
+    }
+
+    @FXML
+    void makeGlobalChatBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
+        enterGlobalChatBtn.setOpacity(1);
+    }
+
+    @FXML
+    void makeGlobalChatBtnTransparent(MouseEvent event) {
+        enterGlobalChatBtn.setOpacity(.6);
+
     }
 }

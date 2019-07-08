@@ -21,7 +21,13 @@ public enum RequestType {
     buy,
     sell,
 
+    //global chat
     sendMessage,
+    enterGlobalChat,
+    exitGlobalChat,
+
+    leaderBoard,
+    shop,
 
     close
 }

@@ -17,11 +17,12 @@ import java.util.List;
 
 public class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
-    private DataBase dataBase = DataBase.getInstance();
+    private ClientDB dataBase = ClientDB.getInstance();
 
     public ControllerShop() {
         ourInstance = this;
     }
+
     @FXML
     private HBox upperBox;
 
@@ -47,58 +48,33 @@ public class ControllerShop {
     void displayAppropriateCards(ActionEvent event) throws IOException {
         lowerBox.getChildren().clear();
         upperBox.getChildren().clear();
-        if (addCardText.getText().isEmpty()){
-            showCards();
+        if (addCardText.getText().isEmpty()) {
+            showCards(dataBase.getCardList(), dataBase.getUsableList());
             return;
         }
         List<Card> cardList = new ArrayList<>();
         for (int i = 0; i < dataBase.getCardList().size(); i++) {
-            if(dataBase.getCardList().get(i).getName().contains(addCardText.getText())){
+            if (dataBase.getCardList().get(i).getName().contains(addCardText.getText())) {
                 cardList.add(dataBase.getCardList().get(i));
             }
         }
         List<Usable> usableList = new ArrayList<>();
         for (int i = 0; i < dataBase.getUsableList().size(); i++) {
-            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())){
+            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())) {
                 usableList.add(dataBase.getUsableList().get(i));
             }
         }
-        if(usableList.isEmpty() && cardList.isEmpty()){
+        if (usableList.isEmpty() && cardList.isEmpty()) {
             return;
         }
-        int size = (usableList.size() + cardList.size());
-        int originalSize = size;
-        Node[] nodes = new Node[size];
-        for (int i = 0; i < cardList.size(); i++) {
-            addCardToBox(nodes, cardList, i , i);
-        }
-        for (int i = 0; i < usableList.size(); i++) {
-            addUsableToBox(nodes, usableList, i, i + cardList.size());
-        }
-        if (size % 2 == 0){
-            size /= 2;
-        }else {
-            size = size / 2 + 1;
-        }
-        for (int i = 0; i < size; i++) {
-            upperBox.getChildren().add(nodes[i]);
-        }
-        if (originalSize % 2 == 0){
-            for (int i = size; i < size * 2; i++) {
-                lowerBox.getChildren().add(nodes[i]);
-            }
-        }else {
-            for (int i = size; i < size * 2 - 1; i++) {
-                lowerBox.getChildren().add(nodes[i]);
-            }
-        }
+        showInHBoxes(cardList, usableList);
     }
 
-    public Label getBuyMessage(){
+    public Label getBuyMessage() {
         return buyMessage;
     }
 
-    public Label getMoneyLabel(){
+    public Label getMoneyLabel() {
         return moneyLabel;
     }
 
@@ -121,43 +97,45 @@ public class ControllerShop {
         backBtn.setStyle("-fx-opacity: 0.6");
     }
 
-    public void showCards() throws IOException {
-        moneyLabel.setText(Integer.toString(dataBase.getLoggedInAccount().getMoney()));
-        Node[] nodes = new Node[80];
-        List<Card> cardList = dataBase.getCardList();
-        List<Usable> usableList = dataBase.getUsableList();
-        for (int i = 0; i < 40; i++) {
-            addCardToBox(nodes, cardList, i, i);
-            upperBox.getChildren().add(nodes[i]);
+    public void showCards(List<Card> cardList, List<Usable> usableList) throws IOException {
+        upperBox.getChildren().clear();
+        lowerBox.getChildren().clear();
+        moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney()));
+        showInHBoxes(cardList, usableList);
+    }
+
+    private void showInHBoxes(List<Card> cardList, List<Usable> usableList) throws IOException {
+        List<Node> nodeList = new ArrayList<>();
+        for (int i = 0; i < cardList.size(); i++) {
+            addCardToBox(nodeList, cardList, i);
         }
-        lowerBox.setLayoutY(upperBox.getLayoutY() + upperBox.getPrefHeight() + 18);
-        for (int i = 40; i < 70; i++) {
-            addCardToBox(nodes, cardList, i, i);
-            lowerBox.getChildren().add(nodes[i]);
+        for (int i = 0; i < usableList.size(); i++) {
+            addUsableToBox(nodeList, usableList, i);
         }
-        for (int i = 70; i < 79; i++) {
-            //todo i should be less than 81 not 79
-            addUsableToBox(nodes, usableList, i - 70, i);
-            lowerBox.getChildren().add(nodes[i]);
+        for (int i = 0; i <= nodeList.size() - 1; i += 2) {
+            upperBox.getChildren().add(nodeList.get(i));
+            if (i + 1 < nodeList.size()) {
+                lowerBox.getChildren().add(nodeList.get(i + 1));
+            }
         }
     }
 
-    private void addUsableToBox(Node[] nodes, List<Usable> usableList, int i, int j) throws IOException {
+    private void addUsableToBox(List<Node> nodeList, List<Usable> usableList, int i) throws IOException {
         Usable usable = usableList.get(i);
         FXMLLoader fxmlLoader;
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
-        nodes[j] = fxmlLoader.load();
+        nodeList.add(fxmlLoader.load());
         CardBackGroundController cardBackGroundController = fxmlLoader.getController();
         cardBackGroundController.setLabelsOfCardOrItem(usable);
     }
 
-    private void addCardToBox(Node[] nodes, List<Card> cardList, int i, int j) throws IOException {
+    private void addCardToBox(List<Node> nodeList, List<Card> cardList, int i) throws IOException {
         FXMLLoader fxmlLoader;
         fxmlLoader = new FXMLLoader();
         Card card = cardList.get(i);
         fxmlLoader.setLocation(getClass().getResource("CardBackGround.fxml"));
-        nodes[j] = fxmlLoader.load();
+        nodeList.add(fxmlLoader.load());
         CardBackGroundController cardBackGroundController = fxmlLoader.getController();
         cardBackGroundController.setLabelsOfCardOrItem(card);
     }
@@ -176,5 +154,6 @@ public class ControllerShop {
         } else {
             view.showCardOrItemDoesNotExist();
         }
-    */}
+    */
+    }
 }

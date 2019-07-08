@@ -98,7 +98,6 @@ Main extends Application {
         new ServerRequestSender(new Request(RequestType.signUp, "userName:" + username.getText() + "password:"
                 + password.getText(), null, null)).start();
         System.out.println("sent");
-
     }
 
     public static void main(String[] args) {
@@ -138,15 +137,6 @@ Main extends Application {
         return false;
     }
 
-    private int findIndexOfAccount(String userName) {
-        for (int i = 0; i < dataBase.getAccounts().size(); i++) {
-            if (dataBase.getAccounts().get(i).getUsername().equals(userName)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     @FXML
     void makeLoginOpaque(MouseEvent event) {
         Main.playWhenMouseEntered();
@@ -176,7 +166,7 @@ Main extends Application {
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             xOffset = primaryStage.getX() - event.getScreenX();
             yOffset = primaryStage.getY() - event.getScreenY();

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="messageBoxPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="145.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="messageTxtArea" layoutY="27.0" prefHeight="151.0" prefWidth="145.0" wrapText="true" />
+      <Label fx:id="senderLbl" layoutY="2.0" prefHeight="24.0" prefWidth="145.0" text="Label" />
+      <Label fx:id="timeLbl" alignment="CENTER_RIGHT" layoutX="3.0" layoutY="178.0" prefHeight="24.0" prefWidth="139.0" text="Label" />
+   </children>
+</AnchorPane>

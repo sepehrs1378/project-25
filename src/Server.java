@@ -1,10 +1,12 @@
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,11 +17,26 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Server extends Application {
+public class Server extends Application implements Initializable {
     public static Stage window = null;
     private static double xOffset = 0;
     private static double yOffset = 0;
+    private static Server instance;
+    public Server(){
+        instance = this;
+    }
+    public static Server getInstance(){
+        return instance;
+    }
+
+    @FXML
+    private ListView<String> cardList;
+
+    @FXML
+    private ListView<String> userList;
 
     @FXML
     private ImageView customCardBtn;
@@ -34,13 +51,11 @@ public class Server extends Application {
 
     @FXML
     void makeSaveAccountsBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         saveAccountsBtn.setStyle("-fx-opacity: 1");
     }
 
     @FXML
     void saveAccounts(MouseEvent event) {
-        Main.playWhenButtonClicked();
         NetworkDB.getInstance().saveAccounts();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
         alert.showAndWait();
@@ -48,7 +63,6 @@ public class Server extends Application {
 
     @FXML
     void makeCustomCardBtnOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         customCardBtn.setStyle("-fx-opacity: 1");
     }
 
@@ -59,10 +73,10 @@ public class Server extends Application {
 
     @FXML
     void enterCustomCardMenu(MouseEvent event) throws IOException {
-        Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCustomCard.fxml"));
-        Main.window.setScene(new Scene(root));
-        Main.setCursor(Main.window);
+        dragAbilityForScenes(window, root);
+        window.setScene(new Scene(root));
+        setCursor(window);
     }
 
     public static void main(String[] args) {
@@ -88,13 +102,17 @@ public class Server extends Application {
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("Server.fxml"));
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(e->{
+            NetworkDB.getInstance().saveAccounts();
+            NetworkDB.getInstance().saveNumberCardMap();
+        });
         primaryStage.initStyle(StageStyle.UNDECORATED);
         dragAbilityForScenes(primaryStage, root);
         setCursor(primaryStage);
         primaryStage.show();
     }
 
-    private void dragAbilityForScenes(Stage primaryStage, Parent root) {
+    public static void dragAbilityForScenes(Stage primaryStage, Parent root) {
         root.setOnMousePressed(event -> {
             yOffset = primaryStage.getY() - event.getScreenY();
             xOffset = primaryStage.getX() - event.getScreenX();
@@ -109,5 +127,26 @@ public class Server extends Application {
         File file = new File("src/pics/mouse_icon");
         Image image = new Image(file.toURI().toString());
         stage.getScene().setCursor(new ImageCursor(image));
+    }
+
+    public void updateUserList(){
+        userList.getItems().clear();
+        NetworkDB.getInstance().getAccountStatusMap().forEach((account, accountStatus) -> {
+            userList.getItems().add(account.getUsername()+"     "+accountStatus.toString());
+        });
+    }
+
+    public void updateCardList(){
+        cardList.getItems().clear();
+        NetworkDB.getInstance().getNumberOfCards().forEach((s, integer) -> {
+            cardList.getItems().add(s+"    "+integer);
+        });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        NetworkDB.getInstance().makeEveryThing();
+        updateCardList();
+        updateUserList();
     }
 }
