@@ -6,6 +6,8 @@ public enum ResponseType {
     collectableUsed,
     PlayerForfeited,
     unitSelected,
+    unitAttacked,
+    unitAndEnemyAttacked,
 
     sendMessage,
     close,

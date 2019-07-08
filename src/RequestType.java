@@ -39,5 +39,7 @@ public enum RequestType {
     buy,
     shop,
 
+    gameFinished,
+
     close
 }

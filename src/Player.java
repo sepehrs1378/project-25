@@ -10,7 +10,6 @@ public class Player {
     private int mana;
     private GraveYard graveYard = new GraveYard();
     private Unit selectedUnit;
-    private Collectable selectedCollectable;
     private List<Buff> buffs = new ArrayList<>();
 
     public Player(PlayerInfo playerInfo, Deck deck) {
@@ -73,14 +72,6 @@ public class Player {
 
     public void setSelectedUnit(Unit selectedUnit) {
         this.selectedUnit = selectedUnit;
-    }
-
-    public Collectable getSelectedCollectable() {
-        return selectedCollectable;
-    }
-
-    public void setSelectedCollectable(Collectable selectedCollectable) {
-        this.selectedCollectable = selectedCollectable;
     }
 
     public List<Collectable> getCollectables() {

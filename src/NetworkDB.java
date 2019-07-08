@@ -43,11 +43,13 @@ public class NetworkDB {
 
     public void addAccountWaitingForOneFlag(Account account) {
         accountsWaitingForOneFlag.add(account);
+        accountStatusMap.put(account, AccountStatus.waitingForMatch);
         pairAccountsForBattle(accountsWaitingForOneFlag, Constants.ONE_FLAG, 1);
     }
 
     public void addAccountWaitingForMultiFlags(Account account) {
         accountsWaitingForMultiFlags.add(account);
+        accountStatusMap.put(account, AccountStatus.waitingForMatch);
         pairAccountsForBattle(accountsWaitingForMultiFlags, Constants.FLAGS, 7);
     }
 

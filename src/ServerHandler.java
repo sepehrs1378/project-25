@@ -65,6 +65,12 @@ public class ServerHandler extends Thread {
                     case unitSelected:
                         caseUnitSelected(response);
                         break;
+                    case unitAttacked:
+                        caseUnitAttack(response);
+                        break;
+                    case unitAndEnemyAttacked:
+                        caseUnitAndEnemyAttacked(response);
+                        break;
                     case sendMessage:
                         caseSendMessage(response);
                         break;
@@ -101,6 +107,39 @@ public class ServerHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseUnitAndEnemyAttacked(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        String attackerId = (String) response.getObjectList().get(0);
+        String targetedId = (String) response.getObjectList().get(1);
+        Battle battle = (Battle) response.getObjectList().get(2);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                UnitImage attackerImage = controllerBattleCommands.getUnitImageWithId(attackerId);
+                UnitImage targetedImage = controllerBattleCommands.getUnitImageWithId(targetedId);
+                attackerImage.showAttack(targetedImage.getColumn());
+                targetedImage.showAttack(attackerImage.getColumn());
+            }
+        });
+    }
+
+    private void caseUnitAttack(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        String attackerId = (String) response.getObjectList().get(0);
+        String targetedId = (String) response.getObjectList().get(1);
+        Battle battle = (Battle) response.getObjectList().get(2);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                UnitImage attackerImage = controllerBattleCommands.getUnitImageWithId(attackerId);
+                UnitImage targetedImage = controllerBattleCommands.getUnitImageWithId(targetedId);
+                attackerImage.showAttack(targetedImage.getColumn());
+            }
+        });
     }
 
     private void caseCardInserted(Response response) {

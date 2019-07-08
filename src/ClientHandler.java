@@ -125,6 +125,9 @@ public class ClientHandler extends Thread {
                 case shop:
                     caseShop(request);
                     break;
+                case gameFinished:
+                    caseGameFinished(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -136,6 +139,10 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
+    }
+
+    private void caseGameFinished(Request request){
+        networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }
 
     private void caseCancelMatchFinding() {
@@ -442,6 +449,41 @@ public class ClientHandler extends Thread {
     }
 
     private void caseAttackUnit(Request request) {
+        String id = request.getMessage();
+        Battle battle = connection.getCurrentBattle();
+        Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        List<Object> objects = new ArrayList<>();
+        Response response;
+        switch (player.getSelectedUnit().attack(id, battle)) {
+            case UNIT_AND_ENEMY_ATTACKED:
+                objects.add(player.getSelectedUnit().getId());
+                objects.add(id);
+                objects.add(battle);
+                response = new Response(ResponseType.unitAndEnemyAttacked, null, null, objects);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
+                break;
+            case UNIT_ATTACKED:
+                objects.add(player.getSelectedUnit().getId());
+                objects.add(id);
+                objects.add(battle);
+                response = new Response(ResponseType.unitAttacked, null, null, objects);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
+                break;
+            case ALREADY_ATTACKED:
+                //empty
+                break;
+            case INVALID_CARD:
+                //empty
+                break;
+            case TARGET_NOT_IN_RANGE:
+                //empty
+                break;
+            case ATTACKED_FRIENDLY_UNIT:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case!!!!");
+        }
         //todo
     }
 
