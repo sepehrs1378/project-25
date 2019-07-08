@@ -167,12 +167,13 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
         stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root));
-        File file = new File("src/pics/cursor.png");
-        Image image = new Image(file.toURI().toString());
-        stage.getScene().setCursor(new ImageCursor(image));
+        Main.setCursor(stage);
+//        File file = new File("src/pics/cursor.png");
+//        Image image = new Image(file.toURI().toString());
+//        stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 
@@ -185,9 +186,10 @@ public class ControllerMainMenu {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
-        File file = new File("src/pics/cursor.png");
-        Image image = new Image(file.toURI().toString());
-        stage.getScene().setCursor(new ImageCursor(image));
+        Main.setCursor(stage);
+//        File file = new File("src/pics/cursor.png");
+//        Image image = new Image(file.toURI().toString());
+//        stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 

@@ -13,7 +13,7 @@
         "@val": {
           "value": {
             "@type": "java.lang.Integer",
-            "@val": 10
+            "@val": 9
           }
         }
       }

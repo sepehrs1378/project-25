@@ -1,3 +1,6 @@
+import com.teamdev.jxcapture.Codec;
+import com.teamdev.jxcapture.EncodingParameters;
+import com.teamdev.jxcapture.VideoCapture;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -21,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -472,39 +476,35 @@ public class ControllerBattleCommands implements Initializable {
         Card card = clientDB.getLoggedInPlayer().getHand().getCardById(handImage.getId());
         switch (clientDB.getCurrentBattle().insert(card, row, column, battle)) {
             case NO_SUCH_CARD_IN_HAND:
-                System.out.println("1");
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
-                System.out.println("2");
                 //empty
                 break;
             case INVALID_NUMBER:
-                System.out.println("3");
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
-                System.out.println("not nearby friendly units");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
-                System.out.println("5");
                 //empty
                 break;
             case CARD_INSERTED:
-                showCardInsertion(row, column, handImage, card);
+                showCardInsertion(row, column, card.getId());
                 return true;
             default:
         }
         return false;
     }
 
-    private void showCardInsertion(int row, int column, HandImage handImage, Card card) {
+    public void showCardInsertion(int row, int column, String id) {
+        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
+        HandImage handImage = getHandImageWithId(id);
         if (card instanceof Unit)
             insertUnitView(row, column, card);
-        if (card instanceof Spell) {
+        if (card instanceof Spell)
             insertSpellView(row, column, card);
-        }
         handImage.clearHandImage();
     }
 
@@ -535,6 +535,14 @@ public class ControllerBattleCommands implements Initializable {
         return null;
     }
 
+    public HandImage getHandImageWithId(String id) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getId().equals(id))
+                return handImage;
+        }
+        return null;
+    }
+
     public boolean isClickedImageViewInHand() {
         for (HandImage handImage : handImageList) {
             if (handImage.getCardView().equals(clickedImageView))
@@ -545,7 +553,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleUnitClicked(String id) {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
-            //todo
+            //todo other cases
             new ServerRequestSender(new Request(RequestType.selectUnit
                     , getUnitImageWithUnitView(clickedImageView).getId(), null, null));
         }
@@ -890,5 +898,25 @@ public class ControllerBattleCommands implements Initializable {
 
     public ImageView getEndTurnEnemyBtn() {
         return endTurnEnemyBtn;
+    }
+
+    public void recordVideo() {
+        final VideoCapture videoCapture = VideoCapture.create();
+        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
+
+        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+        Codec videoCodec = videoCodecs.get(1);
+
+        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
+        encodingParameters.setSize(new Dimension(640, 480));
+        encodingParameters.setBitrate(500000);
+        encodingParameters.setFramerate(30);
+        encodingParameters.setCodec(videoCodec);
+
+        videoCapture.setEncodingParameters(encodingParameters);
+        videoCapture.start();
+
+//        videoCapture.stop();
+//        System.out.println("Done.");
     }
 }
