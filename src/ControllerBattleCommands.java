@@ -822,6 +822,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean endGame() {
         timeBar.setDisable(true);
         clientDB.setCurrentBattle(null);
+        //todo setGame finished
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
@@ -858,7 +859,7 @@ public class ControllerBattleCommands implements Initializable {
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
-            //todo check end game
+            //todo add winner name to endgame
         }
         return false;
     }
