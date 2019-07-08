@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Battle {
-    private static final DataBase dataBase = DataBase.getInstance();
     private Player player1;
     private Player player2;
     private BattleGround battleGround = new BattleGround();
@@ -19,7 +18,7 @@ public class Battle {
             , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti, int prize) {
         this.prize = prize;
         this.singleOrMulti = singleOrMulti;
-//        dataBase.setCurrentBattle(this);todo IMPORTANT seting battle is ignored
+//        dataBase.setCurrentBattle(this);todo IMPORTANT set battle is ignored
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +23,15 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         connection = new Connection(socket);
-        NetworkDB.getInstance().addConnection(connection);
+        networkDB.addConnection(connection);
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         JsonStreamParser parser = connection.getParser();
-        try {
+//        try {
             while (true) {
                 JsonObject obj = parser.next().getAsJsonObject();
                 Request request = yaGson.fromJson(obj.toString(), Request.class);
                 handleMultiPlayerCase(request);
-                handleMatchFinding(request);
+                handleFindMatch(request);
                 handleAccountCase(request);
                 handleGlobalChat(request);
                 handleCollection(request);
@@ -39,13 +40,14 @@ public class ClientHandler extends Thread {
                     Server.getInstance().updateCardList();
                     Server.getInstance().updateUserList();
                 });
+//                logCase(request);
                 if (request.getRequestType().equals(RequestType.close))
                     break;
             }
-        } catch (Exception e) {
-            NetworkDB.getInstance().closeConnection(socket);
-            updateAccountsInLeaderBoard();
-        }
+//        } catch (Exception e) {
+//            networkDB.closeConnection(socket);
+//            updateAccountsInLeaderBoard();
+//        }
     }
 
     private void handleShop(Request request) {
@@ -261,7 +263,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleMatchFinding(Request request) {
+    private void handleFindMatch(Request request) {
         switch (request.getRequestType()) {
             case findClassicMatch:
                 networkDB.addAccountWaitingForClassic(connection.getAccount());
@@ -373,7 +375,7 @@ public class ClientHandler extends Thread {
                 objects.add(battle);
                 Response response = new Response(ResponseType.unitMoved, selectedUnit.getId()
                         , null, objects);
-                networkDB.sendResponeToPlayerAndOpponent(response, connection);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
                 break;
             case OUT_OF_BOUNDARIES:
                 //empty
@@ -393,5 +395,9 @@ public class ClientHandler extends Thread {
             default:
                 System.out.println("unhandled case!!!");
         }
+    }
+
+    private void logCase(Request request) {
+        System.out.println(connection.getAccount().getUsername() + "-->>" + request.getRequestType());
     }
 }

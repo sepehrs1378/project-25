@@ -3,7 +3,6 @@ import java.util.List;
 
 class GraveYard {
     private List<Card> deadCards = new ArrayList<>();
-
     public List<Card> getDeadCards() {
         return deadCards;
     }

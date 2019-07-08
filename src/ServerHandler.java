@@ -40,11 +40,12 @@ public class ServerHandler extends Thread {
             Socket socket = new Socket(address, port);
             clientDB.setSocket(socket);
             JsonStreamParser parser = ClientDB.getInstance().getParser();
-            JsonObject obj;
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-            while (parser.hasNext()) {
-                obj = parser.next().getAsJsonObject();
+            while (true) {
+                JsonObject obj = parser.next().getAsJsonObject();
                 Response response = yaGson.fromJson(obj.toString(), Response.class);
+                handleMatchFound(response);
+                handleMultiPlayer(response);
                 switch (response.getResponseType()) {
                     case sendMessage: {
                         ChatMessage chatMessage = (ChatMessage) response.getObjectList().get(0);
@@ -157,6 +158,7 @@ public class ServerHandler extends Thread {
                         break;
                     }
                 }
+//                logResponse(response);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -260,10 +262,11 @@ public class ServerHandler extends Thread {
         return instance;
     }
 
-    private void handleMultiPlayerCase(Response response) {
+    private void handleMultiPlayer(Response response) {
         switch (response.getResponseType()) {
             case unitMoved:
                 handleUnitMoved(response);
+                break;
             case unitSelected:
                 handleUnitSelected(response);
                 break;
@@ -308,85 +311,27 @@ public class ServerHandler extends Thread {
         ControllerBattleCommands.getOurInstance().updatePane();
     }
 
-    private void handleMatchFoundCase(Response response) {
+    private void handleMatchFound(Response response) {
         if (response.getResponseType().equals(ResponseType.matchFound)) {
             clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
             Player player1 = clientDB.getCurrentBattle().getPlayer1();
             if (clientDB.getLoggedInAccount().getUsername().equals(player1.getPlayerInfo().getPlayerName()))
                 clientDB.setLoggedInPlayer(player1);
             else clientDB.setLoggedInPlayer(clientDB.getCurrentBattle().getPlayer2());
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Main.playWhenButtonClicked();
-                    try {
-                        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-                        Main.window.setScene(new Scene(root));
-                        Main.setCursor(Main.window);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            Platform.runLater(() -> {
+                Main.playWhenButtonClicked();
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                    Main.window.setScene(new Scene(root));
+                    Main.setCursor(Main.window);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             });
         }
     }
 
-    private void handleAccountCase(Response response) {
-        Account account;
-        switch (response.getResponseType()) {
-            case signUp:
-                if (response.getMessage().equals(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage())) {
-                    account = (Account) response.getObjectList().get(0);
-                    ClientDB.getInstance().setLoggedInAccount(account);
-                    openMainMenu();
-                } else if (response.getMessage().equals(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage())) {
-                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                    if (label != null) {
-                        Platform.runLater(() -> label.setText(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage()));
-                    }
-                }
-                break;
-            case login:
-                if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())) {
-                    account = (Account) response.getObjectList().get(0);
-                    ClientDB.getInstance().setLoggedInAccount(account);
-                    openMainMenu();
-                } else if (response.getMessage().equals(OutputMessageType.INVALID_PASSWORD.getMessage())) {
-                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidPassword");
-                    if (label != null) {
-                        Platform.runLater(() -> label.setText(OutputMessageType.INVALID_PASSWORD.getMessage()));
-                    }
-                } else if (response.getMessage().equals(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage())) {
-                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                    if (label != null) {
-                        Platform.runLater(() -> label.setText(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage()));
-                    }
-                } else if (response.getMessage().equals(OutputMessageType.ALREADY_LOGGED_IN.getMessage())) {
-                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
-                    if (label != null) {
-                        Platform.runLater(() -> label.setText(OutputMessageType.ALREADY_LOGGED_IN.getMessage()));
-                    }
-                }
-                break;
-            case logout:
-                if (response.getMessage().equals(OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage())) {
-                    ClientDB.getInstance().setLoggedInAccount(null);
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            Main.playWhenButtonClicked();
-                            try {
-                                Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
-                                Main.window.setScene(new Scene(root));
-                                Main.setCursor(Main.window);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                break;
-            default:
-        }
+    private void logResponse(Response response) {
+        System.out.println("ServerHandler-->>" + response.getResponseType());
     }
 }

@@ -182,7 +182,7 @@ public class ControllerBattleCommands implements Initializable {
         clickedImageView = null;
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request
-                    (RequestType.endTurn, null, null, null));
+                    (RequestType.endTurn, null, null, null)).start();
             endTurnMineBtn.setVisible(false);
             endTurnEnemyBtn.setVisible(true);
         }
@@ -370,23 +370,23 @@ public class ControllerBattleCommands implements Initializable {
             new ServerRequestSender(
                     new Request(RequestType.insertCard
                             , getHandImageWithCardView(clickedImageView).getId()
-                            , null, objects));
+                            , null, objects)).start();
         }
         if (clickedImageView.equals(specialPowerView)) {
             new ServerRequestSender(
                     new Request(RequestType.useSpecialPower, null
-                            , null, objects));
+                            , null, objects)).start();
         }
         if (clickedImageView.equals(collectableView)) {
             new ServerRequestSender(
                     new Request(RequestType.useCollectable, null,
-                            null, objects));
+                            null, objects)).start();
         }
         if (isClickedImageViewUnit()) {
             new ServerRequestSender(
                     new Request(RequestType.moveUnit
                             , getUnitImageWithUnitView(clickedImageView).getId()
-                            , null, objects));
+                            , null, objects)).start();
         }
     }
 
