@@ -33,7 +33,7 @@ public class NetworkDB {
 
     public void addAccountWaitingForClassic(Account account) {
         accountsWaitingForClassic.add(account);
-        pairAccountsForBattle();
+        pairAccountsForBattle(accountsWaitingForClassic, Constants.CLASSIC, 0);
     }
 
     public static NetworkDB getInstance() {
@@ -42,12 +42,12 @@ public class NetworkDB {
 
     public void addAccountWaitingForOneFlag(Account account) {
         accountsWaitingForOneFlag.add(account);
-        pairAccountsForBattle();
+        pairAccountsForBattle(accountsWaitingForOneFlag, Constants.ONE_FLAG, 1);
     }
 
     public void addAccountWaitingForMultiFlags(Account account) {
         accountsWaitingForMultiFlags.add(account);
-        pairAccountsForBattle();
+        pairAccountsForBattle(accountsWaitingForMultiFlags, Constants.FLAGS, 7);
     }
 
     private NetworkDB() {
@@ -171,21 +171,22 @@ public class NetworkDB {
         return null;
     }
 
-    public void pairAccountsForBattle() {
+    public void pairAccountsForBattle(List<Account> accountList, String mode, int numberOfFlags) {
         Account account1;
         Account account2;
         Connection connection1;
+        Battle battle;
         Connection connection2;
-        if (accountsWaitingForClassic.size() >= 2) {
-            account1 = accountsWaitingForClassic.get(0);
-            account2 = accountsWaitingForClassic.get(1);
+        if (accountList.size() >= 2) {
+            account1 = accountList.get(0);
+            account2 = accountList.get(1);
             connection1 = getConnectionWithAccount(account1);
             connection2 = getConnectionWithAccount(account2);
-            accountsWaitingForClassic.remove(0);
-            accountsWaitingForClassic.remove(0);
-            Battle battle = new Battle(account1, account2, Constants.CLASSIC
-                    , 0, null, Constants.MULTI, 2000);
-            saveGame(battle);
+            accountList.remove(0);
+            accountList.remove(0);
+            battle = new Battle(account1, account2, mode
+                    , numberOfFlags, null, Constants.MULTI, 2000);
+
             currentBattlesList.add(battle);
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
