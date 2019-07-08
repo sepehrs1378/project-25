@@ -85,7 +85,8 @@ public enum OutputMessageType {
     NO_ERROR(""),
     NO_SPACES("deck name should not contain spaces"),
     ALREADY_LOGGED_IN("someone already logged in with current identification"),
-    LOGGED_OUT_SUCCESSFULLY("logged out successfully");
+    LOGGED_OUT_SUCCESSFULLY("logged out successfully"),
+    NO_MORE_IN_SHOP("there are currently zero cards of this type in shop");
 
     private String message;
 

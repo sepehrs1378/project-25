@@ -71,18 +71,8 @@ public class CardBackGroundController {
 
     @FXML
     void buyCard(MouseEvent event) {
-        OutputMessageType outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().buy(cardName.getText());
-        number++;
-        numberBoughtLabel.setText(Integer.toString(number));
-        controllerShop.getMoneyLabel().setText(Integer.toString(dataBase.getLoggedInAccount().getMoney()));
-        controllerShop.getBuyMessage().setText(outputMessageType.getMessage());
-        PauseTransition visiblePause = new PauseTransition(
-                Duration.seconds(1)
-        );
-        visiblePause.setOnFinished(
-                event1 -> controllerShop.getBuyMessage().setText("")
-        );
-        visiblePause.play();
+        Main.playWhenButtonClicked();
+          new ServerRequestSender(new Request(RequestType.buy, cardName.getText(), null, null)).start();
     }
 
     @FXML

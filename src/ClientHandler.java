@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -178,6 +179,13 @@ public class ClientHandler extends Thread {
                         String deckName = jsonObject.get("deck").getAsString();
                         String id = jsonObject.get("id").getAsString();
                         connection.getAccount().getPlayerInfo().getCollection().removeCard(id,deckName);
+                        break;
+                    }
+                    case buy:{
+                        OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
+                        List<Object> accountList = new ArrayList<>();
+                        accountList.add(connection.getAccount());
+                        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.buy, outputMessageType.getMessage(), null, accountList), connection);
                         break;
                     }
                 }

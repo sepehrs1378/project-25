@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ControllerShop {
     private static ControllerShop ourInstance = new ControllerShop();
-    private DataBase dataBase = DataBase.getInstance();
+    private ClientDB dataBase = ClientDB.getInstance();
 
     public ControllerShop() {
         ourInstance = this;
@@ -46,53 +46,28 @@ public class ControllerShop {
 
     @FXML
     void displayAppropriateCards(ActionEvent event) throws IOException {
-//        lowerBox.getChildren().clear();
-//        upperBox.getChildren().clear();
-//        if (addCardText.getText().isEmpty()) {
-//            showCards();
-//            return;
-//        }
-//        List<Card> cardList = new ArrayList<>();
-//        for (int i = 0; i < dataBase.getCardList().size(); i++) {
-//            if (dataBase.getCardList().get(i).getName().contains(addCardText.getText())) {
-//                cardList.add(dataBase.getCardList().get(i));
-//            }
-//        }
-//        List<Usable> usableList = new ArrayList<>();
-//        for (int i = 0; i < dataBase.getUsableList().size(); i++) {
-//            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())) {
-//                usableList.add(dataBase.getUsableList().get(i));
-//            }
-//        }
-//        if (usableList.isEmpty() && cardList.isEmpty()) {
-//            return;
-//        }
-//        int size = (usableList.size() + cardList.size());
-//        int originalSize = size;
-//        Node[] nodes = new Node[size];
-//        for (int i = 0; i < cardList.size(); i++) {
-//            addCardToBox(nodes, cardList, i, i);
-//        }
-//        for (int i = 0; i < usableList.size(); i++) {
-//            addUsableToBox(nodes, usableList, i, i + cardList.size());
-//        }
-//        if (size % 2 == 0) {
-//            size /= 2;
-//        } else {
-//            size = size / 2 + 1;
-//        }
-//        for (int i = 0; i < size; i++) {
-//            upperBox.getChildren().add(nodes[i]);
-//        }
-//        if (originalSize % 2 == 0) {
-//            for (int i = size; i < size * 2; i++) {
-//                lowerBox.getChildren().add(nodes[i]);
-//            }
-//        } else {
-//            for (int i = size; i < size * 2 - 1; i++) {
-//                lowerBox.getChildren().add(nodes[i]);
-//            }
-//        }
+        lowerBox.getChildren().clear();
+        upperBox.getChildren().clear();
+        if (addCardText.getText().isEmpty()) {
+            showCards(dataBase.getCardList(), dataBase.getUsableList());
+            return;
+        }
+        List<Card> cardList = new ArrayList<>();
+        for (int i = 0; i < dataBase.getCardList().size(); i++) {
+            if (dataBase.getCardList().get(i).getName().contains(addCardText.getText())) {
+                cardList.add(dataBase.getCardList().get(i));
+            }
+        }
+        List<Usable> usableList = new ArrayList<>();
+        for (int i = 0; i < dataBase.getUsableList().size(); i++) {
+            if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())) {
+                usableList.add(dataBase.getUsableList().get(i));
+            }
+        }
+        if (usableList.isEmpty() && cardList.isEmpty()) {
+            return;
+        }
+        showInHBoxes(cardList, usableList);
     }
 
     public Label getBuyMessage() {
@@ -125,17 +100,23 @@ public class ControllerShop {
     public void showCards(List<Card> cardList, List<Usable> usableList) throws IOException {
         upperBox.getChildren().clear();
         lowerBox.getChildren().clear();
-        moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney())); //todo everybody wants money money!
+        moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney()));
+        showInHBoxes(cardList, usableList);
+    }
+
+    private void showInHBoxes(List<Card> cardList, List<Usable> usableList) throws IOException {
         List<Node> nodeList = new ArrayList<>();
-        for (int i = 0; i < cardList.size(); i++){
+        for (int i = 0; i < cardList.size(); i++) {
             addCardToBox(nodeList, cardList, i);
         }
         for (int i = 0; i < usableList.size(); i++) {
             addUsableToBox(nodeList, usableList, i);
         }
-        for (int i = 0; i < nodeList.size() - 1; i += 2) {
+        for (int i = 0; i <= nodeList.size() - 1; i += 2) {
             upperBox.getChildren().add(nodeList.get(i));
-            lowerBox.getChildren().add(nodeList.get(i + 1));
+            if (i + 1 < nodeList.size()) {
+                lowerBox.getChildren().add(nodeList.get(i + 1));
+            }
         }
     }
 
