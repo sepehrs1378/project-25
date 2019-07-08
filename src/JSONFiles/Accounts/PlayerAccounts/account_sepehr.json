@@ -3,23 +3,1127 @@
   "@val": {
     "levelsOpennessStatus": [
       true,
-      false,
-      false
+      true,
+      true
     ],
-    "password": "s",
+    "password": "1",
     "username": "sepehr",
     "playerInfo": {
       "playerName": "sepehr",
       "collection": {
-        "decks": [],
+        "decks": [
+          {
+            "cards": [
+              {
+                "@type": "Spell",
+                "@val": {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "hero",
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "friend"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 1,
+                    "length": 1,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "DisarmBuff",
+                      "@val": {
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 3,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    },
+                    {
+                      "@type": "PowerBuff",
+                      "@val": {
+                        "apPlus": 4,
+                        "hpPlus": 0,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 3,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "Target : Friendly Unit - for duration of three turns adds 4 damage to target(it could be disarmed)",
+                  "isDispeller": false,
+                  "id": "sepehr_madness_1",
+                  "name": "madness",
+                  "price": 650,
+                  "mana": 0,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Spell",
+                "@val": {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [],
+                    "friendlyOrEnemy": [],
+                    "targetUnitClass": [],
+                    "width": 2,
+                    "length": 2,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "InfernoBuff",
+                      "@val": {
+                        "damagePerTurn": 1,
+                        "startTurn": 0,
+                        "durationTurn": 2,
+                        "delayTurn": 0,
+                        "isDispellable": false,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "Target : 2 * 2 square area - for duration of two turns adds HellFire effect to target",
+                  "isDispeller": false,
+                  "id": "sepehr_hellFire_1",
+                  "name": "hellFire",
+                  "price": 600,
+                  "mana": 3,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Spell",
+                "@val": {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    null
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "Target : Random Enemy Minion with distance less than 8 squares from Friendly Hero - kills target",
+                  "isDispeller": false,
+                  "id": "sepehr_kingsGuard_1",
+                  "name": "kingsGuard",
+                  "price": 1750,
+                  "mana": 9,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 14,
+                  "ap": 7,
+                  "minRange": 2,
+                  "maxRange": 5,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 0,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "enemy"
+                        ],
+                        "targetUnitClass": [
+                          "hybrid",
+                          "ranged",
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 2,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": false
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "NegativeArmorBuff",
+                          "@val": {
+                            "negativeArmorAmount": 1,
+                            "positiveOrNegative": "negative",
+                            "startTurn": 0,
+                            "durationTurn": 2147483647,
+                            "delayTurn": 0,
+                            "isDispellable": false,
+                            "isContinuous": true,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_SPAWN",
+                      "description": "Contains : NegativeArmorBuff - Spell Activation Type : on attack - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 500 - mana : 8 - hp : 14 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_marGhoolPeikar_1",
+                  "name": "marGhoolPeikar",
+                  "price": 500,
+                  "mana": 8,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 14,
+                  "ap": 10,
+                  "minRange": 1,
+                  "maxRange": 7,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 300 - mana : 9 - hp : 14 - ap : 10 - minRange : 1 - maxRange : 7 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_divSiah_1",
+                  "name": "divSiah",
+                  "price": 300,
+                  "mana": 9,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 5,
+                  "ap": 4,
+                  "minRange": 2,
+                  "maxRange": 7,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 300 - mana : 2 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_kamandarFars_1",
+                  "name": "kamandarFars",
+                  "price": 300,
+                  "mana": 2,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 6,
+                  "ap": 1,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 1,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "enemy"
+                        ],
+                        "targetUnitClass": [
+                          "hybrid",
+                          "ranged",
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": false
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "WeaknessBuff",
+                          "@val": {
+                            "apMinus": 0,
+                            "hpMinus": 6,
+                            "positiveOrNegative": "negative",
+                            "startTurn": 0,
+                            "durationTurn": 1,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_ATTACK",
+                      "description": "Contains : WeaknessBuff - Spell Activation Type : on attack - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 400 - mana : 3 - hp : 6 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_gorg_1",
+                  "name": "gorg",
+                  "price": 400,
+                  "mana": 3,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 10,
+                  "ap": 14,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 0,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "friend"
+                        ],
+                        "targetUnitClass": [
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": true
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "ImmunityBuff",
+                          "@val": {
+                            "immunity": "disarm",
+                            "positiveOrNegative": "positive",
+                            "startTurn": 0,
+                            "durationTurn": 2147483647,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_DEFEND",
+                      "description": "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 500 - mana : 6 - hp : 10 - ap : 14 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_gorazVahshi_1",
+                  "name": "gorazVahshi",
+                  "price": 500,
+                  "mana": 6,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 6,
+                  "ap": 2,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 1,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "enemy"
+                        ],
+                        "targetUnitClass": [
+                          "hybrid",
+                          "ranged",
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": false
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "WeaknessBuff",
+                          "@val": {
+                            "apMinus": 0,
+                            "hpMinus": 8,
+                            "positiveOrNegative": "negative",
+                            "startTurn": 0,
+                            "durationTurn": 1,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_ATTACK",
+                      "description": "Contains : WeaknessBuff - Spell Activation Type : on attack - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 400 - mana : 4 - hp : 6 - ap : 2 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_palang_1",
+                  "name": "palang",
+                  "price": 400,
+                  "mana": 4,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 12,
+                  "ap": 4,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 800 - mana : 7 - hp : 12 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": true,
+                  "id": "sepehr_sepahSalarFars_1",
+                  "name": "sepahSalarFars",
+                  "price": 800,
+                  "mana": 7,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 10,
+                  "ap": 6,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 200 - mana : 4 - hp : 10 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_asbSavarFars_1",
+                  "name": "asbSavarFars",
+                  "price": 200,
+                  "mana": 4,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Spell",
+                "@val": {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "friend"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 1,
+                    "length": 1,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "WeaknessBuff",
+                      "@val": {
+                        "apMinus": 0,
+                        "hpMinus": 6,
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 2147483647,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    },
+                    {
+                      "@type": "PowerBuff",
+                      "@val": {
+                        "apPlus": 8,
+                        "hpPlus": 0,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 2147483647,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "Target : Friendly Minion - applies a WeaknessBuff reducing target's hp by 6 while applying PowerBuff increasing target's ap by 8",
+                  "isDispeller": false,
+                  "id": "sepehr_sacrifice_1",
+                  "name": "sacrifice",
+                  "price": 1600,
+                  "mana": 2,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Spell",
+                "@val": {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [],
+                    "friendlyOrEnemy": [],
+                    "targetUnitClass": [],
+                    "width": 3,
+                    "length": 3,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "PoisonBuff",
+                      "@val": {
+                        "damagePerTurn": 1,
+                        "positiveOrNegative": "negative",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "delayTurn": 0,
+                        "isDispellable": false,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "Target : 3 * 3 square area - for duration of one turn adds PoisonLake effect to target",
+                  "isDispeller": false,
+                  "id": "sepehr_poisonLake_1",
+                  "name": "poisonLake",
+                  "price": 900,
+                  "mana": 5,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 5,
+                  "ap": 7,
+                  "minRange": 2,
+                  "maxRange": 5,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 0,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "friend"
+                        ],
+                        "targetUnitClass": [
+                          "ranged"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": true
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "ImmunityBuff",
+                          "@val": {
+                            "immunity": "enemy card spell",
+                            "positiveOrNegative": "positive",
+                            "startTurn": 0,
+                            "durationTurn": 2147483647,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_DEFEND",
+                      "description": "Contains : ImmunityBuff - Spell Activation Type : on defend - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 450 - mana : 4 - hp : 5 - ap : 7 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_giv_1",
+                  "name": "giv",
+                  "price": 450,
+                  "mana": 4,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 3,
+                  "ap": 4,
+                  "minRange": 2,
+                  "maxRange": 5,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 500 - mana : 1 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_kamandarToorani_1",
+                  "name": "kamandarToorani",
+                  "price": 500,
+                  "mana": 1,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 4,
+                  "ap": 4,
+                  "minRange": 1,
+                  "maxRange": 3,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 600 - mana : 1 - hp : 4 - ap : 4 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_neizeDarToorani_1",
+                  "name": "neizeDarToorani",
+                  "price": 600,
+                  "mana": 1,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 6,
+                  "ap": 6,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 0,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "hero",
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "enemy"
+                        ],
+                        "targetUnitClass": [
+                          "hybrid",
+                          "ranged",
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": false
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "DisarmBuff",
+                          "@val": {
+                            "positiveOrNegative": "negative",
+                            "startTurn": 0,
+                            "durationTurn": 1,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        },
+                        {
+                          "@type": "PoisonBuff",
+                          "@val": {
+                            "damagePerTurn": 1,
+                            "positiveOrNegative": "negative",
+                            "startTurn": 0,
+                            "durationTurn": 4,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_ATTACK",
+                      "description": "Contains : PoisonBuff and StunBuff - Spell Activation Type : on attack - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 700 - mana : 4 - hp : 6 - ap : 6 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_jasoosToorani_1",
+                  "name": "jasoosToorani",
+                  "price": 700,
+                  "mana": 4,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 8,
+                  "ap": 2,
+                  "minRange": 1,
+                  "maxRange": 1,
+                  "specialPowers": [
+                    {
+                      "apChange": 0,
+                      "hpChange": 0,
+                      "coolDown": 1,
+                      "turnsToGetReady": 0,
+                      "target": {
+                        "typeOfTarget": [
+                          "minion"
+                        ],
+                        "friendlyOrEnemy": [
+                          "enemy"
+                        ],
+                        "targetUnitClass": [
+                          "hybrid",
+                          "ranged",
+                          "melee"
+                        ],
+                        "width": 1,
+                        "length": 1,
+                        "manhattanDistance": 0,
+                        "isRandomSelecting": false,
+                        "doesAffectAllCards": false
+                      },
+                      "addedSpells": [],
+                      "addedBuffs": [
+                        {
+                          "@type": "SequentialDamageBuff",
+                          "@val": {
+                            "damagePerTurn": [
+                              4
+                            ],
+                            "positiveOrNegative": "negative",
+                            "startTurn": 6,
+                            "durationTurn": 2,
+                            "delayTurn": 0,
+                            "isDispellable": true,
+                            "isContinuous": false,
+                            "isDead": false
+                          }
+                        }
+                      ],
+                      "activationType": "ON_ATTACK",
+                      "description": "Contains : SequentialDamgeBuff - Spell Activation Type : on attack - isn't dispeller",
+                      "isDispeller": false,
+                      "id": "",
+                      "name": "",
+                      "price": 0,
+                      "mana": 0,
+                      "isCustom": false
+                    }
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 400 - mana : 5 - hp : 8 - ap : 2 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_gorgSefid_1",
+                  "name": "gorgSefid",
+                  "price": 400,
+                  "mana": 5,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 5,
+                  "ap": 3,
+                  "minRange": 1,
+                  "maxRange": 3,
+                  "specialPowers": [
+                    null
+                  ],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 500 - mana : 1 - hp : 5 - ap : 3 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_neizeDarFars_1",
+                  "name": "neizeDarFars",
+                  "price": 500,
+                  "mana": 1,
+                  "isCustom": false
+                }
+              },
+              {
+                "@type": "Unit",
+                "@val": {
+                  "hp": 0,
+                  "ap": 2,
+                  "minRange": 1,
+                  "maxRange": 3,
+                  "specialPowers": [],
+                  "flags": [],
+                  "buffs": [],
+                  "heroOrMinion": "minion",
+                  "description": "price : 200 - mana : 2 - hp : 0 - ap : 2 - minRange : 1 - maxRange : 3 - Type : Minion - can't use combo",
+                  "didAttackThisTurn": false,
+                  "didMoveThisTurn": false,
+                  "canUseComboAttack": false,
+                  "id": "sepehr_oghab_1",
+                  "name": "oghab",
+                  "price": 200,
+                  "mana": 2,
+                  "isCustom": false
+                }
+              }
+            ],
+            "hero": {
+              "hp": 30,
+              "ap": 2,
+              "minRange": 2,
+              "maxRange": 6,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": -4,
+                  "coolDown": 2,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "hero",
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "enemy"
+                    ],
+                    "targetUnitClass": [
+                      "hybrid",
+                      "ranged",
+                      "melee"
+                    ],
+                    "width": 1,
+                    "length": 2147483647,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": false
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    null
+                  ],
+                  "activationType": "ON_CAST",
+                  "description": "mana : 2 - hpChange : -4 - cooldown : 2 - spell activation type : on cast - is not dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 2,
+                  "isCustom": false
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "hero",
+              "description": "price : 10000 - mana : 0 - hp : 30 - ap : 2 - minRange : 2 - maxRange : 6 - Unit Type : Hero - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "sepehr_arash_1",
+              "name": "arash",
+              "price": 10000,
+              "mana": 0,
+              "isCustom": false
+            },
+            "name": "sepehr"
+          }
+        ],
         "cards": [
+          "@root.playerInfo.collection.decks.0.hero",
+          "@root.playerInfo.collection.decks.0.cards.1",
+          "@root.playerInfo.collection.decks.0.cards.0",
+          "@root.playerInfo.collection.decks.0.cards.2",
+          {
+            "@type": "Spell",
+            "@val": {
+              "apChange": 0,
+              "hpChange": -6,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [
+                  "hero",
+                  "minion"
+                ],
+                "friendlyOrEnemy": [
+                  "enemy"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 2147483647,
+                "length": 1,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                null
+              ],
+              "activationType": "ON_CAST",
+              "description": "Target : Every Enemy Unit In A Column - appplies 6 damage to target",
+              "isDispeller": false,
+              "id": "sepehr_allAttack_1",
+              "name": "allAttack",
+              "price": 1500,
+              "mana": 4,
+              "isCustom": false
+            }
+          },
+          "@root.playerInfo.collection.decks.0.cards.11",
+          "@root.playerInfo.collection.decks.0.cards.12",
+          "@root.playerInfo.collection.decks.0.cards.5",
+          "@root.playerInfo.collection.decks.0.cards.4",
+          "@root.playerInfo.collection.decks.0.cards.3",
+          "@root.playerInfo.collection.decks.0.cards.13",
+          "@root.playerInfo.collection.decks.0.cards.14",
+          "@root.playerInfo.collection.decks.0.cards.6",
+          "@root.playerInfo.collection.decks.0.cards.7",
+          "@root.playerInfo.collection.decks.0.cards.8",
+          "@root.playerInfo.collection.decks.0.cards.10",
+          "@root.playerInfo.collection.decks.0.cards.9",
           {
             "@type": "Unit",
             "@val": {
-              "hp": 3,
+              "hp": 10,
               "ap": 4,
-              "minRange": 2,
-              "maxRange": 5,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 600 - mana : 5 - hp : 10 - ap : 4 - minRange : 1 - maxRange : 1 - Type : Minion - can use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": true,
+              "id": "sepehr_shahGhool_1",
+              "name": "shahGhool",
+              "price": 600,
+              "mana": 5,
+              "isCustom": false
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 16,
+              "ap": 8,
+              "minRange": 1,
+              "maxRange": 1,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 300 - mana : 6 - hp : 16 - ap : 8 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "sepehr_divGorazSavar_1",
+              "name": "divGorazSavar",
+              "price": 300,
+              "mana": 6,
+              "isCustom": false
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 1,
+              "ap": 1,
+              "minRange": 1,
+              "maxRange": 1,
               "specialPowers": [
                 {
                   "apChange": 0,
@@ -31,7 +1135,100 @@
                       "minion"
                     ],
                     "friendlyOrEnemy": [
-                      "enemy"
+                      "friend"
+                    ],
+                    "targetUnitClass": [
+                      "melee"
+                    ],
+                    "width": 2147483647,
+                    "length": 2147483647,
+                    "manhattanDistance": 0,
+                    "isRandomSelecting": false,
+                    "doesAffectAllCards": true
+                  },
+                  "addedSpells": [],
+                  "addedBuffs": [
+                    {
+                      "@type": "HolyBuff",
+                      "@val": {
+                        "armor": 12,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 2147483647,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": true,
+                        "isDead": false
+                      }
+                    }
+                  ],
+                  "activationType": "PASSIVE",
+                  "description": "Contains : HolyBuff - Spell Activation Type : passive - isn't dispeller",
+                  "isDispeller": false,
+                  "id": "",
+                  "name": "",
+                  "price": 0,
+                  "mana": 0,
+                  "isCustom": false
+                }
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 650 - mana : 3 - hp : 1 - ap : 1 - minRange : 1 - maxRange : 1 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "sepehr_fooladZereh_1",
+              "name": "fooladZereh",
+              "price": 650,
+              "mana": 3,
+              "isCustom": false
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 4,
+              "ap": 2,
+              "minRange": 2,
+              "maxRange": 7,
+              "specialPowers": [
+                null
+              ],
+              "flags": [],
+              "buffs": [],
+              "heroOrMinion": "minion",
+              "description": "price : 600 - mana : 1 - hp : 4 - ap : 2 - minRange : 2 - maxRange : 7 - Type : Minion - can't use combo",
+              "didAttackThisTurn": false,
+              "didMoveThisTurn": false,
+              "canUseComboAttack": false,
+              "id": "sepehr_gholabSangDarToorani_1",
+              "name": "gholabSangDarToorani",
+              "price": 600,
+              "mana": 1,
+              "isCustom": false
+            }
+          },
+          {
+            "@type": "Unit",
+            "@val": {
+              "hp": 5,
+              "ap": 4,
+              "minRange": 2,
+              "maxRange": 3,
+              "specialPowers": [
+                {
+                  "apChange": 0,
+                  "hpChange": 0,
+                  "coolDown": 0,
+                  "turnsToGetReady": 0,
+                  "target": {
+                    "typeOfTarget": [
+                      "minion"
+                    ],
+                    "friendlyOrEnemy": [
+                      "friend"
                     ],
                     "targetUnitClass": [
                       "hybrid",
@@ -47,8 +1244,24 @@
                   "addedSpells": [],
                   "addedBuffs": [
                     {
-                      "@type": "StunBuff",
+                      "@type": "PowerBuff",
                       "@val": {
+                        "apPlus": 2,
+                        "hpPlus": 0,
+                        "positiveOrNegative": "positive",
+                        "startTurn": 0,
+                        "durationTurn": 1,
+                        "delayTurn": 0,
+                        "isDispellable": true,
+                        "isContinuous": false,
+                        "isDead": false
+                      }
+                    },
+                    {
+                      "@type": "WeaknessBuff",
+                      "@val": {
+                        "apMinus": 0,
+                        "hpMinus": 1,
                         "positiveOrNegative": "negative",
                         "startTurn": 0,
                         "durationTurn": 1,
@@ -59,8 +1272,8 @@
                       }
                     }
                   ],
-                  "activationType": "ON_SPAWN",
-                  "description": "Contains : StunBuff - Spell Activation Type : on spawn - isn't dispeller",
+                  "activationType": "PASSIVE",
+                  "description": "Contains : PowerBuff and WeaknessBuff - Spell Activation Type : passive - isn't dispeller",
                   "isDispeller": false,
                   "id": "",
                   "name": "",
@@ -72,22 +1285,161 @@
               "flags": [],
               "buffs": [],
               "heroOrMinion": "minion",
-              "description": "price : 500 - mana : 3 - hp : 3 - ap : 4 - minRange : 2 - maxRange : 5 - Type : Minion - can't use combo",
+              "description": "price : 550 - mana : 4 - hp : 5 - ap : 4 - minRange : 2 - maxRange : 3 - Type : Minion - can't use combo",
               "didAttackThisTurn": false,
               "didMoveThisTurn": false,
               "canUseComboAttack": false,
-              "id": "parham_naneSarma_1",
-              "name": "naneSarma",
-              "price": 500,
-              "mana": 3,
+              "id": "sepehr_jadoogar_1",
+              "name": "jadoogar",
+              "price": 550,
+              "mana": 4,
               "isCustom": false
             }
-          }
+          },
+          "@root.playerInfo.collection.decks.0.cards.19",
+          "@root.playerInfo.collection.decks.0.cards.18",
+          "@root.playerInfo.collection.decks.0.cards.17",
+          "@root.playerInfo.collection.decks.0.cards.16",
+          "@root.playerInfo.collection.decks.0.cards.15"
         ],
-        "items": []
+        "items": [
+          {
+            "price": 15000,
+            "passivePower": {
+              "apChange": 0,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 2147483647,
+                "length": 2147483647,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                null
+              ],
+              "activationType": "ON_BATTLE_START",
+              "description": "",
+              "isDispeller": false,
+              "id": "",
+              "name": "",
+              "price": 0,
+              "mana": 0,
+              "isCustom": false
+            },
+            "id": "sepehr_assassinationDagger_1",
+            "name": "assassinationDagger",
+            "description": "Contains : ManaBuff - Spell Activation Type : on spawn - isn't dispeller"
+          },
+          {
+            "price": 25000,
+            "passivePower": {
+              "apChange": 0,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 2147483647,
+                "length": 2147483647,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": false
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                null
+              ],
+              "activationType": "ON_BATTLE_START",
+              "description": "Contains : ManaBuff - Spell Activation Type : at the start of the battle - isn't dispeller",
+              "isDispeller": false,
+              "id": "",
+              "name": "",
+              "price": 0,
+              "mana": 0,
+              "isCustom": false
+            },
+            "id": "sepehr_soulEater_1",
+            "name": "soulEater",
+            "description": "price : 25000"
+          },
+          {
+            "price": 300,
+            "passivePower": {
+              "apChange": 0,
+              "hpChange": 0,
+              "coolDown": 0,
+              "turnsToGetReady": 0,
+              "target": {
+                "typeOfTarget": [],
+                "friendlyOrEnemy": [
+                  "friend"
+                ],
+                "targetUnitClass": [
+                  "hybrid",
+                  "ranged",
+                  "melee"
+                ],
+                "width": 1,
+                "length": 1,
+                "manhattanDistance": 0,
+                "isRandomSelecting": false,
+                "doesAffectAllCards": true
+              },
+              "addedSpells": [],
+              "addedBuffs": [
+                {
+                  "@type": "ManaBuff",
+                  "@val": {
+                    "manaAddedPerTurn": 1,
+                    "startTurn": 0,
+                    "durationTurn": 3,
+                    "delayTurn": 0,
+                    "isDispellable": false,
+                    "isContinuous": false,
+                    "isDead": false
+                  }
+                }
+              ],
+              "activationType": "PASSIVE",
+              "description": "Contains : ManaBuff - Spell Activation Type : passive - isn't dispeller",
+              "isDispeller": false,
+              "id": "",
+              "name": "",
+              "price": 0,
+              "mana": 0,
+              "isCustom": false
+            },
+            "id": "sepehr_tajDanayee_1",
+            "name": "tajDanayee",
+            "description": "price : 300"
+          }
+        ]
       }
     },
     "matchList": [],
-    "money": 999500
+    "mainDeck": "@root.playerInfo.collection.decks.0",
+    "money": 933250,
+    "turnDuration": "No Time Limit"
   }
 }

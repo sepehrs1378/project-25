@@ -22,6 +22,7 @@ public class ControllerMainMenu {
     private boolean shouldClose = false;
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
     public static Stage stage;
+    public static Stage multiPlayerStage;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
@@ -180,6 +181,7 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMultiPlayerMenu.fxml"));
         stage = new Stage();
+        multiPlayerStage = stage;
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));

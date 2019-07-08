@@ -58,7 +58,7 @@ public class ControllerMultiPlayerMenu {
     public void exitMultiPlayerMenu() {
         if (isScreenLocked)
             return;
-
+        ControllerMainMenu.multiPlayerStage.close();
         //todo
     }
 

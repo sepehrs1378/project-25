@@ -34,7 +34,6 @@ import java.util.ResourceBundle;
 public class ControllerBattleCommands implements Initializable {
     private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
-    private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
@@ -206,7 +205,7 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
-        Main.playMusic("src/ApProjectResources/music/battle.m4a");
+        Main.playMusic("src/music/battle.m4a");
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -407,7 +406,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleSpecialPowerInsertion(int row, int column, Battle battle) {
-        switch (clientDB.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column, battle)) {
+        switch (clientDB.getCurrentBattle().useSpecialPower(clientDB.getLoggedInPlayer(), row, column, battle)) {
             case NO_HERO:
                 //empty
                 break;
@@ -431,7 +430,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void showSpecialPowerUse(int row, int column) {
-        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(clientDB.getLoggedInPlayer());
         UnitImage heroImage = getUnitImageWithId(hero.getId());
         heroImage.showSpell();
         SpellImage specialPowerImage = new SpellImage
@@ -651,17 +650,17 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
-        updateNextCardImage();
-        updateCollectableIcon();//todo
+//        updateNextCardImage();
+//        updateCollectableIcon();//todo
         updateFlags();
-        updateCollectable();
+//        updateCollectable();
         updateHandImages();
         updatePlayersInfo();
         updateHand();
     }
 
     private void updateCollectableIcon() {
-        Collectable collectable = clientDB.getCurrentBattle().getCollectable();
+        /*Collectable collectable = clientDB.getCurrentBattle().getCollectable();
         Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
             if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
@@ -673,11 +672,11 @@ public class ControllerBattleCommands implements Initializable {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 
     private void updateNextCardImage() {
-        Card card = loggedInPlayer.getNextCard();
+        Card card = clientDB.getLoggedInPlayer().getNextCard();
         nextCardImage.setCardImage(card.getId());
     }
 
@@ -768,15 +767,11 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updateHand() {
-        List<Card> handCards = getLoggedInPlayer().getHand().getCards();
+        List<Card> handCards = clientDB.getLoggedInPlayer().getHand().getCards();
         for (int i = 0; i < handCards.size(); i++) {
             Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());
         }
-    }
-
-    public Player getLoggedInPlayer() {
-        return loggedInPlayer;
     }
 
     private void showNextCard() {

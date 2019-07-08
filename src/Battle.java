@@ -7,7 +7,7 @@ public class Battle {
     private BattleGround battleGround = new BattleGround();
     private Player playerInTurn;
     private String mode;
-    private Collectable collectable;
+//    private Collectable collectable;
     private int turnNumber = 1;
     private boolean isBattleFinished = false;
     private int numberOfFlags;
@@ -24,8 +24,8 @@ public class Battle {
         playerInTurn = player1;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
-        this.collectable = collectable == null ? null : collectable.clone();
-        battleGround.setCollectableOnGround(this.collectable);
+//        this.collectable = collectable == null ? null : collectable.clone();
+//        battleGround.setCollectableOnGround(this.collectable);
         battleGround.setFlagsOnGround(numberOfFlags);
         MatchInfo matchInfo1 = new MatchInfo();
         MatchInfo matchInfo2 = new MatchInfo();
@@ -504,9 +504,9 @@ public class Battle {
         return OutputMessageType.INVALID_PLAYER;
     }
 
-    public Collectable getCollectable() {
-        return collectable;
-    }
+//    public Collectable getCollectable() {
+//        return collectable;
+//    }
 
     public String getSingleOrMulti() {
         return singleOrMulti;
