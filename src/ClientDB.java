@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-@SuppressWarnings("ALL")
+
 public class ClientDB {
     private static ClientDB ourInstance = new ClientDB();
     private Socket socket;
@@ -15,6 +15,8 @@ public class ClientDB {
     private OutputStreamWriter output;
     private JsonStreamParser parser;
     private Account loggedInAccount;
+    private Player loggedInPlayer;
+    private Battle currentBattle;
     private Account computerPlayerLevel1;
     private Account computerPlayerLevel2;
     private Account computerPlayerLevel3;
@@ -42,6 +44,10 @@ public class ClientDB {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public Account getComputerPlayerLevel3() {
+        return computerPlayerLevel3;
     }
 
     public JsonStreamParser getParser() {
@@ -76,15 +82,39 @@ public class ClientDB {
         return computerPlayerLevel2;
     }
 
-    public Account getComputerPlayerLevel3() {
-        return computerPlayerLevel3;
+    public Account getComputerAccount(int level) {
+        switch (level) {
+            case 1:
+                return computerPlayerLevel1;
+            case 2:
+                return computerPlayerLevel2;
+            case 3:
+                return computerPlayerLevel3;
+            default:
+                throw new RuntimeException("level out of bounds");
+        }
+    }
+
+    public void setNewIdsForCustomPlayer() {
+        Deck deck = computerPlayerCustom.getMainDeck();
+        if (deck != null) {
+            for (Card card : deck.getCards()) {
+                card.setId(computerPlayerCustom.getUsername() + "_" + card.getId().split("_")[1] + "_"
+                        + card.getId().split("_")[2]);
+            }
+            deck.getHero().setId(computerPlayerCustom.getUsername() + "_" + deck.getHero().getId().split("_")[1] + "_"
+                    + deck.getHero().getId().split("_")[2]);
+            deck.getItem().setId(computerPlayerCustom.getUsername() + "_" + deck.getItem().getId().split("_")[1] + "_"
+                    + deck.getItem().getId().split("_")[2]);
+
+        }
     }
 
     public Account getComputerPlayerCustom() {
         return computerPlayerCustom;
     }
 
-    public void readComputerAccounts(){
+    public void readComputerAccounts() {
         Reader reader = null;
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         try {
@@ -98,6 +128,7 @@ public class ClientDB {
             e.printStackTrace();
         }
     }
+
     public List<Card> getCardList() {
         return cardList;
     }
@@ -150,5 +181,21 @@ public class ClientDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Battle getCurrentBattle() {
+        return currentBattle;
+    }
+
+    public void setCurrentBattle(Battle currentBattle) {
+        this.currentBattle = currentBattle;
+    }
+
+    public Player getLoggedInPlayer() {
+        return loggedInPlayer;
+    }
+
+    public void setLoggedInPlayer(Player loggedInPlayer) {
+        this.loggedInPlayer = loggedInPlayer;
     }
 }

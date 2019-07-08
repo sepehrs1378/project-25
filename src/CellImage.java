@@ -21,7 +21,8 @@ public class CellImage {
                 , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
         setLabelStyle();
         cellLabel.setOnMouseClicked(event -> {
-            ControllerBattleCommands.getOurInstance().handleCellClicked(row, column);
+            ControllerBattleCommands.getOurInstance().handleCellClicked
+                    (row, column, ClientDB.getInstance().getCurrentBattle());
         });
         addToRoot();
     }

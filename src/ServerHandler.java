@@ -14,7 +14,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,7 +38,7 @@ public class ServerHandler extends Thread {
     public void run() {
         try {
             Socket socket = new Socket(address, port);
-            ClientDB.getInstance().setSocket(socket);
+            clientDB.setSocket(socket);
             JsonStreamParser parser = ClientDB.getInstance().getParser();
             JsonObject obj;
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
@@ -131,6 +130,8 @@ public class ServerHandler extends Thread {
                         List<Card> cardList = new ArrayList<>();
                         List<Usable> usableList = new ArrayList<>();
                         separateCardsUsables(response, cardList, usableList);
+                        System.out.println("here");
+                        cardList.forEach(e-> System.out.println(e.getName()));
                         Platform.runLater(() -> {
                             try {
                                 ControllerShop.getOurInstance().showCards(cardList, usableList);
@@ -147,21 +148,36 @@ public class ServerHandler extends Thread {
                         Platform.runLater(() -> {
                             ControllerShop.getOurInstance().getMoneyLabel().setText(Integer.toString(clientDB.getLoggedInAccount().getMoney()));
                             ControllerShop.getOurInstance().getBuyMessage().setText(response.getMessage());
-                            PauseTransition visiblePause = new PauseTransition(
-                                    Duration.seconds(1)
-                            );
-                            visiblePause.setOnFinished(
-                                    event1 -> ControllerShop.getOurInstance().getBuyMessage().setText("")
-                            );
-                            visiblePause.play();
+                            deleteMessageAfterSomeTime(ControllerShop.getOurInstance().getBuyMessage(), 1);
                         });
                         break;
                     }
+                    case sell:
+                        clientDB.setLoggedInAccount((Account) response.getObjectList().get(0));
+                        Platform.runLater(() -> {
+                            ControllerCollectionEditMenu controllerCollectionEditMenu =  ControllerCollectionEditMenu.getOurInstance();
+                            Label messageLabel = controllerCollectionEditMenu.getMessageLabel();
+                            messageLabel.setText(response.getMessage());
+                            deleteMessageAfterSomeTime(messageLabel, 1);
+                            controllerCollectionEditMenu.showCardsInDeck();
+                            controllerCollectionEditMenu.showCardsInCollection();
+                        });
+                        break;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteMessageAfterSomeTime(Label messageLabel, double time){
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(time)
+        );
+        visiblePause.setOnFinished(
+                event1 -> messageLabel.setText("")
+        );
+        visiblePause.play();
     }
 
     private void separateCardsUsables(Response response, List<Card> cardList, List<Usable> usableList) {
@@ -171,6 +187,8 @@ public class ServerHandler extends Thread {
         for (int i = 0; i < response.getIntegers().get(1); i++) {
             usableList.add((Usable) response.getObjectList().get(i + response.getIntegers().get(0)));
         }
+        clientDB.getCardList().clear();
+        clientDB.getUsableList().clear();
         clientDB.getCardList().addAll(cardList);
         clientDB.getUsableList().addAll(usableList);
     }
@@ -259,5 +277,135 @@ public class ServerHandler extends Thread {
 
     public static ServerHandler getInstance() {
         return instance;
+    }
+
+    private void handleMultiPlayerCase(Response response) {
+        switch (response.getResponseType()) {
+            case unitMoved:
+                handleUnitMoved(response);
+            case unitSelected:
+                handleUnitSelected(response);
+                break;
+            case specialPowerUsed:
+                handleSpecialPowerUsed(response);
+                break;
+            default:
+        }
+    }
+
+    private void handleSpecialPowerUsed(Response response) {
+        Integer row = (Integer) response.getObjectList().get(0);
+        Integer column = (Integer) response.getObjectList().get(1);
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ControllerBattleCommands.getOurInstance().showSpecialPowerUse(row, column);
+            }
+        });
+    }
+
+    private void handleUnitSelected(Response response) {
+        UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ControllerBattleCommands.getOurInstance().setClickedImageView(selectedUnit.getUnitView());
+                ControllerBattleCommands.getOurInstance().updatePane();
+            }
+        });
+    }
+
+    private void handleUnitMoved(Response response) {
+        clientDB.setCurrentBattle((Battle) response.getObjectList().get(2));
+        String id = response.getMessage();
+        Integer row = (Integer) response.getObjectList().get(0);
+        Integer column = (Integer) response.getObjectList().get(1);
+        UnitImage movedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(id);
+        movedUnit.showRun(row, column);
+        ControllerBattleCommands.getOurInstance().updatePane();
+    }
+
+    private void handleMatchFoundCase(Response response) {
+        if (response.getResponseType().equals(ResponseType.matchFound)) {
+            clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
+            Player player1 = clientDB.getCurrentBattle().getPlayer1();
+            if (clientDB.getLoggedInAccount().getUsername().equals(player1.getPlayerInfo().getPlayerName()))
+                clientDB.setLoggedInPlayer(player1);
+            else clientDB.setLoggedInPlayer(clientDB.getCurrentBattle().getPlayer2());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Main.playWhenButtonClicked();
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
+                        Main.window.setScene(new Scene(root));
+                        Main.setCursor(Main.window);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    private void handleAccountCase(Response response) {
+        Account account;
+        switch (response.getResponseType()) {
+            case signUp:
+                if (response.getMessage().equals(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage())) {
+                    account = (Account) response.getObjectList().get(0);
+                    ClientDB.getInstance().setLoggedInAccount(account);
+                    openMainMenu();
+                } else if (response.getMessage().equals(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage())) {
+                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
+                    if (label != null) {
+                        Platform.runLater(() -> label.setText(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage()));
+                    }
+                }
+                break;
+            case login:
+                if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())) {
+                    account = (Account) response.getObjectList().get(0);
+                    ClientDB.getInstance().setLoggedInAccount(account);
+                    openMainMenu();
+                } else if (response.getMessage().equals(OutputMessageType.INVALID_PASSWORD.getMessage())) {
+                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidPassword");
+                    if (label != null) {
+                        Platform.runLater(() -> label.setText(OutputMessageType.INVALID_PASSWORD.getMessage()));
+                    }
+                } else if (response.getMessage().equals(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage())) {
+                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
+                    if (label != null) {
+                        Platform.runLater(() -> label.setText(OutputMessageType.ACCOUNT_DOESNT_EXIST.getMessage()));
+                    }
+                } else if (response.getMessage().equals(OutputMessageType.ALREADY_LOGGED_IN.getMessage())) {
+                    Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
+                    if (label != null) {
+                        Platform.runLater(() -> label.setText(OutputMessageType.ALREADY_LOGGED_IN.getMessage()));
+                    }
+                }
+                break;
+            case logout:
+                if (response.getMessage().equals(OutputMessageType.LOGGED_OUT_SUCCESSFULLY.getMessage())) {
+                    ClientDB.getInstance().setLoggedInAccount(null);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Main.playWhenButtonClicked();
+                            try {
+                                Parent root = FXMLLoader.load(getClass().getResource("ControllerAccount.fxml"));
+                                Main.window.setScene(new Scene(root));
+                                Main.setCursor(Main.window);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                break;
+            default:
+        }
     }
 }

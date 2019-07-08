@@ -77,94 +77,90 @@ public class Unit extends Card {
         flags.add(newFlag);
     }
 
-    public OutputMessageType attack(String targetId) {
-        if (dataBase.getCurrentBattle().getPlayerInTurn().
+    public OutputMessageType attack(String targetId,Battle battle) {
+        if (battle.getPlayerInTurn().
                 getSelectedUnit().didAttackThisTurn)
             return OutputMessageType.ALREADY_ATTACKED;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
+        if (!battle.getBattleGround().doesHaveUnit(targetId))
             return OutputMessageType.INVALID_CARD;
-        if (!isTargetUnitWithinRange(targetId))
+        if (!isTargetUnitWithinRange(targetId,battle))
             return OutputMessageType.TARGET_NOT_IN_RANGE;
-        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetId);
-        if (dataBase.getCurrentBattle().getBattleGround()
-                .isUnitFriendlyOrEnemy(targetUnit).equals(Constants.FRIEND))
+        Unit targetUnit = battle.getBattleGround().getUnitWithID(targetId);
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(targetUnit,battle).equals(Constants.FRIEND))
             return OutputMessageType.ATTACKED_FRIENDLY_UNIT;
-        this.attackUnit(targetId, false);
-        if (targetUnit.canAttackTarget(this, true)) {
-            targetUnit.attackUnit(this.getId(), true);
-            dataBase.getCurrentBattle().checkForDeadUnits();
+        this.attackUnit(targetId, false,battle);
+        if (targetUnit.canAttackTarget(this, true,battle)) {
+            targetUnit.attackUnit(this.getId(), true,battle);
+            battle.checkForDeadUnits(battle);
             return OutputMessageType.UNIT_AND_ENEMY_ATTACKED;
         } else {
-            dataBase.getCurrentBattle().checkForDeadUnits();
+            battle.checkForDeadUnits(battle);
             return OutputMessageType.UNIT_ATTACKED;
         }
     }
 
-    public void attackUnit(String targetId, boolean isCounterAttack) {
+    public void attackUnit(String targetId, boolean isCounterAttack,Battle battle) {
         if (this.didAttackThisTurn)
             return;
-        if (!dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(targetId))
+        if (!battle.getBattleGround().doesHaveUnit(targetId))
             return;
-        if (!isTargetUnitWithinRange(targetId))
+        if (!isTargetUnitWithinRange(targetId,battle))
             return;
         if (!isCounterAttack) {
             this.didAttackThisTurn = true;
             this.didMoveThisTurn = true;
         }
-        Unit targetedUnit = dataBase.getCurrentBattle().getBattleGround().
+        Unit targetedUnit = battle.getBattleGround().
                 getUnitWithID(targetId);
-        int damageDealt = calculateDamageDealt(this, targetedUnit);
+        int damageDealt = calculateDamageDealt(this, targetedUnit,battle);
         targetedUnit.changeHp(-damageDealt);
         for (Spell specialPower : specialPowers) {
             if (specialPower != null
                     && specialPower.getActivationType().equals(SpellActivationType.ON_ATTACK))
-                specialPower.doSpell(targetedUnit);
+                specialPower.doSpell(targetedUnit,battle);
         }
     }
 
-    public boolean canAttackTarget(Unit unit, boolean isCounterAttack) {
-        if (!isCounterAttack && dataBase.getCurrentBattle().getBattleGround().
-                isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+    public boolean canAttackTarget(Unit unit, boolean isCounterAttack,Battle battle) {
+        if (!isCounterAttack && battle.getBattleGround().
+                isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND))
             return false;
-        if (dataBase.getCurrentBattle().getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND))
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND))
             if (this.isStunned())
                 return false;
         if (!isCounterAttack && this.didAttackThisTurn)
             return false;
-        return isTargetUnitWithinRange(unit.getId());
+        return isTargetUnitWithinRange(unit.getId(),battle);
     }
 
-    public static OutputMessageType attackCombo(String targetId, String[] attackersIds) {
-        Unit target = DataBase.getInstance().getCurrentBattle()
-                .getBattleGround().getUnitWithID(targetId);
+    public static OutputMessageType attackCombo(String targetId, String[] attackersIds,Battle battle) {
+        Unit target = battle.getBattleGround().getUnitWithID(targetId);
         List<Unit> attackers = new ArrayList<>();
         for (String attackerId : attackersIds) {
-            Unit attacker = DataBase.getInstance().getCurrentBattle()
-                    .getBattleGround().getUnitWithID(attackerId);
+            Unit attacker = battle.getBattleGround().getUnitWithID(attackerId);
             if (attacker == null)
                 return OutputMessageType.A_UNIT_DOESNT_EXIST;
             if (!attacker.canUseComboAttack)
                 return OutputMessageType.A_UNIT_CANT_USE_COMBO;
-            if (!attacker.canAttackTarget(target, false))
+            if (!attacker.canAttackTarget(target, false,battle))
                 return OutputMessageType.A_UNIT_CANT_ATTACK_TARGET;
             attackers.add(attacker);
         }
         for (Unit attacker : attackers) {
-            attacker.attackUnit(targetId, false);
+            attacker.attackUnit(targetId, false,battle);
         }
-        Unit targetUnit = DataBase.getInstance().getCurrentBattle()
-                .getBattleGround().getUnitWithID(targetId);
-        targetUnit.attackUnit(attackers.get(0).getId(), true);
+        Unit targetUnit = battle.getBattleGround().getUnitWithID(targetId);
+        targetUnit.attackUnit(attackers.get(0).getId(), true,battle);
         return OutputMessageType.COMBO_ATTACK_SUCCESSFUL;
     }
 
-    private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit) {
+    private int calculateDamageDealt(Unit attackerUnit, Unit targetedUnit,Battle battle) {
         if (targetedUnit.isImmuneTo(Constants.WEAKER_AP)
                 && targetedUnit.ap > attackerUnit.ap)
             return 0;
         if (this.isImmuneTo(Constants.HOLY_BUFF))
             return attackerUnit.ap + targetedUnit.getNegativeArmor();
-        else return attackerUnit.ap - targetedUnit.getPositiveArmor()
+        else return attackerUnit.ap - targetedUnit.getPositiveArmor(battle)
                 + targetedUnit.getNegativeArmor();
     }
 
@@ -180,12 +176,12 @@ public class Unit extends Card {
         return Constants.RANGED;
     }
 
-    private boolean isTargetUnitWithinRange(String targetID) {
-        Unit targetUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(targetID);
-        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+    private boolean isTargetUnitWithinRange(String targetID,Battle battle) {
+        Unit targetUnit = battle.getBattleGround().getUnitWithID(targetID);
+        BattleGround battleGround = battle.getBattleGround();
         int distanceToTarget = getDistanceToTarget(
                 battleGround.getCoordinationOfUnit(targetUnit)[0],
-                battleGround.getCoordinationOfUnit(targetUnit)[1]);
+                battleGround.getCoordinationOfUnit(targetUnit)[1],battle);
         return distanceToTarget <= maxRange && distanceToTarget >= minRange;
     }
 
@@ -246,13 +242,12 @@ public class Unit extends Card {
         return false;
     }
 
-    public int getDistanceToTarget(int targetRow, int targetColumn) {
-        int unitRow = dataBase.getCurrentBattle().getBattleGround()
+    public int getDistanceToTarget(int targetRow, int targetColumn,Battle battle) {
+        int unitRow = battle.getBattleGround()
                 .getCoordinationOfUnit(this)[0];
-        int unitColumn = dataBase.getCurrentBattle().getBattleGround()
+        int unitColumn = battle.getBattleGround()
                 .getCoordinationOfUnit(this)[1];
-        return dataBase.getCurrentBattle().getBattleGround()
-                .getDistance(unitRow, unitColumn, targetRow, targetColumn);
+        return battle.getBattleGround().getDistance(unitRow, unitColumn, targetRow, targetColumn);
     }
 
     public void takeFlags(List<Flag> flags) {
@@ -275,13 +270,13 @@ public class Unit extends Card {
         return armor;
     }
 
-    public int getPositiveArmor() {
+    public int getPositiveArmor(Battle battle) {
         int armor = 0;
         for (Buff buff : buffs) {
             if (buff instanceof HolyBuff)
                 armor += ((HolyBuff) buff).getArmor();
         }
-        Cell cell = dataBase.getCurrentBattle().getBattleGround().getCellOfUnit(this);
+        Cell cell = battle.getBattleGround().getCellOfUnit(this);
         for (Buff buff : cell.getBuffs()) {
             if (buff instanceof HolyBuff)
                 armor += ((HolyBuff) buff).getArmor();

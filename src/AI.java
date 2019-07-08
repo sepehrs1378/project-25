@@ -14,11 +14,10 @@ public class AI {
     private AI() {
     }
 
-    public void doNextMove(AnchorPane battleGroundPane) {
-        Battle battle = dataBase.getCurrentBattle();
+    public void doNextMove(AnchorPane battleGroundPane, Battle battle) {
         moveUnits(battle, battleGroundPane);
         for (Unit unit : battle.getBattleGround().getUnitsOfPlayer(battle.getPlayer2())) {
-            attackWithUnit(battle, unit);
+            attackWithUnit(unit, battle);
         }
         insertNextCard(battle);
     }
@@ -32,7 +31,7 @@ public class AI {
                 for (Cell cell : cells) {
                     int[] coordination = battle.getBattleGround().getCoordinationOfCell(cell);
                     if (cell.getUnit() == null && coordination != null) {
-                        battle.insert(card, coordination[0], coordination[1]);
+                        battle.insert(card, coordination[0], coordination[1], battle);
                         battle.getPlayer2().moveNextCardToHand();
                         battle.getPlayer2().setNextCard();
                         ControllerBattleCommands.getOurInstance().insertUnitView(coordination[0], coordination[1], card);
@@ -67,14 +66,14 @@ public class AI {
             if (!unit.didMoveThisTurn()) {
                 int[] coordination = battle.getBattleGround().getRandomCellToMoveForUnit(unit);
                 battle.getPlayer2().setSelectedUnit(unit);
-                battle.getBattleGround().moveUnit(coordination[0], coordination[1]);
+                battle.getBattleGround().moveUnit(coordination[0], coordination[1], battle);
                 UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
                 unitImage.showRun(coordination[0], coordination[1]);
             }
         }
     }
 
-    public void attackWithUnit(Battle battle, Unit unit) {
+    public void attackWithUnit(Unit unit, Battle battle) {
         List<String> unitIds = new ArrayList<>();
         for (Cell[] cellRow : battle.getBattleGround().getCells()) {
             for (Cell cell : cellRow) {
@@ -86,17 +85,17 @@ public class AI {
         }
         int counter = 0;
         while (!unit.didAttackThisTurn() && counter < unitIds.size()) {
-            OutputMessageType om = unit.attack(unitIds.get(counter));
+            OutputMessageType om = unit.attack(unitIds.get(counter), battle);
             if (om == OutputMessageType.UNIT_ATTACKED) {
                 UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
-                Unit unitTarget = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(unitIds.get(counter));
-                unitImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
+                Unit unitTarget = battle.getBattleGround().getUnitWithID(unitIds.get(counter));
+                unitImage.showAttack(battle.getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
             } else if (om == OutputMessageType.UNIT_AND_ENEMY_ATTACKED) {
                 UnitImage unitImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unit.getId());
                 UnitImage unitTargetImage = ControllerBattleCommands.getOurInstance().getUnitImageWithId(unitIds.get(counter));
-                Unit unitTarget = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(unitIds.get(counter));
-                unitImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
-                unitTargetImage.showAttack(dataBase.getCurrentBattle().getBattleGround().getCoordinationOfUnit(unit)[1]);
+                Unit unitTarget = battle.getBattleGround().getUnitWithID(unitIds.get(counter));
+                unitImage.showAttack(battle.getBattleGround().getCoordinationOfUnit(unitTarget)[1]);
+                unitTargetImage.showAttack(battle.getBattleGround().getCoordinationOfUnit(unit)[1]);
             }
             counter++;
         }
@@ -110,13 +109,13 @@ public class AI {
         return null;//todo
     }
 
-    public int[] findEnemyUnitInRange(BattleGround battleGround, int row, int column) {
+    public int[] findEnemyUnitInRange(BattleGround battleGround, int row, int column, Battle battle) {
         int rowCounter = 0;
         int coloumnCounter = 0;
         for (Cell[] cellRow : battleGround.getCells()) {
             for (Cell cell : cellRow) {
                 if (Math.abs(row - rowCounter) + Math.abs(column - coloumnCounter) <= 3 && cell.getUnit().getName()
-                        .contains(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName())) {
+                        .contains(battle.getPlayer1().getPlayerInfo().getPlayerName())) {
                     int[] coordinations = new int[2];
                     coordinations[0] = rowCounter;
                     coordinations[1] = coloumnCounter;

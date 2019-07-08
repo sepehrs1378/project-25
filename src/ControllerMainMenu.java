@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
@@ -145,7 +146,7 @@ public class ControllerMainMenu {
     @FXML
     void logout(MouseEvent event) throws IOException {
         new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
-        , null, null)).start();
+                , null,null)).start();
     }
 
     @FXML
@@ -165,19 +166,29 @@ public class ControllerMainMenu {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerSinglePlayerMenu.fxml"));
         stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root));
-        File file = new File("src/pics/cursor.png");
-        Image image = new Image(file.toURI().toString());
-        stage.getScene().setCursor(new ImageCursor(image));
+        Main.setCursor(stage);
+//        File file = new File("src/pics/cursor.png");
+//        Image image = new Image(file.toURI().toString());
+//        stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 
     @FXML
-    void enterMultiPlayer(MouseEvent event) {
+    void enterMultiPlayer(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        //todo not needed for phase 2
+        Parent root = FXMLLoader.load(getClass().getResource("ControllerMultiPlayerMenu.fxml"));
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        Main.setCursor(stage);
+//        File file = new File("src/pics/cursor.png");
+//        Image image = new Image(file.toURI().toString());
+//        stage.getScene().setCursor(new ImageCursor(image));
+        stage.showAndWait();
     }
 
     @FXML
@@ -246,6 +257,7 @@ public class ControllerMainMenu {
     @FXML
     void enterCollection(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.enterCollectoin, null, null,null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
@@ -264,7 +276,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
-        new ServerRequestSender(new Request(RequestType.shop, null , null, null)).start();
+        new ServerRequestSender(new Request(RequestType.shop, null, null, null)).start();
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
@@ -284,11 +296,10 @@ public class ControllerMainMenu {
         shopBtn.setStyle("-fx-opacity: 0.6");
     }
 
-
     @FXML
     void enterGlobalChat(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        new ServerRequestSender(new Request(RequestType.enterGlobalChat,ClientDB.getInstance().getLoggedInAccount().getUsername(),null,null)).start();
+        new ServerRequestSender(new Request(RequestType.enterGlobalChat, ClientDB.getInstance().getLoggedInAccount().getUsername(), null, null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGlobalChat.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
@@ -303,6 +314,5 @@ public class ControllerMainMenu {
     @FXML
     void makeGlobalChatBtnTransparent(MouseEvent event) {
         enterGlobalChatBtn.setOpacity(.6);
-
     }
 }

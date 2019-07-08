@@ -5,17 +5,16 @@ public class InfernoBuff extends Buff {
     private int damagePerTurn;
 
     public InfernoBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous,int startTurn, int damagePerTurn) {
-        super(durationTurn, isDispellable, isContinuous,startTurn);
+            , boolean isContinuous, int startTurn, int damagePerTurn) {
+        super(durationTurn, isDispellable, isContinuous, startTurn);
         this.damagePerTurn = damagePerTurn;
     }
 
-    @Override
     //todo complete it later for damage to units on cells
-    public void doEffect(Unit unit) {
-        List<Cell> cells = dataBase.getCurrentBattle().
-                getBattleGround().getCellsHavingBuff(this);
-        if (isActive()) {
+    @Override
+    public void doEffect(Unit unit, Battle battle) {
+        List<Cell> cells = battle.getBattleGround().getCellsHavingBuff(this);
+        if (isActive(battle)) {
             for (Cell cell : cells) {
                 if (!cell.isEmptyOfUnit())
                     cell.getUnit().changeHp(-damagePerTurn);
@@ -30,7 +29,7 @@ public class InfernoBuff extends Buff {
 
     @Override
     public InfernoBuff clone() {
-        return new InfernoBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), damagePerTurn);
+        return new InfernoBuff(getDurationTurn(), isDispellable(), isContinuous(), getStartTurn(), damagePerTurn);
     }
 
     @Override

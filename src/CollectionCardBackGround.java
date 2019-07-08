@@ -1,13 +1,16 @@
+import com.google.gson.JsonObject;
 import javafx.animation.PauseTransition;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollectionCardBackGround {
-    private DataBase dataBase = DataBase.getInstance();
+    private ClientDB dataBase = ClientDB.getInstance();
     Object object = null;
     String deckName = "";
     @FXML
@@ -81,12 +84,36 @@ public class CollectionCardBackGround {
         if (object instanceof Unit) {
             Unit unit = (Unit) object;
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().addCard(unit.getId(), deckName);
+            if (outputMessageType.getMessage().equals(OutputMessageType.CARD_ADDED_SUCCESSFULLY.getMessage())) {
+                JsonObject obj = new JsonObject();
+                obj.addProperty("cardID", unit.getId());
+                obj.addProperty("deckName", deckName);
+                List<Object> objList = new ArrayList<>();
+                objList.add(obj);
+                new ServerRequestSender(new Request(RequestType.moveCardToDeck, null, null, objList)).start();
+            }
         } else if (object instanceof Spell) {
             Spell spell = (Spell) object;
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().addCard(spell.getId(), deckName);
+            if (outputMessageType.getMessage().equals(OutputMessageType.CARD_ADDED_SUCCESSFULLY.getMessage())) {
+                JsonObject obj = new JsonObject();
+                obj.addProperty("deckName", deckName);
+                List<Object> objList = new ArrayList<>();
+                obj.addProperty("cardID", spell.getId());
+                objList.add(obj);
+                new ServerRequestSender(new Request(RequestType.moveCardToDeck, null, null, objList)).start();
+            }
         } else if (object instanceof Usable) {
             Usable usable = (Usable) object;
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().addCard(usable.getId(), deckName);
+            if (outputMessageType.getMessage().equals(OutputMessageType.CARD_ADDED_SUCCESSFULLY.getMessage())) {
+                JsonObject obj = new JsonObject();
+                obj.addProperty("cardID", usable.getId());
+                List<Object> objList = new ArrayList<>();
+                obj.addProperty("deckName", deckName);
+                objList.add(obj);
+                new ServerRequestSender(new Request(RequestType.moveCardToDeck, null, null, objList)).start();
+            }
         }
         if (outputMessageType != null) {
             ControllerCollectionEditMenu.getOurInstance().getMessageLabel().setText(outputMessageType.getMessage());
@@ -113,16 +140,28 @@ public class CollectionCardBackGround {
     @FXML
     void removeCardFromDeck(MouseEvent event) {
         deckName = ControllerCollectionEditMenu.getDeckName();
+        String id = null;
         OutputMessageType outputMessageType = null;
         if (object instanceof Unit) {
             Unit unit = (Unit) object;
+            id = unit.getId();
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().removeCard(unit.getId(), deckName);
         } else if (object instanceof Spell) {
             Spell spell = (Spell) object;
+            id = spell.getId();
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().removeCard(spell.getId(), deckName);
         } else if (object instanceof Usable) {
             Usable usable = (Usable) object;
+            id = usable.getId();
             outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().removeCard(usable.getId(), deckName);
+        }
+        if (outputMessageType != null && outputMessageType.getMessage().equals(OutputMessageType.CARD_REMOVED_SUCCESSFULLY.getMessage())) {
+            JsonObject object = new JsonObject();
+            object.addProperty("id",id);
+            object.addProperty("deck",deckName);
+            List<Object> objectList = new ArrayList<>();
+            objectList.add(object);
+            new ServerRequestSender(new Request(RequestType.removeCardFromDeck,null,null,objectList)).start();
         }
         if (outputMessageType != null) {
             ControllerCollectionEditMenu.getOurInstance().getMessageLabel().setText(outputMessageType.getMessage());
@@ -145,22 +184,14 @@ public class CollectionCardBackGround {
 
     @FXML
     void sellCard(MouseEvent event) {
-//        ControllerCollectionEditMenu controllerCollectionEditMenu = ControllerCollectionEditMenu.getOurInstance();
-//        OutputMessageType outputMessageType = null;
-//        if (object instanceof Card) {
-//            Card card = (Card) object;
-//            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(card.getId());
-//        }
-//        if (object instanceof Usable) {
-//            Usable usable = (Usable) object;
-//            outputMessageType = dataBase.getLoggedInAccount().getPlayerInfo().getCollection().sell(usable.getId());
-//        }
-//        if (outputMessageType != null) {
-//            controllerCollectionEditMenu.getMessageLabel().setText(outputMessageType.getMessage());
-//            removeMessage();
-//        }
-//        controllerCollectionEditMenu.showCardsInCollection();
-//        controllerCollectionEditMenu.showCardsInDeck();
+        if (object instanceof Card) {
+            Card card = (Card) object;
+            new ServerRequestSender(new Request(RequestType.sell, card.getId(), null, null)).start();
+        }
+        if (object instanceof Usable) {
+            Usable usable = (Usable) object;
+            new ServerRequestSender(new Request(RequestType.sell, usable.getId(), null, null)).start();
+        }
     }
 
     @FXML

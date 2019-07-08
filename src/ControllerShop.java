@@ -58,6 +58,7 @@ public class ControllerShop {
                 cardList.add(dataBase.getCardList().get(i));
             }
         }
+        cardList.forEach(e-> System.out.println(e.getName()));
         List<Usable> usableList = new ArrayList<>();
         for (int i = 0; i < dataBase.getUsableList().size(); i++) {
             if (dataBase.getUsableList().get(i).getName().contains(addCardText.getText())) {
@@ -82,6 +83,7 @@ public class ControllerShop {
     void goBack(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
     }
@@ -100,6 +102,7 @@ public class ControllerShop {
     public void showCards(List<Card> cardList, List<Usable> usableList) throws IOException {
         upperBox.getChildren().clear();
         lowerBox.getChildren().clear();
+        cardList.forEach(e-> System.out.println(e.getName()));
         moneyLabel.setText(Integer.toString(ClientDB.getInstance().getLoggedInAccount().getMoney()));
         showInHBoxes(cardList, usableList);
     }

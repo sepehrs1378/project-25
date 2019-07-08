@@ -6,16 +6,12 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-
-public class HandImage {
+public class NextCardImage {
     private final String UNIT = "unit";
     private final String SPELL = "spell";
     private final int UNIT_VIEW_SIZE = 150;
     private final int SPELL_VIEW_SIZE = 80;
-    private final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
-    private final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
     private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
-    private int number;
     private String id = "";
     private String unitOrSpell = "";
     private AnchorPane root;
@@ -31,30 +27,9 @@ public class HandImage {
         manaLabel.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #4789ff;-fx-background-radius: 100;-fx-font-size: 23");
     }
 
-    public HandImage(int number, AnchorPane root) {
-        this.ringView = ControllerBattleCommands.getOurInstance().getHandRings().get(number);
-        this.number = number;
+    public NextCardImage(AnchorPane root) {
+        this.ringView = ControllerBattleCommands.getOurInstance().getNextCardRing();
         this.root = root;
-        cardView.setOnMouseClicked(event -> {
-            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
-            if (controller.getClickedImageView() != null
-                    && controller.getClickedImageView().equals(cardView)) {
-                ControllerBattleCommands.getOurInstance().setClickedImageView(null);
-                setStyleAsNotSelected();
-            } else {
-                ControllerBattleCommands.getOurInstance().setClickedImageView(cardView);
-                setStyleAsSelected();
-            }
-            ControllerBattleCommands.getOurInstance().updatePane();
-        });
-        cardView.setOnMouseEntered(event -> {
-            if (!cardView.getStyle().equals(SELECTED_STYLE))
-                cardView.setStyle(MOUSE_ENTERED_STYLE);
-        });
-        cardView.setOnMouseExited(event -> {
-            if (!cardView.getStyle().equals(SELECTED_STYLE))
-                cardView.setStyle(MOUSE_EXITED_STYLE);
-        });
         addToRoot();
     }
 
@@ -82,7 +57,7 @@ public class HandImage {
                 hpLabel.setVisible(false);
             }
             setCardViewStyle();
-            relocateCardToHand();
+            relocateCardToNextCard();
             //todo very important check later
             manaLabel.setText(card.getMana() + "");
         } catch (IOException e) {
@@ -122,7 +97,7 @@ public class HandImage {
         manaLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.9);
     }
 
-    private void relocateCardToHand() {
+    private void relocateCardToNextCard() {
         double x = 0;
         double y = 0;
         if (unitOrSpell.equals(UNIT)) {
@@ -138,10 +113,7 @@ public class HandImage {
         setStatsPositions();
     }
 
-    public void clearHandImage() {
-        //todo maybe works incorrect because
-        // maybe the imageView remains in the hand
-        // and some methods don't work properly
+    public void clearNextCardImage() {
         cardView.setVisible(false);
         apLabel.setVisible(false);
         hpLabel.setVisible(false);

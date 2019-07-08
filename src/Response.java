@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Response {
     private ResponseType responseType;
@@ -9,16 +7,16 @@ public class Response {
     private List<Object> objectList;
     private Map<Object, Class> objectClassMap = new HashMap<>();
 
-    public Response(ResponseType responseType, String message, List<Integer> integers, List<Object> objectList) {
+    public Response(ResponseType responseType, String message, List<Integer> integers
+            , List<Object> objectList) {
         this.responseType = responseType;
         this.message = message;
         this.integers = integers;
         this.objectList = objectList;
-        if (objectList != null) {
+        if (objectList != null)
             for (Object object : objectList) {
                 objectClassMap.put(object, object.getClass());
             }
-        }
     }
 
     public ResponseType getResponseType() {

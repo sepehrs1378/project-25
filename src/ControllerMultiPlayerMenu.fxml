@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="611.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMultiPlayerMenu">
+   <children>
+      <ImageView fitHeight="612.0" fitWidth="881.0">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="classicBtn" fitHeight="156.0" fitWidth="155.0" layoutX="712.0" layoutY="15.0" onMouseClicked="#findClassicMatch" onMouseEntered="#makeClassicBtnOpaque" onMouseExited="#makeClassicBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/classic_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="multiFlagsBtn" fitHeight="155.0" fitWidth="155.0" layoutX="712.0" layoutY="412.0" onMouseClicked="#findMultiFlagsMatch" onMouseEntered="#makeMultiFlagsBtnOpaque" onMouseExited="#makeMultiFlagsBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/multiple_flags_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="singleFlagBtn" fitHeight="155.0" fitWidth="155.0" layoutX="712.0" layoutY="218.0" onMouseClicked="#findOneFlagMatch" onMouseEntered="#makeSingleFlagBtnOpaque" onMouseExited="#makeSingleFlagBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/single_flag_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="loadingIcon" layoutX="48.0" layoutY="408.0" visible="false">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/loading.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cancelBtn" fitHeight="142.0" fitWidth="155.0" layoutX="18.0" layoutY="470.0" onMouseClicked="#cancelMatchFinding" onMouseEntered="#makeCancelBtnOpaque" onMouseExited="#makeCancelBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/cancel_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeBtn" fitHeight="63.0" fitWidth="61.0" layoutX="7.0" layoutY="7.0" onMouseClicked="#exitMultiPlayerMenu" onMouseEntered="#makeCloseBtnOpaque" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/close_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="373.0" layoutX="262.0" layoutY="-2.0" preserveRatio="true">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/multiplayer_title.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

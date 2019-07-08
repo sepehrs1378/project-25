@@ -11,8 +11,8 @@ public class PowerBuff extends Buff {
     }
 
     @Override
-    public void doEffect(Unit unit) {
-        if (isInFirstActivationTurn()) {
+    public void doEffect(Unit unit,Battle battle) {
+        if (isInFirstActivationTurn(battle)) {
             unit.changeHp(hpPlus);
             unit.changeAp(apPlus);
         }

@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private static final DataBase dataBase = DataBase.getInstance();
     private List<Collectable> collectables = new ArrayList<>();
     private PlayerInfo playerInfo;
     private Hand hand = new Hand();
@@ -42,7 +41,6 @@ public class Player {
             hand.addCard(deck.getCards().get(randomNumber));
             deck.getCards().remove(randomNumber);
         }
-
     }
 
     public void setMana(int mana) {
@@ -117,39 +115,16 @@ public class Player {
         return getCollectableWithID(id) != null;
     }
 
-    public OutputMessageType selectUnit(String id) {
-        Battle currentBattle = dataBase.getCurrentBattle();
-        if (currentBattle.getBattleGround().getUnitWithID(id) == null)
+    public OutputMessageType selectUnit(String id, Battle battle) {
+        if (battle.getBattleGround().getUnitWithID(id) == null)
             return OutputMessageType.INVALID_COLLECTABLE_CARD;
-        Unit unit = currentBattle.getBattleGround().getUnitWithID(id);
-        if (currentBattle.getBattleGround().isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
+        Unit unit = battle.getBattleGround().getUnitWithID(id);
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle).equals(Constants.ENEMY))
             return OutputMessageType.ENEMY_UNIT_SELECTED;
         if (unit.isStunned())
             return OutputMessageType.UNIT_IS_STUNNED;
         selectedUnit = unit;
         return OutputMessageType.SELECTED;
-    }
-
-    public OutputMessageType select(String id) {
-        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id) == null
-                && !doesHaveCollectable(id))
-            return OutputMessageType.INVALID_COLLECTABLE_CARD;
-        if (doesHaveCollectable(id)) {
-            selectedUnit = null;
-            selectedCollectable = getCollectableWithID(id);
-            return OutputMessageType.SELECTED;
-        }
-        if (dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id).isStunned()) {
-            return OutputMessageType.UNIT_IS_STUNNED;
-        }
-        if (dataBase.getCurrentBattle().getBattleGround().doesHaveUnit(id)) {
-            selectedUnit = dataBase.getCurrentBattle().getBattleGround().getUnitWithID(id);
-            if (selectedUnit.getId().split("_")[0].matches(dataBase.getCurrentBattle().
-                    getPlayerInTurn().getPlayerInfo().getPlayerName())) {
-                return OutputMessageType.SELECTED;
-            }
-        }
-        return OutputMessageType.INVALID_COLLECTABLE_CARD;
     }
 
     public List<Buff> getBuffs() {

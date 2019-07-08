@@ -36,17 +36,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerBattleCommands implements Initializable {
-    private static DataBase dataBase = DataBase.getInstance();
+    private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
     private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private List<SpellImage> spellImageList = new ArrayList<>();
-    private CellImage[][] cellsImages = new CellImage[5][9];
-    private ImageView clickedImageView = new ImageView();//todo
     private List<FlagImage> flagImages = new ArrayList<>();
-    Timeline timeline = new Timeline();
+    private CellImage[][] cellsImages = new CellImage[5][9];
+    private CollectableImage collectableImage;
+    private NextCardImage nextCardImage;
+    private ImageView clickedImageView = new ImageView();
+    private Timeline timeline = new Timeline();
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -104,6 +106,9 @@ public class ControllerBattleCommands implements Initializable {
         forfeitBtn.setStyle("-fx-opacity: 0.6");
     }
 
+    //todo grave yard doesn't get any resource from server and does the work
+    // with the current resources : clientDB.getCurrentBattle....
+    // maybe it's better to send currentBattle to client every time we enter grave yard
     @FXML
     void enterGraveYard(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGraveYard.fxml"));
@@ -169,11 +174,8 @@ public class ControllerBattleCommands implements Initializable {
     private ProgressBar timeBar;
 
     @FXML
-    void endTurn(MouseEvent event) throws GoToMainMenuException {
-        //todo
+    void endTurn(MouseEvent event) {
         endTurnWhenClicked();
-//        endTurnMineBtn.setVisible(false);
-//        endTurnEnemyBtn.setVisible(true);
     }
 
     private void endTurnWhenClicked() {
@@ -182,27 +184,33 @@ public class ControllerBattleCommands implements Initializable {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         clickedImageView = null;
-        if (endTurn()) {
-            return;
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            new ServerRequestSender(new Request
+                    (RequestType.endTurn, null, null, null));
+            endTurnMineBtn.setVisible(false);
+            endTurnEnemyBtn.setVisible(true);
         }
-        /*Battle battle = dataBase.getCurrentBattle();
-        if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-            AI.getInstance().doNextMove(battleGroundPane);
-            if (endTurn()) {
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
+            Battle battle = clientDB.getCurrentBattle();
+            if (endTurn(battle)) {
                 return;
             }
-        }*/
+            if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
+                AI.getInstance().doNextMove(battleGroundPane, battle);
+                if (endTurn(battle)) {
+                    return;
+                }
+            }
+        }
         setTimeBar();
-
         updatePane();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        startTempBattle();//todo remove it later
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
-        this.loggedInPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Main.playMusic("src/ApProjectResources/music/battle.m4a");
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -210,11 +218,16 @@ public class ControllerBattleCommands implements Initializable {
         setupCursor();
         setupHeroSpecialPowerView();
         setupItemView();
+        setupNextCardImage();
         updatePane();
     }
 
+    private void setupNextCardImage() {
+        nextCardImage = new NextCardImage(battleGroundPane);
+    }
+
     private void setTimeBar() {
-        String turnDuration = dataBase.getLoggedInAccount().getTurnDuration();
+        String turnDuration = clientDB.getLoggedInAccount().getTurnDuration();
         if (turnDuration != null && !turnDuration.equals(Constants.NO_LIMIT)) {
             timeline.stop();
             timeline.getKeyFrames().clear();
@@ -233,12 +246,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupPlayersInfoViews() {
-        player1Label.setText(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        player2Label.setText(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        player1Label.setText(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        player2Label.setText(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
     }
 
     private void setupItemView() {
-        Usable usable = (Usable) dataBase.getLoggedInAccount().getMainDeck().getItem();
+        Usable usable = (Usable) clientDB.getLoggedInAccount().getMainDeck().getItem();
         try {
             if (usable != null) {
                 usableView.setImage(new Image(new FileInputStream("/src/ApProjectResources/units/" + usable.getName() + "/usable")));
@@ -252,7 +265,7 @@ public class ControllerBattleCommands implements Initializable {
         final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
         final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
         final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
-        Unit hero = dataBase.getLoggedInAccount().getMainDeck().getHero();
+        Unit hero = clientDB.getLoggedInAccount().getMainDeck().getHero();
         if (hero.getMainSpecialPower() == null) {
             return;
         }
@@ -284,7 +297,8 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setupCursor() {
         try {
-            ImageCursor cursor = new ImageCursor(new Image(new FileInputStream("./src/pics/mouse_icon")));
+            ImageCursor cursor = new ImageCursor(new Image
+                    (new FileInputStream("src/pics/mouse_icon")));
             battleGroundPane.setCursor(cursor);
         } catch (IOException e) {
             e.printStackTrace();
@@ -300,8 +314,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupHeroesImages() {
-        Unit playerHero = dataBase.getCurrentBattle().getPlayer1().getDeck().getHero();
-        Unit opponentHero = dataBase.getCurrentBattle().getPlayer2().getDeck().getHero();
+        Unit playerHero = clientDB.getCurrentBattle().getPlayer1().getDeck().getHero();
+        Unit opponentHero = clientDB.getCurrentBattle().getPlayer2().getDeck().getHero();
         UnitImage playerHeroImage = new UnitImage(playerHero.getId(), battleGroundPane);
         UnitImage opponentHeroImage = new UnitImage(opponentHero.getId(), battleGroundPane);
         unitImageList.add(opponentHeroImage);
@@ -319,30 +333,85 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    public void handleCellClicked(int row, int column) {
+    public void handleCellClicked(Integer row, Integer column, Battle battle) {
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI))
+            handleCellClickedForMulti(row, column);
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE))
+            handleCellClickedForSingle(row, column, battle);
+    }
+
+    private void handleCellClickedForSingle(Integer row, Integer column, Battle battle) {
         //todo complete it for other purposes too
-        if (isClickedImageViewInHand())
-            if (handleCardInsertion(row, column)) {
-                updatePane();
-                return;
-            }
-        if (clickedImageView == specialPowerView) {
-            if (handleSpecialPowerInsertion(row, column)) {
+        if (isClickedImageViewInHand()) {
+            if (handleCardInsertion(row, column, battle)) {
                 updatePane();
                 return;
             }
         }
-        if (handleUnitMove(row, column)) {
-            updatePane();
-            return;
+        if (clickedImageView.equals(specialPowerView)) {
+            if (handleSpecialPowerInsertion(row, column, battle)) {
+                updatePane();
+                return;
+            }
+        }
+        if (clickedImageView.equals(collectableView)) {
+            //todo
+        }
+        if (isClickedImageViewUnit()) {
+            if (handleUnitMove(row, column)) {
+                updatePane();
+                return;
+            }
         }
         updatePane();
     }
 
-    private boolean handleSpecialPowerInsertion(int row, int column) {
-        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
-        UnitImage heroImage = getUnitImageWithId(hero.getId());
-        switch (dataBase.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column)) {
+    private void handleCellClickedForMulti(Integer row, Integer column) {
+        List<Object> objects = new ArrayList<>();
+        objects.add(row);
+        objects.add(column);
+        if (isClickedImageViewInHand()) {
+            new ServerRequestSender(
+                    new Request(RequestType.insertCard
+                            , getHandImageWithCardView(clickedImageView).getId()
+                            , null, objects));
+        }
+        if (clickedImageView.equals(specialPowerView)) {
+            new ServerRequestSender(
+                    new Request(RequestType.useSpecialPower, null
+                            , null, objects));
+        }
+        if (clickedImageView.equals(collectableView)) {
+            new ServerRequestSender(
+                    new Request(RequestType.useCollectable, null,
+                            null, objects));
+        }
+        if (isClickedImageViewUnit()) {
+            new ServerRequestSender(
+                    new Request(RequestType.moveUnit
+                            , getUnitImageWithUnitView(clickedImageView).getId()
+                            , null, objects));
+        }
+    }
+
+    private boolean isClickedImageViewUnit() {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage.getUnitView().equals(clickedImageView))
+                return true;
+        }
+        return false;
+    }
+
+    private UnitImage getUnitImageWithUnitView(ImageView unitView) {
+        for (UnitImage unitImage : unitImageList) {
+            if (unitImage.getUnitView().equals(unitView))
+                return unitImage;
+        }
+        return null;
+    }
+
+    private boolean handleSpecialPowerInsertion(int row, int column, Battle battle) {
+        switch (clientDB.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column, battle)) {
             case NO_HERO:
                 //empty
                 break;
@@ -356,11 +425,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case SPECIAL_POWER_USED:
-                heroImage.showSpell();
-                SpellImage specialPowerImage = new SpellImage
-                        (hero.getId(), row, column, battleGroundPane, SpellType.specialPower);
-                spellImageList.add(specialPowerImage);
-                clickedImageView = null;
+                showSpecialPowerUse(row, column);
                 break;
             default:
                 System.out.println("unhandled case!!!!!");
@@ -369,9 +434,19 @@ public class ControllerBattleCommands implements Initializable {
         return false;
     }
 
+    public void showSpecialPowerUse(int row, int column) {
+        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        UnitImage heroImage = getUnitImageWithId(hero.getId());
+        heroImage.showSpell();
+        SpellImage specialPowerImage = new SpellImage
+                (hero.getId(), row, column, battleGroundPane, SpellType.specialPower);
+        spellImageList.add(specialPowerImage);
+        clickedImageView = null;
+    }
+
     private boolean handleUnitMove(int row, int column) {
-        switch (dataBase.getCurrentBattle().getBattleGround()
-                .moveUnit(row, column)) {
+        switch (clientDB.getCurrentBattle().getBattleGround()
+                .moveUnit(row, column, clientDB.getCurrentBattle())) {
             case UNIT_NOT_SELECTED:
                 //empty
                 break;
@@ -388,7 +463,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case UNIT_MOVED:
-                Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+                Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
                 UnitImage movedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
                 movedUnitImage.showRun(row, column);
                 return true;
@@ -397,11 +472,10 @@ public class ControllerBattleCommands implements Initializable {
         return false;
     }
 
-    private boolean handleCardInsertion(int row, int column) {
+    private boolean handleCardInsertion(int row, int column, Battle battle) {
         HandImage handImage = getHandImageWithCardView(clickedImageView);
-        Card card = dataBase.getCurrentBattle()
-                .getPlayerInTurn().getHand().getCardById(handImage.getId());
-        switch (dataBase.getCurrentBattle().insert(card, row, column)) {
+        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(handImage.getId());
+        switch (clientDB.getCurrentBattle().insert(card, row, column, battle)) {
             case NO_SUCH_CARD_IN_HAND:
                 System.out.println("1");
                 //empty
@@ -415,7 +489,7 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
-                System.out.println("4");
+                System.out.println("not nearby friendly units");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
@@ -423,17 +497,20 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case CARD_INSERTED:
-                System.out.println("6");
-                if (card instanceof Unit)
-                    insertUnitView(row, column, card);
-                if (card instanceof Spell) {
-                    insertSpellView(row, column, card);
-                }
-                handImage.clearHandImage();
+                showCardInsertion(row, column, handImage, card);
                 return true;
             default:
         }
         return false;
+    }
+
+    private void showCardInsertion(int row, int column, HandImage handImage, Card card) {
+        if (card instanceof Unit)
+            insertUnitView(row, column, card);
+        if (card instanceof Spell) {
+            insertSpellView(row, column, card);
+        }
+        handImage.clearHandImage();
     }
 
     public List<SpellImage> getSpellImageList() {
@@ -472,28 +549,35 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
-        if (currentPlayer.getSelectedCollectable() == null) {
-            if (handleUnitSelection(id)) {
-                updatePane();
-                return;
-            }
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
+            //todo
+            new ServerRequestSender(new Request(RequestType.selectUnit
+                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null));
         }
-        if (currentPlayer.getSelectedUnit() != null) {
-            if (handleUnitAttack(id)) {
-                updatePane();
-                return;
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
+            Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
+            if (currentPlayer.getSelectedCollectable() == null) {
+                if (handleUnitSelection(id)) {
+                    updatePane();
+                    return;
+                }
             }
+            if (currentPlayer.getSelectedUnit() != null) {
+                if (handleUnitAttack(id)) {
+                    updatePane();
+                    return;
+                }
+            }
+            updatePane();
         }
-        updatePane();
     }
 
     private boolean handleUnitAttack(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
         UnitImage targetedUnitImage = getUnitImageWithId(id);
         //todo add this feature to unselect a unit with clicking on it if needed
-        switch (currentPlayer.getSelectedUnit().attack(id)) {
+        switch (currentPlayer.getSelectedUnit().attack(id, clientDB.getCurrentBattle())) {
             case UNIT_ATTACKED:
                 selectedUnitImage.showAttack(targetedUnitImage.getColumn());
                 return true;
@@ -520,9 +604,9 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleUnitSelection(String id) {
-        Player currentPlayer = dataBase.getCurrentBattle().getPlayerInTurn();
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage unitImage = getUnitImageWithId(id);
-        switch (currentPlayer.selectUnit(id)) {
+        switch (currentPlayer.selectUnit(id, clientDB.getCurrentBattle())) {
             case SELECTED:
                 unitImage.setUnitStyleAsSelected();
                 clickedImageView = unitImage.getUnitView();
@@ -571,10 +655,20 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
-        Collectable collectable = dataBase.getCurrentBattle().getCollectable();
-        Player player1 = dataBase.getCurrentBattle().getPlayer1();
+        updateNextCardImage();
+        updateCollectableIcon();//todo
+        updateFlags();
+        updateCollectable();
+        updateHandImages();
+        updatePlayersInfo();
+        updateHand();
+    }
+
+    private void updateCollectableIcon() {
+        Collectable collectable = clientDB.getCurrentBattle().getCollectable();
+        Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
-            if (dataBase.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
+            if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
                     player1.getCollectables().get(0).equals(collectable)) {
                 try {
                     collectableView.setImage(new Image(new FileInputStream("src/ApProjectResources/collectables/" +
@@ -584,16 +678,17 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
-        showFlags();
-        updateHandImages();
-        updatePlayersInfo();
-        updateHand();
+    }
+
+    private void updateNextCardImage() {
+        Card card = loggedInPlayer.getNextCard();
+        nextCardImage.setCardImage(card.getId());
     }
 
     private void updateCellImages() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[row][column];
+                Cell cell = clientDB.getCurrentBattle().getBattleGround().getCells()[row][column];
                 CellImage cellImage = cellsImages[row][column];
                 cellImage.clearBuffImageList();
                 for (Buff buff : cell.getBuffs()) {
@@ -607,7 +702,7 @@ public class ControllerBattleCommands implements Initializable {
         for (UnitImage unitImage : unitImageList) {
             if (unitImage == null)
                 continue;
-            BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
+            BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
             if (!battleGround.doesHaveUnit(unitImage.getId())) {
                 unitImage.showDeath();
                 continue;
@@ -632,21 +727,32 @@ public class ControllerBattleCommands implements Initializable {
             specialPowerView.setStyle(null);
     }
 
-    private void showFlags() {
-        BattleGround battleGround = dataBase.getCurrentBattle().getBattleGround();
-        List<ImageView> images = new ArrayList<>();
+    private void updateFlags() {
+        BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
         for (FlagImage flagImage : flagImages)
-            images.add(flagImage.getFlagView());
-        battleGroundPane.getChildren().removeAll(images);
+            flagImage.removeFromRoot();
         flagImages.clear();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (battleGround.getCells()[i][j].getFlags().size() > 0) {
-                    FlagImage flagImage = new FlagImage();
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                if (battleGround.getCells()[row][column].getFlags().size() > 0) {
+                    FlagImage flagImage = new FlagImage(battleGroundPane);
+                    flagImage.setInCell(row, column);
                     flagImages.add(flagImage);
-                    flagImage.getFlagView().setTranslateX(getCellLayoutX(j) - 10);
-                    flagImage.getFlagView().setTranslateY(getCellLayoutY(i) - 10);
-                    battleGroundPane.getChildren().add(flagImage.getFlagView());
+                }
+            }
+        }
+    }
+
+    private void updateCollectable() {
+        BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
+        collectableImage.removeFromRoot();
+        collectableImage = null;
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                if (battleGround.getCells()[row][column].getCollectable() != null) {
+                    collectableImage = new CollectableImage(battleGroundPane);
+                    collectableImage.setInCell(row, column);
+
                 }
             }
         }
@@ -661,8 +767,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updatePlayersInfo() {
-        playerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
-        computerManaLabel.setText(Integer.toString(dataBase.getCurrentBattle().getPlayer1().getMana()));
+        playerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
+        computerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
     }
 
     private void updateHand() {
@@ -678,13 +784,12 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void showNextCard() {
-    /*    Card card = dataBase.getCurrentBattle().getPlayerInTurn().getNextCard();
+        /*Card card = clientDB.getCurrentBattle().getPlayerInTurn().getNextCard();
         if (card instanceof Spell) {
             view.showCardInfoSpell((Spell) card);
         } else if (card instanceof Unit) {
             view.showCardInfoMinion((Unit) card);
-        }
-    */
+        }*/
     }
 
     private void attackCombo() {
@@ -700,16 +805,18 @@ public class ControllerBattleCommands implements Initializable {
     public void useCollectable() {
         /*int row = Integer.parseInt(request.getCommand().split("[ (),]")[2]);
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
-        Collectable collectable = dataBase.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
-        view.printOutputMessage(dataBase.getCurrentBattle().useCollectable(collectable, row, column));
+        Collectable collectable = clientDB.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
+        view.printOutputMessage(clientDB.getCurrentBattle().useCollectable(collectable, row, column));
     */
     }
 
     private void forfeitGame() {
-        Main.getGlobalMediaPlayer().play();
-        Account account = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        Account player1 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        Account player2 = NetworkDB.getInstance().getAccountWithUserName(dataBase.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+        //todo this method have to implemented in model
+        // to be used by both server and client
+        /*Main.getGlobalMediaPlayer().play();
+        Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
+        Account player2 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
         MatchInfo matchInfo1 = player1.getMatchList().get(player1.getMatchList().size() - 1);
         MatchInfo matchInfo2 = player2.getMatchList().get(player2.getMatchList().size() - 1);
         if (player1 == account) {
@@ -718,12 +825,12 @@ public class ControllerBattleCommands implements Initializable {
         } else {
             matchInfo1.setWinner(player1.getUsername());
             matchInfo2.setWinner(player1.getUsername());
-        }
+        }*/
     }
 
     private boolean endGame() {
         timeBar.setDisable(true);
-        dataBase.setCurrentBattle(null);
+        clientDB.setCurrentBattle(null);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
@@ -755,8 +862,8 @@ public class ControllerBattleCommands implements Initializable {
         timeline.play();
     }
 
-    private boolean endTurn() {
-        OutputMessageType outputMessageType = dataBase.getCurrentBattle().nextTurn();
+    private boolean endTurn(Battle battle) {
+        OutputMessageType outputMessageType = clientDB.getCurrentBattle().nextTurn(battle);
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
@@ -773,14 +880,6 @@ public class ControllerBattleCommands implements Initializable {
         return GraphicConstants.BATTLE_GROUND_START_Y + GraphicConstants.CELL_HEIGHT * row;
     }
 
-    public double getHandRingLayoutX(int number) {
-        return handRings.get(number).getLayoutX();
-    }
-
-    public double getHandRingLayoutY(int number) {
-        return handRings.get(number).getLayoutX();
-    }
-
     public AnchorPane getBattleGroundPane() {
         return battleGroundPane;
     }
@@ -791,6 +890,14 @@ public class ControllerBattleCommands implements Initializable {
 
     public List<UnitImage> getUnitImageList() {
         return unitImageList;
+    }
+
+    public ImageView getEndTurnMineBtn() {
+        return endTurnMineBtn;
+    }
+
+    public ImageView getEndTurnEnemyBtn() {
+        return endTurnEnemyBtn;
     }
 
     public void recordVideo() {

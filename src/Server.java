@@ -57,6 +57,7 @@ public class Server extends Application implements Initializable {
     @FXML
     void saveAccounts(MouseEvent event) {
         NetworkDB.getInstance().saveAccounts();
+        NetworkDB.getInstance().saveNumberCardMap();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Accounts Have Been Successfully Saved");
         alert.showAndWait();
     }
@@ -80,9 +81,11 @@ public class Server extends Application implements Initializable {
     }
 
     public static void main(String[] args) {
+        NetworkDB.getInstance();
         new Thread(() -> {
             try {
                 NetworkDB.getInstance().readAccounts();
+
                 ServerSocket serverSocket = new ServerSocket(5555);
                 while (true) {
                     Socket socket = serverSocket.accept();

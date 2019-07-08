@@ -13,18 +13,13 @@ public class Battle {
     private boolean isBattleFinished = false;
     private int numberOfFlags;
     private String singleOrMulti;
-
-    public int getPrize() {
-        return prize;
-    }
-
     private int prize;
 
     public Battle(Account firstPlayerAccount, Account secondPlayerAccount
             , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti, int prize) {
         this.prize = prize;
         this.singleOrMulti = singleOrMulti;
-        dataBase.setCurrentBattle(this);
+//        dataBase.setCurrentBattle(this);todo IMPORTANT seting battle is ignored
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;
@@ -44,21 +39,21 @@ public class Battle {
         startBattle();
     }
 
-    public OutputMessageType nextTurn() {
+    public OutputMessageType nextTurn(Battle battle) {
         resetSelectedForPlayers();
-        resetUnitsMoveAndAttack();
-        doBuffsEffects();
-        removeBuffs();
+        resetUnitsMoveAndAttack(battle);
+        doBuffsEffects(battle);
+        removeBuffs(battle);
         Player player = checkEndBattle();
         if (player != null) {
             return endBattle(player);
         }
-        checkForDeadUnits();
+        checkForDeadUnits(battle);
         checkSpecialPowersCooldown();
         checkFlagInHandTurn();
         changeTurn();
         turnNumber++;
-        reviveContinuousBuffs();
+        reviveContinuousBuffs(battle);
         setManaBasedOnTurnNumber();
         playerInTurn.moveNextCardToHand();
         return OutputMessageType.TURN_CHANGED;
@@ -75,10 +70,10 @@ public class Battle {
     }
 
     private void resetSelectedForPlayers() {
-        dataBase.getCurrentBattle().getPlayer1().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer1().setSelectedUnit(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedCollectable(null);
-        dataBase.getCurrentBattle().getPlayer2().setSelectedUnit(null);
+        player1.setSelectedCollectable(null);
+        player1.setSelectedUnit(null);
+        player2.setSelectedCollectable(null);
+        player2.setSelectedUnit(null);
     }
 
     public Player getPlayer1() {
@@ -95,6 +90,10 @@ public class Battle {
 
     public String getMode() {
         return mode;
+    }
+
+    public int getPrize() {
+        return prize;
     }
 
     public int getTurnNumber() {
@@ -119,7 +118,7 @@ public class Battle {
         return playerInTurn;
     }
 
-    public void killUnit(Unit unit) {
+    public void killUnit(Unit unit, Battle battle) {
         if (unit.getId().contains(player1.getPlayerInfo().getPlayerName()))
             player1.getGraveYard().addDeadCard(unit);
         if (unit.getId().contains(player2.getPlayerInfo().getPlayerName()))
@@ -129,19 +128,19 @@ public class Battle {
                 continue;
             if (specialPower.equals(SpellActivationType.ON_DEATH))
                 specialPower.doSpell(battleGround.getCoordinationOfUnit(unit)[0]
-                        , battleGround.getCoordinationOfUnit(unit)[1]);
+                        , battleGround.getCoordinationOfUnit(unit)[1], battle);
         }
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
     }
 
-    public void checkForDeadUnits() {
+    public void checkForDeadUnits(Battle battle) {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = battleGround.getCells()[i][j];
                 if (cell.isEmptyOfUnit())
                     continue;
                 if (cell.getUnit().getHp() <= 0)
-                    killUnit(cell.getUnit());
+                    killUnit(cell.getUnit(), battle);
             }
         }
     }
@@ -236,40 +235,40 @@ public class Battle {
         return players;
     }
 
-    public void reviveContinuousBuffs() {
+    public void reviveContinuousBuffs(Battle battle) {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = battle.getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     if (buff != null && buff.isContinuous())
-                        buff.revive();
+                        buff.revive(battle);
                 }
                 if (cell.getUnit() == null)
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
                     if (buff != null && buff.isContinuous())
-                        buff.revive();
+                        buff.revive(battle);
                 }
             }
         }
     }
 
-    public void removeBuffs() {
-        removeBuffsFromCellsAndUnits();
-        removeBuffsFrom(player1);
-        removeBuffsFrom(player2);
+    public void removeBuffs(Battle battle) {
+        removeBuffsFromCellsAndUnits(battle);
+        removeBuffsFrom(player1, battle);
+        removeBuffsFrom(player2, battle);
     }
 
-    private void removeBuffsFromCellsAndUnits() {
+    private void removeBuffsFromCellsAndUnits(Battle battle) {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = battle.getBattleGround().getCells()[i][j];
                 int k = 0;
                 while (k < cell.getBuffs().size()) {
                     Buff buff = cell.getBuffs().get(k);
-                    if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+                    if (buff.isExpired(battle) || (buff.isDead() && !buff.isContinuous()))
                         cell.getBuffs().remove(buff);
                     else k++;
                 }
@@ -278,7 +277,7 @@ public class Battle {
                 k = 0;
                 while (k < cell.getUnit().getBuffs().size()) {
                     Buff buff = cell.getUnit().getBuffs().get(k);
-                    if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+                    if (buff.isExpired(battle) || (buff.isDead() && !buff.isContinuous()))
                         cell.getUnit().getBuffs().remove(buff);
                     else k++;
                 }
@@ -286,22 +285,22 @@ public class Battle {
         }
     }
 
-    private void removeBuffsFrom(Player player2) {
+    private void removeBuffsFrom(Player player2, Battle battle) {
         int i;
         i = 0;
         while (i < player2.getBuffs().size()) {
             Buff buff = player2.getBuffs().get(i);
-            if (buff.isExpired() || (buff.isDead() && !buff.isContinuous()))
+            if (buff.isExpired(battle) || (buff.isDead() && !buff.isContinuous()))
                 player2.getBuffs().remove(buff);
         }
     }
 
-    public void resetUnitsMoveAndAttack() {
+    public void resetUnitsMoveAndAttack(Battle battle) {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = battle.getBattleGround().getCells()[i][j];
                 if (cell.isEmptyOfUnit())
                     continue;
                 Unit unit = cell.getUnit();
@@ -326,33 +325,33 @@ public class Battle {
         }
     }
 
-    public void doBuffsEffects() {
+    public void doBuffsEffects(Battle battle) {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = battle.getBattleGround().getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     //todo IMPORTANT
                 }
                 if (cell.isEmptyOfUnit())
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
-                    buff.doEffect(cell.getUnit());
+                    buff.doEffect(cell.getUnit(),battle);
                 }
             }
         }
         for (Buff buff : player1.getBuffs()) {
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player1);
+                ((ManaBuff) buff).doEffect(player1,battle);
         }
         for (Buff buff : player2.getBuffs()) {
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player2);
+                ((ManaBuff) buff).doEffect(player2,battle);
         }
     }
 
-    public OutputMessageType insert(Card card, int row, int column) {
+    public OutputMessageType insert(Card card, int row, int column, Battle battle) {
         if (card == null)
             return OutputMessageType.NO_SUCH_CARD_IN_HAND;
         if (card.getMana() > playerInTurn.getMana())
@@ -362,17 +361,17 @@ public class Battle {
             if (row >= Constants.BATTLE_GROUND_WIDTH || row < 0
                     || column >= Constants.BATTLE_GROUND_LENGTH || column < 0)
                 return OutputMessageType.INVALID_NUMBER;
-            if (!isCellNearbyFriendlyUnits(row, column))
+            if (!isCellNearbyFriendlyUnits(row, column, battle))
                 return OutputMessageType.NOT_NEARBY_FRIENDLY_UNITS;
             if (battleGround.getCells()[row][column].getUnit() == null) {
                 for (Spell specialPower : unit.getSpecialPowers()) {
                     if (specialPower != null
                             && specialPower.getActivationType() == SpellActivationType.ON_SPAWN)
-                        specialPower.doSpell(row, column);
+                        specialPower.doSpell(row, column, battle);
                 }
                 battleGround.getCells()[row][column].setUnit(unit);
-                battleGround.gatherCollectable(row, column);
-                battleGround.gatherFlags(unit, row, column);
+                battleGround.gatherCollectable(row, column, battle);
+                battleGround.gatherFlags(unit, row, column, battle);
                 playerInTurn.getHand().getCards().remove(unit);
                 playerInTurn.setNextCard();
                 playerInTurn.reduceMana(unit.getMana());
@@ -382,7 +381,7 @@ public class Battle {
         }
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
-            spell.doSpell(row, column);
+            spell.doSpell(row, column, battle);
             playerInTurn.getGraveYard().addDeadCard(spell);
             playerInTurn.getHand().deleteCard(spell);
             playerInTurn.reduceMana(spell.getMana());
@@ -390,16 +389,16 @@ public class Battle {
         return OutputMessageType.CARD_INSERTED;
     }
 
-    public boolean isCellNearbyFriendlyUnits(int row, int column) {
+    public boolean isCellNearbyFriendlyUnits(int row, int column, Battle battle) {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
                 if (!isCoordinationValid(i, j) || i == j)
                     continue;
-                Cell cell = dataBase.getCurrentBattle().getBattleGround().getCells()[i][j];
+                Cell cell = battle.getBattleGround().getCells()[i][j];
                 if (cell.isEmptyOfUnit())
                     continue;
-                if (dataBase.getCurrentBattle().getBattleGround()
-                        .isUnitFriendlyOrEnemy(cell.getUnit()).equals(Constants.FRIEND))
+                if (battle.getBattleGround()
+                        .isUnitFriendlyOrEnemy(cell.getUnit(), battle).equals(Constants.FRIEND))
                     return true;
             }
         }
@@ -412,8 +411,8 @@ public class Battle {
         return column >= 0 && column < Constants.BATTLE_GROUND_LENGTH;
     }
 
-    public OutputMessageType useSpecialPower(Player player, int row, int column) {
-        Unit hero = dataBase.getCurrentBattle().getBattleGround().getHeroOfPlayer(player);
+    public OutputMessageType useSpecialPower(Player player, int row, int column, Battle battle) {
+        Unit hero = battle.getBattleGround().getHeroOfPlayer(player);
         if (hero == null)
             return OutputMessageType.NO_HERO;
         if (hero.getMainSpecialPower() == null)
@@ -427,7 +426,7 @@ public class Battle {
             return OutputMessageType.NOT_ENOUGH_MANA;
         if (hero.getMainSpecialPower().getCoolDown() == 0
                 && hero.getMainSpecialPower().getActivationType() == SpellActivationType.ON_CAST) {
-            hero.getMainSpecialPower().doSpell(row, column);
+            hero.getMainSpecialPower().doSpell(row, column, battle);
             hero.getMainSpecialPower().setTurnsToGetReady(hero.getMainSpecialPower().getCoolDown());
         }
         return OutputMessageType.SPECIAL_POWER_USED;
@@ -442,7 +441,7 @@ public class Battle {
         return OutputMessageType.COLLECTABLE_USED;
     }
 
-    public List<String> getAvailableMoves() {
+    public List<String> getAvailableMoves(Battle battle) {
         List<String> output = new ArrayList<>();
         for (Unit unit : battleGround.getUnitsOfPlayer(playerInTurn)) {
             String temp = "";
@@ -456,7 +455,7 @@ public class Battle {
             else player = player2;
             if (!unit.didAttackThisTurn()) {
                 for (Unit enemyUnit : battleGround.getUnitsOfPlayer(player)) {
-                    if (unit.canAttackTarget(enemyUnit, false)) {
+                    if (unit.canAttackTarget(enemyUnit, false, battle)) {
                         temp += "\n\t\t" + enemyUnit.getId();
                     }
                 }

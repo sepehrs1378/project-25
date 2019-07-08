@@ -9,7 +9,7 @@ class HolyBuff extends Buff {
     }
 
     @Override
-    public void doEffect(Unit unit) {
+    public void doEffect(Unit unit,Battle battle) {
         //empty
     }
 

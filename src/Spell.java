@@ -64,17 +64,17 @@ class Spell extends Card {
         this.addedSpells.add(addedSpell);
     }
 
-    public void doSpell(Unit unit) {
-        addBuffsToUnit(unit);
+    public void doSpell(Unit unit,Battle battle) {
+        addBuffsToUnit(unit,battle);
         if (isDispeller())
-            dispelBuffsOfUnit(unit);
+            dispelBuffsOfUnit(unit,battle);
         unit.changeAp(getHpChange());
         unit.changeHp(getApChange());
     }
 
-    public void doSpell(int insertionRow, int insertionColumn) {
-        doSpellEffectOnCells(insertionRow, insertionColumn);
-        doSpellEffectOnUnits(insertionRow, insertionColumn);
+    public void doSpell(int insertionRow, int insertionColumn,Battle battle) {
+        doSpellEffectOnCells(insertionRow, insertionColumn,battle);
+        doSpellEffectOnUnits(insertionRow, insertionColumn,battle);
     }
 
     public Spell clone() {
@@ -84,29 +84,29 @@ class Spell extends Card {
                 description, isDispeller);
     }
 
-    private void doSpellEffectOnCells(int insertionRow, int insertionColumn) {
-        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn);
+    private void doSpellEffectOnCells(int insertionRow, int insertionColumn,Battle battle) {
+        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn,battle);
         for (Cell cell : targetCells) {
             for (Buff buff : getAddedBuffs()) {
                 Buff cloneBuff = buff.clone();
                 cloneBuff.setDead(false);
-                cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
+                cloneBuff.setStartTurn(battle.getTurnNumber());
                 cell.getBuffs().add(buff);
             }
         }
     }
 
-    private void doSpellEffectOnUnits(int insertionRow, int insertionColumn) {
-        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn);
+    private void doSpellEffectOnUnits(int insertionRow, int insertionColumn,Battle battle) {
+        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn,battle);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
-                    && dataBase.getCurrentBattle().getBattleGround().
-                    isUnitFriendlyOrEnemy(unit).equals(Constants.ENEMY))
+                    && battle.getBattleGround().
+                    isUnitFriendlyOrEnemy(unit,battle).equals(Constants.ENEMY))
                 continue;
-            addBuffsToUnit(unit);
+            addBuffsToUnit(unit,battle);
             addSpellsToUnit(unit);
             if (isDispeller)
-                dispelBuffsOfUnit(unit);
+                dispelBuffsOfUnit(unit,battle);
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
@@ -118,7 +118,7 @@ class Spell extends Card {
         }
     }
 
-    private void addBuffsToUnit(Unit unit) {
+    private void addBuffsToUnit(Unit unit,Battle battle) {
         for (Buff buff : addedBuffs) {
             if (buff != null && unit != null) {
                 if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
@@ -127,17 +127,16 @@ class Spell extends Card {
                     continue;
                 Buff cloneBuff = buff.clone();
                 cloneBuff.setDead(false);
-                cloneBuff.setStartTurn(dataBase.getCurrentBattle().getTurnNumber());
+                cloneBuff.setStartTurn(battle.getTurnNumber());
                 unit.getBuffs().add(cloneBuff);
             }
         }
     }
 
-    private void dispelBuffsOfUnit(Unit unit) {
+    private void dispelBuffsOfUnit(Unit unit,Battle battle) {
         int i = 0;
         //if unit is friendly we removeIdFromDeckName negative buffs
-        if (dataBase.getCurrentBattle().getBattleGround()
-                .isUnitFriendlyOrEnemy(unit).equals(Constants.FRIEND)) {
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND)) {
             while (i < unit.getBuffs().size()) {
                 Buff buff = unit.getBuffs().get(i);
                 if (buff.getPositiveOrNegative().equals(Constants.NEGATIVE)

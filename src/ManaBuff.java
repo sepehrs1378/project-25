@@ -11,9 +11,9 @@ public class ManaBuff extends Buff {
     }
 
     @Override
-    public void doEffect(Unit unit) {
-        List<Player> players = dataBase.getCurrentBattle().getPlayersHavingBuff(this);
-        if (isActive()) {
+    public void doEffect(Unit unit,Battle battle) {
+        List<Player> players = battle.getPlayersHavingBuff(this);
+        if (isActive(battle)) {
             for (Player player : players) {
                 player.changeMana(manaAddedPerTurn);
             }
@@ -21,8 +21,8 @@ public class ManaBuff extends Buff {
         //todo ممکنه تاثیرش به خاطر nextTurn اعمال نشه و بره زیر مقدار دهی معمولی مانا
     }
 
-    public void doEffect(Player player) {
-        if (!isActive())
+    public void doEffect(Player player,Battle battle) {
+        if (!isActive(battle))
             player.changeMana(manaAddedPerTurn);
     }
 

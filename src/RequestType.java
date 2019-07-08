@@ -10,16 +10,33 @@ public enum RequestType {
     insertCard,
     endTurn,
     enterGraveYard,
+    forfeit,
+    selectUnit,
 
-    buy,
+    findClassicMatch,
+    findOneFlagMatch,
+    findMultiFlagsMatch,
+    cancelMatchFinding,
+
+    enterCollectoin,
+    exitCollection,
     sell,
+    createDeck,
+    removeDeck,
+    importDeck,
+    setMainDeck,
+    moveCardToDeck,
+    removeCardFromDeck,
+    sellCard,
 
-    //global chat
+
     sendMessage,
     enterGlobalChat,
     exitGlobalChat,
 
     leaderBoard,
+
+    buy,
     shop,
 
     close

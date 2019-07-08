@@ -1,7 +1,13 @@
 public enum ResponseType {
-    //global chat
-    sendMessage,
+    matchFound,
+    unitMoved,
+    cardInserted,
+    specialPowerUsed,
+    collectableUsed,
+    PlayerForfeited,
+    unitSelected,
 
+    sendMessage,
     close,
     signUp,
     login,
@@ -9,5 +15,6 @@ public enum ResponseType {
     leaderBoard,
     updateLeaderBoard,
     shop,
-    buy
+    buy,
+    sell
 }
