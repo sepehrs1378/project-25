@@ -25,7 +25,7 @@ public class ClientHandler extends Thread {
         NetworkDB.getInstance().addConnection(connection);
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         JsonStreamParser parser = connection.getParser();
-        try {
+//        try {
             while (true) {
                 JsonObject obj = parser.next().getAsJsonObject();
                 Request request = yaGson.fromJson(obj.toString(), Request.class);
@@ -42,10 +42,10 @@ public class ClientHandler extends Thread {
                 if (request.getRequestType().equals(RequestType.close))
                     break;
             }
-        } catch (Exception e) {
-            NetworkDB.getInstance().closeConnection(socket);
-            updateAccountsInLeaderBoard();
-        }
+//        } catch (Exception e) {
+//            NetworkDB.getInstance().closeConnection(socket);
+//            updateAccountsInLeaderBoard();
+//        }
     }
 
     private void handleShop(Request request) {
