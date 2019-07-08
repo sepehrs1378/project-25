@@ -75,7 +75,7 @@ public class ClientHandler extends Thread {
                     caseFindMultiFlagsMatch();
                     break;
                 case cancelMatchFinding:
-                    //todo
+                    caseCancelMatchFinding();
                     break;
                 case enterCollectoin:
                     caseEnterCollection(request);
@@ -136,6 +136,12 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
+    }
+
+    private void caseCancelMatchFinding() {
+        Account account = connection.getAccount();
+        networkDB.getAccountStatusMap().put(account, AccountStatus.online);
+        networkDB.removeAccountFromWaitingList(account);
     }
 
     private void caseLeaderBoard() {
@@ -362,11 +368,69 @@ public class ClientHandler extends Thread {
     }
 
     private void caseUseSpecialPower(Request request) {
-        //todo
+        Integer row = (Integer) request.getObjectList().get(0);
+        Integer column = (Integer) request.getObjectList().get(1);
+        Battle battle = connection.getCurrentBattle();
+        Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        switch (battle.useSpecialPower(player, row, column, battle)) {
+            case SPECIAL_POWER_USED:
+                List<Object> objects = new ArrayList<>();
+                objects.add(battle);
+                Response response = new Response(ResponseType.specialPowerUsed, null, null, objects);
+                networkDB.sendResponseToClient(response, connection);
+                break;
+            case NO_HERO:
+                //empty
+                break;
+            case SPECIAL_POWER_IN_COOLDOWN:
+                //empty
+                break;
+            case HERO_HAS_NO_SPELL:
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case OUT_OF_BOUNDARIES:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case!!!");
+        }
     }
 
     private void caseInsertCard(Request request) {
-        //todo
+        String id = request.getMessage();
+        Integer row = (Integer) request.getObjectList().get(0);
+        Integer column = (Integer) request.getObjectList().get(1);
+        Battle battle = connection.getCurrentBattle();
+        Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        Card card = player.getHand().getCardById(id);
+        switch (battle.insert(card, row, column, battle)) {
+            case NO_SUCH_CARD_IN_HAND:
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case INVALID_NUMBER:
+                //empty
+                break;
+            case NOT_NEARBY_FRIENDLY_UNITS:
+                //empty
+                break;
+            case THIS_CELL_IS_FULL:
+                //empty
+                break;
+            case CARD_INSERTED:
+                List<Object> objects = new ArrayList<>();
+                objects.add(row);
+                objects.add(column);
+                objects.add(battle);
+                Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
+                networkDB.sendResponseToClient(response, connection);
+                break;
+        }
     }
 
     private void caseEndTurn(Request request) {

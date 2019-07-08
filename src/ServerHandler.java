@@ -52,7 +52,7 @@ public class ServerHandler extends Thread {
                         caseUnitMoved(response);
                         break;
                     case cardInserted:
-                        //todo
+                        caseCardInserted(response);
                         break;
                     case specialPowerUsed:
                         caseSpecialPowerUsed(response);
@@ -101,6 +101,22 @@ public class ServerHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseCardInserted(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        String id = response.getMessage();
+        Integer row = (Integer) response.getObjectList().get(0);
+        Integer column = (Integer) response.getObjectList().get(1);
+        Battle battle = (Battle) response.getObjectList().get(2);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerBattleCommands.showCardInsertion(row, column, id);
+                ControllerBattleCommands.getOurInstance().updatePane();
+            }
+        });
     }
 
     private void casePlayerForfeited(Response response) {
@@ -336,6 +352,7 @@ public class ServerHandler extends Thread {
             @Override
             public void run() {
                 ControllerBattleCommands.getOurInstance().showSpecialPowerUse(row, column);
+                ControllerBattleCommands.getOurInstance().updatePane();
             }
         });
     }
@@ -358,8 +375,13 @@ public class ServerHandler extends Thread {
         Integer row = (Integer) response.getObjectList().get(0);
         Integer column = (Integer) response.getObjectList().get(1);
         UnitImage movedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(id);
-        movedUnit.showRun(row, column);
-        ControllerBattleCommands.getOurInstance().updatePane();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                movedUnit.showRun(row, column);
+                ControllerBattleCommands.getOurInstance().updatePane();
+            }
+        });
     }
 
     private void caseMatchFound(Response response) {

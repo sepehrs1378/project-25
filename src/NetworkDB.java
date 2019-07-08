@@ -33,6 +33,7 @@ public class NetworkDB {
 
     public void addAccountWaitingForClassic(Account account) {
         accountsWaitingForClassic.add(account);
+        accountStatusMap.put(account, AccountStatus.waitingForMatch);
         pairAccountsForBattle();
     }
 
@@ -185,7 +186,6 @@ public class NetworkDB {
             accountsWaitingForClassic.remove(0);
             Battle battle = new Battle(account1, account2, Constants.CLASSIC
                     , 0, null, Constants.MULTI, 2000);
-            saveGame(battle);
             currentBattlesList.add(battle);
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
@@ -617,5 +617,19 @@ public class NetworkDB {
                 }
             }
         }
+    }
+
+    public void removeAccountFromWaitingList(Account account) {
+        accountsWaitingForClassic.remove(account);
+        accountsWaitingForOneFlag.remove(account);
+        accountsWaitingForMultiFlags.remove(account);
+    }
+
+    public Player getPlayerWithAccount(Account account, Battle battle) {
+        if (account.getUsername().equals(battle.getPlayer1().getPlayerInfo().getPlayerName()))
+            return battle.getPlayer1();
+        if (account.getUsername().equals(battle.getPlayer2().getPlayerInfo().getPlayerName()))
+            return battle.getPlayer2();
+        return null;
     }
 }
