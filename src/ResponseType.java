@@ -15,5 +15,6 @@ public enum ResponseType {
     leaderBoard,
     updateLeaderBoard,
     shop,
-    buy
+    buy,
+    sell
 }

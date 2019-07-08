@@ -353,27 +353,24 @@ public class ControllerCollection implements Initializable {
             label.setPrefHeight(50);
             label.setPrefWidth(deckListBox.getPrefWidth());
             deckListBox.getChildren().add(label);
-            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (selectedLabel != null) {
-                        selectedLabel.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00");
-                        selectedLabel.setEffect(null);
-                    }
-                    if (label == selectedLabel) {
-                        selectedLabel = null;
-                        label.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00;");
-                        label.setEffect(null);
-                        return;
-                    }
-                    DropShadow dropShadow = new DropShadow();
-                    dropShadow.setOffsetX(2);
-                    dropShadow.setOffsetY(2);
-                    dropShadow.setColor(Color.rgb(150, 50, 50, .688));
-                    selectedLabel = label;
-                    label.setStyle("-fx-background-radius: 10; -fx-font-size: 30;-fx-border-color: #ffe700; -fx-border-radius: 10; -fx-text-fill: #e02100");
-                    label.setEffect(dropShadow);
+            label.setOnMouseClicked(event -> {
+                if (selectedLabel != null) {
+                    selectedLabel.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00");
+                    selectedLabel.setEffect(null);
                 }
+                if (label == selectedLabel) {
+                    selectedLabel = null;
+                    label.setStyle("-fx-background-radius: 10; -fx-font-size: 30; -fx-border-radius: 10; -fx-text-fill: #e0da00;");
+                    label.setEffect(null);
+                    return;
+                }
+                DropShadow dropShadow = new DropShadow();
+                dropShadow.setOffsetX(2);
+                dropShadow.setOffsetY(2);
+                dropShadow.setColor(Color.rgb(150, 50, 50, .688));
+                selectedLabel = label;
+                label.setStyle("-fx-background-radius: 10; -fx-font-size: 30;-fx-border-color: #ffe700; -fx-border-radius: 10; -fx-text-fill: #e02100");
+                label.setEffect(dropShadow);
             });
         }
     }

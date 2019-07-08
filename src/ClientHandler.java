@@ -58,10 +58,11 @@ public class ClientHandler extends Thread {
                 integerList.add(cardList.size());
                 integerList.add(usableList.size());
                 List<Object> cardsAndUsables = new ArrayList<>();
+                cardList.forEach(e-> System.out.println(((Card)e).getName()));
                 cardsAndUsables.addAll(cardList);
                 cardsAndUsables.addAll(usableList);
                 NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.shop, null, integerList, cardsAndUsables), connection);
-                return;
+                break;
             case buy:
                 OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
                 List<Object> accountList = new ArrayList<>();
@@ -118,6 +119,13 @@ public class ClientHandler extends Thread {
                 deckName = jsonObject.get("deck").getAsString();
                 String id = jsonObject.get("id").getAsString();
                 connection.getAccount().getPlayerInfo().getCollection().removeCard(id, deckName);
+                break;
+            case sell:
+                Account account = connection.getAccount();
+                OutputMessageType outputMessageType = account.getPlayerInfo().getCollection().sell(account, request.getMessage());
+                List<Object> accountList = new ArrayList<>();
+                accountList.add(account);
+                networkDB.sendResponseToClient(new Response(ResponseType.sell, outputMessageType.getMessage(), null, accountList), connection);
                 break;
         }
     }
