@@ -260,6 +260,8 @@ public class PlayerCollection {
                 Card card = (Card) obj;
                 account.addMoney(card.getPrice());
                 cards.remove(card);
+                int num = dataBase.getNumberOfCards().get(card.getName());
+                dataBase.getNumberOfCards().put(card.getName(), num + 1);
                 for (Deck deck : decks) {
                     deck.getCards().remove(card);
                     if (deck.getHero() != null && deck.getHero().equals(card)) {
