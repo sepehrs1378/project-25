@@ -548,26 +548,40 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void handleUnitClicked(String id) {
-        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
-            //todo other cases
-            new ServerRequestSender(new Request(RequestType.selectUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null));
-        }
-        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
-            Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
-            if (currentPlayer.getSelectedCollectable() == null) {
-                if (handleUnitSelection(id)) {
-                    updatePane();
-                    return;
-                }
-            }
-            if (currentPlayer.getSelectedUnit() != null) {
-                if (handleUnitAttack(id)) {
-                    updatePane();
-                    return;
-                }
-            }
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI))
+            handleUnitClickedForMulti();
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE))
+            handleUnitClickedForSingle(id);
+    }
+
+    private void handleUnitClickedForSingle(String id) {
+        Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
+        if (handleUnitSelection(id)) {
             updatePane();
+            return;
+        }
+        if (currentPlayer.getSelectedUnit() != null) {
+            if (handleUnitAttack(id)) {
+                updatePane();
+                return;
+            }
+        }
+        updatePane();
+    }
+
+    private void handleUnitClickedForMulti() {
+        //todo other cases select and attack
+        Battle battle = clientDB.getCurrentBattle();
+        UnitImage clickedUnit = getUnitImageWithUnitView(clickedImageView);
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
+                .equals(Constants.FRIEND)) {
+            new ServerRequestSender(new Request(RequestType.selectUnit
+                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
+        }
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
+                .equals(Constants.ENEMY)) {
+            new ServerRequestSender(new Request(RequestType.attackUnit
+                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
         }
     }
 

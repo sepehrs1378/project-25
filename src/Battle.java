@@ -39,7 +39,6 @@ public class Battle {
     }
 
     public OutputMessageType nextTurn(Battle battle) {
-        resetSelectedForPlayers();
         resetUnitsMoveAndAttack(battle);
         doBuffsEffects(battle);
         removeBuffs(battle);
@@ -66,13 +65,6 @@ public class Battle {
                 unit.getFlags().get(0).setTurnsInUnitHand(turn + 1);
             }
         }
-    }
-
-    private void resetSelectedForPlayers() {
-        player1.setSelectedCollectable(null);
-        player1.setSelectedUnit(null);
-        player2.setSelectedCollectable(null);
-        player2.setSelectedUnit(null);
     }
 
     public Player getPlayer1() {

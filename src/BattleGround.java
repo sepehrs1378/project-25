@@ -123,7 +123,7 @@ class BattleGround {
     public Unit getUnitHavingFlag() {
         for (Cell[] cellRow : cells) {
             for (Cell cell : cellRow) {
-                if (cell.getUnit()!=null&&!cell.getUnit().getFlags().isEmpty())
+                if (cell.getUnit() != null && !cell.getUnit().getFlags().isEmpty())
                     return cell.getUnit();
             }
         }
@@ -143,7 +143,7 @@ class BattleGround {
         return minions;
     }
 
-    public OutputMessageType moveUnit(int destinationRow, int destinationColumn,Battle battle) {
+    public OutputMessageType moveUnit(int destinationRow, int destinationColumn, Battle battle) {
         if (destinationRow >= Constants.BATTLE_GROUND_WIDTH
                 || destinationColumn >= Constants.BATTLE_GROUND_LENGTH)
             return OutputMessageType.OUT_OF_BOUNDARIES;
@@ -161,13 +161,13 @@ class BattleGround {
         Cell originCell = getCellOfUnit(selectedUnit);
         originCell.setUnit(null);
         cells[destinationRow][destinationColumn].setUnit(selectedUnit);
-        gatherCollectable(destinationRow, destinationColumn,battle);
-        gatherFlags(selectedUnit, destinationRow, destinationColumn,battle);
+        gatherCollectable(destinationRow, destinationColumn, battle);
+        gatherFlags(selectedUnit, destinationRow, destinationColumn, battle);
         selectedUnit.setDidMoveThisTurn(true);
         return OutputMessageType.UNIT_MOVED;
     }
 
-    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn,Battle battle) {
+    public void gatherFlags(Unit unit, int destinationRow, int destinationColumn, Battle battle) {
         Cell cell = battle.getBattleGround().getCells()[destinationRow][destinationColumn];
         List<Flag> flags = cell.getFlags();
         for (Flag flag : flags) {
@@ -176,7 +176,7 @@ class BattleGround {
         cell.getFlags().removeAll(flags);
     }
 
-    public void gatherCollectable(int destinationRow, int destinationColumn,Battle battle) {
+    public void gatherCollectable(int destinationRow, int destinationColumn, Battle battle) {
         Cell cell = battle.getBattleGround().getCells()[destinationRow][destinationColumn];
         Collectable collectable = cell.getCollectable();
         if (collectable != null) {
@@ -190,7 +190,7 @@ class BattleGround {
         return Math.abs(row1 - row2) + Math.abs(column1 - column2);
     }
 
-    public String isUnitFriendlyOrEnemy(Unit unit,Battle battle) {
+    public String isUnitFriendlyOrEnemy(Unit unit, Battle battle) {
         Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
         Matcher matcher = pattern.matcher(unit.getId());
         String username = "";
@@ -204,8 +204,20 @@ class BattleGround {
         if (playerName.equals(username))
             return Constants.FRIEND;
         return Constants.ENEMY;
+    }
 
-
+    public String isUnitFriendlyOrEnemy(String id, Battle battle) {
+        Pattern pattern = Pattern.compile(Constants.ID_PATTERN);
+        Matcher matcher = pattern.matcher(id);
+        String username = "";
+        if (matcher.find())
+            username = matcher.group(1);
+        if (username.isEmpty())
+            return "";
+        String playerName = battle.getPlayerInTurn().getPlayerInfo().getPlayerName();
+        if (playerName.equals(username))
+            return Constants.FRIEND;
+        return Constants.ENEMY;
     }
 
     public List<Unit> getUnitsHavingBuff(Buff buff) {
@@ -240,10 +252,10 @@ class BattleGround {
             flags.add(new Flag());
         int counter = flags.size();
         while (counter > 0) {
-            int column = (int) (Math.random() * (Constants.BATTLE_GROUND_LENGTH-2));
+            int column = (int) (Math.random() * (Constants.BATTLE_GROUND_LENGTH - 2));
             int row = (int) (Math.random() * Constants.BATTLE_GROUND_WIDTH);
-            if (cells[row][column+1].getFlags().isEmpty() && cells[row][column+1].getUnit() == null && cells[row][column+1].getCollectable() == null) {
-                cells[row][column+1].getFlags().add(flags.get(counter - 1));
+            if (cells[row][column + 1].getFlags().isEmpty() && cells[row][column + 1].getUnit() == null && cells[row][column + 1].getCollectable() == null) {
+                cells[row][column + 1].getFlags().add(flags.get(counter - 1));
                 flags.remove(counter - 1);
                 counter--;
             }
