@@ -146,7 +146,7 @@ public class ControllerMainMenu {
     @FXML
     void logout(MouseEvent event) throws IOException {
         new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
-                , null, null)).start();
+                , null,null)).start();
     }
 
     @FXML
@@ -255,7 +255,7 @@ public class ControllerMainMenu {
     @FXML
     void enterCollection(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        new ServerRequestSender(new Request(RequestType.enterCollectoin,null,null,null)).start();
+        new ServerRequestSender(new Request(RequestType.enterCollectoin, null, null,null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerCollection.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);
@@ -274,7 +274,7 @@ public class ControllerMainMenu {
 
     @FXML
     void enterShop(MouseEvent event) throws IOException {
-        new ServerRequestSender(new Request(RequestType.shop, null , null, null)).start();
+        new ServerRequestSender(new Request(RequestType.shop, null, null, null)).start();
         Main.playWhenButtonClicked();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerShop.fxml"));
         Main.window.setScene(new Scene(root));
@@ -297,7 +297,7 @@ public class ControllerMainMenu {
     @FXML
     void enterGlobalChat(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        new ServerRequestSender(new Request(RequestType.enterGlobalChat,ClientDB.getInstance().getLoggedInAccount().getUsername(),null,null)).start();
+        new ServerRequestSender(new Request(RequestType.enterGlobalChat, ClientDB.getInstance().getLoggedInAccount().getUsername(), null, null)).start();
         Parent root = FXMLLoader.load(getClass().getResource("ControllerGlobalChat.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);

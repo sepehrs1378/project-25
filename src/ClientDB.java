@@ -46,6 +46,10 @@ public class ClientDB {
         return socket;
     }
 
+    public Account getComputerPlayerLevel3() {
+        return computerPlayerLevel3;
+    }
+
     public JsonStreamParser getParser() {
         return parser;
     }
@@ -110,7 +114,7 @@ public class ClientDB {
         return computerPlayerCustom;
     }
 
-    public void readComputerAccounts(){
+    public void readComputerAccounts() {
         Reader reader = null;
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         try {
@@ -124,6 +128,7 @@ public class ClientDB {
             e.printStackTrace();
         }
     }
+
     public List<Card> getCardList() {
         return cardList;
     }
@@ -176,5 +181,21 @@ public class ClientDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Battle getCurrentBattle() {
+        return currentBattle;
+    }
+
+    public void setCurrentBattle(Battle currentBattle) {
+        this.currentBattle = currentBattle;
+    }
+
+    public Player getLoggedInPlayer() {
+        return loggedInPlayer;
+    }
+
+    public void setLoggedInPlayer(Player loggedInPlayer) {
+        this.loggedInPlayer = loggedInPlayer;
     }
 }

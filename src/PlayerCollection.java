@@ -147,13 +147,13 @@ public class PlayerCollection {
     }
 
     public OutputMessageType createDeck(String deckName) {
-        if(deckName.contains(" ")){
+        if (deckName.contains(" ")) {
             return OutputMessageType.NO_SPACES;
         }
         if (doesHaveDeck(deckName))
             return OutputMessageType.DECK_ALREADY_EXISTS;
         Deck newDeck = new Deck(deckName);
-        new ServerRequestSender(new Request(RequestType.createDeck,deckName,null,null)).start();
+        new ServerRequestSender(new Request(RequestType.createDeck, deckName, null, null)).start();
         decks.add(newDeck);
         return OutputMessageType.DECK_CREATED;
     }
@@ -163,7 +163,7 @@ public class PlayerCollection {
             Card card = dataBase.getCardWithName(name);
             if (account.getMoney() < card.getPrice())
                 return OutputMessageType.INSUFFICIENT_MONEY;
-            else if (dataBase.getNumberOfCards().get(name) == 0){
+            else if (dataBase.getNumberOfCards().get(name) == 0) {
                 return OutputMessageType.NO_MORE_IN_SHOP;
             } else {
                 buySuccessful(account, name);

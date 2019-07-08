@@ -62,6 +62,7 @@ public class NetworkDB {
         readCustomCards();
         readNumberCardMap();
     }
+
     public Map<String, Integer> getNumberOfCards() {
         return numberOfCards;
     }
@@ -183,10 +184,12 @@ public class NetworkDB {
             currentBattlesList.add(battle);
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
+            List<Object> objects = new ArrayList<>();
+            objects.add(battle);
             sendResponseToClient(new Response
-                    (ResponseType.matchFound, null, null, battle), connection1);
+                    (ResponseType.matchFound, null, null, objects), connection1);
             sendResponseToClient(new Response
-                    (ResponseType.matchFound, null, null, battle), connection2);
+                    (ResponseType.matchFound, null, null, objects), connection2);
         }
         //todo IMPORTANT complete it for other modes too...
     }
@@ -206,8 +209,8 @@ public class NetworkDB {
         sendResponseToClient(response, getOpponentConnection(connection));
     }
 
-    public Account getAccountWithUserName(String username){
-        for(Account account:accountStatusMap.keySet()){
+    public Account getAccountWithUserName(String username) {
+        for (Account account : accountStatusMap.keySet()) {
             if (account.getUsername().equals(username))
                 return account;
         }
@@ -548,6 +551,7 @@ public class NetworkDB {
         }
 
     }
+
     public void saveCustomCard(Card card) {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         String fileName = "cardCustom_" + card.getName() + ".json";
@@ -572,16 +576,16 @@ public class NetworkDB {
         }
     }
 
-    public void saveNumberCardMap(){
+    public void saveNumberCardMap() {
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        numberOfCards.forEach((name , number)->{
+        numberOfCards.forEach((name, number) -> {
             FileWriter fileWriter = null;
             try {
-                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Numbers/"+name+".json"));
+                fileWriter = new FileWriter(new File("src/JSONFiles/Cards/Numbers/" + name + ".json"));
                 JsonObject obj = new JsonObject();
                 obj.addProperty("cardName", name);
-                obj.addProperty("number" , number);
-                yaGson.toJson(obj,fileWriter);
+                obj.addProperty("number", number);
+                yaGson.toJson(obj, fileWriter);
                 fileWriter.flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -589,7 +593,7 @@ public class NetworkDB {
         });
     }
 
-    public void readNumberCardMap(){
+    public void readNumberCardMap() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         File folder = new File("src/JSONFiles/Cards/Numbers");
         String[] fileNames = folder.list();
@@ -599,8 +603,8 @@ public class NetworkDB {
                 if (fileName.endsWith(".json")) {
                     try {
                         reader = new FileReader("src/JSONFiles/Cards/Numbers/" + fileName);
-                        JsonObject object=gson.fromJson(reader, JsonObject.class);
-                        numberOfCards.put(object.get("cardName").getAsString(),object.get("number").getAsInt());
+                        JsonObject object = gson.fromJson(reader, JsonObject.class);
+                        numberOfCards.put(object.get("cardName").getAsString(), object.get("number").getAsInt());
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();

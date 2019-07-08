@@ -182,7 +182,7 @@ public class ControllerBattleCommands implements Initializable {
         clickedImageView = null;
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request
-                    (RequestType.endTurn, null, null));
+                    (RequestType.endTurn, null, null, null));
             endTurnMineBtn.setVisible(false);
             endTurnEnemyBtn.setVisible(true);
         }
@@ -192,7 +192,7 @@ public class ControllerBattleCommands implements Initializable {
                 return;
             }
             if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
-                AI.getInstance().doNextMove(battleGroundPane,battle);
+                AI.getInstance().doNextMove(battleGroundPane, battle);
                 if (endTurn(battle)) {
                     return;
                 }
@@ -363,27 +363,30 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void handleCellClickedForMulti(Integer row, Integer column) {
+        List<Object> objects = new ArrayList<>();
+        objects.add(row);
+        objects.add(column);
         if (isClickedImageViewInHand()) {
             new ServerRequestSender(
                     new Request(RequestType.insertCard
                             , getHandImageWithCardView(clickedImageView).getId()
-                            , null, row, column));
+                            , null, objects));
         }
         if (clickedImageView.equals(specialPowerView)) {
             new ServerRequestSender(
                     new Request(RequestType.useSpecialPower, null
-                            , null, row, column));
+                            , null, objects));
         }
         if (clickedImageView.equals(collectableView)) {
             new ServerRequestSender(
                     new Request(RequestType.useCollectable, null,
-                            null, row, column));
+                            null, objects));
         }
         if (isClickedImageViewUnit()) {
             new ServerRequestSender(
                     new Request(RequestType.moveUnit
                             , getUnitImageWithUnitView(clickedImageView).getId()
-                            , null, row, column));
+                            , null, objects));
         }
     }
 
@@ -545,7 +548,7 @@ public class ControllerBattleCommands implements Initializable {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             //todo
             new ServerRequestSender(new Request(RequestType.selectUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null));
+                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null));
         }
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
             Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
@@ -806,7 +809,7 @@ public class ControllerBattleCommands implements Initializable {
     private void forfeitGame() {
         //todo this method have to implemented in model
         // to be used by both server and client
-        Main.getGlobalMediaPlayer().play();
+        /*Main.getGlobalMediaPlayer().play();
         Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
         Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
         Account player2 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
@@ -818,7 +821,7 @@ public class ControllerBattleCommands implements Initializable {
         } else {
             matchInfo1.setWinner(player1.getUsername());
             matchInfo2.setWinner(player1.getUsername());
-        }
+        }*/
     }
 
     private boolean endGame() {

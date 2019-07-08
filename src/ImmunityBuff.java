@@ -2,14 +2,14 @@ public class ImmunityBuff extends Buff {
     private String immunity;
 
     ImmunityBuff(int durationTurn, boolean isDispellable
-            , boolean isContinuous,int startTurn, String immunity) {
-        super(durationTurn, isDispellable, isContinuous,startTurn);
+            , boolean isContinuous, int startTurn, String immunity) {
+        super(durationTurn, isDispellable, isContinuous, startTurn);
         setPositiveOrNegative(Constants.POSITIVE);
         this.immunity = immunity;
     }
 
     @Override
-    public void doEffect(Unit unit) {
+    public void doEffect(Unit unit, Battle battle) {
         //empty
     }
 
@@ -20,7 +20,7 @@ public class ImmunityBuff extends Buff {
 
     @Override
     public ImmunityBuff clone() {
-        return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(),getStartTurn(), immunity);
+        return new ImmunityBuff(getDurationTurn(), isDispellable(), isContinuous(), getStartTurn(), immunity);
     }
 
     @Override

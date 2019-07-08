@@ -11,11 +11,11 @@ public class ControllerMultiPlayerMenu {
         return ourInstance;
     }
 
-    private ControllerMultiPlayerMenu() {
+    public ControllerMultiPlayerMenu() {
     }
 
     @FXML
-    private ImageView loadingIcon;
+    public ImageView loadingIcon;
 
     @FXML
     public void findClassicMatch() {

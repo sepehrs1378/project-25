@@ -96,7 +96,7 @@ Main extends Application {
             return;
         }
         new ServerRequestSender(new Request(RequestType.signUp, "userName:" + username.getText() + "password:"
-                + password.getText(), null, null)).start();
+                + password.getText(), null,null)).start();
         System.out.println("sent");
     }
 
