@@ -4,9 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonStreamParser;
 import javafx.application.Platform;
 
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,159 +22,249 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         connection = new Connection(socket);
-        NetworkDB.getInstance().addConnection(connection);
+        networkDB.addConnection(connection);
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         JsonStreamParser parser = connection.getParser();
-//        try {
-            while (true) {
-                JsonObject obj = parser.next().getAsJsonObject();
-                Request request = yaGson.fromJson(obj.toString(), Request.class);
-                handleMultiPlayerCase(request);
-                handleMatchFinding(request);
-                handleAccountCase(request);
-                handleGlobalChat(request);
-                handleCollection(request);
-                handleShop(request);
-                Platform.runLater(() -> {
-                    Server.getInstance().updateCardList();
-                    Server.getInstance().updateUserList();
-                });
-                if (request.getRequestType().equals(RequestType.close))
+        while (true) {
+            JsonObject obj = parser.next().getAsJsonObject();
+            Request request = yaGson.fromJson(obj.toString(), Request.class);
+            switch (request.getRequestType()) {
+                case login:
+                    caseLogin(request);
+                    break;
+                case logout:
+                    caseLogout(request);
+                    break;
+                case signUp:
+                    caseSignUp(request);
+                    break;
+                case moveUnit:
+                    caseMoveUnit(request);
+                    break;
+                case attackUnit:
+                    caseAttackUnit(request);
+                    break;
+                case useSpecialPower:
+                    caseUseSpecialPower(request);
+                    break;
+                case useCollectable:
+                    caseUseCollectable(request);
+                    break;
+                case insertCard:
+                    caseInsertCard(request);
+                    break;
+                case endTurn:
+                    caseEndTurn(request);
+                    break;
+                case enterGraveYard:
+                    caseEnterGraveYard(request);
+                    break;
+                case forfeit:
+                    caseForfeit(request);
+                    break;
+                case selectUnit:
+                    caseSelectUnit(request);
+                    break;
+                case findClassicMatch:
+                    caseFindClassicMatch();
+                    break;
+                case findOneFlagMatch:
+                    caseFindOneFlagMatch();
+                    break;
+                case findMultiFlagsMatch:
+                    caseFindMultiFlagsMatch();
+                    break;
+                case cancelMatchFinding:
+                    caseCancelMatchFinding();
+                    break;
+                case enterCollectoin:
+                    caseEnterCollection(request);
+                    break;
+                case exitCollection:
+                    caseExitCollection();
+                    break;
+                case sell:
+                    caseSell(request);
+                    break;
+                case createDeck:
+                    caseCreateDeck(request);
+                    break;
+                case removeDeck:
+                    caseRemoveDeck(request);
+                    break;
+                case importDeck:
+                    caseImportDeck(request);
+                    break;
+                case setMainDeck:
+                    caseSetMainDeck(request);
+                    break;
+                case moveCardToDeck:
+                    caseMoveCardToDeck(request);
+                    break;
+                case removeCardFromDeck:
+                    caseRemoveCardFromDeck(request);
+                    break;
+                case sellCard:
+                    caseSell(request);
+                    break;
+                case sendMessage:
+                    caseSendMessage(request);
+                    break;
+                case enterGlobalChat:
+                    caseEnterGlobalChat(request);
+                    break;
+                case exitGlobalChat:
+                    caseExitGlobalChat(request);
+                    break;
+                case leaderBoard:
+                    caseLeaderBoard();
+                    break;
+                case buy:
+                    caseBuy(request);
+                    break;
+                case shop:
+                    caseShop(request);
+                    break;
+                case close:
+                    //todo
                     break;
             }
-//        } catch ( e) {
-//            NetworkDB.getInstance().closeConnection(socket);
-//            updateAccountsInLeaderBoard();
-//        }
-    }
-
-    private void handleShop(Request request) {
-        switch (request.getRequestType()) {
-            case shop:
-                NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.shop);
-                List<Object> cardList = new ArrayList<>(NetworkDB.getInstance().getCardList());
-                List<Object> usableList = new ArrayList<>(NetworkDB.getInstance().getUsableList());
-                List<Integer> integerList = new ArrayList<>();
-                integerList.add(cardList.size());
-                integerList.add(usableList.size());
-                List<Object> cardsAndUsables = new ArrayList<>();
-                cardList.forEach(e-> System.out.println(((Card)e).getName()));
-                cardsAndUsables.addAll(cardList);
-                cardsAndUsables.addAll(usableList);
-                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.shop, null, integerList, cardsAndUsables), connection);
-                break;
-            case buy:
-                OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
-                List<Object> accountList = new ArrayList<>();
-                accountList.add(connection.getAccount());
-                NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.buy, outputMessageType.getMessage(), null, accountList), connection);
+            Platform.runLater(() -> {
+                Server.getInstance().updateCardList();
+                Server.getInstance().updateUserList();
+            });
+            if (request.getRequestType().equals(RequestType.close))
                 break;
         }
     }
 
-    private void handleCollection(Request request) {
-        String deckName;
+    private void caseCancelMatchFinding() {
+        Account account = connection.getAccount();
+        networkDB.getAccountStatusMap().put(account, AccountStatus.online);
+        networkDB.removeAccountFromWaitingList(account);
+    }
+
+    private void caseLeaderBoard() {
+        networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.leaderBoard);
+        List<Object> accountList = new ArrayList<>(networkDB.getAccountStatusMap().keySet());
+        List<Integer> integers = new ArrayList<>();
+        setIntegerList(accountList, integers);
+        networkDB.sendResponseToClient(new Response(ResponseType.leaderBoard, null, integers, accountList), connection);
+    }
+
+    private void caseBuy(Request request) {
+        OutputMessageType outputMessageType = connection.getAccount().getPlayerInfo().getCollection().buy(connection.getAccount(), request.getMessage());
+        List<Object> accountList = new ArrayList<>();
+        accountList.add(connection.getAccount());
+        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.buy, outputMessageType.getMessage(), null, accountList), connection);
+    }
+
+    private void caseShop(Request request) {
+        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.shop);
+        List<Object> cardList = new ArrayList<>(NetworkDB.getInstance().getCardList());
+        List<Object> usableList = new ArrayList<>(NetworkDB.getInstance().getUsableList());
+        List<Integer> integerList = new ArrayList<>();
+        integerList.add(cardList.size());
+        integerList.add(usableList.size());
+        List<Object> cardsAndUsables = new ArrayList<>();
+        cardList.forEach(e -> System.out.println(((Card) e).getName()));
+        cardsAndUsables.addAll(cardList);
+        cardsAndUsables.addAll(usableList);
+        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.shop, null, integerList, cardsAndUsables), connection);
+    }
+
+    private void caseSell(Request request) {
+        Account account = connection.getAccount();
+        OutputMessageType outputMessageType = account.getPlayerInfo().getCollection().sell(account, request.getMessage());
+        List<Object> accountList = new ArrayList<>();
+        accountList.add(account);
+        networkDB.sendResponseToClient(new Response(ResponseType.sell, outputMessageType.getMessage(), null, accountList), connection);
+    }
+
+    private void caseRemoveCardFromDeck(Request request) {
         JsonObject jsonObject;
+        String deckName;
+        jsonObject = (JsonObject) request.getObjectList().get(0);
+        deckName = jsonObject.get("deck").getAsString();
+        String id = jsonObject.get("id").getAsString();
+        connection.getAccount().getPlayerInfo().getCollection().removeCard(id, deckName);
+    }
+
+    private void caseMoveCardToDeck(Request request) {
+        JsonObject jsonObject;
+        String deckName;
+        jsonObject = (JsonObject) request.getObjectList().get(0);
+        deckName = jsonObject.get("deckName").getAsString();
+        String cardId = jsonObject.get("cardID").getAsString();
+        connection.getAccount().getPlayerInfo().getCollection().addCard(cardId, deckName);
+    }
+
+    private void caseExitCollection() {
+        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
+    }
+
+    private void caseImportDeck(Request request) {
         Deck deck;
-        switch (request.getRequestType()) {
-            case enterCollectoin:
-                NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.collection);
-                break;
-            case createDeck:
-                deck = new Deck(request.getMessage());
-                connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
-                break;
-            case removeDeck:
-                deckName = request.getMessage();
-                for (Deck tempDeck : connection.getAccount().getPlayerInfo().getCollection().getDecks()) {
-                    if (tempDeck.getName().equals(deckName)) {
-                        connection.getAccount().getPlayerInfo().getCollection().getDecks().remove(tempDeck);
-                        if (connection.getAccount().getMainDeck().getName().equals(deckName)) {
-                            connection.getAccount().setMainDeck(null);
-                        }
-                        break;
-                    }
+        deck = (Deck) request.getObjectList().get(0);
+        connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+    }
+
+    private void caseSetMainDeck(Request request) {
+        String deckName;
+        Deck deck;
+        deckName = request.getMessage();
+        deck = connection.getAccount().getPlayerInfo().getCollection().getDeckByName(deckName);
+        connection.getAccount().setMainDeck(deck);
+    }
+
+    private void caseRemoveDeck(Request request) {
+        String deckName;
+        deckName = request.getMessage();
+        for (Deck tempDeck : connection.getAccount().getPlayerInfo().getCollection().getDecks()) {
+            if (tempDeck.getName().equals(deckName)) {
+                connection.getAccount().getPlayerInfo().getCollection().getDecks().remove(tempDeck);
+                if (connection.getAccount().getMainDeck().getName().equals(deckName)) {
+                    connection.getAccount().setMainDeck(null);
                 }
                 break;
-            case setMainDeck:
-                deckName = request.getMessage();
-                deck = connection.getAccount().getPlayerInfo().getCollection().getDeckByName(deckName);
-                connection.getAccount().setMainDeck(deck);
-                break;
-            case importDeck:
-                deck = (Deck) request.getObjectList().get(0);
-                connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
-                break;
-            case exitCollection:
-                NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
-                break;
-            case moveCardToDeck:
-                jsonObject = (JsonObject) request.getObjectList().get(0);
-                deckName = jsonObject.get("deckName").getAsString();
-                String cardId = jsonObject.get("cardID").getAsString();
-                connection.getAccount().getPlayerInfo().getCollection().addCard(cardId, deckName);
-                break;
-            case removeCardFromDeck:
-                jsonObject = (JsonObject) request.getObjectList().get(0);
-                deckName = jsonObject.get("deck").getAsString();
-                String id = jsonObject.get("id").getAsString();
-                connection.getAccount().getPlayerInfo().getCollection().removeCard(id, deckName);
-                break;
-            case sell:
-                Account account = connection.getAccount();
-                OutputMessageType outputMessageType = account.getPlayerInfo().getCollection().sell(account, request.getMessage());
-                List<Object> accountList = new ArrayList<>();
-                accountList.add(account);
-                networkDB.sendResponseToClient(new Response(ResponseType.sell, outputMessageType.getMessage(), null, accountList), connection);
-                break;
+            }
         }
     }
 
-    private void handleGlobalChat(Request request) {
+    private void caseCreateDeck(Request request) {
+        Deck deck;
+        deck = new Deck(request.getMessage());
+        connection.getAccount().getPlayerInfo().getCollection().getDecks().add(deck);
+    }
+
+    private void caseEnterCollection(Request request) {
+        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.collection);
+    }
+
+    private void caseExitGlobalChat(Request request) {
         Account account;
-        switch (request.getRequestType()) {
-            case sendMessage:
-                ChatMessage chatMessage = (ChatMessage) request.getObjectList().get(0);
-                for (Account tempAccount : networkDB.getAccountStatusMap().keySet()) {
-                    if (networkDB.getAccountStatusMap().get(tempAccount) == AccountStatus.chatting
-                            && !tempAccount.getUsername().equals(chatMessage.getSender())) {
-                        Connection receiver = networkDB.getConnectionWithAccount(tempAccount);
-                        networkDB.sendResponseToClient(new Response(ResponseType.sendMessage, null, null, request.getObjectList()), receiver);
-                    }
-                }
-                break;
-            case enterGlobalChat:
-                account = networkDB.getAccountWithUserName(request.getMessage());
-                networkDB.getAccountStatusMap().put(account, AccountStatus.chatting);
-                break;
-            case exitGlobalChat:
-                account = networkDB.getAccountWithUserName(request.getMessage());
-                networkDB.getAccountStatusMap().put(account, AccountStatus.online);
-                break;
-        }
+        account = networkDB.getAccountWithUserName(request.getMessage());
+        networkDB.getAccountStatusMap().put(account, AccountStatus.online);
     }
 
-    private void handleAccountCase(Request request) {
-        Pattern pattern;
-        Matcher matcher;
+    private void caseEnterGlobalChat(Request request) {
         Account account;
-        switch (request.getRequestType()) {
-            case signUp:
-                handleSignup(request);
-                break;
-            case login:
-                handleLogin(request);
-                break;
-            case logout:
-                handleLogout(request);
-                break;
-            case leaderBoard:
-                handleLeaderboard();
-                break;
+        account = networkDB.getAccountWithUserName(request.getMessage());
+        networkDB.getAccountStatusMap().put(account, AccountStatus.chatting);
+    }
+
+    private void caseSendMessage(Request request) {
+        ChatMessage chatMessage = (ChatMessage) request.getObjectList().get(0);
+        for (Account tempAccount : networkDB.getAccountStatusMap().keySet()) {
+            if (networkDB.getAccountStatusMap().get(tempAccount) == AccountStatus.chatting
+                    && !tempAccount.getUsername().equals(chatMessage.getSender())) {
+                Connection receiver = networkDB.getConnectionWithAccount(tempAccount);
+                networkDB.sendResponseToClient(new Response(ResponseType.sendMessage, null, null, request.getObjectList()), receiver);
+            }
         }
     }
 
-    private void handleLogout(Request request) {
+    private void caseLogout(Request request) {
         Pattern pattern;
         Matcher matcher;
         Account account;
@@ -193,15 +281,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleLeaderboard() {
-        NetworkDB.getInstance().getAccountStatusMap().put(connection.getAccount(), AccountStatus.leaderBoard);
-        List<Object> accountList = new ArrayList<>(NetworkDB.getInstance().getAccountStatusMap().keySet());
-        List<Integer> integerList = new ArrayList<>();
-        setIntegerList(accountList, integerList);
-        NetworkDB.getInstance().sendResponseToClient(new Response(ResponseType.leaderBoard, null, integerList, accountList), connection);
-    }
-
-    private void handleLogin(Request request) {
+    private void caseLogin(Request request) {
         Pattern pattern = Pattern.compile("userName:(\\w+)password:(\\w+)");
         Matcher matcher = pattern.matcher(request.getMessage());
         matcher.find();
@@ -227,7 +307,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleSignup(Request request) {
+    private void caseSignUp(Request request) {
         Pattern pattern;
         Matcher matcher;
         Account account;
@@ -271,82 +351,105 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleMatchFinding(Request request) {
-        switch (request.getRequestType()) {
-            case findClassicMatch:
-                networkDB.addAccountWaitingForClassic(connection.getAccount());
+    private void caseFindMultiFlagsMatch() {
+        networkDB.addAccountWaitingForMultiFlags(connection.getAccount());
+    }
+
+    private void caseFindOneFlagMatch() {
+        networkDB.addAccountWaitingForOneFlag(connection.getAccount());
+    }
+
+    private void caseFindClassicMatch() {
+        networkDB.addAccountWaitingForClassic(connection.getAccount());
+    }
+
+    private void caseUseCollectable(Request request) {
+        //todo
+    }
+
+    private void caseUseSpecialPower(Request request) {
+        Integer row = (Integer) request.getObjectList().get(0);
+        Integer column = (Integer) request.getObjectList().get(1);
+        Battle battle = connection.getCurrentBattle();
+        Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        switch (battle.useSpecialPower(player, row, column, battle)) {
+            case SPECIAL_POWER_USED:
+                List<Object> objects = new ArrayList<>();
+                objects.add(battle);
+                Response response = new Response(ResponseType.specialPowerUsed, null, null, objects);
+                networkDB.sendResponseToClient(response, connection);
                 break;
-            case findOneFlagMatch:
-                networkDB.addAccountWaitingForOneFlag(connection.getAccount());
+            case NO_HERO:
+                //empty
                 break;
-            case findMultiFlagsMatch:
-                networkDB.addAccountWaitingForMultiFlags(connection.getAccount());
+            case SPECIAL_POWER_IN_COOLDOWN:
+                //empty
+                break;
+            case HERO_HAS_NO_SPELL:
+                //empty
+                break;
+            case NOT_ENOUGH_MANA:
+                //empty
+                break;
+            case OUT_OF_BOUNDARIES:
+                //empty
                 break;
             default:
+                System.out.println("unhandled case!!!");
         }
     }
 
-    private void handleMultiPlayerCase(Request request) {
-        switch (request.getRequestType()) {
-            case moveUnit:
-                handleMoveUnit(request);
+    private void caseInsertCard(Request request) {
+        String id = request.getMessage();
+        Integer row = (Integer) request.getObjectList().get(0);
+        Integer column = (Integer) request.getObjectList().get(1);
+        Battle battle = connection.getCurrentBattle();
+        Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        Card card = player.getHand().getCardById(id);
+        switch (battle.insert(card, row, column, battle)) {
+            case NO_SUCH_CARD_IN_HAND:
+                //empty
                 break;
-            case attackUnit:
-                handleAttackUnit(request);
+            case NOT_ENOUGH_MANA:
+                //empty
                 break;
-            case endTurn:
-                handleEndTurn(request);
+            case INVALID_NUMBER:
+                //empty
                 break;
-            case insertCard:
-                handleInsertCard(request);
+            case NOT_NEARBY_FRIENDLY_UNITS:
+                //empty
                 break;
-            case useSpecialPower:
-                handleUseSpecialPower(request);
+            case THIS_CELL_IS_FULL:
+                //empty
                 break;
-            case useCollectable:
-                handleUseCollectable(request);
-                break;
-            case selectUnit:
-                handleSelectUnit(request);
-                break;
-            case enterGraveYard:
-                handleEnterGraveYard(request);
-                break;
-            case forfeit:
-                handleForfeit(request);
+            case CARD_INSERTED:
+                List<Object> objects = new ArrayList<>();
+                objects.add(row);
+                objects.add(column);
+                objects.add(battle);
+                Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
+                networkDB.sendResponseToClient(response, connection);
                 break;
         }
     }
 
-    private void handleUseCollectable(Request request) {
+    private void caseEndTurn(Request request) {
         //todo
     }
 
-    private void handleUseSpecialPower(Request request) {
+    private void caseForfeit(Request request) {
         //todo
     }
 
-    private void handleInsertCard(Request request) {
+    private void caseAttackUnit(Request request) {
         //todo
     }
 
-    private void handleEndTurn(Request request) {
+    private void caseEnterGraveYard(Request request) {
         //todo
     }
 
-    private void handleForfeit(Request request) {
-        //todo
-    }
-
-    private void handleAttackUnit(Request request) {
-        //todo
-    }
-
-    private void handleEnterGraveYard(Request request) {
-        //todo
-    }
-
-    private void handleSelectUnit(Request request) {
+    private void caseSelectUnit(Request request) {
         Battle battle = connection.getCurrentBattle();
         String id = request.getMessage();
         switch (battle.getPlayerInTurn().selectUnit(id, battle)) {
@@ -370,7 +473,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void handleMoveUnit(Request request) {
+    private void caseMoveUnit(Request request) {
         Battle battle = connection.getCurrentBattle();
         Integer destinationRow = (Integer) request.getObjectList().get(0);
         Integer destinationColumn = (Integer) request.getObjectList().get(1);
@@ -383,7 +486,7 @@ public class ClientHandler extends Thread {
                 objects.add(battle);
                 Response response = new Response(ResponseType.unitMoved, selectedUnit.getId()
                         , null, objects);
-                networkDB.sendResponeToPlayerAndOpponent(response, connection);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
                 break;
             case OUT_OF_BOUNDARIES:
                 //empty
@@ -403,5 +506,9 @@ public class ClientHandler extends Thread {
             default:
                 System.out.println("unhandled case!!!");
         }
+    }
+
+    private void logCase(Request request) {
+        System.out.println(connection.getAccount().getUsername() + "-->>" + request.getRequestType());
     }
 }

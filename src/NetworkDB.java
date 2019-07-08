@@ -31,8 +31,9 @@ public class NetworkDB {
         return accountsWaitingForMultiFlags;
     }
 
-    public synchronized void addAccountWaitingForClassic(Account account) {
+    public void addAccountWaitingForClassic(Account account) {
         accountsWaitingForClassic.add(account);
+        accountStatusMap.put(account, AccountStatus.waitingForMatch);
         pairAccountsForBattle();
     }
 
@@ -40,14 +41,14 @@ public class NetworkDB {
         return ourInstance;
     }
 
-    public synchronized void addAccountWaitingForOneFlag(Account account) {
+    public void addAccountWaitingForOneFlag(Account account) {
         accountsWaitingForOneFlag.add(account);
-        pairAccountsForBattle();
+        pairAccountsForBattle(accountsWaitingForOneFlag, Constants.ONE_FLAG, 1);
     }
 
     public void addAccountWaitingForMultiFlags(Account account) {
         accountsWaitingForMultiFlags.add(account);
-        pairAccountsForBattle();
+        pairAccountsForBattle(accountsWaitingForMultiFlags, Constants.FLAGS, 7);
     }
 
     private NetworkDB() {
@@ -104,7 +105,7 @@ public class NetworkDB {
         }
     }
 
-    public synchronized void saveAccounts() {
+    public void saveAccounts() {
         YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
         for (Account account : accountStatusMap.keySet()) {
             String fileName = "account_" + account.getUsername() + ".json";
@@ -120,11 +121,11 @@ public class NetworkDB {
         }
     }
 
-    public synchronized void addConnection(Connection connection) {
+    public void addConnection(Connection connection) {
         connectionList.add(connection);
     }
 
-    public synchronized void setAccountStatus(Account account, AccountStatus status) {
+    public void setAccountStatus(Account account, AccountStatus status) {
         accountStatusMap.put(account, status);
     }
 
@@ -140,7 +141,7 @@ public class NetworkDB {
         return null;
     }
 
-    public synchronized void closeConnection(Socket socket) {
+    public void closeConnection(Socket socket) {
         Connection connection = getConnectionWithSocket(socket);
         connection.close();
         connectionList.remove(connection);
@@ -150,8 +151,10 @@ public class NetworkDB {
         return currentBattlesList;
     }
 
-    public synchronized void sendResponseToClient(Response response, Connection connection) {
+    public void sendResponseToClient(Response response, Connection connection) {
         try {
+            System.out.println(connection);
+            System.out.println(response.getResponseType());
             OutputStreamWriter output = connection.getOutput();
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
             yaGson.toJson(response, output);
@@ -163,24 +166,28 @@ public class NetworkDB {
 
     public Connection getConnectionWithAccount(Account account) {
         for (Connection connection : connectionList) {
-            if (connection.getAccount() == account)
+            if (connection.getAccount().equals(account))
                 return connection;
         }
         return null;
     }
 
-    public synchronized void pairAccountsForBattle() {
-        Account account1, account2;
-        Connection connection1, connection2;
-        if (accountsWaitingForClassic.size() >= 2) {
-            account1 = accountsWaitingForClassic.get(0);
-            account2 = accountsWaitingForClassic.get(1);
+    public void pairAccountsForBattle(List<Account> accountList, String mode, int numberOfFlags) {
+        Account account1;
+        Account account2;
+        Connection connection1;
+        Battle battle;
+        Connection connection2;
+        if (accountList.size() >= 2) {
+            account1 = accountList.get(0);
+            account2 = accountList.get(1);
             connection1 = getConnectionWithAccount(account1);
             connection2 = getConnectionWithAccount(account2);
-            accountsWaitingForClassic.remove(0);
-            accountsWaitingForClassic.remove(1);
-            Battle battle = new Battle(account1, account2, Constants.CLASSIC
-                    , 0, null, Constants.MULTI, 2000);
+            accountList.remove(0);
+            accountList.remove(0);
+            battle = new Battle(account1, account2, mode
+                    , numberOfFlags, null, Constants.MULTI, 2000);
+
             currentBattlesList.add(battle);
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
@@ -204,7 +211,7 @@ public class NetworkDB {
         return null;
     }
 
-    public void sendResponeToPlayerAndOpponent(Response response, Connection connection) {
+    public void sendResponseToPlayerAndOpponent(Response response, Connection connection) {
         sendResponseToClient(response, connection);
         sendResponseToClient(response, getOpponentConnection(connection));
     }
@@ -612,5 +619,19 @@ public class NetworkDB {
                 }
             }
         }
+    }
+
+    public void removeAccountFromWaitingList(Account account) {
+        accountsWaitingForClassic.remove(account);
+        accountsWaitingForOneFlag.remove(account);
+        accountsWaitingForMultiFlags.remove(account);
+    }
+
+    public Player getPlayerWithAccount(Account account, Battle battle) {
+        if (account.getUsername().equals(battle.getPlayer1().getPlayerInfo().getPlayerName()))
+            return battle.getPlayer1();
+        if (account.getUsername().equals(battle.getPlayer2().getPlayerInfo().getPlayerName()))
+            return battle.getPlayer2();
+        return null;
     }
 }

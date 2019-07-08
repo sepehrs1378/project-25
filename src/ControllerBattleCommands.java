@@ -38,7 +38,6 @@ import java.util.ResourceBundle;
 public class ControllerBattleCommands implements Initializable {
     private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
-    private Player loggedInPlayer;
     private List<ImageView> handRings = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
@@ -186,7 +185,7 @@ public class ControllerBattleCommands implements Initializable {
         clickedImageView = null;
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request
-                    (RequestType.endTurn, null, null, null));
+                    (RequestType.endTurn, null, null, null)).start();
             endTurnMineBtn.setVisible(false);
             endTurnEnemyBtn.setVisible(true);
         }
@@ -210,7 +209,7 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
-        Main.playMusic("src/ApProjectResources/music/battle.m4a");
+        Main.playMusic("src/music/battle.m4a");
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -374,23 +373,23 @@ public class ControllerBattleCommands implements Initializable {
             new ServerRequestSender(
                     new Request(RequestType.insertCard
                             , getHandImageWithCardView(clickedImageView).getId()
-                            , null, objects));
+                            , null, objects)).start();
         }
         if (clickedImageView.equals(specialPowerView)) {
             new ServerRequestSender(
                     new Request(RequestType.useSpecialPower, null
-                            , null, objects));
+                            , null, objects)).start();
         }
         if (clickedImageView.equals(collectableView)) {
             new ServerRequestSender(
                     new Request(RequestType.useCollectable, null,
-                            null, objects));
+                            null, objects)).start();
         }
         if (isClickedImageViewUnit()) {
             new ServerRequestSender(
                     new Request(RequestType.moveUnit
                             , getUnitImageWithUnitView(clickedImageView).getId()
-                            , null, objects));
+                            , null, objects)).start();
         }
     }
 
@@ -411,7 +410,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean handleSpecialPowerInsertion(int row, int column, Battle battle) {
-        switch (clientDB.getCurrentBattle().useSpecialPower(loggedInPlayer, row, column, battle)) {
+        switch (clientDB.getCurrentBattle().useSpecialPower(clientDB.getLoggedInPlayer(), row, column, battle)) {
             case NO_HERO:
                 //empty
                 break;
@@ -435,7 +434,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     public void showSpecialPowerUse(int row, int column) {
-        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(loggedInPlayer);
+        Unit hero = clientDB.getCurrentBattle().getBattleGround().getHeroOfPlayer(clientDB.getLoggedInPlayer());
         UnitImage heroImage = getUnitImageWithId(hero.getId());
         heroImage.showSpell();
         SpellImage specialPowerImage = new SpellImage
@@ -477,39 +476,35 @@ public class ControllerBattleCommands implements Initializable {
         Card card = clientDB.getLoggedInPlayer().getHand().getCardById(handImage.getId());
         switch (clientDB.getCurrentBattle().insert(card, row, column, battle)) {
             case NO_SUCH_CARD_IN_HAND:
-                System.out.println("1");
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
-                System.out.println("2");
                 //empty
                 break;
             case INVALID_NUMBER:
-                System.out.println("3");
                 //empty
                 break;
             case NOT_NEARBY_FRIENDLY_UNITS:
-                System.out.println("not nearby friendly units");
                 //empty
                 break;
             case THIS_CELL_IS_FULL:
-                System.out.println("5");
                 //empty
                 break;
             case CARD_INSERTED:
-                showCardInsertion(row, column, handImage, card);
+                showCardInsertion(row, column, card.getId());
                 return true;
             default:
         }
         return false;
     }
 
-    private void showCardInsertion(int row, int column, HandImage handImage, Card card) {
+    public void showCardInsertion(int row, int column, String id) {
+        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
+        HandImage handImage = getHandImageWithId(id);
         if (card instanceof Unit)
             insertUnitView(row, column, card);
-        if (card instanceof Spell) {
+        if (card instanceof Spell)
             insertSpellView(row, column, card);
-        }
         handImage.clearHandImage();
     }
 
@@ -540,6 +535,14 @@ public class ControllerBattleCommands implements Initializable {
         return null;
     }
 
+    public HandImage getHandImageWithId(String id) {
+        for (HandImage handImage : handImageList) {
+            if (handImage.getId().equals(id))
+                return handImage;
+        }
+        return null;
+    }
+
     public boolean isClickedImageViewInHand() {
         for (HandImage handImage : handImageList) {
             if (handImage.getCardView().equals(clickedImageView))
@@ -550,7 +553,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleUnitClicked(String id) {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
-            //todo
+            //todo other cases
             new ServerRequestSender(new Request(RequestType.selectUnit
                     , getUnitImageWithUnitView(clickedImageView).getId(), null, null));
         }
@@ -655,17 +658,17 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
-        updateNextCardImage();
-        updateCollectableIcon();//todo
+//        updateNextCardImage();
+//        updateCollectableIcon();//todo
         updateFlags();
-        updateCollectable();
+//        updateCollectable();
         updateHandImages();
         updatePlayersInfo();
         updateHand();
     }
 
     private void updateCollectableIcon() {
-        Collectable collectable = clientDB.getCurrentBattle().getCollectable();
+        /*Collectable collectable = clientDB.getCurrentBattle().getCollectable();
         Player player1 = clientDB.getCurrentBattle().getPlayer1();
         if (!player1.getCollectables().isEmpty()) {
             if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1.getPlayerInfo().getPlayerName()) &&
@@ -677,11 +680,11 @@ public class ControllerBattleCommands implements Initializable {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 
     private void updateNextCardImage() {
-        Card card = loggedInPlayer.getNextCard();
+        Card card = clientDB.getLoggedInPlayer().getNextCard();
         nextCardImage.setCardImage(card.getId());
     }
 
@@ -772,15 +775,11 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updateHand() {
-        List<Card> handCards = getLoggedInPlayer().getHand().getCards();
+        List<Card> handCards = clientDB.getLoggedInPlayer().getHand().getCards();
         for (int i = 0; i < handCards.size(); i++) {
             Card card = handCards.get(i);
             handImageList.get(i).setCardImage(card.getId());
         }
-    }
-
-    public Player getLoggedInPlayer() {
-        return loggedInPlayer;
     }
 
     private void showNextCard() {

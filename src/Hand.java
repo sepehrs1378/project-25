@@ -3,7 +3,6 @@ import java.util.List;
 
 class Hand {
     private List<Card> cards = new ArrayList<>();
-
     public List<Card> getCards() {
         return cards;
     }

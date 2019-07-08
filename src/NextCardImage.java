@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class NextCardImage {
+    private static ClientDB clientDB = ClientDB.getInstance();
     private final String UNIT = "unit";
     private final String SPELL = "spell";
     private final int UNIT_VIEW_SIZE = 150;
@@ -35,8 +36,7 @@ public class NextCardImage {
 
     public void setCardImage(String id) {
         this.id = id;
-        Card card = ControllerBattleCommands.getOurInstance()
-                .getLoggedInPlayer().getHand().getCardById(id);
+        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
         cardView.setVisible(true);
         manaLabel.setVisible(true);
         try {
