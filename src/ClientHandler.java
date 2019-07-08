@@ -125,6 +125,9 @@ public class ClientHandler extends Thread {
                 case shop:
                     caseShop(request);
                     break;
+                case gameFinished:
+                    caseGameFinished(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -136,6 +139,10 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
+    }
+
+    private void caseGameFinished(Request request){
+        networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }
 
     private void caseCancelMatchFinding() {
