@@ -1,3 +1,5 @@
+import com.sun.security.ntlm.Client;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -383,7 +385,7 @@ public class Battle {
     public boolean isCellNearbyFriendlyUnits(int row, int column, Battle battle) {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
-                if (!isCoordinationValid(i, j) || i == j)
+                if (!isCoordinationValid(i, j)||(i==row && column == j))
                     continue;
                 Cell cell = battle.getBattleGround().getCells()[i][j];
                 if (cell.isEmptyOfUnit())
@@ -471,25 +473,32 @@ public class Battle {
     }
 
     private OutputMessageType endBattle(Player winner) {
-        Account player1Account = NetworkDB.getInstance().getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
-        Account player2Account = NetworkDB.getInstance().getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
-        int sizeMatchList1 = player1Account.getMatchList().size();
-        int sizeMatchList2 = player2Account.getMatchList().size();
+        Account account1 = null;
+        Account account2 = null;
+        if(singleOrMulti.equals(Constants.SINGLE)){
+            account1 = ClientDB.getInstance().getLoggedInAccount();
+            account2 = ClientDB.getInstance().getComputerPlayerWithName(player2.getPlayerInfo().getPlayerName());
+
+        }else if (singleOrMulti.equals(Constants.MULTI)){
+            account1 = NetworkDB.getInstance().getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
+            account2 = NetworkDB.getInstance().getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
+        }
+        if (account1 == null || account2 == null){
+            return null;
+        }
+        //todo check for connecting to server
+        int sizeMatchList1 = account1.getMatchList().size();
+        int sizeMatchList2 = account2.getMatchList().size();
         if (winner == player1) {
-            if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer1")) {
-                player1Account.getLevelsOpennessStatus()[1] = true;
-            } else if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer2")) {
-                player1Account.getLevelsOpennessStatus()[2] = true;
-            }
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
-            player1Account.addMoney(prize);
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account.getUsername());
+            account1.getMatchList().get(sizeMatchList1 - 1).setWinner(account1.getUsername());
+            account1.addMoney(prize);
+            account2.getMatchList().get(sizeMatchList2 - 1).setWinner(account1.getUsername());
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
         } else if (winner == player2) {
-            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account.getUsername());
-            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account.getUsername());
-            player2Account.addMoney(prize);
+            account1.getMatchList().get(sizeMatchList1 - 1).setWinner(account2.getUsername());
+            account2.getMatchList().get(sizeMatchList2 - 1).setWinner(account2.getUsername());
+            account2.addMoney(prize);
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }

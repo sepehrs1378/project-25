@@ -398,10 +398,13 @@ public class ServerHandler extends Thread {
 
     private void caseUnitSelected(Response response) {
         UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
+        System.out.println(response.getMessage());
         clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                System.out.println(selectedUnit);
+                System.out.println(selectedUnit.getUnitView());
                 ControllerBattleCommands.getOurInstance().setClickedImageView(selectedUnit.getUnitView());
                 ControllerBattleCommands.getOurInstance().updatePane();
             }

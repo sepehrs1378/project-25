@@ -34,7 +34,7 @@ public class NetworkDB {
     public void addAccountWaitingForClassic(Account account) {
         accountsWaitingForClassic.add(account);
         accountStatusMap.put(account, AccountStatus.waitingForMatch);
-        pairAccountsForBattle(accountsWaitingForClassic, Constants.CLASSIC, 0);
+        pairAccountsForBattle(accountsWaitingForClassic,Constants.CLASSIC,0);
     }
 
     public static NetworkDB getInstance() {
@@ -215,6 +215,7 @@ public class NetworkDB {
 
     public void sendResponseToPlayerAndOpponent(Response response, Connection connection) {
         sendResponseToClient(response, connection);
+        System.out.println(getOpponentConnection(connection));
         sendResponseToClient(response, getOpponentConnection(connection));
     }
 

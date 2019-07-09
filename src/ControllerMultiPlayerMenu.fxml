@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMultiPlayerMenu">
+<AnchorPane prefHeight="611.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMultiPlayerMenu">
    <children>
-      <Button layoutX="97.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findClassicMatch" text="Classic" />
-      <Button layoutX="269.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findOneFlagMatch" text="OneFlag" />
-      <Button layoutX="442.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#findMultiFlagsMatch" text="MultiFlags" />
-      <Button layoutX="230.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#cancelMatchFinding" text="CancelFindingMatch" />
-      <Label layoutX="251.0" layoutY="48.0" text="MultiPlayerMenu" textFill="#f50202" />
-      <Button layoutX="26.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#exitMultiPlayerMenu" text="Back" />
-      <ImageView fx:id="loadingIcon" fitHeight="76.0" fitWidth="108.0" layoutX="251.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="612.0" fitWidth="881.0">
          <image>
-            <Image url="@pics/loading_icon.png" />
+            <Image url="@pics/multi_player_menu_pics/background.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="classicBtn" fitHeight="156.0" fitWidth="155.0" layoutX="712.0" layoutY="15.0" onMouseClicked="#findClassicMatch" onMouseEntered="#makeClassicBtnOpaque" onMouseExited="#makeClassicBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/classic_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="multiFlagsBtn" fitHeight="155.0" fitWidth="155.0" layoutX="712.0" layoutY="412.0" onMouseClicked="#findMultiFlagsMatch" onMouseEntered="#makeMultiFlagsBtnOpaque" onMouseExited="#makeMultiFlagsBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/multiple_flags_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="singleFlagBtn" fitHeight="155.0" fitWidth="155.0" layoutX="712.0" layoutY="218.0" onMouseClicked="#findOneFlagMatch" onMouseEntered="#makeSingleFlagBtnOpaque" onMouseExited="#makeSingleFlagBtnTransparent" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/single_flag_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="loadingIcon" layoutX="48.0" layoutY="408.0" visible="false">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/loading.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cancelBtn" fitHeight="142.0" fitWidth="155.0" layoutX="18.0" layoutY="470.0" onMouseClicked="#cancelMatchFinding" onMouseEntered="#makeCancelBtnOpaque" onMouseExited="#makeCancelBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/cancel_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="closeBtn" fitHeight="63.0" fitWidth="61.0" layoutX="7.0" layoutY="7.0" onMouseClicked="#exitMultiPlayerMenu" onMouseEntered="#makeCloseBtnOpaque" style="-fx-opacity: 0.6;">
+         <image>
+            <Image url="@pics/close_button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="373.0" layoutX="262.0" layoutY="-2.0" preserveRatio="true">
+         <image>
+            <Image url="@pics/multi_player_menu_pics/multiplayer_title.png" />
          </image>
       </ImageView>
    </children>

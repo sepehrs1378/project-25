@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -19,5 +21,10 @@
          </font>
       </Label>
       <Line layoutX="496.0" layoutY="4.0" startY="82.5" />
+      <ImageView fx:id="replayBtn" fitHeight="51.0" fitWidth="56.0" layoutX="690.0" layoutY="18.0" onMouseClicked="#replayGame" onMouseEntered="#makeReplayBtnOpaque" onMouseExited="#makeReplayBtnTransparent" preserveRatio="true" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@pics/match_history_menu_pics/replay_button.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -198,4 +198,17 @@ public class ClientDB {
     public void setLoggedInPlayer(Player loggedInPlayer) {
         this.loggedInPlayer = loggedInPlayer;
     }
+
+    public Account getComputerPlayerWithName(String name){
+        if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(name))
+            return computerPlayerLevel1;
+        else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(name)){
+            return computerPlayerLevel2;
+        }else if(computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(name)){
+            return computerPlayerLevel3;
+        }else if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(name)){
+            return computerPlayerCustom;
+        }
+        return null;
+    }
 }

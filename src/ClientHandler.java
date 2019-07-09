@@ -125,6 +125,9 @@ public class ClientHandler extends Thread {
                 case shop:
                     caseShop(request);
                     break;
+                case gameFinished:
+                    caseGameFinished(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -136,6 +139,10 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
+    }
+
+    private void caseGameFinished(Request request){
+        networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }
 
     private void caseCancelMatchFinding() {
@@ -428,7 +435,7 @@ public class ClientHandler extends Thread {
                 objects.add(column);
                 objects.add(battle);
                 Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
-                networkDB.sendResponseToClient(response, connection);
+                networkDB.sendResponseToPlayerAndOpponent(response,connection);
                 break;
         }
     }

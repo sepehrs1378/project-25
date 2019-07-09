@@ -1,3 +1,7 @@
+//import com.teamdev.jxcapture.Codec;
+//import com.teamdev.jxcapture.EncodingParameters;
+//import com.teamdev.jxcapture.VideoCapture;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -496,12 +500,23 @@ public class ControllerBattleCommands implements Initializable {
 
     public void showCardInsertion(int row, int column, String id) {
         Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
+        if (card == null) {
+            if (clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName().equals(
+                    clientDB.getLoggedInAccount().getUsername()
+            )){
+                card = clientDB.getCurrentBattle().getPlayer2().getHand().getCardById(id);
+            }else{
+                card = clientDB.getCurrentBattle().getPlayer1().getHand().getCardById(id);
+            }
+        }
         HandImage handImage = getHandImageWithId(id);
         if (card instanceof Unit)
             insertUnitView(row, column, card);
         if (card instanceof Spell)
             insertSpellView(row, column, card);
-        handImage.clearHandImage();
+        if (handImage != null) {
+            handImage.clearHandImage();
+        }
     }
 
     public List<SpellImage> getSpellImageList() {
@@ -549,7 +564,7 @@ public class ControllerBattleCommands implements Initializable {
 
     public void handleUnitClicked(String id) {
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI))
-            handleUnitClickedForMulti();
+            handleUnitClickedForMulti(id);
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE))
             handleUnitClickedForSingle(id);
     }
@@ -569,18 +584,19 @@ public class ControllerBattleCommands implements Initializable {
         updatePane();
     }
 
-    private void handleUnitClickedForMulti() {
+    private void handleUnitClickedForMulti(String id) {
+        //todo other cases select and attack
         Battle battle = clientDB.getCurrentBattle();
-        UnitImage clickedUnit = getUnitImageWithUnitView(clickedImageView);
+        UnitImage clickedUnit = getUnitImageWithId(id);
         if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
                 .equals(Constants.FRIEND)) {
             new ServerRequestSender(new Request(RequestType.selectUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
+                    , id, null, null)).start();
         }
         if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
                 .equals(Constants.ENEMY)) {
             new ServerRequestSender(new Request(RequestType.attackUnit
-                    , getUnitImageWithUnitView(clickedImageView).getId(), null, null)).start();
+                    , id, null, null)).start();
         }
     }
 
@@ -839,6 +855,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean endGame() {
         timeBar.setDisable(true);
         clientDB.setCurrentBattle(null);
+        //todo setGame finished
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
@@ -875,7 +892,7 @@ public class ControllerBattleCommands implements Initializable {
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
-            //todo check end game
+            //todo add winner name to endgame
         }
         return false;
     }
@@ -907,4 +924,24 @@ public class ControllerBattleCommands implements Initializable {
     public ImageView getEndTurnEnemyBtn() {
         return endTurnEnemyBtn;
     }
+
+//    public void recordVideo() {
+//        final VideoCapture videoCapture = VideoCapture.create();
+//        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
+//
+//        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+//        Codec videoCodec = videoCodecs.get(1);
+//
+//        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
+//        encodingParameters.setSize(new Dimension(640, 480));
+//        encodingParameters.setBitrate(500000);
+//        encodingParameters.setFramerate(30);
+//        encodingParameters.setCodec(videoCodec);
+//
+//        videoCapture.setEncodingParameters(encodingParameters);
+//        videoCapture.start();
+
+//        videoCapture.stop();
+//        System.out.println("Done.");
+//    }
 }
