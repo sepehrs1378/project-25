@@ -101,12 +101,27 @@ public class ServerHandler extends Thread {
                     case sell:
                         caseSell(response);
                         break;
+                    case customCardAdded:
+                        caseCustomCardAdded(response);
+                        break;
                 }
 //                logResponse(response);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseCustomCardAdded(Response response) {
+        Card card = (Card)response.getObjectList().get(0);
+        ClientDB.getInstance().getCardList().add(card);
+        Platform.runLater(()->{
+            try {
+                ControllerShop.getOurInstance().showCards(clientDB.getCardList(),clientDB.getUsableList());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void caseUnitAndEnemyAttacked(Response response) {
@@ -190,7 +205,7 @@ public class ServerHandler extends Thread {
         List<Usable> usableList = new ArrayList<>();
         separateCardsUsables(response, cardList, usableList);
         System.out.println("here");
-        cardList.forEach(e -> System.out.println(e.getName()));
+//        cardList.forEach(e -> System.out.println(e.getName()));
         Platform.runLater(() -> {
             try {
                 ControllerShop.getOurInstance().showCards(cardList, usableList);

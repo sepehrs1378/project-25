@@ -188,8 +188,11 @@ public class ControllerCustomCard implements Initializable {
         if (spell == null)
             return;
         spell.setCustom(true);
-        DataBase.getInstance().getCardList().add(spell);
-        DataBase.getInstance().saveCustomCard(spell);
+        NetworkDB.getInstance().getCardList().add(spell);
+        NetworkDB.getInstance().saveCustomCard(spell);
+        NetworkDB.getInstance().getNumberOfCards().put(spell.getName(),10);
+        sendCardToClients(spell);
+        Server.getInstance().updateCardList();
     }
 
     private Spell makeSpell() {
@@ -301,7 +304,7 @@ public class ControllerCustomCard implements Initializable {
                 Integer.parseInt(heroAPtxt.getText()), minRange, maxRange, heroSpell
                 , Constants.HERO, "", false);
         unit.setCustom(true);
-        DataBase.getInstance().getCardList().add(unit);
+        NetworkDB.getInstance().getCardList().add(unit);
         try {
             Files.createDirectory(Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/"));
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
@@ -319,6 +322,16 @@ public class ControllerCustomCard implements Initializable {
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death.m4a"),
                     Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/death.m4a"),
                     StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack.m4a"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/attack.m4a"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/spell"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/spell"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/special_power.png"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/special_power.png"),
+                    StandardCopyOption.REPLACE_EXISTING);
+
             //todo remember to copy sound effects!
         } catch (IOException ignored) {
 
@@ -326,7 +339,10 @@ public class ControllerCustomCard implements Initializable {
         heroSpell = null;
         spellBuffs.clear();
         clearEveryThing();
-        DataBase.getInstance().saveCustomCard(unit);
+        NetworkDB.getInstance().saveCustomCard(unit);
+        NetworkDB.getInstance().getNumberOfCards().put(unit.getName(),10);
+        Server.getInstance().updateCardList();
+        sendCardToClients(unit);
         new Alert(Alert.AlertType.INFORMATION, "hero created successfully!").showAndWait();
     }
 
@@ -397,7 +413,7 @@ public class ControllerCustomCard implements Initializable {
                 Integer.parseInt(minionAptxt.getText()), minRange, maxRange, minionSpell
                 , Constants.MINION, "", false);
         unit.setCustom(true);
-        DataBase.getInstance().getCardList().add(unit);
+        NetworkDB.getInstance().getCardList().add(unit);
         try {
             Files.createDirectory(Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/"));
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack")
@@ -412,19 +428,34 @@ public class ControllerCustomCard implements Initializable {
             Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/run")
                     , Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/run")
                     , StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/death.m4a"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/death.m4a"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/attack.m4a"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/attack.m4a"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/spell"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/spell"),
+                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get("./src/ApProjectResources/units/custom_cards/default/special_power.png"),
+                    Paths.get("./src/ApProjectResources/units/" + unit.getName() + "/special_power.png"),
+                    StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
         minionSpell = null;
         spellBuffs.clear();
         clearEveryThing();
-        DataBase.getInstance().saveCustomCard(unit);
+        NetworkDB.getInstance().saveCustomCard(unit);
+        NetworkDB.getInstance().getNumberOfCards().put(unit.getName(),10);
+        sendCardToClients(unit);
+        Server.getInstance().updateCardList();
         new Alert(Alert.AlertType.INFORMATION, "minion created successfully!").showAndWait();
     }
 
 
     private boolean isNameUnique(String name) {
-        for (Card card : DataBase.getInstance().getCardList()) {
+        for (Card card : NetworkDB.getInstance().getCardList()) {
             if (card.getName().equals(name)) {
                 return false;
             }
@@ -434,7 +465,6 @@ public class ControllerCustomCard implements Initializable {
 
     @FXML
     void makeCreateMinionOpaque(MouseEvent event) {
-        Main.playWhenMouseEntered();
         createMinionBtn.setOpacity(1);
     }
 
@@ -687,5 +717,17 @@ public class ControllerCustomCard implements Initializable {
 
     private void clearEveryThing() {
         //todo
+    }
+
+    private void sendCardToClients(Card card){
+        List<Object> objects = new ArrayList<>();
+        objects.add(card);
+        NetworkDB.getInstance().getAccountStatusMap().forEach((account,status)->{
+            if (status == AccountStatus.shop){
+                NetworkDB.getInstance().sendResponseToClient
+                        (new Response(ResponseType.customCardAdded,null,null,objects)
+                                ,NetworkDB.getInstance().getConnectionWithAccount(account));
+            }
+        });
     }
 }
