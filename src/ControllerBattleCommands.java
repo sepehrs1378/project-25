@@ -570,7 +570,6 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void handleUnitClickedForMulti() {
-        //todo other cases select and attack
         Battle battle = clientDB.getCurrentBattle();
         UnitImage clickedUnit = getUnitImageWithUnitView(clickedImageView);
         if (battle.getBattleGround().isUnitFriendlyOrEnemy(clickedUnit.getId(), battle)
