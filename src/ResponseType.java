@@ -8,6 +8,9 @@ public enum ResponseType {
     unitSelected,
     unitAttacked,
     unitAndEnemyAttacked,
+    player1Won,
+    player2Won,
+    turnChanged,
 
     sendMessage,
     close,

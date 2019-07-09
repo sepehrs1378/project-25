@@ -70,7 +70,6 @@ public class ClientDB {
     }
 
     public void setLoggedInAccount(Account loggedInAccount) {
-        DataBase.getInstance().setLoggedInAccount(loggedInAccount);
         this.loggedInAccount = loggedInAccount;
     }
 
@@ -189,6 +188,16 @@ public class ClientDB {
 
     public void setCurrentBattle(Battle currentBattle) {
         this.currentBattle = currentBattle;
+        Player player1 = currentBattle.getPlayer1();
+        Player player2 = currentBattle.getPlayer2();
+        if (loggedInPlayer == null)
+            return;
+        if (player1.getPlayerInfo().getPlayerName().equals
+                (loggedInPlayer.getPlayerInfo().getPlayerName()))
+            loggedInPlayer = player1;
+        if (player2.getPlayerInfo().getPlayerName().equals
+                (loggedInPlayer.getPlayerInfo().getPlayerName()))
+            loggedInPlayer = player2;
     }
 
     public Player getLoggedInPlayer() {
@@ -199,14 +208,14 @@ public class ClientDB {
         this.loggedInPlayer = loggedInPlayer;
     }
 
-    public Account getComputerPlayerWithName(String name){
+    public Account getComputerPlayerWithName(String name) {
         if (computerPlayerLevel1.getPlayerInfo().getPlayerName().equals(name))
             return computerPlayerLevel1;
-        else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(name)){
+        else if (computerPlayerLevel2.getPlayerInfo().getPlayerName().equals(name)) {
             return computerPlayerLevel2;
-        }else if(computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(name)){
+        } else if (computerPlayerLevel3.getPlayerInfo().getPlayerName().equals(name)) {
             return computerPlayerLevel3;
-        }else if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(name)){
+        } else if (computerPlayerCustom.getPlayerInfo().getPlayerName().equals(name)) {
             return computerPlayerCustom;
         }
         return null;

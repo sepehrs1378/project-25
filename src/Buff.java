@@ -1,5 +1,4 @@
-abstract public class Buff {
-    public transient static final DataBase dataBase = DataBase.getInstance();
+public abstract class Buff {
     private String positiveOrNegative;
     private int startTurn;
     private int durationTurn;

@@ -155,8 +155,6 @@ public class NetworkDB {
 
     public void sendResponseToClient(Response response, Connection connection) {
         try {
-            System.out.println(connection);
-            System.out.println(response.getResponseType());
             OutputStreamWriter output = connection.getOutput();
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
             yaGson.toJson(response, output);

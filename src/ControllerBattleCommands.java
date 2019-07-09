@@ -18,8 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -164,30 +161,28 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView nextCardRing;
 
     @FXML
-    private Label playerManaLabel;
+    private Label player1ManaLabel;
 
     @FXML
-    private Label computerManaLabel;
+    private Label player2ManaLabel;
 
     @FXML
     private ProgressBar timeBar;
 
     @FXML
     void endTurn(MouseEvent event) {
+        if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+            return;
         endTurnWhenClicked();
     }
 
     private void endTurnWhenClicked() {
-        Media media = new Media(Paths.get("src/music/end_turn.m4a").toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.play();
+        Main.playMedia("src/music/end_turn.m4a"
+                , Duration.INDEFINITE, 1, false, 100);
         clickedImageView = null;
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request
                     (RequestType.endTurn, null, null, null)).start();
-            endTurnMineBtn.setVisible(false);
-            endTurnEnemyBtn.setVisible(true);
         }
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.SINGLE)) {
             Battle battle = clientDB.getCurrentBattle();
@@ -209,7 +204,8 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
-        Main.playMusic("src/music/battle.m4a");
+        Main.playMedia("src/music/battle.m4a"
+                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 100);
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -274,15 +270,9 @@ public class ControllerBattleCommands implements Initializable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        specialPowerView.setOnMouseEntered(event -> {
-            if (!specialPowerView.getStyle().equals(SELECTED_STYLE))
-                specialPowerView.setStyle(MOUSE_ENTERED_STYLE);
-        });
-        specialPowerView.setOnMouseExited(event -> {
-            if (!specialPowerView.getStyle().equals(SELECTED_STYLE))
-                specialPowerView.setStyle(MOUSE_EXITED_STYLE);
-        });
         specialPowerView.setOnMouseClicked(event -> {
+            if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+                return;
             if (clickedImageView != null && clickedImageView == specialPowerView) {
                 clickedImageView = null;
                 specialPowerView.setStyle(null);
@@ -291,6 +281,16 @@ public class ControllerBattleCommands implements Initializable {
                 specialPowerView.setStyle(SELECTED_STYLE);
             }
             updatePane();
+        });
+        specialPowerView.setOnMouseEntered(event -> {
+            if (!specialPowerView.getStyle().equals(SELECTED_STYLE)) {
+                specialPowerView.setStyle(MOUSE_ENTERED_STYLE);
+            }
+        });
+        specialPowerView.setOnMouseExited(event -> {
+            if (!specialPowerView.getStyle().equals(SELECTED_STYLE)) {
+                specialPowerView.setStyle(MOUSE_EXITED_STYLE);
+            }
         });
     }
 
@@ -690,6 +690,19 @@ public class ControllerBattleCommands implements Initializable {
         updateHandImages();
         updatePlayersInfo();
         updateHand();
+        updateEndTurnButton();
+    }
+
+    private void updateEndTurnButton() {
+        System.out.println(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
+        System.out.println("** " + clientDB.getLoggedInPlayer().getPlayerInfo().getPlayerName());
+        if (clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn())) {
+            endTurnMineBtn.setVisible(true);
+            endTurnEnemyBtn.setVisible(false);
+        } else {
+            endTurnMineBtn.setVisible(false);
+            endTurnEnemyBtn.setVisible(true);
+        }
     }
 
     private void updateCollectableIcon() {
@@ -795,8 +808,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updatePlayersInfo() {
-        playerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
-        computerManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
+        player1ManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
+        player2ManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer2().getMana()));
     }
 
     private void updateHand() {
@@ -944,18 +957,4 @@ public class ControllerBattleCommands implements Initializable {
     //        videoCapture.stop();
 //        System.out.println("Done.");
 //    }
-
-    public MediaPlayer getMediaPlayer(String filePath) {
-        MediaPlayer mediaPlayer = null;
-        try {
-            Media media = new Media(Paths.get(filePath).toUri().toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(Integer.MAX_VALUE);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.play();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return mediaPlayer;
-    }
 }

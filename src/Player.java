@@ -46,10 +46,6 @@ public class Player {
         this.mana = mana;
     }
 
-    public void addMana(int addedMana) {
-        mana += addedMana;
-    }
-
     public void reduceMana(int reducedMana) {
         mana -= reducedMana;
     }

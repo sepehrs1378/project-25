@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class ControllerSettingsMenu {
     private DataBase dataBase = DataBase.getInstance();
+    private static ClientDB clientDB = ClientDB.getInstance();
 
     @FXML
     private JFXComboBox<String> timeComboBox;
@@ -23,7 +24,7 @@ public class ControllerSettingsMenu {
     @FXML
     void goBack(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
-        dataBase.getLoggedInAccount().setTurnDuration(timeComboBox.getValue());
+        clientDB.getLoggedInAccount().setTurnDuration(timeComboBox.getValue());
         Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
         Main.window.setScene(new Scene(root));
         Main.setCursor(Main.window);

@@ -1,7 +1,6 @@
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -16,6 +15,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +24,6 @@ import java.nio.file.Paths;
 public class
 
 Main extends Application {
-    private DataBase dataBase = DataBase.getInstance();
-    private ClientDB clientDB = ClientDB.getInstance();
     public static Stage window;
     private static MediaPlayer globalMediaPlayer;
     private static double xOffset = 0;
@@ -96,12 +94,12 @@ Main extends Application {
             return;
         }
         new ServerRequestSender(new Request(RequestType.signUp, "userName:" + username.getText() + "password:"
-                + password.getText(), null,null)).start();
+                + password.getText(), null, null)).start();
     }
 
     public static void main(String[] args) {
         String address = "localhost";
-        DataBase.getInstance().makeEveryThing();
+//        DataBase.getInstance().makeEveryThing();
         ClientDB.getInstance();
         ServerHandler serverHandler = new ServerHandler(address, 5555);
         serverHandler.start();
@@ -155,7 +153,8 @@ Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         setCursor(primaryStage);
-        playMusic("src/music/mainMenu.mp3");
+        globalMediaPlayer = playMedia("src/music/mainMenu.mp3", Duration.INDEFINITE
+                , Integer.MAX_VALUE, true, 100);
         dragAbilityForScenes(primaryStage, root);
         primaryStage.setOnCloseRequest(e -> {
             new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()
@@ -176,17 +175,21 @@ Main extends Application {
         });
     }
 
-    public static void playMusic(String filePath) {
+    public static MediaPlayer playMedia(String filePath, Duration stopDuration, int cycleCount
+            , boolean autoPlay, double volume) {
+        MediaPlayer mediaPlayer = null;
         try {
             Media media = new Media(Paths.get(filePath).toUri().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(Integer.MAX_VALUE);
-            mediaPlayer.setAutoPlay(true);
-            globalMediaPlayer = mediaPlayer;
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(cycleCount);
+            mediaPlayer.setAutoPlay(autoPlay);
+            mediaPlayer.setStopTime(stopDuration);
+            mediaPlayer.setVolume(volume);
             mediaPlayer.play();
-        } catch (Exception exc) {
-            exc.printStackTrace(System.out);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return mediaPlayer;
     }
 
     public static void playWhenButtonClicked() {

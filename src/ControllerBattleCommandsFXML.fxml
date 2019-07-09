@@ -92,7 +92,7 @@
             <Image url="@pics/in_battle_pics/mana_ring.png" />
          </image>
       </ImageView>
-      <Label fx:id="playerManaLabel" alignment="CENTER" layoutX="42.0" layoutY="36.0" prefHeight="72.0" prefWidth="68.0" text="2">
+      <Label fx:id="player1ManaLabel" alignment="CENTER" layoutX="42.0" layoutY="36.0" prefHeight="72.0" prefWidth="68.0" text="2">
          <font>
             <Font name="System Bold Italic" size="28.0" />
          </font>
@@ -110,7 +110,7 @@
             <Image url="@pics/in_battle_pics/mana_ring.png" />
          </image>
       </ImageView>
-      <Label fx:id="computerManaLabel" alignment="CENTER" layoutX="1198.0" layoutY="18.0" prefHeight="81.0" prefWidth="77.0" text="2">
+      <Label fx:id="player2ManaLabel" alignment="CENTER" layoutX="1198.0" layoutY="18.0" prefHeight="81.0" prefWidth="77.0" text="2">
          <font>
             <Font name="System Bold Italic" size="28.0" />
          </font>

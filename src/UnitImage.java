@@ -19,17 +19,18 @@ import java.util.List;
 
 public class UnitImage {
     //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
+    private static ClientDB clientDB = ClientDB.getInstance();
     private final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
     private final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
     private final int UNIT_VIEW_SIZE = 150;
     private final int UNIT_EFFECT_SIZE = 80;
     private AnchorPane root;
-    private long attackDuration = 2000;
-    private long deathDuration = 1200;
-    private long spellDuration = 3000;
-    private long runDuration = 1000;
-    private long spawnDuration = 1500;
+    private Long attackDuration = 2000L;
+    private Long deathDuration = 1200L;
+    private Long spellDuration = 3000L;
+    private Long runDuration = 1000L;
+    private Long spawnDuration = 1500L;
     private int row = 0;
     private int column = 0;
     private ImageView unitView = new ImageView();
@@ -52,6 +53,8 @@ public class UnitImage {
         unitStatus = UnitStatus.stand;
         loadUnitImage();
         unitView.setOnMouseClicked(event -> {
+            if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+                return;
             ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
         });
         unitView.setOnMouseEntered(event -> {
@@ -110,8 +113,10 @@ public class UnitImage {
     }
 
     public void showRun(int destinationRow, int destinationColumn) {
-        MediaPlayer mediaPlayer = ControllerBattleCommands.getOurInstance()
-                .getMediaPlayer("src/music/step.mp3");
+        Main.playMedia("src/music/step.mp3"
+                , Duration.millis(runDuration.doubleValue())
+                , Integer.MAX_VALUE, false, 80);
+
         setUnitStatus(UnitStatus.run);
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
@@ -143,7 +148,6 @@ public class UnitImage {
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
-                    mediaPlayer.stop();
                     this.stop();
                 } else resetStatsPositions();
             }
@@ -152,8 +156,9 @@ public class UnitImage {
     }
 
     public void showAttack(int targetColumn) {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/" + getUnitName() + "/attack.m4a").toUri().toString()));
-        mediaPlayer.play();
+        Main.playMedia("src/ApProjectResources/" + getUnitName() + "/attack.m4a"
+                , Duration.INDEFINITE, 1, false, 100);
+
         setUnitStatus(UnitStatus.attack);
         changeFacing(this.column, targetColumn);
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -174,6 +179,9 @@ public class UnitImage {
     }
 
     public void showSpawn() {
+        Main.playMedia("src/music/unitSpawn.mp3"
+                , Duration.millis(spawnDuration.doubleValue()), Integer.MAX_VALUE, false, 100);
+
         ImageView effectView = addEffectToUnit(UnitEffectType.spawnEffect);
 
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -197,8 +205,9 @@ public class UnitImage {
     }
 
     public void showDeath() {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/" + getUnitName() + "/death.m4a").toUri().toString()));
-        mediaPlayer.play();
+        Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "death.m4a"
+                , Duration.INDEFINITE, 1, false, 100);
+
         setUnitStatus(UnitStatus.death);
         ImageView effectView = addEffectToUnit(UnitEffectType.bloodDrop);
 

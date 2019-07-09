@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -7,8 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class EndGameVictory {
+public class EndGameVictory implements Initializable {
     @FXML
     private ImageView backBtn;
 
@@ -32,5 +35,10 @@ public class EndGameVictory {
     @FXML
     void makeBackBtnTransparent(MouseEvent event) {
         backBtn.setStyle("-fx-opacity: 0.6");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

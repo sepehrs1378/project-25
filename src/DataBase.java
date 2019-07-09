@@ -752,10 +752,9 @@ public class DataBase {
         collectableList.add(shamshirChini);
     }
 
-    private void makeAccounts() {
-
+    /*private void makeAccounts() {
         //todo add usables to deck
-        /*Deck computerPlayer1Deck = new Deck("Deck");
+        Deck computerPlayer1Deck = new Deck("Deck");
         addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 0, 1);
         addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 6, 1);
         addCardToDeck(computerPlayerLevel1, computerPlayer1Deck, 9, 1);
@@ -826,8 +825,9 @@ public class DataBase {
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 58, 1);
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 60, 1);
         addCardToDeck(computerPlayerLevel3, computerPlayer3Deck, 63, 1);
-        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*/
-        /*Account temp1=new Account("temp1","1");
+        computerPlayerLevel3.setMainDeck(computerPlayer3Deck);*//*
+
+        Account temp1 = new Account("temp1", "1");
         Deck temp1Deck = new Deck("deck");
         addCardToDeck(temp1, temp1Deck, 0, 1);
         addCardToDeck(temp1, temp1Deck, 6, 1);
@@ -853,7 +853,7 @@ public class DataBase {
         temp1.getPlayerInfo().getCollection().getDecks().add(temp1Deck);
         temp1.setMainDeck(temp1Deck);
 
-        Account temp2 = new Account("temp2","2");
+        Account temp2 = new Account("temp2", "2");
         Deck temp2Deck = new Deck("deck");
         addCardToDeck(temp2, temp2Deck, 0, 1);
         addCardToDeck(temp2, temp2Deck, 6, 1);
@@ -880,10 +880,11 @@ public class DataBase {
         temp2.setMainDeck(temp2Deck);
 
         accountList.add(temp1);
-        accountList.add(temp2);*/
+        accountList.add(temp2);
+
 
         Deck computerPlayerCostumDeck = new Deck("deck");
-    }
+    }*/
 
     public List<Card> getCardList() {
         return cardList;

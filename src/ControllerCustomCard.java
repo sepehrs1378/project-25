@@ -422,7 +422,6 @@ public class ControllerCustomCard implements Initializable {
         new Alert(Alert.AlertType.INFORMATION, "minion created successfully!").showAndWait();
     }
 
-
     private boolean isNameUnique(String name) {
         for (Card card : DataBase.getInstance().getCardList()) {
             if (card.getName().equals(name)) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CellImage {
+    private static ClientDB clientDB = ClientDB.getInstance();
     private AnchorPane root;
     private final int cellWidth = 63;
     private final int cellHeight = 50;
@@ -21,6 +22,9 @@ public class CellImage {
                 , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
         setLabelStyle();
         cellLabel.setOnMouseClicked(event -> {
+            if (!clientDB.getLoggedInPlayer()
+                    .equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+                return;
             ControllerBattleCommands.getOurInstance().handleCellClicked
                     (row, column, ClientDB.getInstance().getCurrentBattle());
         });

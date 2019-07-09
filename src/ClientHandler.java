@@ -136,12 +136,13 @@ public class ClientHandler extends Thread {
                 Server.getInstance().updateCardList();
                 Server.getInstance().updateUserList();
             });
+            logCase(request);
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
     }
 
-    private void caseGameFinished(Request request){
+    private void caseGameFinished(Request request) {
         networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }
 
@@ -371,8 +372,7 @@ public class ClientHandler extends Thread {
     }
 
     private void caseUseCollectable(Request request) {
-
-        //todo
+        //todo use battle.useCollectable
     }
 
     private void caseUseSpecialPower(Request request) {
@@ -436,17 +436,41 @@ public class ClientHandler extends Thread {
                 objects.add(column);
                 objects.add(battle);
                 Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
-                networkDB.sendResponseToPlayerAndOpponent(response,connection);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
                 break;
         }
     }
 
     private void caseEndTurn(Request request) {
-        //todo
+        Battle battle = connection.getCurrentBattle();
+        Response response;
+        Account account1 = connection.getAccount();
+        Account account2 = networkDB.getOpponentConnection(connection).getAccount();
+        List<Object> objects = new ArrayList<>();
+        objects.add(battle);
+        switch (battle.nextTurn()) {
+            case WINNER_PLAYER1:
+                response = new Response(ResponseType.player1Won, null, null, objects);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
+                break;
+            case WINNER_PLAYER2:
+                response = new Response(ResponseType.player2Won, null, null, objects);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
+                break;
+            case TURN_CHANGED:
+                response = new Response(ResponseType.turnChanged, null, null, objects);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
+                break;
+            case INVALID_PLAYER:
+                //empty
+                break;
+            default:
+                System.out.println("unhandled case!!!");
+        }
     }
 
     private void caseForfeit(Request request) {
-        //todo
+        //todo maybe isn't gonna be implemented
     }
 
     private void caseAttackUnit(Request request) {
@@ -497,10 +521,10 @@ public class ClientHandler extends Thread {
         String id = request.getMessage();
         switch (battle.getPlayerInTurn().selectUnit(id, battle)) {
             case SELECTED:
-                List<Object> battles = new ArrayList<>();
-                battles.add(battle);
+                List<Object> objects = new ArrayList<>();
+                objects.add(battle);
                 Response response = new Response
-                        (ResponseType.unitSelected, id, null, battles);
+                        (ResponseType.unitSelected, id, null, objects);
                 networkDB.sendResponseToClient(response, connection);
                 break;
             case INVALID_COLLECTABLE_CARD:

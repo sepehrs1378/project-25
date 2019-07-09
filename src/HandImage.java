@@ -37,6 +37,8 @@ public class HandImage {
         this.number = number;
         this.root = root;
         cardView.setOnMouseClicked(event -> {
+            if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+                return;
             ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
             if (controller.getClickedImageView() != null
                     && controller.getClickedImageView().equals(cardView)) {

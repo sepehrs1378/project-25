@@ -1,5 +1,4 @@
 public class DamagePerTurnBuff extends Buff {
-    public static final DataBase dataBase = DataBase.getInstance();
     private int[] damagePerTurn;
 
     public DamagePerTurnBuff(int durationTurn, boolean isDispellable,

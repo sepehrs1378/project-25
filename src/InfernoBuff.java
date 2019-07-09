@@ -1,7 +1,6 @@
 import java.util.List;
 
 public class InfernoBuff extends Buff {
-    public static final DataBase dataBase = DataBase.getInstance();
     private int damagePerTurn;
 
     public InfernoBuff(int durationTurn, boolean isDispellable

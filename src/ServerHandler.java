@@ -71,6 +71,15 @@ public class ServerHandler extends Thread {
                     case unitAndEnemyAttacked:
                         caseUnitAndEnemyAttacked(response);
                         break;
+                    case player1Won:
+                        casePlayer1Won(response);
+                        break;
+                    case player2Won:
+                        casePlayer2Won(response);
+                        break;
+                    case turnChanged:
+                        caseTurnChanged(response);
+                        break;
                     case sendMessage:
                         caseSendMessage(response);
                         break;
@@ -102,11 +111,68 @@ public class ServerHandler extends Thread {
                         caseSell(response);
                         break;
                 }
-//                logResponse(response);
+                logResponse(response);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseTurnChanged(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        Battle battle = (Battle) response.getObjectList().get(0);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerBattleCommands.updatePane();
+            }
+        });
+    }
+
+    private void casePlayer1Won(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        Battle battle = (Battle) response.getObjectList().get(0);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Parent root = null;
+                try {
+                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer1()))
+                        root = FXMLLoader.load(getClass().getResource("EndGameVictory.fxml"));
+                    else
+                        root = FXMLLoader.load(getClass().getResource("EndGameDefeat.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Main.window.setScene(new Scene(root));
+                Main.setCursor(Main.window);
+                controllerBattleCommands.updatePane();
+            }
+        });
+    }
+
+    private void casePlayer2Won(Response response) {
+        ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
+        Battle battle = (Battle) response.getObjectList().get(0);
+        clientDB.setCurrentBattle(battle);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Parent root = null;
+                try {
+                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer2()))
+                        root = FXMLLoader.load(getClass().getResource("EndGameVictory.fxml"));
+                    else root = FXMLLoader.load(getClass().getResource("EndGameDefeat.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Main.window.setScene(new Scene(root));
+                Main.setCursor(Main.window);
+                controllerBattleCommands.updatePane();
+            }
+        });
     }
 
     private void caseUnitAndEnemyAttacked(Response response) {
@@ -417,12 +483,9 @@ public class ServerHandler extends Thread {
         Integer row = (Integer) response.getObjectList().get(0);
         Integer column = (Integer) response.getObjectList().get(1);
         UnitImage movedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(id);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                movedUnit.showRun(row, column);
-                ControllerBattleCommands.getOurInstance().updatePane();
-            }
+        Platform.runLater(() -> {
+            movedUnit.showRun(row, column);
+            ControllerBattleCommands.getOurInstance().updatePane();
         });
     }
 

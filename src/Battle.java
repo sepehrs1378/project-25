@@ -177,7 +177,7 @@ public class Battle {
         return null;
     }
 
-    public Player checkEndBattleModeClassic() {
+    private Player checkEndBattleModeClassic() {
         if (battleGround.getHeroOfPlayer(player1).getHp() <= 0) {
             isBattleFinished = true;
             return player2;
@@ -188,11 +188,12 @@ public class Battle {
         return null;
     }
 
-    public Player checkEndBattleModeOneFlag() {
+    private Player checkEndBattleModeOneFlag() {
         Unit unitWithFlag = battleGround.getUnitHavingFlag();
         if (unitWithFlag != null) {
             if (unitWithFlag.getFlags().get(0).getTurnsInUnitHand() >= 11) {
-                if (unitWithFlag.getId().split("_")[0].equals(player1.getPlayerInfo().getPlayerName())) {
+                if (unitWithFlag.getId().split("_")[0]
+                        .equals(player1.getPlayerInfo().getPlayerName())) {
                     isBattleFinished = true;
                     return player1;
                 } else {
@@ -204,7 +205,7 @@ public class Battle {
         return null;
     }
 
-    public Player checkEndBattleModeFlags() {
+    private Player checkEndBattleModeFlags() {
         int numberOfFlagsPlayer1 = battleGround.getNumberOfFlagsForPlayer(player1);
         int numberOfFlagsPlayer2 = battleGround.getNumberOfFlagsForPlayer(player2);
         if (numberOfFlagsPlayer1 >= getNumberOfFlags() / 2 + 1) {
@@ -226,7 +227,7 @@ public class Battle {
         return players;
     }
 
-    public void reviveContinuousBuffs() {
+    private void reviveContinuousBuffs() {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = battleGround.getCells()[i][j];

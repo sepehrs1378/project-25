@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Spell extends Card {
-    private static transient DataBase dataBase = DataBase.getInstance();
     private int apChange;
     private int hpChange;
     private int coolDown;
