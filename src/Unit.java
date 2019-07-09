@@ -90,10 +90,10 @@ public class Unit extends Card {
         this.attackUnit(targetId, false,battle);
         if (targetUnit.canAttackTarget(this, true,battle)) {
             targetUnit.attackUnit(this.getId(), true,battle);
-            battle.checkForDeadUnits(battle);
+            battle.checkForDeadUnits();
             return OutputMessageType.UNIT_AND_ENEMY_ATTACKED;
         } else {
-            battle.checkForDeadUnits(battle);
+            battle.checkForDeadUnits();
             return OutputMessageType.UNIT_ATTACKED;
         }
     }

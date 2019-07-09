@@ -503,9 +503,9 @@ public class ControllerBattleCommands implements Initializable {
         if (card == null) {
             if (clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName().equals(
                     clientDB.getLoggedInAccount().getUsername()
-            )){
+            )) {
                 card = clientDB.getCurrentBattle().getPlayer2().getHand().getCardById(id);
-            }else{
+            } else {
                 card = clientDB.getCurrentBattle().getPlayer1().getHand().getCardById(id);
             }
         }
@@ -831,7 +831,8 @@ public class ControllerBattleCommands implements Initializable {
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
         Collectable collectable = clientDB.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
         view.printOutputMessage(clientDB.getCurrentBattle().useCollectable(collectable, row, column));
-    */}
+    */
+    }
 
     private void forfeitGame() {
         //todo this method have to implemented in model
@@ -887,7 +888,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private boolean endTurn(Battle battle) {
-        OutputMessageType outputMessageType = clientDB.getCurrentBattle().nextTurn(battle);
+        OutputMessageType outputMessageType = clientDB.getCurrentBattle().nextTurn();
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
@@ -940,7 +941,21 @@ public class ControllerBattleCommands implements Initializable {
 //        videoCapture.setEncodingParameters(encodingParameters);
 //        videoCapture.start();
 
-//        videoCapture.stop();
+    //        videoCapture.stop();
 //        System.out.println("Done.");
 //    }
+
+    public MediaPlayer getMediaPlayer(String filePath) {
+        MediaPlayer mediaPlayer = null;
+        try {
+            Media media = new Media(Paths.get(filePath).toUri().toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(Integer.MAX_VALUE);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return mediaPlayer;
+    }
 }

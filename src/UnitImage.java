@@ -110,6 +110,8 @@ public class UnitImage {
     }
 
     public void showRun(int destinationRow, int destinationColumn) {
+        MediaPlayer mediaPlayer = ControllerBattleCommands.getOurInstance()
+                .getMediaPlayer("src/music/step.mp3");
         setUnitStatus(UnitStatus.run);
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
         double startY = unitView.getTranslateY() + unitView.getFitHeight() / 2;
@@ -141,6 +143,7 @@ public class UnitImage {
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
+                    mediaPlayer.stop();
                     this.stop();
                 } else resetStatsPositions();
             }
@@ -194,7 +197,7 @@ public class UnitImage {
     }
 
     public void showDeath() {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/"+ getUnitName() +"/death.m4a").toUri().toString()));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(Paths.get("src/ApProjectResources/units/" + getUnitName() + "/death.m4a").toUri().toString()));
         mediaPlayer.play();
         setUnitStatus(UnitStatus.death);
         ImageView effectView = addEffectToUnit(UnitEffectType.bloodDrop);
