@@ -831,8 +831,7 @@ public class ControllerBattleCommands implements Initializable {
         int column = Integer.parseInt(request.getCommand().split("[ (),]")[3]);
         Collectable collectable = clientDB.getCurrentBattle().getPlayerInTurn().getSelectedCollectable();
         view.printOutputMessage(clientDB.getCurrentBattle().useCollectable(collectable, row, column));
-    */
-    }
+    */}
 
     private void forfeitGame() {
         //todo this method have to implemented in model

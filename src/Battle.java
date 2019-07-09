@@ -1,5 +1,3 @@
-import com.sun.security.ntlm.Client;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,7 @@ public class Battle {
     private BattleGround battleGround = new BattleGround();
     private Player playerInTurn;
     private String mode;
-//    private Collectable collectable;
+    //    private Collectable collectable;todo collectable is ignored
     private int turnNumber = 1;
     private boolean isBattleFinished = false;
     private int numberOfFlags;
@@ -20,7 +18,7 @@ public class Battle {
             , String mode, int numberOfFlags, Collectable collectable, String singleOrMulti, int prize) {
         this.prize = prize;
         this.singleOrMulti = singleOrMulti;
-//        dataBase.setCurrentBattle(this);todo IMPORTANT set battle is ignored
+//        dataBase.setCurrentBattle(this);
         player1 = new Player(firstPlayerAccount.getPlayerInfo(), firstPlayerAccount.getMainDeck());
         player2 = new Player(secondPlayerAccount.getPlayerInfo(), secondPlayerAccount.getMainDeck());
         playerInTurn = player1;
@@ -40,20 +38,20 @@ public class Battle {
         startBattle();
     }
 
-    public OutputMessageType nextTurn(Battle battle) {
-        resetUnitsMoveAndAttack(battle);
-        doBuffsEffects(battle);
-        removeBuffs(battle);
+    public OutputMessageType nextTurn() {
+        resetUnitsMoveAndAttack();
+        doBuffsEffects();
+        removeBuffs();
         Player player = checkEndBattle();
         if (player != null) {
             return endBattle(player);
         }
-        checkForDeadUnits(battle);
+        checkForDeadUnits();
         checkSpecialPowersCooldown();
         checkFlagInHandTurn();
         changeTurn();
         turnNumber++;
-        reviveContinuousBuffs(battle);
+        reviveContinuousBuffs();
         setManaBasedOnTurnNumber();
         playerInTurn.moveNextCardToHand();
         return OutputMessageType.TURN_CHANGED;
@@ -126,14 +124,14 @@ public class Battle {
         this.getBattleGround().getCellOfUnit(unit).setUnit(null);
     }
 
-    public void checkForDeadUnits(Battle battle) {
+    public void checkForDeadUnits() {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
                 Cell cell = battleGround.getCells()[i][j];
                 if (cell.isEmptyOfUnit())
                     continue;
                 if (cell.getUnit().getHp() <= 0)
-                    killUnit(cell.getUnit(), battle);
+                    killUnit(cell.getUnit(), this);
             }
         }
     }
@@ -228,28 +226,28 @@ public class Battle {
         return players;
     }
 
-    public void reviveContinuousBuffs(Battle battle) {
+    public void reviveContinuousBuffs() {
         for (int i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (int j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = battle.getBattleGround().getCells()[i][j];
+                Cell cell = battleGround.getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     if (buff != null && buff.isContinuous())
-                        buff.revive(battle);
+                        buff.revive(this);
                 }
                 if (cell.getUnit() == null)
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
                     if (buff != null && buff.isContinuous())
-                        buff.revive(battle);
+                        buff.revive(this);
                 }
             }
         }
     }
 
-    public void removeBuffs(Battle battle) {
-        removeBuffsFromCellsAndUnits(battle);
-        removeBuffsFrom(player1, battle);
-        removeBuffsFrom(player2, battle);
+    public void removeBuffs() {
+        removeBuffsFromCellsAndUnits(this);
+        removeBuffsFrom(player1, this);
+        removeBuffsFrom(player2, this);
     }
 
     private void removeBuffsFromCellsAndUnits(Battle battle) {
@@ -288,12 +286,12 @@ public class Battle {
         }
     }
 
-    public void resetUnitsMoveAndAttack(Battle battle) {
+    public void resetUnitsMoveAndAttack() {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = battle.getBattleGround().getCells()[i][j];
+                Cell cell = battleGround.getCells()[i][j];
                 if (cell.isEmptyOfUnit())
                     continue;
                 Unit unit = cell.getUnit();
@@ -318,30 +316,28 @@ public class Battle {
         }
     }
 
-    public void doBuffsEffects(Battle battle) {
+    public void doBuffsEffects() {
         int i;
         int j;
         for (i = 0; i < Constants.BATTLE_GROUND_WIDTH; i++) {
             for (j = 0; j < Constants.BATTLE_GROUND_LENGTH; j++) {
-                Cell cell = battle.getBattleGround().getCells()[i][j];
+                Cell cell = battleGround.getCells()[i][j];
                 for (Buff buff : cell.getBuffs()) {
                     //todo IMPORTANT
                 }
                 if (cell.isEmptyOfUnit())
                     continue;
                 for (Buff buff : cell.getUnit().getBuffs()) {
-                    buff.doEffect(cell.getUnit(),battle);
+                    buff.doEffect(cell.getUnit(), this);
                 }
             }
         }
-        for (Buff buff : player1.getBuffs()) {
+        for (Buff buff : player1.getBuffs())
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player1,battle);
-        }
-        for (Buff buff : player2.getBuffs()) {
+                ((ManaBuff) buff).doEffect(player1, this);
+        for (Buff buff : player2.getBuffs())
             if (buff instanceof ManaBuff)
-                ((ManaBuff) buff).doEffect(player2,battle);
-        }
+                ((ManaBuff) buff).doEffect(player2, this);
     }
 
     public OutputMessageType insert(Card card, int row, int column, Battle battle) {
@@ -385,7 +381,7 @@ public class Battle {
     public boolean isCellNearbyFriendlyUnits(int row, int column, Battle battle) {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
-                if (!isCoordinationValid(i, j)||(i==row && column == j))
+                if (!isCoordinationValid(i, j) || (i == row && column == j))
                     continue;
                 Cell cell = battle.getBattleGround().getCells()[i][j];
                 if (cell.isEmptyOfUnit())
@@ -468,42 +464,96 @@ public class Battle {
         player1.setNextCard();
     }
 
-    private void resetDeck(Deck deck) {
-        //todo is it needed?
+    private OutputMessageType endBattle(Player winner) {
+        if (singleOrMulti.equals(Constants.SINGLE))
+            return endBattleForSingle(winner);
+        if (singleOrMulti.equals(Constants.MULTI))
+            return endBattleForMulti(winner);
+        return OutputMessageType.INVALID_PLAYER;
     }
 
-    private OutputMessageType endBattle(Player winner) {
-        Account account1 = null;
-        Account account2 = null;
-        if(singleOrMulti.equals(Constants.SINGLE)){
-            account1 = ClientDB.getInstance().getLoggedInAccount();
-            account2 = ClientDB.getInstance().getComputerPlayerWithName(player2.getPlayerInfo().getPlayerName());
-
-        }else if (singleOrMulti.equals(Constants.MULTI)){
-            account1 = NetworkDB.getInstance().getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
-            account2 = NetworkDB.getInstance().getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
-        }
-        if (account1 == null || account2 == null){
-            return null;
-        }
-        //todo check for connecting to server
-        int sizeMatchList1 = account1.getMatchList().size();
-        int sizeMatchList2 = account2.getMatchList().size();
-        if (winner == player1) {
-            account1.getMatchList().get(sizeMatchList1 - 1).setWinner(account1.getUsername());
-            account1.addMoney(prize);
-            account2.getMatchList().get(sizeMatchList2 - 1).setWinner(account1.getUsername());
+    private OutputMessageType endBattleForMulti(Player winner) {
+        Account player1Account;
+        Account player2Account;
+        int account1MatchListSize;
+        int account2MatchListSize;
+        NetworkDB networkDB = NetworkDB.getInstance();
+        player1Account = networkDB.getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
+        player2Account = networkDB.getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
+        account1MatchListSize = player1Account.getMatchList().size();
+        account2MatchListSize = player2Account.getMatchList().size();
+        if (winner.equals(player1)) {
+            player1Account.getMatchList().get(account1MatchListSize - 1).setWinner(player1Account.getUsername());
+            player2Account.getMatchList().get(account2MatchListSize - 1).setWinner(player1Account.getUsername());
+            player1Account.addMoney(prize);
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER1;
-        } else if (winner == player2) {
-            account1.getMatchList().get(sizeMatchList1 - 1).setWinner(account2.getUsername());
-            account2.getMatchList().get(sizeMatchList2 - 1).setWinner(account2.getUsername());
-            account2.addMoney(prize);
+        }
+        if (winner.equals(player2)) {
+            player1Account.getMatchList().get(account1MatchListSize - 1).setWinner(player2Account.getUsername());
+            player2Account.getMatchList().get(account2MatchListSize - 1).setWinner(player2Account.getUsername());
+            player2Account.addMoney(prize);
             isBattleFinished = true;
             return OutputMessageType.WINNER_PLAYER2;
         }
         return OutputMessageType.INVALID_PLAYER;
     }
+
+    private OutputMessageType endBattleForSingle(Player winner) {
+        Account player1Account;
+        Account player2Account;
+        int account1MatchListSize;
+        int account2MatchListSize;
+        ClientDB clientDB = ClientDB.getInstance();
+        player1Account = clientDB.getLoggedInAccount();
+        player2Account = clientDB.getComputerPlayerWithName(player2.getPlayerInfo().getPlayerName());
+        account1MatchListSize = player1Account.getMatchList().size();
+        account2MatchListSize = player2Account.getMatchList().size();
+        if (winner.equals(player1)) {
+            if (player2.getPlayerInfo().getPlayerName().equals("computer1"))
+                player1Account.getLevelsOpennessStatus()[1] = true;
+            if (player2.getPlayerInfo().getPlayerName().equals("computer2"))
+                player1Account.getLevelsOpennessStatus()[2] = true;
+            player1Account.getMatchList().get(account1MatchListSize - 1).setWinner(player1Account.getUsername());
+            player1Account.addMoney(prize);
+            player2Account.getMatchList().get(account2MatchListSize - 1).setWinner(player1Account.getUsername());
+            isBattleFinished = true;
+            return OutputMessageType.WINNER_PLAYER1;
+        }
+        if (winner.equals(player2)) {
+            player1Account.getMatchList().get(account1MatchListSize - 1).setWinner(player2Account.getUsername());
+            player2Account.getMatchList().get(account2MatchListSize - 1).setWinner(player2Account.getUsername());
+            player2Account.addMoney(prize);
+            isBattleFinished = true;
+            return OutputMessageType.WINNER_PLAYER2;
+        }
+        return OutputMessageType.INVALID_PLAYER;
+    }
+
+        /*Account player1Account = NetworkDB.getInstance().getAccountWithUserName(player1.getPlayerInfo().getPlayerName());
+        Account player2Account = NetworkDB.getInstance().getAccountWithUserName(player2.getPlayerInfo().getPlayerName());
+        int sizeMatchList1 = player1Account.getMatchList().size();
+        int sizeMatchList2 = player2Account.getMatchList().size();
+        if (winner == player1) {
+            if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer1")) {
+                player1Account.getLevelsOpennessStatus()[1] = true;
+            } else if (singleOrMulti.equals(Constants.SINGLE) && player2.getPlayerInfo().getPlayerName().equals("computer2")) {
+                player1Account.getLevelsOpennessStatus()[2] = true;
+            }
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player1Account.getUsername());
+            player1Account.addMoney(prize);
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player1Account.getUsername());
+            isBattleFinished = true;
+            return OutputMessageType.WINNER_PLAYER1;
+        } else if (winner == player2) {
+            player1Account.getMatchList().get(sizeMatchList1 - 1).setWinner(player2Account.getUsername());
+            player2Account.getMatchList().get(sizeMatchList2 - 1).setWinner(player2Account.getUsername());
+            player2Account.addMoney(prize);
+            isBattleFinished = true;
+            return OutputMessageType.WINNER_PLAYER2;
+        }
+        return OutputMessageType.INVALID_PLAYER;
+    }*/
 
 //    public Collectable getCollectable() {
 //        return collectable;

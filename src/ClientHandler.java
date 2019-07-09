@@ -371,6 +371,7 @@ public class ClientHandler extends Thread {
     }
 
     private void caseUseCollectable(Request request) {
+
         //todo
     }
 
