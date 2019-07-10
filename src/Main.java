@@ -1,6 +1,7 @@
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -172,6 +173,23 @@ Main extends Application {
         root.setOnMouseDragged(event -> {
             primaryStage.setX(event.getScreenX() + xOffset);
             primaryStage.setY(event.getScreenY() + yOffset);
+        });
+    }
+
+    public static void openMainMenu() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Main.getGlobalMediaPlayer().play();
+                    Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
+                    Main.window.setScene(new Scene(root));
+                    Main.dragAbilityForScenes(Main.window, root);
+                    Main.setCursor(Main.window);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 

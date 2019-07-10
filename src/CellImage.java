@@ -22,8 +22,7 @@ public class CellImage {
                 , ControllerBattleCommands.getOurInstance().getCellLayoutY(row));
         setLabelStyle();
         cellLabel.setOnMouseClicked(event -> {
-            if (!clientDB.getLoggedInPlayer()
-                    .equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+            if (!ControllerBattleCommands.getOurInstance().canPlayerTouchScreen())
                 return;
             ControllerBattleCommands.getOurInstance().handleCellClicked
                     (row, column, ClientDB.getInstance().getCurrentBattle());

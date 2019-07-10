@@ -6,12 +6,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EndGameVictory implements Initializable {
+    private static EndGameVictory instance;
+
+    public EndGameVictory() {
+        instance = this;
+    }
+
     @FXML
     private ImageView backBtn;
 
@@ -22,8 +29,7 @@ public class EndGameVictory implements Initializable {
     void goBack(MouseEvent event) throws IOException {
         Main.playWhenButtonClicked();
         new ServerRequestSender(new Request(RequestType.gameFinished, null, null, null));
-        Parent root = FXMLLoader.load(getClass().getResource("EndGameVictory.fxml"));
-        Main.window.setScene(new Scene(root));
+        Main.openMainMenu();
     }
 
     @FXML
@@ -39,6 +45,15 @@ public class EndGameVictory implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ControllerBattleCommands.getOurInstance().getBackgroundMusic().stop();
+        Main.playMedia("src/music/victorySound.mp3", Duration.INDEFINITE, 1, false, 100);
+    }
 
+    public void setPrizeLabel(int prize) {
+        prizeLabel.setText(prize + "");
+    }
+
+    public static EndGameVictory getInstance() {
+        return instance;
     }
 }

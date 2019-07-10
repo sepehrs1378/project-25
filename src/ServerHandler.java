@@ -139,9 +139,10 @@ public class ServerHandler extends Thread {
             public void run() {
                 Parent root = null;
                 try {
-                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer1()))
+                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer1())) {
                         root = FXMLLoader.load(getClass().getResource("EndGameVictory.fxml"));
-                    else
+                        EndGameVictory.getInstance().setPrizeLabel(battle.getPrize());
+                    } else
                         root = FXMLLoader.load(getClass().getResource("EndGameDefeat.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -162,9 +163,10 @@ public class ServerHandler extends Thread {
             public void run() {
                 Parent root = null;
                 try {
-                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer2()))
+                    if (clientDB.getLoggedInPlayer().equals(battle.getPlayer2())) {
                         root = FXMLLoader.load(getClass().getResource("EndGameVictory.fxml"));
-                    else root = FXMLLoader.load(getClass().getResource("EndGameDefeat.fxml"));
+                        EndGameVictory.getInstance().setPrizeLabel(battle.getPrize());
+                    } else root = FXMLLoader.load(getClass().getResource("EndGameDefeat.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -271,7 +273,7 @@ public class ServerHandler extends Thread {
         if (response.getMessage().equals(OutputMessageType.CREATED_ACCOUNT_SUCCESSFULLY.getMessage())) {
             Account account = (Account) response.getObjectList().get(0);
             ClientDB.getInstance().setLoggedInAccount(account);
-            openMainMenu();
+            Main.openMainMenu();
         } else if (response.getMessage().equals(OutputMessageType.USERNAME_ALREADY_EXISTS.getMessage())) {
             Label label = findInvalidUserName(Main.window, "loginPane", "invalidUsername");
             if (label != null) {
@@ -322,7 +324,7 @@ public class ServerHandler extends Thread {
         if (response.getMessage().equals(OutputMessageType.LOGGED_IN_SUCCESSFULLY.getMessage())) {
             Account account = (Account) response.getObjectList().get(0);
             ClientDB.getInstance().setLoggedInAccount(account);
-            openMainMenu();
+            Main.openMainMenu();
         } else if (response.getMessage().equals(OutputMessageType.INVALID_PASSWORD.getMessage())) {
             Label label = findInvalidUserName(Main.window, "loginPane", "invalidPassword");
             if (label != null) {
@@ -407,22 +409,6 @@ public class ServerHandler extends Thread {
         return (VBox) scrollPane.getContent();
     }
 
-    private void openMainMenu() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource("ControllerMainMenu.fxml"));
-                    Main.window.setScene(new Scene(root));
-                    Main.dragAbilityForScenes(Main.window, root);
-                    Main.setCursor(Main.window);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     private Label findInvalidUserName(Stage stage, String paneID, String labelID) {
         AnchorPane anchorPane = null;
         for (Object object : stage.getScene().getRoot().getChildrenUnmodifiable()) {
@@ -465,13 +451,10 @@ public class ServerHandler extends Thread {
 
     private void caseUnitSelected(Response response) {
         UnitImage selectedUnit = ControllerBattleCommands.getOurInstance().getUnitImageWithId(response.getMessage());
-        System.out.println(response.getMessage());
         clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println(selectedUnit);
-                System.out.println(selectedUnit.getUnitView());
                 ControllerBattleCommands.getOurInstance().setClickedImageView(selectedUnit.getUnitView());
                 ControllerBattleCommands.getOurInstance().updatePane();
             }
@@ -502,6 +485,7 @@ public class ServerHandler extends Thread {
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
                     ControllerMainMenu.multiPlayerStage.close();
+                    ControllerMultiPlayerMenu.getInstance().getBackgroundMusic().stop();
                     Main.window.setScene(new Scene(root));
                     Main.setCursor(Main.window);
                 } catch (IOException e) {

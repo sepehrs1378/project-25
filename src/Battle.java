@@ -178,10 +178,10 @@ public class Battle {
     }
 
     private Player checkEndBattleModeClassic() {
-        if (battleGround.getHeroOfPlayer(player1).getHp() <= 0) {
+        if (battleGround.getHeroOfPlayer(player1) == null) {
             isBattleFinished = true;
             return player2;
-        } else if (battleGround.getHeroOfPlayer(player2).getHp() <= 0) {
+        } else if (battleGround.getHeroOfPlayer(player2) == null) {
             isBattleFinished = true;
             return player1;
         }

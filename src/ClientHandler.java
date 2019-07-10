@@ -445,8 +445,6 @@ public class ClientHandler extends Thread {
     private void caseEndTurn(Request request) {
         Battle battle = connection.getCurrentBattle();
         Response response;
-        Account account1 = connection.getAccount();
-        Account account2 = networkDB.getOpponentConnection(connection).getAccount();
         List<Object> objects = new ArrayList<>();
         objects.add(battle);
         switch (battle.nextTurn()) {

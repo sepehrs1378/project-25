@@ -53,7 +53,7 @@ public class UnitImage {
         unitStatus = UnitStatus.stand;
         loadUnitImage();
         unitView.setOnMouseClicked(event -> {
-            if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+            if (!ControllerBattleCommands.getOurInstance().canPlayerTouchScreen())
                 return;
             ControllerBattleCommands.getOurInstance().handleUnitClicked(id);
         });
@@ -113,6 +113,7 @@ public class UnitImage {
     }
 
     public void showRun(int destinationRow, int destinationColumn) {
+        ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/music/step.mp3"
                 , Duration.millis(runDuration.doubleValue())
                 , Integer.MAX_VALUE, false, 80);
@@ -148,6 +149,7 @@ public class UnitImage {
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(path);
+                    ControllerBattleCommands.getOurInstance().setScreenLocked(false);
                     this.stop();
                 } else resetStatsPositions();
             }
@@ -156,7 +158,8 @@ public class UnitImage {
     }
 
     public void showAttack(int targetColumn) {
-        Main.playMedia("src/ApProjectResources/" + getUnitName() + "/attack.m4a"
+        ControllerBattleCommands.getOurInstance().setScreenLocked(true);
+        Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/attack.m4a"
                 , Duration.INDEFINITE, 1, false, 100);
 
         setUnitStatus(UnitStatus.attack);
@@ -171,6 +174,7 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
+                    ControllerBattleCommands.getOurInstance().setScreenLocked(false);
                     this.stop();
                 }
             }
@@ -179,6 +183,7 @@ public class UnitImage {
     }
 
     public void showSpawn() {
+        ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/music/unitSpawn.mp3"
                 , Duration.millis(spawnDuration.doubleValue()), Integer.MAX_VALUE, false, 100);
 
@@ -194,6 +199,7 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > duration) {
                     root.getChildren().remove(effectView);
+                    ControllerBattleCommands.getOurInstance().setScreenLocked(false);
                     this.stop();
                 } else {
                     unitView.setStyle("-fx-opacity: " + (now - lastTime - 0.0) / duration);
@@ -205,7 +211,8 @@ public class UnitImage {
     }
 
     public void showDeath() {
-        Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "death.m4a"
+        ControllerBattleCommands.getOurInstance().setScreenLocked(true);
+        Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/death.m4a"
                 , Duration.INDEFINITE, 1, false, 100);
 
         setUnitStatus(UnitStatus.death);
@@ -222,6 +229,7 @@ public class UnitImage {
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
                     root.getChildren().remove(effectView);
+                    ControllerBattleCommands.getOurInstance().setScreenLocked(false);
                     removeFromRoot();
                     this.stop();
                 } else {
@@ -233,6 +241,7 @@ public class UnitImage {
     }
 
     public void showSpell() {
+        ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         setUnitStatus(UnitStatus.spell);
         //todo show spell effects
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -245,6 +254,7 @@ public class UnitImage {
                     lastTime = now;
                 if (now - lastTime > duration) {
                     setUnitStatus(UnitStatus.stand);
+                    ControllerBattleCommands.getOurInstance().setScreenLocked(false);
                     this.stop();
                 }
             }

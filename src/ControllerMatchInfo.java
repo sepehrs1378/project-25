@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class ControllerMatchInfo implements Initializable {
     private static ControllerMatchInfo ourInstance = new ControllerMatchInfo();
-    private DataBase dataBase = DataBase.getInstance();
+    private static ClientDB clientDB = ClientDB.getInstance();
     public static Stage matchHistoryStage = null;
 
     @FXML
@@ -52,7 +52,7 @@ public class ControllerMatchInfo implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<MatchInfo> matchList = dataBase.getLoggedInAccount().getMatchList();
+        List<MatchInfo> matchList = clientDB.getLoggedInAccount().getMatchList();
         for (int i = matchList.size() - 1; i >= 0; i--) {
             MatchInfo matchInfo = matchList.get(i);
             String opponent = matchInfo.getOpponent();

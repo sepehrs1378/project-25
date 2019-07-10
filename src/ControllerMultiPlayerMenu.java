@@ -1,12 +1,19 @@
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class ControllerMultiPlayerMenu {
+public class ControllerMultiPlayerMenu implements Initializable {
     private static ControllerMultiPlayerMenu ourInstance;
     private ClientDB clientDB = ClientDB.getInstance();
     private boolean isScreenLocked = false;
+    private MediaPlayer backgroundMusic;
 
     public static ControllerMultiPlayerMenu getInstance() {
         return ourInstance;
@@ -127,10 +134,18 @@ public class ControllerMultiPlayerMenu {
 
     @FXML
     public void exitMultiPlayerMenu() {
+        backgroundMusic.stop();
+        Main.getGlobalMediaPlayer().play();
         if (isScreenLocked)
             return;
         ControllerMainMenu.multiPlayerStage.close();
-        //todo
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Main.getGlobalMediaPlayer().stop();
+        backgroundMusic = Main.playMedia("src/music/multiPlayerMenu.mp3"
+                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 100);
     }
 
     private void lockScreen() {
@@ -147,5 +162,9 @@ public class ControllerMultiPlayerMenu {
 
     public static ControllerMultiPlayerMenu getOurInstance() {
         return ourInstance;
+    }
+
+    public MediaPlayer getBackgroundMusic() {
+        return backgroundMusic;
     }
 }

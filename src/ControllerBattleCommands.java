@@ -2,6 +2,7 @@
 //import com.teamdev.jxcapture.EncodingParameters;
 //import com.teamdev.jxcapture.VideoCapture;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -18,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,6 +47,8 @@ public class ControllerBattleCommands implements Initializable {
     private NextCardImage nextCardImage;
     private ImageView clickedImageView = new ImageView();
     private Timeline timeline = new Timeline();
+    private MediaPlayer backgroundMusic;
+    private boolean isScreenLocked = false;
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -171,7 +175,7 @@ public class ControllerBattleCommands implements Initializable {
 
     @FXML
     void endTurn(MouseEvent event) {
-        if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+        if (!canPlayerTouchScreen())
             return;
         endTurnWhenClicked();
     }
@@ -203,9 +207,7 @@ public class ControllerBattleCommands implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
-        Main.getGlobalMediaPlayer().stop();
-        Main.playMedia("src/music/battle.m4a"
-                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 70);
+        setupMusic();
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -215,6 +217,26 @@ public class ControllerBattleCommands implements Initializable {
         setupItemView();
         setupNextCardImage();
         updatePane();
+    }
+
+    private void setupMusic() {
+        Main.getGlobalMediaPlayer().stop();
+        Main.playMedia("src/music/horn.mp3", Duration.INDEFINITE, 1, false, 100);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastTime = 0;
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now - lastTime > 11000000000L) {
+                    backgroundMusic = Main.playMedia("src/music/battle.m4a"
+                            , Duration.INDEFINITE, Integer.MAX_VALUE, true, 70);
+                    this.stop();
+                }
+            }
+        };
+        animationTimer.start();
     }
 
     private void setupNextCardImage() {
@@ -272,7 +294,7 @@ public class ControllerBattleCommands implements Initializable {
             e.printStackTrace();
         }
         specialPowerView.setOnMouseClicked(event -> {
-            if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+            if (!canPlayerTouchScreen())
                 return;
             if (clickedImageView != null && clickedImageView == specialPowerView) {
                 clickedImageView = null;
@@ -926,7 +948,27 @@ public class ControllerBattleCommands implements Initializable {
         return endTurnEnemyBtn;
     }
 
-//    public void recordVideo() {
+    public boolean isScreenLocked() {
+        return isScreenLocked;
+    }
+
+    public void setScreenLocked(boolean screenLocked) {
+        isScreenLocked = screenLocked;
+    }
+
+    public boolean canPlayerTouchScreen() {
+        if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
+            return false;
+        if (isScreenLocked)
+            return false;
+        return true;
+    }
+
+    public MediaPlayer getBackgroundMusic() {
+        return backgroundMusic;
+    }
+
+    //    public void recordVideo() {
 //        final VideoCapture videoCapture = VideoCapture.create();
 //        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
 //
