@@ -272,7 +272,9 @@ public class ControllerBattleCommands implements Initializable {
                 }
             }
         }
-        setTimeBar();
+        if(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())){
+            setTimeBar();
+        }
         updatePane();
     }
 
