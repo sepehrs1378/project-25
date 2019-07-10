@@ -434,6 +434,7 @@ public class ClientHandler extends Thread {
                 List<Object> objects = new ArrayList<>();
                 objects.add(row);
                 objects.add(column);
+                objects.add(card);
                 objects.add(battle);
                 Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
                 networkDB.sendResponseToPlayerAndOpponent(response, connection);

@@ -205,7 +205,7 @@ public class ControllerBattleCommands implements Initializable {
         setTimeBar();
         Main.getGlobalMediaPlayer().stop();
         Main.playMedia("src/music/battle.m4a"
-                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 100);
+                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 70);
         setupPlayersInfoViews();
         setupBattleGroundCells();
         setupHandRings();
@@ -249,7 +249,8 @@ public class ControllerBattleCommands implements Initializable {
         Usable usable = (Usable) clientDB.getLoggedInAccount().getMainDeck().getItem();
         try {
             if (usable != null) {
-                usableView.setImage(new Image(new FileInputStream("/src/ApProjectResources/units/" + usable.getName() + "/usable")));
+                usableView.setImage(new Image
+                        (new FileInputStream("/src/ApProjectResources/items/" + usable.getName() + "/icon")));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -491,47 +492,36 @@ public class ControllerBattleCommands implements Initializable {
                 //empty
                 break;
             case CARD_INSERTED:
-                showCardInsertion(row, column, card.getId());
+                showCardInsertion(row, column, card);
                 return true;
             default:
         }
         return false;
     }
 
-    public void showCardInsertion(int row, int column, String id) {
-        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
-        if (card == null) {
-            if (clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName().equals(
-                    clientDB.getLoggedInAccount().getUsername()
-            )) {
-                card = clientDB.getCurrentBattle().getPlayer2().getHand().getCardById(id);
-            } else {
-                card = clientDB.getCurrentBattle().getPlayer1().getHand().getCardById(id);
-            }
-        }
-        HandImage handImage = getHandImageWithId(id);
+    public void showCardInsertion(int row, int column, Card card) {
         if (card instanceof Unit)
-            insertUnitView(row, column, card);
+            insertUnitView(row, column, card.getId());
         if (card instanceof Spell)
-            insertSpellView(row, column, card);
-        if (handImage != null) {
+            insertSpellView(row, column, card.getId());
+        HandImage handImage = getHandImageWithId(card.getId());
+        if (handImage != null)
             handImage.clearHandImage();
-        }
     }
 
     public List<SpellImage> getSpellImageList() {
         return spellImageList;
     }
 
-    private void insertSpellView(int row, int column, Card card) {
+    private void insertSpellView(int row, int column, String id) {
         SpellImage insertedSpellImage = new SpellImage
-                (card.getId(), row, column, battleGroundPane, SpellType.spell);
+                (id, row, column, battleGroundPane, SpellType.spell);
         spellImageList.add(insertedSpellImage);
         clickedImageView = null;
     }
 
-    public void insertUnitView(int row, int column, Card card) {
-        UnitImage insertedUnitImage = new UnitImage(card.getId(), battleGroundPane);
+    public void insertUnitView(int row, int column, String id) {
+        UnitImage insertedUnitImage = new UnitImage(id, battleGroundPane);
         unitImageList.add(insertedUnitImage);
         insertedUnitImage.setInCell(row, column);
         insertedUnitImage.showSpawn();
@@ -694,8 +684,6 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updateEndTurnButton() {
-        System.out.println(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
-        System.out.println("** " + clientDB.getLoggedInPlayer().getPlayerInfo().getPlayerName());
         if (clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn())) {
             endTurnMineBtn.setVisible(true);
             endTurnEnemyBtn.setVisible(false);

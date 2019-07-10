@@ -34,7 +34,7 @@ public class AI {
                         battle.insert(card, coordination[0], coordination[1], battle);
                         battle.getPlayer2().moveNextCardToHand();
                         battle.getPlayer2().setNextCard();
-                        ControllerBattleCommands.getOurInstance().insertUnitView(coordination[0], coordination[1], card);
+                        ControllerBattleCommands.getOurInstance().insertUnitView(coordination[0], coordination[1], card.getId());
                         return;
                     }
                 }

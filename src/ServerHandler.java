@@ -213,13 +213,14 @@ public class ServerHandler extends Thread {
         String id = response.getMessage();
         Integer row = (Integer) response.getObjectList().get(0);
         Integer column = (Integer) response.getObjectList().get(1);
-        Battle battle = (Battle) response.getObjectList().get(2);
+        Card card = (Card) response.getObjectList().get(2);
+        Battle battle = (Battle) response.getObjectList().get(3);
         clientDB.setCurrentBattle(battle);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                controllerBattleCommands.showCardInsertion(row, column, id);
-                ControllerBattleCommands.getOurInstance().updatePane();
+                controllerBattleCommands.showCardInsertion(row, column, card);
+                controllerBattleCommands.updatePane();
             }
         });
     }
