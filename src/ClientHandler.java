@@ -469,7 +469,7 @@ public class ClientHandler extends Thread {
     }
 
     private void caseForfeit(Request request) {
-        //todo maybe isn't gonna be implemented
+        //todo maybe it isn't gonna be implemented
     }
 
     private void caseAttackUnit(Request request) {

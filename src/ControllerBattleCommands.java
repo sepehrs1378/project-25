@@ -53,6 +53,8 @@ public class ControllerBattleCommands implements Initializable {
     private Timeline timeline = new Timeline();
     private MediaPlayer backgroundMusic;
     private boolean isScreenLocked = false;
+    private double xOffset = 0;
+    private double yOffset = 0;
     //todo next card has bug
 
     public void setClickedImageView(ImageView clickedImageView) {
@@ -61,6 +63,14 @@ public class ControllerBattleCommands implements Initializable {
 
     public ImageView getClickedImageView() {
         return clickedImageView;
+    }
+
+    public double getxOffset() {
+        return xOffset;
+    }
+
+    public double getyOffset() {
+        return yOffset;
     }
 
     @FXML
@@ -271,8 +281,6 @@ public class ControllerBattleCommands implements Initializable {
                     return;
                 }
             }
-        }
-        if(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())){
             setTimeBar();
         }
         updatePane();
@@ -795,6 +803,9 @@ public class ControllerBattleCommands implements Initializable {
         updatePlayersInfo();
         updateHand();
         updateEndTurnButton();
+        if(clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI) && clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())){
+            setTimeBar();
+        }
     }
 
     private void updateEndTurnButton() {
