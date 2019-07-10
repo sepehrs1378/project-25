@@ -128,6 +128,12 @@ public class ClientHandler extends Thread {
                 case gameFinished:
                     caseGameFinished(request);
                     break;
+                case enterSellAuction:
+                    caseEnterSellAuction(request);
+                    break;
+                case enterBuyAuction:
+                    caseEnterBuyAuction(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -139,6 +145,22 @@ public class ClientHandler extends Thread {
             if (request.getRequestType().equals(RequestType.close))
                 break;
         }
+    }
+
+    private void caseEnterBuyAuction(Request request) {
+        List<Object> objectList =new ArrayList<>(networkDB.getAuctionList());
+        networkDB.sendResponseToClient(new Response(ResponseType.enterBuyAuction,null,null,objectList),connection);
+    }
+
+    private void caseEnterSellAuction(Request request) {
+        Card card = ((Card)request.getObjectList().get(0));
+        String userName = request.getMessage();
+        Account account=NetworkDB.getInstance().getAccountWithUserName(userName);
+        card =account.getPlayerInfo().getCollection().getCardWithID(card.getId());
+        Auction auction = new Auction(account,card);
+        NetworkDB.getInstance().getAuctionList().add(auction);
+        connection.setCurrentAuction(auction);
+        //todo update auctionList in clients
     }
 
     private void caseGameFinished(Request request){

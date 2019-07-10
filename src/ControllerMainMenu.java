@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -31,6 +32,9 @@ public class ControllerMainMenu {
     public ControllerMainMenu() {
         ourInstance = this;
     }
+
+    @FXML
+    private ImageView auctionsBtn;
 
     @FXML
     private ImageView multiPlayerBtn;
@@ -316,5 +320,22 @@ public class ControllerMainMenu {
     @FXML
     void makeGlobalChatBtnTransparent(MouseEvent event) {
         enterGlobalChatBtn.setOpacity(.6);
+    }
+
+    @FXML
+    void enterAuctions(MouseEvent event) {
+        Main.playWhenButtonClicked();
+        new ServerRequestSender(new Request(RequestType.enterBuyAuction,null,null,null)).start();
+    }
+
+    @FXML
+    void makeAuctionBtnOpaque(MouseEvent event) {
+        Main.playWhenMouseEntered();
+        auctionsBtn.setOpacity(1);
+    }
+
+    @FXML
+    void makeAuctionBtnTransparent(MouseEvent event) {
+        auctionsBtn.setOpacity(.6);
     }
 }

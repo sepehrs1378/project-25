@@ -14,6 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -104,12 +105,35 @@ public class ServerHandler extends Thread {
                     case customCardAdded:
                         caseCustomCardAdded(response);
                         break;
+                    case enterBuyAuction:
+                        caseEnterBuyAuction(response);
+                        break;
                 }
 //                logResponse(response);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseEnterBuyAuction(Response response) {
+        List<String> strings = new ArrayList<>();
+        for (Object object:response.getObjectList()){
+            Auction auction = (Auction)object;
+            strings.add(auction.getSeller().getUsername()+"    "+
+                        auction.getCard().getId()+"    "+ auction.getHighestBid());
+        }
+        Platform.runLater(()->{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("ControllerAuctionBuy.fxml"));
+            AnchorPane root = fxmlLoader.getRoot();
+            ControllerAuctionBuy controllerAuctionBuy = fxmlLoader.getController();
+            controllerAuctionBuy.upadateAuctionList(strings);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        });
     }
 
     private void caseCustomCardAdded(Response response) {

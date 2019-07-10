@@ -6,5 +6,7 @@ public enum AccountStatus {
     chatting,
     leaderBoard,
     shop,
-    collection
+    collection,
+    auctionBuy,
+    auctionSell
 }

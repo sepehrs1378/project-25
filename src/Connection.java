@@ -9,6 +9,7 @@ public class Connection {
     private Socket socket;
     private Account account;
     private Battle currentBattle;
+    private Auction currentAuction;
     private InputStreamReader input;
     private OutputStreamWriter output;
     private JsonStreamParser parser;
@@ -64,5 +65,13 @@ public class Connection {
 
     public Battle getCurrentBattle() {
         return currentBattle;
+    }
+
+    public Auction getCurrentAuction() {
+        return currentAuction;
+    }
+
+    public void setCurrentAuction(Auction currentAuction) {
+        this.currentAuction = currentAuction;
     }
 }

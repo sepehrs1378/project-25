@@ -19,5 +19,7 @@ public enum ResponseType {
     shop,
     buy,
     sell,
-    customCardAdded
+    customCardAdded,
+
+    enterBuyAuction
 }

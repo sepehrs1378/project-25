@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="476.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerAuctionSell">
+   <children>
+      <ImageView fitHeight="488.0" fitWidth="648.0" layoutY="-1.0">
+         <image>
+            <Image url="@pics/auction_menu/background.jpg" />
+         </image>
+      </ImageView>
+      <ListView fx:id="biddersList" layoutX="94.0" layoutY="199.0" prefHeight="200.0" prefWidth="461.0" />
+      <Label fx:id="timeLbl" layoutX="132.0" layoutY="143.0" text="Time" textFill="#f0a302">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
+      <Label fx:id="prizeLbl" layoutX="423.0" layoutY="143.0" text="Prize" textFill="#cdc30d">
+         <font>
+            <Font name="System Bold Italic" size="34.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

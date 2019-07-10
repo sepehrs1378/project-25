@@ -29,6 +29,13 @@ public enum RequestType {
     removeCardFromDeck,
     sellCard,
 
+    enterSellAuction,
+    exitSellAuction,
+    enterBuyAuction,
+    exitBuyAuction,
+    sellAuction,
+    buyAuction,
+
 
     sendMessage,
     enterGlobalChat,

@@ -18,6 +18,7 @@ public class NetworkDB {
     private List<Usable> usableList = new ArrayList<>();
     private List<Collectable> collectableList = new ArrayList<>();
     private List<Card> cardList = new ArrayList<>();
+    private List<Auction> auctionList = new ArrayList<>();
 
     public List<Account> getAccountsWaitingForClassic() {
         return accountsWaitingForClassic;
@@ -636,5 +637,9 @@ public class NetworkDB {
         if (account.getUsername().equals(battle.getPlayer2().getPlayerInfo().getPlayerName()))
             return battle.getPlayer2();
         return null;
+    }
+
+    public List<Auction> getAuctionList() {
+        return auctionList;
     }
 }
