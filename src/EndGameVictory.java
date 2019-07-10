@@ -46,7 +46,8 @@ public class EndGameVictory implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ControllerBattleCommands.getOurInstance().getBackgroundMusic().stop();
-        Main.playMedia("src/music/victorySound.mp3", Duration.INDEFINITE, 1, false, 100);
+        Main.playMedia("src/music/victorySound.mp3"
+                , Duration.INDEFINITE, 1, false, 1);
     }
 
     public void setPrizeLabel(int prize) {

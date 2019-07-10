@@ -12,11 +12,9 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 public class ControllerMainMenu {
     private static ControllerMainMenu ourInstance;
-    private DataBase dataBase = DataBase.getInstance();
     private ControllerMatchInfo controllerMatchInfo = ControllerMatchInfo.getInstance();
     private boolean changeOpacity = true;
     private boolean shouldClose = false;
@@ -171,9 +169,6 @@ public class ControllerMainMenu {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root));
         Main.setCursor(stage);
-//        File file = new File("src/pics/cursor.png");
-//        Image image = new Image(file.toURI().toString());
-//        stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 
@@ -187,9 +182,6 @@ public class ControllerMainMenu {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
         Main.setCursor(stage);
-//        File file = new File("src/pics/cursor.png");
-//        Image image = new Image(file.toURI().toString());
-//        stage.getScene().setCursor(new ImageCursor(image));
         stage.showAndWait();
     }
 

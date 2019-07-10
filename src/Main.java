@@ -100,7 +100,6 @@ Main extends Application {
 
     public static void main(String[] args) {
         String address = "localhost";
-//        DataBase.getInstance().makeEveryThing();
         ClientDB.getInstance();
         ServerHandler serverHandler = new ServerHandler(address, 5555);
         serverHandler.start();
@@ -155,7 +154,7 @@ Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         setCursor(primaryStage);
         globalMediaPlayer = playMedia("src/music/mainMenu.mp3", Duration.INDEFINITE
-                , Integer.MAX_VALUE, true, 100);
+                , Integer.MAX_VALUE, true, 1);
         dragAbilityForScenes(primaryStage, root);
         primaryStage.setOnCloseRequest(e -> {
             new ServerRequestSender(new Request(RequestType.logout, "userName:" + ClientDB.getInstance().getLoggedInAccount().getUsername()

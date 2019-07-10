@@ -37,6 +37,7 @@ public class EndGameDefeat implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ControllerBattleCommands.getOurInstance().getBackgroundMusic().stop();
-        Main.playMedia("src/music/defeatSound.mp3", Duration.INDEFINITE, 1, false, 100);
+        Main.playMedia("src/music/defeatSound.mp3"
+                , Duration.INDEFINITE, 1, false, 1);
     }
 }

@@ -116,7 +116,7 @@ public class UnitImage {
         ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/music/step.mp3"
                 , Duration.millis(runDuration.doubleValue())
-                , Integer.MAX_VALUE, false, 80);
+                , Integer.MAX_VALUE, false, 1);
 
         setUnitStatus(UnitStatus.run);
         double startX = unitView.getTranslateX() + unitView.getFitWidth() / 2;
@@ -160,7 +160,7 @@ public class UnitImage {
     public void showAttack(int targetColumn) {
         ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/attack.m4a"
-                , Duration.INDEFINITE, 1, false, 100);
+                , Duration.INDEFINITE, 1, false, 1);
 
         setUnitStatus(UnitStatus.attack);
         changeFacing(this.column, targetColumn);
@@ -185,7 +185,8 @@ public class UnitImage {
     public void showSpawn() {
         ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/music/unitSpawn.mp3"
-                , Duration.millis(spawnDuration.doubleValue()), Integer.MAX_VALUE, false, 100);
+                , Duration.millis(spawnDuration.doubleValue())
+                , Integer.MAX_VALUE, false, 1);
 
         ImageView effectView = addEffectToUnit(UnitEffectType.spawnEffect);
 
@@ -213,7 +214,7 @@ public class UnitImage {
     public void showDeath() {
         ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/death.m4a"
-                , Duration.INDEFINITE, 1, false, 100);
+                , Duration.INDEFINITE, 1, false, 1);
 
         setUnitStatus(UnitStatus.death);
         ImageView effectView = addEffectToUnit(UnitEffectType.bloodDrop);
@@ -242,7 +243,7 @@ public class UnitImage {
 
     public void showSelect() {
         Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/selection.mp3"
-                , Duration.INDEFINITE, 1, false, 100);
+                , Duration.INDEFINITE, 1, false, 1);
     }
 
     public void showSpell() {

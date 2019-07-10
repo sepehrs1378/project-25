@@ -145,7 +145,7 @@ public class ControllerMultiPlayerMenu implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Main.getGlobalMediaPlayer().stop();
         backgroundMusic = Main.playMedia("src/music/multiPlayerMenu.mp3"
-                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 100);
+                , Duration.INDEFINITE, Integer.MAX_VALUE, true, 1);
     }
 
     private void lockScreen() {

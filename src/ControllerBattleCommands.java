@@ -254,7 +254,7 @@ public class ControllerBattleCommands implements Initializable {
 
     private void endTurnWhenClicked() {
         Main.playMedia("src/music/end_turn.m4a"
-                , Duration.INDEFINITE, 1, false, 100);
+                , Duration.INDEFINITE, 1, false, 1);
         clickedImageView = null;
         if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI)) {
             new ServerRequestSender(new Request
@@ -293,7 +293,8 @@ public class ControllerBattleCommands implements Initializable {
 
     private void setupMusic() {
         Main.getGlobalMediaPlayer().stop();
-        Main.playMedia("src/music/horn.mp3", Duration.INDEFINITE, 1, false, 100);
+        Main.playMedia("src/music/horn.mp3", Duration.INDEFINITE
+                , 1, false, 1);
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastTime = 0;
 
@@ -303,7 +304,7 @@ public class ControllerBattleCommands implements Initializable {
                     lastTime = now;
                 if (now - lastTime > 11000000000L) {
                     backgroundMusic = Main.playMedia("src/music/battle.m4a"
-                            , Duration.INDEFINITE, Integer.MAX_VALUE, true, 25);
+                            , Duration.INDEFINITE, Integer.MAX_VALUE, true, .5);
                     this.stop();
                 }
             }
@@ -339,8 +340,8 @@ public class ControllerBattleCommands implements Initializable {
         makeManaCells(player2ManaCells, p2mana1, p2mana2, p2mana3, p2mana4, p2mana5, p2mana6, p2mana7, p2mana8, p2mana9);
         Unit player1Hero = clientDB.getCurrentBattle().getPlayer1().getDeck().getHero();
         Unit player2Hero = clientDB.getCurrentBattle().getPlayer2().getDeck().getHero();
-        player1InfoImage = new PlayerInfoImage(1, player1Hero.getId(), battleGroundPane);
-        player2InfoImage = new PlayerInfoImage(2, player2Hero.getId(), battleGroundPane);
+        player1InfoImage = new PlayerInfoImage(1, player1Hero.getId());
+        player2InfoImage = new PlayerInfoImage(2, player2Hero.getId());
     }
 
     private void makeManaCells(List<ImageView> playerManaCells, ImageView mana1, ImageView mana2, ImageView mana3, ImageView mana4, ImageView mana5, ImageView mana6, ImageView mana7, ImageView mana8, ImageView mana9) {

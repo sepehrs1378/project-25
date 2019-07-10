@@ -9,17 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerInfoImage {
-    private AnchorPane root;
     private String heroId;
     private Label playerName;
     private List<ImageView> manaCells = new ArrayList<>();
     private ImageView heroFace = new ImageView();
-    private int playerNumber = 1;
 
-    public PlayerInfoImage(int playerNumber, String heroId, AnchorPane root) {
-        this.root = root;
+    public PlayerInfoImage(int playerNumber, String heroId) {
         this.heroId = heroId;
-        this.playerNumber = playerNumber;
         ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
         if (playerNumber == 1) {
             playerName = controllerBattleCommands.getPlayer1Label();
@@ -31,6 +27,7 @@ public class PlayerInfoImage {
             heroFace = controllerBattleCommands.getP2HeroFace();
             manaCells = controllerBattleCommands.getPlayer2ManaCells();
         }
+        playerName.setText(getPlayerName());
         setHeroFace();
     }
 
@@ -61,5 +58,9 @@ public class PlayerInfoImage {
 
     private String getHeroName() {
         return heroId.split("_")[1];
+    }
+
+    private String getPlayerName() {
+        return heroId.split("_")[0];
     }
 }
