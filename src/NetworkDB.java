@@ -187,18 +187,38 @@ public class NetworkDB {
             accountList.remove(0);
             battle = new Battle(account1, account2, mode
                     , numberOfFlags, null, Constants.MULTI, 2000);
-
+            String duration = returnLesserDuration(account1, account2);
             currentBattlesList.add(battle);
             connection1.setCurrentBattle(battle);
             connection2.setCurrentBattle(battle);
             List<Object> objects = new ArrayList<>();
             objects.add(battle);
             sendResponseToClient(new Response
-                    (ResponseType.matchFound, null, null, objects), connection1);
+                    (ResponseType.matchFound, duration, null, objects), connection1);
             sendResponseToClient(new Response
-                    (ResponseType.matchFound, null, null, objects), connection2);
+                    (ResponseType.matchFound, duration, null, objects), connection2);
         }
         //todo IMPORTANT complete it for other modes too...
+    }
+
+    private String returnLesserDuration(Account account1, Account account2){
+        boolean nullOrNoLimit1 = (account1.getTurnDuration() == null || account1.getTurnDuration().equals(Constants.NO_LIMIT));
+        boolean nullOrNoLimit2 = (account2.getTurnDuration() == null || account2.getTurnDuration().equals(Constants.NO_LIMIT));
+        if (nullOrNoLimit1 && !nullOrNoLimit2){
+            return account2.getTurnDuration();
+        }
+        if (!nullOrNoLimit1 && nullOrNoLimit2){
+            return account1.getTurnDuration();
+        }
+        if (nullOrNoLimit1 && nullOrNoLimit2){
+            return Constants.NO_LIMIT;
+        }
+        int duration1 = Integer.parseInt(account1.getTurnDuration());
+        int duration2 = Integer.parseInt(account2.getTurnDuration());
+        if (duration1 < duration2)
+            return account1.getTurnDuration();
+        else
+            return account2.getTurnDuration();
     }
 
     public Connection getOpponentConnection(Connection connection) {

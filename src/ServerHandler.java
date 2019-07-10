@@ -476,6 +476,7 @@ public class ServerHandler extends Thread {
 
     private void caseMatchFound(Response response) {
         if (response.getResponseType().equals(ResponseType.matchFound)) {
+            clientDB.getLoggedInAccount().setTurnDuration(response.getMessage());
             clientDB.setCurrentBattle((Battle) response.getObjectList().get(0));
             Player player1 = clientDB.getCurrentBattle().getPlayer1();
             if (clientDB.getLoggedInAccount().getUsername().equals(player1.getPlayerInfo().getPlayerName()))
