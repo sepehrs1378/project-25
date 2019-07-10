@@ -88,7 +88,7 @@ public class HandImage {
             relocateCardToHand();
             //todo very important check later
             manaLabel.setText(card.getMana() + "");
-            cardName.setText(card.getId());
+            cardName.setText(getCardName());
         } catch (IOException e) {
             e.printStackTrace();
         }

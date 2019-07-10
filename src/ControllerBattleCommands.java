@@ -38,12 +38,16 @@ public class ControllerBattleCommands implements Initializable {
     private static ClientDB clientDB = ClientDB.getInstance();
     private static ControllerBattleCommands ourInstance;
     private List<ImageView> handRings = new ArrayList<>();
+    private List<ImageView> player1ManaCells = new ArrayList<>();
+    private List<ImageView> player2ManaCells = new ArrayList<>();
     private List<UnitImage> unitImageList = new ArrayList<>();
     private List<HandImage> handImageList = new ArrayList<>();
     private List<SpellImage> spellImageList = new ArrayList<>();
     private List<FlagImage> flagImages = new ArrayList<>();
     private CellImage[][] cellsImages = new CellImage[5][9];
     private CollectableImage collectableImage;
+    private PlayerInfoImage player1InfoImage;
+    private PlayerInfoImage player2InfoImage;
     private NextCardImage nextCardImage;
     private ImageView clickedImageView = new ImageView();
     private Timeline timeline = new Timeline();
@@ -58,6 +62,66 @@ public class ControllerBattleCommands implements Initializable {
     public ImageView getClickedImageView() {
         return clickedImageView;
     }
+
+    @FXML
+    private ImageView p1HeroFace;
+
+    @FXML
+    private ImageView p2HeroFace;
+
+    @FXML
+    private ImageView p1mana1;
+
+    @FXML
+    private ImageView p1mana2;
+
+    @FXML
+    private ImageView p1mana3;
+
+    @FXML
+    private ImageView p1mana4;
+
+    @FXML
+    private ImageView p1mana5;
+
+    @FXML
+    private ImageView p1mana6;
+
+    @FXML
+    private ImageView p1mana7;
+
+    @FXML
+    private ImageView p1mana8;
+
+    @FXML
+    private ImageView p1mana9;
+
+    @FXML
+    private ImageView p2mana1;
+
+    @FXML
+    private ImageView p2mana2;
+
+    @FXML
+    private ImageView p2mana3;
+
+    @FXML
+    private ImageView p2mana4;
+
+    @FXML
+    private ImageView p2mana5;
+
+    @FXML
+    private ImageView p2mana6;
+
+    @FXML
+    private ImageView p2mana7;
+
+    @FXML
+    private ImageView p2mana8;
+
+    @FXML
+    private ImageView p2mana9;
 
     @FXML
     private ImageView endTurnMineBtn;
@@ -180,6 +244,14 @@ public class ControllerBattleCommands implements Initializable {
         endTurnWhenClicked();
     }
 
+    public List<ImageView> getPlayer1ManaCells() {
+        return player1ManaCells;
+    }
+
+    public List<ImageView> getPlayer2ManaCells() {
+        return player2ManaCells;
+    }
+
     private void endTurnWhenClicked() {
         Main.playMedia("src/music/end_turn.m4a"
                 , Duration.INDEFINITE, 1, false, 100);
@@ -208,7 +280,7 @@ public class ControllerBattleCommands implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setTimeBar();
         setupMusic();
-        setupPlayersInfoViews();
+        setupPlayersInfoImages();
         setupBattleGroundCells();
         setupHandRings();
         setupHeroesImages();
@@ -231,7 +303,7 @@ public class ControllerBattleCommands implements Initializable {
                     lastTime = now;
                 if (now - lastTime > 11000000000L) {
                     backgroundMusic = Main.playMedia("src/music/battle.m4a"
-                            , Duration.INDEFINITE, Integer.MAX_VALUE, true, 70);
+                            , Duration.INDEFINITE, Integer.MAX_VALUE, true, 25);
                     this.stop();
                 }
             }
@@ -262,9 +334,25 @@ public class ControllerBattleCommands implements Initializable {
         }
     }
 
-    private void setupPlayersInfoViews() {
-        player1Label.setText(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
-        player2Label.setText(clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName());
+    private void setupPlayersInfoImages() {
+        makeManaCells(player1ManaCells, p1mana1, p1mana2, p1mana3, p1mana4, p1mana5, p1mana6, p1mana7, p1mana8, p1mana9);
+        makeManaCells(player2ManaCells, p2mana1, p2mana2, p2mana3, p2mana4, p2mana5, p2mana6, p2mana7, p2mana8, p2mana9);
+        Unit player1Hero = clientDB.getCurrentBattle().getPlayer1().getDeck().getHero();
+        Unit player2Hero = clientDB.getCurrentBattle().getPlayer2().getDeck().getHero();
+        player1InfoImage = new PlayerInfoImage(1, player1Hero.getId(), battleGroundPane);
+        player2InfoImage = new PlayerInfoImage(2, player2Hero.getId(), battleGroundPane);
+    }
+
+    private void makeManaCells(List<ImageView> playerManaCells, ImageView mana1, ImageView mana2, ImageView mana3, ImageView mana4, ImageView mana5, ImageView mana6, ImageView mana7, ImageView mana8, ImageView mana9) {
+        playerManaCells.add(mana1);
+        playerManaCells.add(mana2);
+        playerManaCells.add(mana3);
+        playerManaCells.add(mana4);
+        playerManaCells.add(mana5);
+        playerManaCells.add(mana6);
+        playerManaCells.add(mana7);
+        playerManaCells.add(mana8);
+        playerManaCells.add(mana9);
     }
 
     private void setupItemView() {
@@ -818,8 +906,8 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void updatePlayersInfo() {
-        player1ManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer1().getMana()));
-        player2ManaLabel.setText(Integer.toString(clientDB.getCurrentBattle().getPlayer2().getMana()));
+        player1InfoImage.setMana(clientDB.getCurrentBattle().getPlayer1().getMana());
+        player2InfoImage.setMana(clientDB.getCurrentBattle().getPlayer2().getMana());
     }
 
     private void updateHand() {
@@ -966,6 +1054,22 @@ public class ControllerBattleCommands implements Initializable {
 
     public MediaPlayer getBackgroundMusic() {
         return backgroundMusic;
+    }
+
+    public ImageView getP1HeroFace() {
+        return p1HeroFace;
+    }
+
+    public ImageView getP2HeroFace() {
+        return p2HeroFace;
+    }
+
+    public Label getPlayer1Label() {
+        return player1Label;
+    }
+
+    public Label getPlayer2Label() {
+        return player2Label;
     }
 
     //    public void recordVideo() {
