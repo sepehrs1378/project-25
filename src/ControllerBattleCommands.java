@@ -523,6 +523,9 @@ public class ControllerBattleCommands implements Initializable {
 
     private boolean handleSpecialPowerInsertion(int row, int column, Battle battle) {
         switch (clientDB.getCurrentBattle().useSpecialPower(clientDB.getLoggedInPlayer(), row, column, battle)) {
+            case SPECIAL_POWER_USED:
+                showSpecialPowerUse(row, column);
+                break;
             case NO_HERO:
                 //empty
                 break;
@@ -534,9 +537,6 @@ public class ControllerBattleCommands implements Initializable {
                 break;
             case NOT_ENOUGH_MANA:
                 //empty
-                break;
-            case SPECIAL_POWER_USED:
-                showSpecialPowerUse(row, column);
                 break;
             default:
                 System.out.println("unhandled case!!!!!");

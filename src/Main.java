@@ -192,8 +192,8 @@ Main extends Application {
         });
     }
 
-    public static MediaPlayer playMedia(String filePath, Duration stopDuration, int cycleCount
-            , boolean autoPlay, double volume) {
+    public static MediaPlayer playMedia(String filePath, Duration stopDuration
+            , int cycleCount, boolean autoPlay, double volume) {
         MediaPlayer mediaPlayer = null;
         try {
             Media media = new Media(Paths.get(filePath).toUri().toString());

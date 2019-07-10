@@ -29,7 +29,7 @@ public class HandImage {
     {
         apLabel.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #fff700;-fx-background-radius: 100;-fx-font-size: 18");
         hpLabel.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #ff0003;-fx-background-radius: 100;-fx-font-size: 18");
-        manaLabel.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #4789ff;-fx-background-radius: 100;-fx-font-size: 23");
+        manaLabel.setStyle("-fx-text-fill: #5a5a5a;-fx-background-color: #4789ff;-fx-background-radius: 100;-fx-font-size: 18");
         cardName.setStyle("-fx-text-fill: #ff7c26;-fx-font-size: 23;");
     }
 

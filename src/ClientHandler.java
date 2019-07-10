@@ -380,26 +380,33 @@ public class ClientHandler extends Thread {
         Integer column = (Integer) request.getObjectList().get(1);
         Battle battle = connection.getCurrentBattle();
         Player player = networkDB.getPlayerWithAccount(connection.getAccount(), battle);
+        List<Object> objects = new ArrayList<>();
         switch (battle.useSpecialPower(player, row, column, battle)) {
             case SPECIAL_POWER_USED:
-                List<Object> objects = new ArrayList<>();
+                objects.add(row);
+                objects.add(column);
                 objects.add(battle);
                 Response response = new Response(ResponseType.specialPowerUsed, null, null, objects);
-                networkDB.sendResponseToClient(response, connection);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
                 break;
             case NO_HERO:
+                System.out.println("no hero");
                 //empty
                 break;
             case SPECIAL_POWER_IN_COOLDOWN:
+                System.out.println("in cooldown");
                 //empty
                 break;
             case HERO_HAS_NO_SPELL:
+                System.out.println("hero no spell");
                 //empty
                 break;
             case NOT_ENOUGH_MANA:
+                System.out.println("not enough mana");
                 //empty
                 break;
             case OUT_OF_BOUNDARIES:
+                System.out.println("out of boundaries");
                 //empty
                 break;
             default:
