@@ -190,14 +190,18 @@ public class ClientDB {
         this.currentBattle = currentBattle;
         Player player1 = currentBattle.getPlayer1();
         Player player2 = currentBattle.getPlayer2();
-        if (loggedInPlayer == null)
-            return;
-        if (player1.getPlayerInfo().getPlayerName().equals
-                (loggedInPlayer.getPlayerInfo().getPlayerName()))
+        if (currentBattle.getSingleOrMulti().equals(Constants.SINGLE))
             loggedInPlayer = player1;
-        if (player2.getPlayerInfo().getPlayerName().equals
-                (loggedInPlayer.getPlayerInfo().getPlayerName()))
-            loggedInPlayer = player2;
+        if (currentBattle.getSingleOrMulti().equals(Constants.MULTI)) {
+            if (loggedInPlayer == null)
+                return;
+            if (player1.getPlayerInfo().getPlayerName().equals
+                    (loggedInPlayer.getPlayerInfo().getPlayerName()))
+                loggedInPlayer = player1;
+            if (player2.getPlayerInfo().getPlayerName().equals
+                    (loggedInPlayer.getPlayerInfo().getPlayerName()))
+                loggedInPlayer = player2;
+        }
     }
 
     public Player getLoggedInPlayer() {

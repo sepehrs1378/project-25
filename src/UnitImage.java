@@ -240,6 +240,11 @@ public class UnitImage {
         animationTimer.start();
     }
 
+    public void showSelect() {
+        Main.playMedia("src/ApProjectResources/units/" + getUnitName() + "/selection.mp3"
+                , Duration.INDEFINITE, 1, false, 100);
+    }
+
     public void showSpell() {
         ControllerBattleCommands.getOurInstance().setScreenLocked(true);
         setUnitStatus(UnitStatus.spell);
@@ -313,13 +318,13 @@ public class UnitImage {
                 return;
         }
         BuffImage buffImage = new BuffImage(buffType, root);
-        buffImage.relocate(unitView.getTranslateX(), unitView.getTranslateY());
+        buffImageList.add(buffImage);
+        buffImage.relocate(unitView.getTranslateX() + UNIT_VIEW_SIZE / 2 - BuffImage.BUFF_VIEW_SIZE / 2
+                , unitView.getTranslateY() + UNIT_VIEW_SIZE / 2 - BuffImage.BUFF_VIEW_SIZE / 2);
     }
 
     public void clearBuffImageList() {
-        for (BuffImage buffImage : buffImageList) {
-            root.getChildren().remove(buffImage);
-        }
+        root.getChildren().removeAll(buffImageList);
         buffImageList.clear();
     }
 

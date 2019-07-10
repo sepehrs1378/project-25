@@ -7,8 +7,8 @@ import java.util.List;
 public class CellImage {
     private static ClientDB clientDB = ClientDB.getInstance();
     private AnchorPane root;
-    private final int cellWidth = 63;
-    private final int cellHeight = 50;
+    private final int CELL_WIDTH = 63;
+    private final int CELL_HEIGHT = 50;
     private int row = 0;
     private int column = 0;
     private Label cellLabel = new Label();
@@ -35,8 +35,8 @@ public class CellImage {
     }
 
     private void setLabelStyle() {
-        cellLabel.setMinWidth(cellWidth);
-        cellLabel.setMinHeight(cellHeight);
+        cellLabel.setMinWidth(CELL_WIDTH);
+        cellLabel.setMinHeight(CELL_HEIGHT);
         cellLabel.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .2");
         cellLabel.setOnMouseEntered(e -> {
             cellLabel.setStyle("-fx-background-radius: 10;-fx-background-color: #ebdad5;-fx-opacity: .4");
@@ -60,6 +60,7 @@ public class CellImage {
         }
         BuffImage buffImage = new BuffImage(buffType, root);
         buffImageList.add(buffImage);
-        buffImage.relocate(cellLabel.getLayoutX(), cellLabel.getLayoutY());
+        buffImage.relocate(cellLabel.getLayoutX() + CELL_WIDTH / 2 - BuffImage.BUFF_VIEW_SIZE / 2
+                , cellLabel.getLayoutY() + CELL_HEIGHT / 2 - BuffImage.BUFF_VIEW_SIZE / 2);
     }
 }

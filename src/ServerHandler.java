@@ -455,6 +455,7 @@ public class ServerHandler extends Thread {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                selectedUnit.showSelect();
                 ControllerBattleCommands.getOurInstance().setClickedImageView(selectedUnit.getUnitView());
                 ControllerBattleCommands.getOurInstance().updatePane();
             }

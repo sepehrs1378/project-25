@@ -193,7 +193,7 @@ public class ControllerBattleCommands implements Initializable {
             if (endTurn(battle)) {
                 return;
             }
-            if (battle.getSingleOrMulti().equals(Constants.SINGLE) && battle.getPlayerInTurn().equals(battle.getPlayer2())) {
+            if (battle.getPlayerInTurn().equals(battle.getPlayer2())) {
                 AI.getInstance().doNextMove(battleGroundPane, battle);
                 if (endTurn(battle)) {
                     return;
@@ -649,6 +649,7 @@ public class ControllerBattleCommands implements Initializable {
         switch (currentPlayer.selectUnit(id, clientDB.getCurrentBattle())) {
             case SELECTED:
                 unitImage.setUnitStyleAsSelected();
+                unitImage.showSelect();
                 clickedImageView = unitImage.getUnitView();
                 return true;
             case ENEMY_UNIT_SELECTED:
@@ -742,9 +743,8 @@ public class ControllerBattleCommands implements Initializable {
                 Cell cell = clientDB.getCurrentBattle().getBattleGround().getCells()[row][column];
                 CellImage cellImage = cellsImages[row][column];
                 cellImage.clearBuffImageList();
-                for (Buff buff : cell.getBuffs()) {
+                for (Buff buff : cell.getBuffs())
                     cellImage.addBuffImage(buff.getType());
-                }
             }
         }
     }
