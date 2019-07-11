@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ControllerSinglePlayerMenu implements Initializable {
@@ -80,10 +81,8 @@ public class ControllerSinglePlayerMenu implements Initializable {
     void enterLevel1(MouseEvent event) throws IOException {
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel1(),
                 Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
-        clientDB.setCurrentBattle(battle);
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-        Main.window.setScene(new Scene(root));
-        ControllerMainMenu.stage.close();
+        setBattle(battle);
+        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level1"));
     }
 
     @FXML
@@ -91,10 +90,8 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Main.getGlobalMediaPlayer().stop();
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel2()
                 , Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
-        clientDB.setCurrentBattle(battle);
-        Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-        Main.window.setScene(new Scene(root));
-        ControllerMainMenu.stage.close();
+        setBattle(battle);
+        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level2"));
     }
 
     @FXML
@@ -102,6 +99,11 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Main.getGlobalMediaPlayer().stop();
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel3()
                 , Constants.FLAGS, 7, null, Constants.SINGLE, 1500);
+        setBattle(battle);
+        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level3"));
+    }
+
+    private void setBattle(Battle battle) throws IOException {
         clientDB.setCurrentBattle(battle);
         Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
         Main.window.setScene(new Scene(root));
@@ -250,29 +252,23 @@ public class ControllerSinglePlayerMenu implements Initializable {
             case Constants.CLASSIC: {
                 Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
-                clientDB.setCurrentBattle(battle);
-                Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-                Main.window.setScene(new Scene(root));
-                ControllerMainMenu.stage.close();
+                setBattle(battle);
+                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Classic"));
                 break;
             }
             case Constants.ONE_FLAG: {
                 Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
-                clientDB.setCurrentBattle(battle);
-                Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-                Main.window.setScene(new Scene(root));
-                ControllerMainMenu.stage.close();
+                setBattle(battle);
+                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("oneFlag"));
                 break;
             }
             case Constants.FLAGS:
                 if (flagNumberLabel.getText().isEmpty()) {
                     Battle battle = new Battle(clientDB.getLoggedInAccount(), clientDB.getComputerPlayerCustom(),
                             Constants.FLAGS, 7, null, Constants.SINGLE, 1000);
-                    clientDB.setCurrentBattle(battle);
-                    Parent root = FXMLLoader.load(getClass().getResource("ControllerBattleCommandsFXML.fxml"));
-                    Main.window.setScene(new Scene(root));
-                    ControllerMainMenu.stage.close();
+                    setBattle(battle);
+                    ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Flags"));
                 } else {
                     Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                             Constants.FLAGS, Integer.parseInt(flagNumberLabel.getText()), null,

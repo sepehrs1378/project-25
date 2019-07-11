@@ -2,6 +2,9 @@ import com.teamdev.jxcapture.Codec;
 import com.teamdev.jxcapture.EncodingParameters;
 import com.teamdev.jxcapture.VideoCapture;
 
+import com.teamdev.jxcapture.Codec;
+import com.teamdev.jxcapture.EncodingParameters;
+import com.teamdev.jxcapture.VideoCapture;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -55,7 +58,16 @@ public class ControllerBattleCommands implements Initializable {
     private MediaPlayer backgroundMusic;
     private SpecialPowerImage specialPowerImage;
     private boolean isScreenLocked = false;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private double originalX = 0;
+    private double originalY = 0;
+    private VideoCapture currentVideoCapture = null;
     //todo next card has bug
+
+    public CellImage[][] getCellsImages() {
+        return cellsImages;
+    }
 
     public void setClickedImageView(ImageView clickedImageView) {
         this.clickedImageView = clickedImageView;
@@ -64,6 +76,25 @@ public class ControllerBattleCommands implements Initializable {
     public ImageView getClickedImageView() {
         return clickedImageView;
     }
+
+    public double getxOffset() {
+        return xOffset;
+    }
+
+    public double getyOffset() {
+        return yOffset;
+    }
+
+    public void setxOffset(double xOffset) {
+        this.xOffset = xOffset;
+    }
+
+    public void setyOffset(double yOffset) {
+        this.yOffset = yOffset;
+    }
+
+    @FXML
+    private ImageView background;
 
     @FXML
     private ImageView p1HeroFace;
@@ -277,8 +308,8 @@ public class ControllerBattleCommands implements Initializable {
                     return;
                 }
             }
+            setTimeBar();
         }
-        setTimeBar();
         updatePane();
     }
 
@@ -764,6 +795,9 @@ public class ControllerBattleCommands implements Initializable {
         updatePlayersInfo();
         updateHand();
         updateEndTurnButton();
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI) && clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())) {
+            setTimeBar();
+        }
     }
 
     private void updateEndTurnButton() {
@@ -928,6 +962,7 @@ public class ControllerBattleCommands implements Initializable {
     private void forfeitGame() {
         //todo this method have to implemented in model
         // to be used by both server and client
+        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
         /*Main.getGlobalMediaPlayer().play();
         Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
         Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -946,6 +981,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean endGame() {
         timeBar.setDisable(true);
         clientDB.setCurrentBattle(null);
+        currentVideoCapture.stop();
         //todo setGame finished
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -1026,7 +1062,9 @@ public class ControllerBattleCommands implements Initializable {
     public boolean canPlayerTouchScreen() {
         if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
             return false;
-        return !isScreenLocked;
+        if (isScreenLocked)
+            return false;
+        return true;
     }
 
     public MediaPlayer getBackgroundMusic() {
@@ -1049,13 +1087,45 @@ public class ControllerBattleCommands implements Initializable {
         return player2Label;
     }
 
-    public void recordVideo() {
-        final VideoCapture videoCapture = VideoCapture.create();
-        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
+    public double getOriginalX() {
+        return originalX;
+    }
 
-        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+    public void setOriginalX(double originalX) {
+        this.originalX = originalX;
+    }
+
+    public double getOriginalY() {
+        return originalY;
+    }
+
+    public void setOriginalY(double originalY) {
+        this.originalY = originalY;
+    }
+
+    public void recordVideo(String name) {
+        final VideoCapture videoCapture = VideoCapture.create();
+        currentVideoCapture = videoCapture;
+        int x = (int) (Main.window.getX() + background.getX());
+        int y = (int) (Main.window.getY() + background.getY());
+        videoCapture.setCaptureArea(new Rectangle(x, y, 1486, 819));
+
+        List<Codec> videoCodecs = videoCapture.getVideoCodecs();
         Codec videoCodec = videoCodecs.get(1);
 
+        EncodingParameters encodingParameters = new EncodingParameters(new File("src/videos/" + name + "." + videoCapture.getVideoFormat().getId()));
+        encodingParameters.setSize(new Dimension(640, 480));
+        encodingParameters.setBitrate(500000);
+        encodingParameters.setFramerate(30);
+        encodingParameters.setCodec(videoCodec);
+
+        videoCapture.setEncodingParameters(encodingParameters);
+        videoCapture.start();
+    }
+
+    public VideoCapture getCurrentVideoCapture() {
+        return currentVideoCapture;
+    }
         EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
         encodingParameters.setSize(new Dimension(640, 480));
         encodingParameters.setBitrate(500000);

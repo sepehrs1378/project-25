@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ClientDB {
@@ -223,5 +224,11 @@ public class ClientDB {
             return computerPlayerCustom;
         }
         return null;
+    }
+
+    public String generateNameForVideoRecord(String mode){
+        Date date = new Date();
+        long now = date.getTime();
+        return (mode + now);
     }
 }
