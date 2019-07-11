@@ -55,7 +55,13 @@ public class ControllerBattleCommands implements Initializable {
     private boolean isScreenLocked = false;
     private double xOffset = 0;
     private double yOffset = 0;
+    private double originalX = 0;
+    private double originalY = 0;
     //todo next card has bug
+
+    public CellImage[][] getCellsImages(){
+        return cellsImages;
+    }
 
     public void setClickedImageView(ImageView clickedImageView) {
         this.clickedImageView = clickedImageView;
@@ -71,6 +77,14 @@ public class ControllerBattleCommands implements Initializable {
 
     public double getyOffset() {
         return yOffset;
+    }
+
+    public void setxOffset(double xOffset) {
+        this.xOffset = xOffset;
+    }
+
+    public void setyOffset(double yOffset) {
+        this.yOffset = yOffset;
     }
 
     @FXML
@@ -1084,6 +1098,22 @@ public class ControllerBattleCommands implements Initializable {
 
     public Label getPlayer2Label() {
         return player2Label;
+    }
+
+    public double getOriginalX() {
+        return originalX;
+    }
+
+    public void setOriginalX(double originalX) {
+        this.originalX = originalX;
+    }
+
+    public double getOriginalY() {
+        return originalY;
+    }
+
+    public void setOriginalY(double originalY) {
+        this.originalY = originalY;
     }
 
     //    public void recordVideo() {

@@ -37,9 +37,9 @@ public class HandImage {
         this.ringView = ControllerBattleCommands.getOurInstance().getHandRings().get(number);
         this.root = root;
         cardView.setOnMouseClicked(event -> {
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
             if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
                 return;
-            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
             if (controller.getClickedImageView() != null
                     && controller.getClickedImageView().equals(cardView)) {
                 ControllerBattleCommands.getOurInstance().setClickedImageView(null);
@@ -49,6 +49,36 @@ public class HandImage {
                 setStyleAsSelected();
             }
             ControllerBattleCommands.getOurInstance().updatePane();
+        });
+        cardView.setOnMousePressed(event -> {
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+            controller.setxOffset(cardView.getLayoutX() - event.getSceneX());
+            controller.setyOffset(cardView.getLayoutY() - event.getSceneY());
+            controller.setOriginalX(cardView.getX());
+            controller.setOriginalY(cardView.getY());
+        });
+        cardView.setOnMouseDragged(event -> {
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+            cardView.setLayoutX(event.getSceneX() + controller.getxOffset());
+            cardView.setLayoutY(event.getSceneY() + controller.getyOffset());
+        });
+        cardView.setOnMouseReleased(event -> {
+            ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+            for (int i = 0; i < controller.getCellsImages().length; i++) {
+                for (int j = 0; j < controller.getCellsImages()[0].length; j++) {
+                    Label label = controller.getCellsImages()[i][j].getCellLabel();
+                    double xDifference = event.getSceneX() - label.getLayoutX();
+                    double yDifference = event.getSceneY() - label.getLayoutY();
+                    if (0 < xDifference && xDifference < label.getWidth() && 0 < yDifference
+                            && yDifference < label.getHeight()) {
+                        controller.setClickedImageView(cardView);
+                        controller.handleCellClicked(i, j, clientDB.getCurrentBattle());
+                        break;
+                    }
+                }
+            }
+            cardView.setLayoutX(controller.getOriginalX());
+            cardView.setLayoutY(controller.getOriginalY());
         });
         cardView.setOnMouseEntered(event -> {
             if (!cardView.getStyle().equals(SELECTED_STYLE))
