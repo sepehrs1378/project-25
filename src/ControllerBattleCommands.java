@@ -93,6 +93,9 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     @FXML
+    private ImageView background;
+
+    @FXML
     private ImageView p1HeroFace;
 
     @FXML
@@ -1146,7 +1149,4 @@ public class ControllerBattleCommands implements Initializable {
     public VideoCapture getCurrentVideoCapture() {
         return currentVideoCapture;
     }
-
-    @FXML
-    private ImageView background;
 }
