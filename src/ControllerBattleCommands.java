@@ -2,6 +2,9 @@
 //import com.teamdev.jxcapture.EncodingParameters;
 //import com.teamdev.jxcapture.VideoCapture;
 
+import com.teamdev.jxcapture.Codec;
+import com.teamdev.jxcapture.EncodingParameters;
+import com.teamdev.jxcapture.VideoCapture;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -25,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -57,9 +61,10 @@ public class ControllerBattleCommands implements Initializable {
     private double yOffset = 0;
     private double originalX = 0;
     private double originalY = 0;
+    private VideoCapture currentVideoCapture = null;
     //todo next card has bug
 
-    public CellImage[][] getCellsImages(){
+    public CellImage[][] getCellsImages() {
         return cellsImages;
     }
 
@@ -817,7 +822,7 @@ public class ControllerBattleCommands implements Initializable {
         updatePlayersInfo();
         updateHand();
         updateEndTurnButton();
-        if(clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI) && clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())){
+        if (clientDB.getCurrentBattle().getSingleOrMulti().equals(Constants.MULTI) && clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName().equals(clientDB.getLoggedInAccount().getUsername())) {
             setTimeBar();
         }
     }
@@ -994,6 +999,7 @@ public class ControllerBattleCommands implements Initializable {
     private boolean endGame() {
         timeBar.setDisable(true);
         clientDB.setCurrentBattle(null);
+        currentVideoCapture.stop();
         //todo setGame finished
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "game has finished please press ok to exit to main menu");
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -1116,23 +1122,25 @@ public class ControllerBattleCommands implements Initializable {
         this.originalY = originalY;
     }
 
-    //    public void recordVideo() {
-//        final VideoCapture videoCapture = VideoCapture.create();
-//        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
-//
-//        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
-//        Codec videoCodec = videoCodecs.get(1);
-//
-//        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
-//        encodingParameters.setSize(new Dimension(640, 480));
-//        encodingParameters.setBitrate(500000);
-//        encodingParameters.setFramerate(30);
-//        encodingParameters.setCodec(videoCodec);
-//
-//        videoCapture.setEncodingParameters(encodingParameters);
-//        videoCapture.start();
+    public void recordVideo(String name) {
+        final VideoCapture videoCapture = VideoCapture.create();
+        currentVideoCapture = videoCapture;
+        videoCapture.setCaptureArea(new Rectangle((int) Main.window.getScene().getX(), (int) Main.window.getScene().getX(), 1486, 819));
 
-    //        videoCapture.stop();
-//        System.out.println("Done.");
-//    }
+        List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+        Codec videoCodec = videoCodecs.get(1);
+
+        EncodingParameters encodingParameters = new EncodingParameters(new File("src/" + name + "." + videoCapture.getVideoFormat().getId()));
+        encodingParameters.setSize(new Dimension(640, 480));
+        encodingParameters.setBitrate(500000);
+        encodingParameters.setFramerate(30);
+        encodingParameters.setCodec(videoCodec);
+
+        videoCapture.setEncodingParameters(encodingParameters);
+        videoCapture.start();
+    }
+
+    public VideoCapture getCurrentVideoCapture() {
+        return currentVideoCapture;
+    }
 }

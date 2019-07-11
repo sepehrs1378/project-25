@@ -150,6 +150,7 @@ public class ServerHandler extends Thread {
                 Main.window.setScene(new Scene(root));
                 Main.setCursor(Main.window);
                 controllerBattleCommands.updatePane();
+                stopRecording();
             }
         });
     }
@@ -173,8 +174,18 @@ public class ServerHandler extends Thread {
                 Main.window.setScene(new Scene(root));
                 Main.setCursor(Main.window);
                 controllerBattleCommands.updatePane();
+                stopRecording();
             }
         });
+    }
+
+    private void stopRecording(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
     }
 
     private void caseUnitAndEnemyAttacked(Response response) {
@@ -490,6 +501,13 @@ public class ServerHandler extends Thread {
                     ControllerMultiPlayerMenu.getInstance().getBackgroundMusic().stop();
                     Main.window.setScene(new Scene(root));
                     Main.setCursor(Main.window);
+                    ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
+                    String player1Name = clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName();
+                    String player2Name = clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName();
+                    if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1Name))
+                        controller.recordVideo(clientDB.generateNameForVideoRecord(player2Name + "-"));
+                    else
+                        controller.recordVideo(clientDB.generateNameForVideoRecord(player1Name + "-"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
