@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="533.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerAuctionBuy">
+   <children>
+      <ImageView fitHeight="544.0" fitWidth="792.0" layoutY="-3.0">
+         <image>
+            <Image url="@pics/auction_menu/background.jpg" />
+         </image>
+      </ImageView>
+      <ListView fx:id="auctionsList" layoutX="101.0" layoutY="120.0" prefHeight="236.0" prefWidth="591.0" />
+      <TextField fx:id="offerTxt" layoutX="376.0" layoutY="375.0" prefHeight="25.0" prefWidth="131.0" promptText="offer" />
+      <Button fx:id="submitBtn" layoutX="528.0" layoutY="375.0" mnemonicParsing="false" onAction="#submit" text="submit" />
+      <ImageView fx:id="backBtn" fitHeight="67.0" fitWidth="63.0" layoutY="-3.0" onMouseClicked="#goBack" onMouseEntered="#makeBackBtnOpaque" onMouseExited="#makeBackBtnTransparent">
+         <image>
+            <Image url="@pics/back_button.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

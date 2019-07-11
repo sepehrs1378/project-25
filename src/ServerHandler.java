@@ -5,15 +5,16 @@ import com.google.gson.JsonStreamParser;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -110,6 +111,21 @@ public class ServerHandler extends Thread {
                     case sell:
                         caseSell(response);
                         break;
+                    case customCardAdded:
+                        caseCustomCardAdded(response);
+                        break;
+                    case enterBuyAuction:
+                        caseEnterBuyAuction(response);
+                        break;
+                    case auctionBuyUpdate:
+                        caseAuctionBuyUpdate(response);
+                        break;
+                    case auctionSellUpdate:
+                        caseAuctionSellUpdate(response);
+                        break;
+                    case auctionSellExit:
+                        caseAuctionSellExit(response);
+                        break;
                 }
                 logResponse(response);
             }
@@ -117,7 +133,6 @@ public class ServerHandler extends Thread {
             e.printStackTrace();
         }
     }
-
     private void caseTurnChanged(Response response) {
         ControllerBattleCommands controllerBattleCommands = ControllerBattleCommands.getOurInstance();
         Battle battle = (Battle) response.getObjectList().get(0);
@@ -186,6 +201,71 @@ public class ServerHandler extends Thread {
             e.printStackTrace();
         }
         ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
+    }
+    private void caseAuctionSellExit(Response response) {
+        Account account = (Account) response.getObjectList().get(0);
+        clientDB.setLoggedInAccount(account);
+        ControllerMainMenu.auctionSell.close();
+        ControllerCollectionEditMenu.getOurInstance().showCardsInDeck();
+        ControllerCollectionEditMenu.getOurInstance().showCardsInCollection();
+
+    }
+
+    private void caseAuctionSellUpdate(Response response) {
+        System.out.println("caseAuctionSellUpdate");
+        Auction auction = (Auction) response.getObjectList().get(0);
+        List<String> strings = new ArrayList<>();
+        for(Account account:auction.getBidders()){
+            strings.add(account.getUsername());
+        }
+        strings.forEach(System.out::println);
+        Platform.runLater(() -> {
+            ControllerAuctionSell.getInstance().updateBiddersList(strings,auction.getBids());
+        });
+    }
+
+    private void caseAuctionBuyUpdate(Response response) {
+        List<String> strings = new ArrayList<>();
+        for (Object o : response.getObjectList()) {
+            strings.add((String) o);
+        }
+        Platform.runLater(() -> {
+            ControllerAuctionBuy.getInstance().upadateAuctionList(strings);
+        });
+    }
+
+    private void caseEnterBuyAuction(Response response) {
+        List<String> strings = new ArrayList<>();
+        for (Object object : response.getObjectList()) {
+            String string = (String) object;
+            strings.add(string);
+        }
+        Platform.runLater(() -> {
+            try {
+
+                AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerAuctionBuy.fxml"));
+                ControllerAuctionBuy.getInstance().upadateAuctionList(strings);
+                Stage stage = new Stage();
+                ControllerMainMenu.auctionBuy = stage;
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void caseCustomCardAdded(Response response) {
+        Card card = (Card) response.getObjectList().get(0);
+        ClientDB.getInstance().getCardList().add(card);
+        Platform.runLater(() -> {
+            try {
+                ControllerShop.getOurInstance().showCards(clientDB.getCardList(), clientDB.getUsableList());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void caseUnitAndEnemyAttacked(Response response) {
@@ -269,7 +349,7 @@ public class ServerHandler extends Thread {
         List<Usable> usableList = new ArrayList<>();
         separateCardsUsables(response, cardList, usableList);
         System.out.println("here");
-        cardList.forEach(e -> System.out.println(e.getName()));
+//        cardList.forEach(e -> System.out.println(e.getName()));
         Platform.runLater(() -> {
             try {
                 ControllerShop.getOurInstance().showCards(cardList, usableList);

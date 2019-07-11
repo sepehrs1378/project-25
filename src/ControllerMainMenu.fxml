@@ -69,5 +69,10 @@
             <Image url="@pics/main_menu_pics/global_chat.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="auctionsBtn" fitHeight="80.0" fitWidth="200.0" layoutX="1015.0" layoutY="330.0" onMouseClicked="#enterAuctions" onMouseEntered="#makeAuctionBtnOpaque" onMouseExited="#makeAuctionBtnTransparent" opacity="0.6">
+         <image>
+            <Image url="@pics/main_menu_pics/auctions_button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

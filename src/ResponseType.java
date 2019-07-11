@@ -21,5 +21,12 @@ public enum ResponseType {
     updateLeaderBoard,
     shop,
     buy,
-    sell
+    sell,
+    customCardAdded,
+
+    auctionBuyUpdate,
+    auctionSellUpdate,
+    auctionSellExit,
+
+    enterBuyAuction
 }

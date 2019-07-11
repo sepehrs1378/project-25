@@ -284,6 +284,32 @@ public class PlayerCollection {
         return OutputMessageType.NOT_IN_COLLECTION;
     }
 
+    public void sellToOtherClient(Account seller , Account buyer ,  String cardID, Card card, int price ){
+        String newId = "";
+        if (buyer == null ){
+            newId = "shop" + "_" + card.getId().split("_")[1] + "_" + card.getId().split("_")[2];
+
+        }
+        else {
+            newId = buyer.getUsername() + "_" + card.getId().split("_")[1] + "_" + card.getId().split("_")[2];
+        }
+        seller.getPlayerInfo().getCollection().getCards().remove(card);
+        for (Deck deck:seller.getPlayerInfo().getCollection().getDecks()){
+            seller.getPlayerInfo().getCollection().removeCard(cardID,deck.getName());
+        }
+        card.setId(newId);
+        if (buyer == null){
+            seller.addMoney(price);
+            int number = NetworkDB.getInstance().getNumberOfCards().get(card.getName());
+            NetworkDB.getInstance().getNumberOfCards().put(card.getName(),number+1);
+        }else {
+            buyer.getPlayerInfo().getCollection().getCards().add(card);
+            seller.addMoney(price);
+            buyer.addMoney((-1)*price);
+        }
+
+    }
+
     public OutputMessageType selectDeckAsMain(Account account, String deckName) {
         if (!doesHaveDeck(deckName))
             return OutputMessageType.DECK_DOESNT_EXIST;

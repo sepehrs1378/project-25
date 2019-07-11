@@ -1,11 +1,19 @@
 import com.google.gson.JsonObject;
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +44,9 @@ public class CollectionCardBackGround {
 
     @FXML
     private ImageView sellBtn;
+
+    @FXML
+    private JFXButton sellByAuction;
 
     @FXML
     void makeCardBackGroundOpaque(MouseEvent event) {
@@ -210,4 +221,23 @@ public class CollectionCardBackGround {
         sellBtn.setVisible(false);
         cardBackGround.setDisable(true);
     }
+
+    @FXML
+    void enterAuction(ActionEvent event) throws IOException {
+        if (object instanceof Card){
+            Stage stage = new Stage();
+            AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerAuctionSell.fxml"));
+            Card card = (Card)object;
+            List<Object> objectList = new ArrayList<>();
+            objectList.add(card);
+            new ServerRequestSender(new Request(RequestType.enterSellAuction,
+                    ClientDB.getInstance().getLoggedInAccount().getUsername(),null , objectList)).start();
+            ControllerAuctionSell.getInstance().getPrizeLbl().setText(card.getPrice()*80/100+"");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            ControllerMainMenu.auctionSell = stage;
+        }
+    }
+
 }
