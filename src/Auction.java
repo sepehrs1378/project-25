@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Auction {
     private Account seller;
+
+
     private List<Account> bidders = new ArrayList<>();
     private List<Integer> bids = new ArrayList<>();
     private int baseMoney;
@@ -66,5 +68,13 @@ public class Auction {
     public void addBidder(Account bidder, int price){
         bidders.add(bidder);
         bids.add(price);
+    }
+
+    public List<Account> getBidders() {
+        return bidders;
+    }
+
+    public List<Integer> getBids() {
+        return bids;
     }
 }

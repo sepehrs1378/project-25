@@ -24,6 +24,7 @@ public class ControllerMainMenu {
     private ControllerShop controllerShop = ControllerShop.getOurInstance();
     public static Stage stage;
     public static Stage multiPlayerStage;
+    public static Stage auctionBuy;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;

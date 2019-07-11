@@ -21,5 +21,8 @@ public enum ResponseType {
     sell,
     customCardAdded,
 
+    auctionBuyUpdate,
+    auctionSellUpdate,
+
     enterBuyAuction
 }

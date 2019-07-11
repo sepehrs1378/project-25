@@ -35,7 +35,7 @@ public enum RequestType {
     exitBuyAuction,
     sellAuction,
     buyAuction,
-
+    submitOffer,
 
     sendMessage,
     enterGlobalChat,

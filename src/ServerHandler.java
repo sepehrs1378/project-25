@@ -5,15 +5,15 @@ import com.google.gson.JsonStreamParser;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -108,6 +108,12 @@ public class ServerHandler extends Thread {
                     case enterBuyAuction:
                         caseEnterBuyAuction(response);
                         break;
+                    case auctionBuyUpdate:
+                        caseAuctionBuyUpdate(response);
+                        break;
+                    case auctionSellUpdate:
+                        caseAuctionSellUpdate(response);
+                        break;
                 }
 //                logResponse(response);
             }
@@ -116,32 +122,57 @@ public class ServerHandler extends Thread {
         }
     }
 
+    private void caseAuctionSellUpdate(Response response) {
+        System.out.println("caseAuctionSellUpdate");
+        Auction auction = (Auction) response.getObjectList().get(0);
+        List<String> strings = new ArrayList<>();
+        for(Account account:auction.getBidders()){
+            strings.add(account.getUsername());
+        }
+        strings.forEach(System.out::println);
+        Platform.runLater(() -> {
+            ControllerAuctionSell.getInstance().updateBiddersList(strings,auction.getBids());
+        });
+    }
+
+    private void caseAuctionBuyUpdate(Response response) {
+        List<String> strings = new ArrayList<>();
+        for (Object o : response.getObjectList()) {
+            strings.add((String) o);
+        }
+        Platform.runLater(() -> {
+            ControllerAuctionBuy.getInstance().upadateAuctionList(strings);
+        });
+    }
+
     private void caseEnterBuyAuction(Response response) {
         List<String> strings = new ArrayList<>();
-        for (Object object:response.getObjectList()){
-            Auction auction = (Auction)object;
-            strings.add(auction.getSeller().getUsername()+"    "+
-                        auction.getCard().getId()+"    "+ auction.getHighestBid());
+        for (Object object : response.getObjectList()) {
+            String string = (String) object;
+            strings.add(string);
         }
-        Platform.runLater(()->{
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("ControllerAuctionBuy.fxml"));
-            AnchorPane root = fxmlLoader.getRoot();
-            ControllerAuctionBuy controllerAuctionBuy = fxmlLoader.getController();
-            controllerAuctionBuy.upadateAuctionList(strings);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
+        Platform.runLater(() -> {
+            try {
+
+                AnchorPane root = FXMLLoader.load(getClass().getResource("ControllerAuctionBuy.fxml"));
+                ControllerAuctionBuy.getInstance().upadateAuctionList(strings);
+                Stage stage = new Stage();
+                ControllerMainMenu.auctionBuy = stage;
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
     private void caseCustomCardAdded(Response response) {
-        Card card = (Card)response.getObjectList().get(0);
+        Card card = (Card) response.getObjectList().get(0);
         ClientDB.getInstance().getCardList().add(card);
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             try {
-                ControllerShop.getOurInstance().showCards(clientDB.getCardList(),clientDB.getUsableList());
+                ControllerShop.getOurInstance().showCards(clientDB.getCardList(), clientDB.getUsableList());
             } catch (IOException e) {
                 e.printStackTrace();
             }

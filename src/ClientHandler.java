@@ -134,6 +134,9 @@ public class ClientHandler extends Thread {
                 case enterBuyAuction:
                     caseEnterBuyAuction(request);
                     break;
+                case submitOffer:
+                    caseSubmitOffer(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -147,9 +150,36 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void caseSubmitOffer(Request request) {
+        JsonObject obj = (JsonObject) request.getObjectList().get(0);
+        String accountName = obj.get("bidder").getAsString();
+        int bidMoney = obj.get("bid").getAsInt();
+        String cardName = obj.get("cardName").getAsString();
+        String sellerName = obj.get("sellerName").getAsString();
+        Auction auction= null;
+        for (Auction auctionTemp: NetworkDB.getInstance().getAuctionList()){
+            if (auctionTemp.getSeller().getUsername().equals(sellerName)){
+                auction = auctionTemp;
+                break;
+            }
+        }
+        assert auction != null;
+        if (cardName.equals(auction.getCard().getName())){
+            auction.addBidder(NetworkDB.getInstance().getAccountWithUserName(accountName),bidMoney);
+            List<Object> objectList = new ArrayList<>();
+            objectList.add(auction);
+            Account account = networkDB.getAccountWithUserName(sellerName);
+            Connection tempConnection = networkDB.getConnectionWithAccount(account);
+            networkDB.sendResponseToClient(new Response(ResponseType.auctionSellUpdate,null
+                                                        ,null,objectList),tempConnection);
+
+        }
+    }
+
     private void caseEnterBuyAuction(Request request) {
-        List<Object> objectList =new ArrayList<>(networkDB.getAuctionList());
-        networkDB.sendResponseToClient(new Response(ResponseType.enterBuyAuction,null,null,objectList),connection);
+        networkDB.getAccountStatusMap().put(connection.getAccount(),AccountStatus.auctionBuy);
+        List<Object> objects = new ArrayList<>(getAuctionStrings());
+        networkDB.sendResponseToClient(new Response(ResponseType.enterBuyAuction,null,null,objects),connection);
     }
 
     private void caseEnterSellAuction(Request request) {
@@ -160,7 +190,22 @@ public class ClientHandler extends Thread {
         Auction auction = new Auction(account,card);
         NetworkDB.getInstance().getAuctionList().add(auction);
         connection.setCurrentAuction(auction);
-        //todo update auctionList in clients
+        networkDB.getAccountStatusMap().forEach((account1, accountStatus) -> {
+            if (accountStatus==AccountStatus.auctionBuy){
+                List<Object> objects = new ArrayList<>(getAuctionStrings());
+                networkDB.sendResponseToClient(new Response(ResponseType.auctionBuyUpdate,null,null,objects)
+                        ,networkDB.getConnectionWithAccount(account1));
+            }
+        });
+    }
+
+    private List<String> getAuctionStrings(){
+        List<String> strings = new ArrayList<>();
+        for (Auction auction: networkDB.getAuctionList()){
+            String string = auction.getSeller().getUsername()+"   "+auction.getCard().getName() + "   " + ((auction.getHighestBidder()==null)?"empty":auction.getHighestBidder()) + "   " + auction.getHighestBid();
+            strings.add(string);
+        }
+        return strings;
     }
 
     private void caseGameFinished(Request request){
