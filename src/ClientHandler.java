@@ -137,6 +137,9 @@ public class ClientHandler extends Thread {
                 case submitOffer:
                     caseSubmitOffer(request);
                     break;
+                case exitSellAuction:
+                    caseExitSellAuction(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -150,65 +153,84 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void caseExitSellAuction(Request request) {
+        Account seller = connection.getAccount();
+        Auction auction = null;
+        for (Auction auctionTemp : networkDB.getAuctionList()) {
+            if (auctionTemp.getSeller().getUsername().equals(seller.getUsername())) {
+                auction = auctionTemp;
+                return;
+            }
+        }
+        Account buyer = auction.getBidders().get(auction.getHighestBidIndex());
+        Card card = auction.getCard();
+        seller.getPlayerInfo().getCollection().sellToOtherClient(seller,buyer,card.getId(),card,auction.getHighestBid());
+        List<Object> objects = new ArrayList<>();
+        objects.add(connection.getAccount());
+        networkDB.sendResponseToClient(new Response(ResponseType.auctionSellExit , null , null , objects),connection);
+        networkDB.getAuctionList().remove(auction);
+        //todo send to clients
+    }
+
     private void caseSubmitOffer(Request request) {
         JsonObject obj = (JsonObject) request.getObjectList().get(0);
         String accountName = obj.get("bidder").getAsString();
         int bidMoney = obj.get("bid").getAsInt();
         String cardName = obj.get("cardName").getAsString();
         String sellerName = obj.get("sellerName").getAsString();
-        Auction auction= null;
-        for (Auction auctionTemp: NetworkDB.getInstance().getAuctionList()){
-            if (auctionTemp.getSeller().getUsername().equals(sellerName)){
+        Auction auction = null;
+        for (Auction auctionTemp : NetworkDB.getInstance().getAuctionList()) {
+            if (auctionTemp.getSeller().getUsername().equals(sellerName)) {
                 auction = auctionTemp;
                 break;
             }
         }
         assert auction != null;
-        if (cardName.equals(auction.getCard().getName())){
-            auction.addBidder(NetworkDB.getInstance().getAccountWithUserName(accountName),bidMoney);
+        if (cardName.equals(auction.getCard().getName())) {
+            auction.addBidder(NetworkDB.getInstance().getAccountWithUserName(accountName), bidMoney);
             List<Object> objectList = new ArrayList<>();
             objectList.add(auction);
             Account account = networkDB.getAccountWithUserName(sellerName);
             Connection tempConnection = networkDB.getConnectionWithAccount(account);
-            networkDB.sendResponseToClient(new Response(ResponseType.auctionSellUpdate,null
-                                                        ,null,objectList),tempConnection);
+            networkDB.sendResponseToClient(new Response(ResponseType.auctionSellUpdate, null
+                    , null, objectList), tempConnection);
 
         }
     }
 
     private void caseEnterBuyAuction(Request request) {
-        networkDB.getAccountStatusMap().put(connection.getAccount(),AccountStatus.auctionBuy);
+        networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.auctionBuy);
         List<Object> objects = new ArrayList<>(getAuctionStrings());
-        networkDB.sendResponseToClient(new Response(ResponseType.enterBuyAuction,null,null,objects),connection);
+        networkDB.sendResponseToClient(new Response(ResponseType.enterBuyAuction, null, null, objects), connection);
     }
 
     private void caseEnterSellAuction(Request request) {
-        Card card = ((Card)request.getObjectList().get(0));
+        Card card = ((Card) request.getObjectList().get(0));
         String userName = request.getMessage();
-        Account account=NetworkDB.getInstance().getAccountWithUserName(userName);
-        card =account.getPlayerInfo().getCollection().getCardWithID(card.getId());
-        Auction auction = new Auction(account,card);
+        Account account = NetworkDB.getInstance().getAccountWithUserName(userName);
+        card = account.getPlayerInfo().getCollection().getCardWithID(card.getId());
+        Auction auction = new Auction(account, card);
         NetworkDB.getInstance().getAuctionList().add(auction);
         connection.setCurrentAuction(auction);
         networkDB.getAccountStatusMap().forEach((account1, accountStatus) -> {
-            if (accountStatus==AccountStatus.auctionBuy){
+            if (accountStatus == AccountStatus.auctionBuy) {
                 List<Object> objects = new ArrayList<>(getAuctionStrings());
-                networkDB.sendResponseToClient(new Response(ResponseType.auctionBuyUpdate,null,null,objects)
-                        ,networkDB.getConnectionWithAccount(account1));
+                networkDB.sendResponseToClient(new Response(ResponseType.auctionBuyUpdate, null, null, objects)
+                        , networkDB.getConnectionWithAccount(account1));
             }
         });
     }
 
-    private List<String> getAuctionStrings(){
+    private List<String> getAuctionStrings() {
         List<String> strings = new ArrayList<>();
-        for (Auction auction: networkDB.getAuctionList()){
-            String string = auction.getSeller().getUsername()+"   "+auction.getCard().getName() + "   " + ((auction.getHighestBidder()==null)?"empty":auction.getHighestBidder()) + "   " + auction.getHighestBid();
+        for (Auction auction : networkDB.getAuctionList()) {
+            String string = auction.getSeller().getUsername() + "   " + auction.getCard().getName() + "   " + ((auction.getHighestBidder() == null) ? "empty" : auction.getHighestBidder()) + "   " + auction.getHighestBid();
             strings.add(string);
         }
         return strings;
     }
 
-    private void caseGameFinished(Request request){
+    private void caseGameFinished(Request request) {
         networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }
 
@@ -502,7 +524,7 @@ public class ClientHandler extends Thread {
                 objects.add(column);
                 objects.add(battle);
                 Response response = new Response(ResponseType.cardInserted, card.getId(), null, objects);
-                networkDB.sendResponseToPlayerAndOpponent(response,connection);
+                networkDB.sendResponseToPlayerAndOpponent(response, connection);
                 break;
         }
     }

@@ -23,6 +23,7 @@ public enum ResponseType {
 
     auctionBuyUpdate,
     auctionSellUpdate,
+    auctionSellExit,
 
     enterBuyAuction
 }

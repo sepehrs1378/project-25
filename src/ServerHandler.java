@@ -114,12 +114,24 @@ public class ServerHandler extends Thread {
                     case auctionSellUpdate:
                         caseAuctionSellUpdate(response);
                         break;
+                    case auctionSellExit:
+                        caseAuctionSellExit(response);
+                        break;
                 }
 //                logResponse(response);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void caseAuctionSellExit(Response response) {
+        Account account = (Account) response.getObjectList().get(0);
+        clientDB.setLoggedInAccount(account);
+        ControllerMainMenu.auctionSell.close();
+        ControllerCollectionEditMenu.getOurInstance().showCardsInDeck();
+        ControllerCollectionEditMenu.getOurInstance().showCardsInCollection();
+
     }
 
     private void caseAuctionSellUpdate(Response response) {

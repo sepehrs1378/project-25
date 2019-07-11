@@ -79,7 +79,7 @@ public class ControllerAuctionSell implements Initializable {
                     e.printStackTrace();
                 }
             }
-            //todo send finished request and handel it properly
+            new ServerRequestSender(new Request(RequestType.exitSellAuction,null,null,null));
         }).start();
     }
 }

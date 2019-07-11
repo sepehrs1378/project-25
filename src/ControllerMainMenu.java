@@ -25,6 +25,7 @@ public class ControllerMainMenu {
     public static Stage stage;
     public static Stage multiPlayerStage;
     public static Stage auctionBuy;
+    public static Stage auctionSell;
 
     public static ControllerMainMenu getInstance() {
         return ourInstance;
