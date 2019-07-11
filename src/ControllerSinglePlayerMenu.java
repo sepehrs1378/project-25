@@ -82,7 +82,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel1(),
                 Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
         setBattle(battle);
-        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level1"));
+//        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level1"));
     }
 
     @FXML
@@ -91,7 +91,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel2()
                 , Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
         setBattle(battle);
-        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level2"));
+//        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level2"));
     }
 
     @FXML
@@ -100,7 +100,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
         Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerLevel3()
                 , Constants.FLAGS, 7, null, Constants.SINGLE, 1500);
         setBattle(battle);
-        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level3"));
+//        ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("level3"));
     }
 
     private void setBattle(Battle battle) throws IOException {
@@ -253,14 +253,14 @@ public class ControllerSinglePlayerMenu implements Initializable {
                 Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.CLASSIC, 0, null, Constants.SINGLE, 1000);
                 setBattle(battle);
-                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Classic"));
+//                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Classic"));
                 break;
             }
             case Constants.ONE_FLAG: {
                 Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                         Constants.ONE_FLAG, 1, null, Constants.SINGLE, 1000);
                 setBattle(battle);
-                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("oneFlag"));
+//                ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("oneFlag"));
                 break;
             }
             case Constants.FLAGS:
@@ -268,7 +268,7 @@ public class ControllerSinglePlayerMenu implements Initializable {
                     Battle battle = new Battle(clientDB.getLoggedInAccount(), clientDB.getComputerPlayerCustom(),
                             Constants.FLAGS, 7, null, Constants.SINGLE, 1000);
                     setBattle(battle);
-                    ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Flags"));
+//                    ControllerBattleCommands.getOurInstance().recordVideo(clientDB.generateNameForVideoRecord("Flags"));
                 } else {
                     Battle battle = new Battle(clientDB.getLoggedInAccount(), ClientDB.getInstance().getComputerPlayerCustom(),
                             Constants.FLAGS, Integer.parseInt(flagNumberLabel.getText()), null,

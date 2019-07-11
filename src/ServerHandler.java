@@ -200,7 +200,7 @@ public class ServerHandler extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
+//        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
     }
     private void caseAuctionSellExit(Response response) {
         Account account = (Account) response.getObjectList().get(0);
@@ -583,10 +583,10 @@ public class ServerHandler extends Thread {
                     ControllerBattleCommands controller = ControllerBattleCommands.getOurInstance();
                     String player1Name = clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName();
                     String player2Name = clientDB.getCurrentBattle().getPlayer2().getPlayerInfo().getPlayerName();
-                    if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1Name))
-                        controller.recordVideo(clientDB.generateNameForVideoRecord(player2Name + "-"));
-                    else
-                        controller.recordVideo(clientDB.generateNameForVideoRecord(player1Name + "-"));
+//                    if (clientDB.getLoggedInAccount().getPlayerInfo().getPlayerName().equals(player1Name))
+//                        controller.recordVideo(clientDB.generateNameForVideoRecord(player2Name + "-"));
+//                    else
+//                        controller.recordVideo(clientDB.generateNameForVideoRecord(player1Name + "-"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

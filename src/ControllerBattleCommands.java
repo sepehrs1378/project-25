@@ -962,7 +962,7 @@ public class ControllerBattleCommands implements Initializable {
     private void forfeitGame() {
         //todo this method have to implemented in model
         // to be used by both server and client
-        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
+//        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
         /*Main.getGlobalMediaPlayer().play();
         Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
         Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -1103,7 +1103,7 @@ public class ControllerBattleCommands implements Initializable {
         this.originalY = originalY;
     }
 
-    public void recordVideo(String name) {
+    /*public void recordVideo(String name) {
         final VideoCapture videoCapture = VideoCapture.create();
         currentVideoCapture = videoCapture;
         int x = (int) (Main.window.getX() + background.getX());
@@ -1137,5 +1137,5 @@ public class ControllerBattleCommands implements Initializable {
 
         videoCapture.stop();
         System.out.println("Done.");
-    }
+    }*/
 }
