@@ -30,6 +30,10 @@ public class CellImage {
         addToRoot();
     }
 
+    public Label getCellLabel(){
+        return cellLabel;
+    }
+
     private void addToRoot() {
         root.getChildren().add(cellLabel);
     }
