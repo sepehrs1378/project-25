@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="battleGroundPane" prefHeight="819.0" prefWidth="1486.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
+<AnchorPane fx:id="battleGroundPane" prefHeight="819.0" prefWidth="1486.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerBattleCommands">
     <children>
-        <ImageView fitHeight="819.0" fitWidth="1500.0">
+        <ImageView fx:id="background" fitHeight="819.0" fitWidth="1500.0">
             <image>
                 <Image url="@pics/maps/redrock/background@2x.jpg" />
             </image>

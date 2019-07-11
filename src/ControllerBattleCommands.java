@@ -981,6 +981,7 @@ public class ControllerBattleCommands implements Initializable {
     private void forfeitGame() {
         //todo this method have to implemented in model
         // to be used by both server and client
+        ControllerBattleCommands.getOurInstance().getCurrentVideoCapture().stop();
         /*Main.getGlobalMediaPlayer().play();
         Account account = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayerInTurn().getPlayerInfo().getPlayerName());
         Account player1 = clientDB.getAccountWithUsername(clientDB.getCurrentBattle().getPlayer1().getPlayerInfo().getPlayerName());
@@ -1125,12 +1126,14 @@ public class ControllerBattleCommands implements Initializable {
     public void recordVideo(String name) {
         final VideoCapture videoCapture = VideoCapture.create();
         currentVideoCapture = videoCapture;
-        videoCapture.setCaptureArea(new Rectangle((int) Main.window.getScene().getX(), (int) Main.window.getScene().getX(), 1486, 819));
+        int x = (int) (Main.window.getX() + background.getX());
+        int y = (int) (Main.window.getY() + background.getY());
+        videoCapture.setCaptureArea(new Rectangle(x, y, 1486, 819));
 
         List<Codec> videoCodecs = videoCapture.getVideoCodecs();
         Codec videoCodec = videoCodecs.get(1);
 
-        EncodingParameters encodingParameters = new EncodingParameters(new File("src/" + name + "." + videoCapture.getVideoFormat().getId()));
+        EncodingParameters encodingParameters = new EncodingParameters(new File("src/videos/" + name + "." + videoCapture.getVideoFormat().getId()));
         encodingParameters.setSize(new Dimension(640, 480));
         encodingParameters.setBitrate(500000);
         encodingParameters.setFramerate(30);
@@ -1143,4 +1146,7 @@ public class ControllerBattleCommands implements Initializable {
     public VideoCapture getCurrentVideoCapture() {
         return currentVideoCapture;
     }
+
+    @FXML
+    private ImageView background;
 }
