@@ -138,6 +138,7 @@ Main extends Application {
     void makeLoginOpaque(MouseEvent event) {
         Main.playWhenMouseEntered();
         loginBtn.setStyle("-fx-opacity: 1");
+        //
     }
 
     @FXML
