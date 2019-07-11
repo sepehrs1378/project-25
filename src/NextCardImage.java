@@ -91,9 +91,9 @@ public class NextCardImage {
         int ringSize = GraphicConstants.HAND_RING_SIZE;
         hpLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.15);
         hpLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.8);
-        apLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.75);
+        apLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.60);
         apLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.8);
-        manaLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.45);
+        manaLabel.setTranslateX(ringView.getLayoutX() + ringSize * 0.40);
         manaLabel.setTranslateY(ringView.getLayoutY() + ringSize * 0.9);
     }
 
