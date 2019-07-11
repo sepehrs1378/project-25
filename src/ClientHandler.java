@@ -140,6 +140,9 @@ public class ClientHandler extends Thread {
                 case exitSellAuction:
                     caseExitSellAuction(request);
                     break;
+                case exitBuyAuction:
+                    caseExitBuyAuction(request);
+                    break;
                 case close:
                     //todo
                     break;
@@ -154,21 +157,26 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void caseExitBuyAuction(Request request) {
+        networkDB.getAccountStatusMap().put(connection.getAccount(),AccountStatus.online);
+    }
+
     private void caseExitSellAuction(Request request) {
         Account seller = connection.getAccount();
         Auction auction = null;
         for (Auction auctionTemp : networkDB.getAuctionList()) {
             if (auctionTemp.getSeller().getUsername().equals(seller.getUsername())) {
                 auction = auctionTemp;
-                return;
+                break;
             }
         }
+        assert auction != null;
         Account buyer = auction.getBidders().get(auction.getHighestBidIndex());
         Card card = auction.getCard();
-        seller.getPlayerInfo().getCollection().sellToOtherClient(seller,buyer,card.getId(),card,auction.getHighestBid());
+        seller.getPlayerInfo().getCollection().sellToOtherClient(seller, buyer, card.getId(), card, auction.getHighestBid());
         List<Object> objects = new ArrayList<>();
         objects.add(connection.getAccount());
-        networkDB.sendResponseToClient(new Response(ResponseType.auctionSellExit , null , null , objects),connection);
+        networkDB.sendResponseToClient(new Response(ResponseType.auctionSellExit, null, null, objects), connection);
         networkDB.getAuctionList().remove(auction);
         //todo send to clients
     }
@@ -230,6 +238,7 @@ public class ClientHandler extends Thread {
         }
         return strings;
     }
+
     private void caseGameFinished(Request request) {
         networkDB.getAccountStatusMap().put(connection.getAccount(), AccountStatus.online);
     }

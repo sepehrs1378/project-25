@@ -79,7 +79,7 @@ public class ControllerAuctionSell implements Initializable {
                     e.printStackTrace();
                 }
             }
-            new ServerRequestSender(new Request(RequestType.exitSellAuction,null,null,null));
+            new ServerRequestSender(new Request(RequestType.exitSellAuction,null,null,null)).start();
         }).start();
     }
 }

@@ -205,9 +205,12 @@ public class ServerHandler extends Thread {
     private void caseAuctionSellExit(Response response) {
         Account account = (Account) response.getObjectList().get(0);
         clientDB.setLoggedInAccount(account);
-        ControllerMainMenu.auctionSell.close();
-        ControllerCollectionEditMenu.getOurInstance().showCardsInDeck();
-        ControllerCollectionEditMenu.getOurInstance().showCardsInCollection();
+        Platform.runLater(()->{
+            ControllerMainMenu.auctionSell.close();
+            ControllerCollectionEditMenu.getOurInstance().showCardsInDeck();
+            ControllerCollectionEditMenu.getOurInstance().showCardsInCollection();
+
+        });
 
     }
 

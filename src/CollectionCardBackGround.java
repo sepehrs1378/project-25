@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -234,9 +235,11 @@ public class CollectionCardBackGround {
                     ClientDB.getInstance().getLoggedInAccount().getUsername(),null , objectList)).start();
             ControllerAuctionSell.getInstance().getPrizeLbl().setText(card.getPrice()*80/100+"");
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.initStyle(StageStyle.UNDECORATED);
             ControllerMainMenu.auctionSell = stage;
+            stage.showAndWait();
         }
     }
 

@@ -56,7 +56,10 @@ public class ControllerAuctionBuy {
 
     @FXML
     void goBack(MouseEvent event) {
-
+        new ServerRequestSender(new Request(RequestType.exitBuyAuction,null,null,null)).start();
+        Platform.runLater(()->{
+            ControllerMainMenu.auctionBuy.close();
+        });
     }
 
     @FXML
