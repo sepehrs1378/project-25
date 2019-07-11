@@ -20,7 +20,7 @@ public class SpellImage {
         String filePath = "";
         switch (spellType) {
             case specialPower:
-                filePath = "./src/ApProjectResources/units/" + getName() + "/effect";
+                filePath = "./src/ApProjectResources/units/" + getName() + "/effect.gif";
                 break;
             case spell:
                 filePath = "./src/ApProjectResources/spells/" + getName() + "/effect";

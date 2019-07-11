@@ -36,7 +36,7 @@ public class NextCardImage {
 
     public void setCardImage(String id) {
         this.id = id;
-        Card card = clientDB.getLoggedInPlayer().getHand().getCardById(id);
+        Card card = clientDB.getLoggedInPlayer().getNextCard();
         cardView.setVisible(true);
         manaLabel.setVisible(true);
         try {

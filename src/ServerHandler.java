@@ -228,7 +228,6 @@ public class ServerHandler extends Thread {
     }
 
     private void casePlayerForfeited(Response response) {
-        //todo
     }
 
     private void caseSell(Response response) {

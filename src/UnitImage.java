@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnitImage {
-    //todo دیوریشن ها و سایز ها رو بهتره در نهایت برای هر گیف از فایل بخونیم
     private static ClientDB clientDB = ClientDB.getInstance();
     private final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
     private final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
@@ -35,8 +34,8 @@ public class UnitImage {
     private int column = 0;
     private ImageView unitView = new ImageView();
     private List<BuffImage> buffImageList = new ArrayList<>();
-    private Label apNumber = new Label("0");//todo relocateCardView and reset it
-    private Label hpNumber = new Label("0");//todo
+    private Label apNumber = new Label("0");
+    private Label hpNumber = new Label("0");
     private String id;
     private UnitStatus unitStatus;
 

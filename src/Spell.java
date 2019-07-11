@@ -14,10 +14,10 @@ class Spell extends Card {
     private boolean isDispeller;
 
     Spell(String id, String name, int price, int mana,
-                 int apChange, int hpChange, int coolDown,
-                 Target target, Buff addedBuff,
-                 SpellActivationType activationType,
-                 String description, boolean isDispeller) {
+          int apChange, int hpChange, int coolDown,
+          Target target, Buff addedBuff,
+          SpellActivationType activationType,
+          String description, boolean isDispeller) {
         super(id, name, price, mana);
         this.apChange = apChange;
         this.hpChange = hpChange;
@@ -63,17 +63,17 @@ class Spell extends Card {
         this.addedSpells.add(addedSpell);
     }
 
-    public void doSpell(Unit unit,Battle battle) {
-        addBuffsToUnit(unit,battle);
+    public void doSpell(Unit unit, Battle battle) {
+        addBuffsToUnit(unit, battle);
         if (isDispeller())
-            dispelBuffsOfUnit(unit,battle);
+            dispelBuffsOfUnit(unit, battle);
         unit.changeAp(getHpChange());
         unit.changeHp(getApChange());
     }
 
-    public void doSpell(int insertionRow, int insertionColumn,Battle battle) {
-        doSpellEffectOnCells(insertionRow, insertionColumn,battle);
-        doSpellEffectOnUnits(insertionRow, insertionColumn,battle);
+    public void doSpell(int insertionRow, int insertionColumn, Battle battle) {
+        doSpellEffectOnCells(insertionRow, insertionColumn, battle);
+        doSpellEffectOnUnits(insertionRow, insertionColumn, battle);
     }
 
     public Spell clone() {
@@ -83,8 +83,8 @@ class Spell extends Card {
                 description, isDispeller);
     }
 
-    private void doSpellEffectOnCells(int insertionRow, int insertionColumn,Battle battle) {
-        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn,battle);
+    private void doSpellEffectOnCells(int insertionRow, int insertionColumn, Battle battle) {
+        List<Cell> targetCells = target.getTargetCells(insertionRow, insertionColumn, battle);
         for (Cell cell : targetCells) {
             for (Buff buff : getAddedBuffs()) {
                 Buff cloneBuff = buff.clone();
@@ -95,17 +95,17 @@ class Spell extends Card {
         }
     }
 
-    private void doSpellEffectOnUnits(int insertionRow, int insertionColumn,Battle battle) {
-        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn,battle);
+    private void doSpellEffectOnUnits(int insertionRow, int insertionColumn, Battle battle) {
+        List<Unit> targetUnits = target.getTargetUnits(insertionRow, insertionColumn, battle);
         for (Unit unit : targetUnits) {
             if (unit.isImmuneTo(Constants.ENEMY_CARD_SPELL)
                     && battle.getBattleGround().
-                    isUnitFriendlyOrEnemy(unit,battle).equals(Constants.ENEMY))
+                    isUnitFriendlyOrEnemy(unit, battle).equals(Constants.ENEMY))
                 continue;
-            addBuffsToUnit(unit,battle);
+            addBuffsToUnit(unit, battle);
             addSpellsToUnit(unit);
             if (isDispeller)
-                dispelBuffsOfUnit(unit,battle);
+                dispelBuffsOfUnit(unit, battle);
             unit.changeAp(getApChange());
             unit.changeHp(getHpChange());
         }
@@ -117,7 +117,7 @@ class Spell extends Card {
         }
     }
 
-    private void addBuffsToUnit(Unit unit,Battle battle) {
+    private void addBuffsToUnit(Unit unit, Battle battle) {
         for (Buff buff : addedBuffs) {
             if (buff != null && unit != null) {
                 if (buff instanceof PoisonBuff && unit.isImmuneTo(Constants.POISON))
@@ -132,10 +132,10 @@ class Spell extends Card {
         }
     }
 
-    private void dispelBuffsOfUnit(Unit unit,Battle battle) {
+    private void dispelBuffsOfUnit(Unit unit, Battle battle) {
         int i = 0;
         //if unit is friendly we removeIdFromDeckName negative buffs
-        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit,battle).equals(Constants.FRIEND)) {
+        if (battle.getBattleGround().isUnitFriendlyOrEnemy(unit, battle).equals(Constants.FRIEND)) {
             while (i < unit.getBuffs().size()) {
                 Buff buff = unit.getBuffs().get(i);
                 if (buff.getPositiveOrNegative().equals(Constants.NEGATIVE)

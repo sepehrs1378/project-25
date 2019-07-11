@@ -74,7 +74,6 @@ public class Player {
         return collectables;
     }
 
-
     public void setNextCard() {
         int randomNumber = (int) (Math.random() * deck.getCards().size());
         if (!deck.getCards().isEmpty()) {

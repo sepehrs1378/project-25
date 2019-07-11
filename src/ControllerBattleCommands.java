@@ -1,6 +1,6 @@
-//import com.teamdev.jxcapture.Codec;
-//import com.teamdev.jxcapture.EncodingParameters;
-//import com.teamdev.jxcapture.VideoCapture;
+import com.teamdev.jxcapture.Codec;
+import com.teamdev.jxcapture.EncodingParameters;
+import com.teamdev.jxcapture.VideoCapture;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,6 +53,7 @@ public class ControllerBattleCommands implements Initializable {
     private ImageView clickedImageView = new ImageView();
     private Timeline timeline = new Timeline();
     private MediaPlayer backgroundMusic;
+    private SpecialPowerImage specialPowerImage;
     private boolean isScreenLocked = false;
     //todo next card has bug
 
@@ -186,6 +188,10 @@ public class ControllerBattleCommands implements Initializable {
         stage.setScene(scene);
         ControllerGraveYard.stage = stage;
         stage.showAndWait();
+    }
+
+    public ImageView getSpecialPowerView() {
+        return specialPowerView;
     }
 
     @FXML
@@ -369,41 +375,7 @@ public class ControllerBattleCommands implements Initializable {
     }
 
     private void setupHeroSpecialPowerView() {
-        final String MOUSE_ENTERED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 10, 0, 0, 0);";
-        final String MOUSE_EXITED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 0);";
-        final String SELECTED_STYLE = "-fx-effect: dropshadow(three-pass-box, rgb(255,255,0), 10, 0, 0, 0);";
-        Unit hero = clientDB.getLoggedInAccount().getMainDeck().getHero();
-        if (hero.getMainSpecialPower() == null) {
-            return;
-        }
-        try {
-            specialPowerView.setImage(new Image(new FileInputStream
-                    ("src/ApProjectResources/units/" + hero.getName() + "/special_power.png")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        specialPowerView.setOnMouseClicked(event -> {
-            if (!canPlayerTouchScreen())
-                return;
-            if (clickedImageView != null && clickedImageView == specialPowerView) {
-                clickedImageView = null;
-                specialPowerView.setStyle(null);
-            } else {
-                clickedImageView = specialPowerView;
-                specialPowerView.setStyle(SELECTED_STYLE);
-            }
-            updatePane();
-        });
-        specialPowerView.setOnMouseEntered(event -> {
-            if (!specialPowerView.getStyle().equals(SELECTED_STYLE)) {
-                specialPowerView.setStyle(MOUSE_ENTERED_STYLE);
-            }
-        });
-        specialPowerView.setOnMouseExited(event -> {
-            if (!specialPowerView.getStyle().equals(SELECTED_STYLE)) {
-                specialPowerView.setStyle(MOUSE_EXITED_STYLE);
-            }
-        });
+        specialPowerImage = new SpecialPowerImage(battleGroundPane);
     }
 
     private void setupCursor() {
@@ -705,7 +677,6 @@ public class ControllerBattleCommands implements Initializable {
         Player currentPlayer = clientDB.getCurrentBattle().getPlayerInTurn();
         UnitImage selectedUnitImage = getUnitImageWithId(currentPlayer.getSelectedUnit().getId());
         UnitImage targetedUnitImage = getUnitImageWithId(id);
-        //todo add this feature to unselect a unit with clicking on it if needed
         switch (currentPlayer.getSelectedUnit().attack(id, clientDB.getCurrentBattle())) {
             case UNIT_ATTACKED:
                 selectedUnitImage.showAttack(targetedUnitImage.getColumn());
@@ -785,7 +756,7 @@ public class ControllerBattleCommands implements Initializable {
         updateUnitImages();
         updateSpecialPowerImage();
         updateCellImages();
-//        updateNextCardImage();
+        updateNextCardImage();
 //        updateCollectableIcon();//todo
         updateFlags();
 //        updateCollectable();
@@ -823,7 +794,8 @@ public class ControllerBattleCommands implements Initializable {
 
     private void updateNextCardImage() {
         Card card = clientDB.getLoggedInPlayer().getNextCard();
-        nextCardImage.setCardImage(card.getId());
+        if (card != null)
+            nextCardImage.setCardImage(card.getId());
     }
 
     private void updateCellImages() {
@@ -865,6 +837,13 @@ public class ControllerBattleCommands implements Initializable {
     private void updateSpecialPowerImage() {
         if (clickedImageView != specialPowerView)
             specialPowerView.setStyle(null);
+        BattleGround battleGround = clientDB.getCurrentBattle().getBattleGround();
+        Unit hero = battleGround.getHeroOfPlayer(clientDB.getLoggedInPlayer());
+        if (hero == null)
+            return;
+        Spell specialPower = hero.getMainSpecialPower();
+        specialPowerImage.setCooldown(specialPower.getTurnsToGetReady());
+        specialPowerImage.setManaCost(specialPower.getMana());
     }
 
     private void updateFlags() {
@@ -1004,7 +983,6 @@ public class ControllerBattleCommands implements Initializable {
         if (outputMessageType == OutputMessageType.WINNER_PLAYER1
                 || outputMessageType == OutputMessageType.WINNER_PLAYER2) {
             return endGame();
-            //todo add winner name to endgame
         }
         return false;
     }
@@ -1048,9 +1026,7 @@ public class ControllerBattleCommands implements Initializable {
     public boolean canPlayerTouchScreen() {
         if (!clientDB.getLoggedInPlayer().equals(clientDB.getCurrentBattle().getPlayerInTurn()))
             return false;
-        if (isScreenLocked)
-            return false;
-        return true;
+        return !isScreenLocked;
     }
 
     public MediaPlayer getBackgroundMusic() {
@@ -1073,23 +1049,23 @@ public class ControllerBattleCommands implements Initializable {
         return player2Label;
     }
 
-    //    public void recordVideo() {
-//        final VideoCapture videoCapture = VideoCapture.create();
-//        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
-//
-//        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
-//        Codec videoCodec = videoCodecs.get(1);
-//
-//        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
-//        encodingParameters.setSize(new Dimension(640, 480));
-//        encodingParameters.setBitrate(500000);
-//        encodingParameters.setFramerate(30);
-//        encodingParameters.setCodec(videoCodec);
-//
-//        videoCapture.setEncodingParameters(encodingParameters);
-//        videoCapture.start();
+    public void recordVideo() {
+        final VideoCapture videoCapture = VideoCapture.create();
+        videoCapture.setCaptureArea(new Rectangle(100, 100, 1486, 819));
 
-    //        videoCapture.stop();
-//        System.out.println("Done.");
-//    }
+        java.util.List<Codec> videoCodecs = videoCapture.getVideoCodecs();
+        Codec videoCodec = videoCodecs.get(1);
+
+        EncodingParameters encodingParameters = new EncodingParameters(new File("Rectangle." + videoCapture.getVideoFormat().getId()));
+        encodingParameters.setSize(new Dimension(640, 480));
+        encodingParameters.setBitrate(500000);
+        encodingParameters.setFramerate(30);
+        encodingParameters.setCodec(videoCodec);
+
+        videoCapture.setEncodingParameters(encodingParameters);
+        videoCapture.start();
+
+        videoCapture.stop();
+        System.out.println("Done.");
+    }
 }

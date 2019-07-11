@@ -101,14 +101,6 @@ public class AI {
         }
     }
 
-    public Unit getBestTargetForUnitAttack(Unit unit) {
-        return null;//todo
-    }
-
-    public List<Card> getSelectedCardsFromHand(Hand hand) {
-        return null;//todo
-    }
-
     public int[] findEnemyUnitInRange(BattleGround battleGround, int row, int column, Battle battle) {
         int rowCounter = 0;
         int coloumnCounter = 0;

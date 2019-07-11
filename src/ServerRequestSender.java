@@ -18,7 +18,7 @@ public class ServerRequestSender extends Thread {
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
             yaGson.toJson(request, output);
             output.flush();
-//            logRequest();
+            logRequest();
         } catch (IOException e) {
             e.printStackTrace();
         }

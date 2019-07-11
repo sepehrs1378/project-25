@@ -59,7 +59,7 @@ public class Account implements Comparable<Account> {
 
     public void openLevelOfStory(int level) {
         levelsOpennessStatus[level] = true;
-    } //todo use it!
+    }
 
     public int getNumberOfWins() {
         int numberOfWins = 0;

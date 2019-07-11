@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Target {
-    private static transient DataBase dataBase = DataBase.getInstance();
     private List<String> typeOfTarget = new ArrayList<>();
     private List<String> friendlyOrEnemy = new ArrayList<>();
     private List<String> targetUnitClass = new ArrayList<>();
